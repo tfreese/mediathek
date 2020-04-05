@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+		<groupId>de.freese.mediathek</groupId>
+		<artifactId>mediathek</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <groupId>de.freese.kodi</groupId>
+    <artifactId>kodi</artifactId>
+    <packaging>pom</packaging>
+
+    <name>${project.groupId} - ${project.artifactId}</name>
+    <description>Parent POM für KODI</description>
+
+    <modules>
+        <module>kodi-core</module>
+        <module>kodi-swing</module>
+        <module>kodi-javafx</module>
+        <module>kodi-web</module>
+    </modules>
+
+    <dependencies>
+        <!-- compile scope -->
+        <!-- runtime scope -->
+        <!-- provided scope -->
+        <!-- test scope -->
+    </dependencies>
+</project>

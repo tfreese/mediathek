@@ -1,0 +1,105 @@
+/*
+https://docs.oracle.com/javase/8/javafx/api/javafx/scene/doc-files/cssref.html
+*/
+.root
+{
+    -fx-font-size: 18px; /* relative Größe zum Device */
+    /*-fx-font-size: 14pt;*/ /* absolute Größe */
+    /*-fx-background-color: linear-gradient(#61a2b1, #2A5058);*/
+}
+
+.text
+{
+    -fx-font-weight: normal;
+    -fx-font-smoothing-type: gray; /* antialising Effekt */
+    /*-fx-effect: dropshadow(gaussian, rgba(255,255,255,0.5), 0, 0, 0, 1);*/
+    /*-fx-text-fill: #333333;*/
+}
+
+.button
+{
+    -fx-font-weight: bold;
+}
+
+.gridpane {
+    -fx-hgap: 5;
+    -fx-vgap: 5;
+    -fx-grid-lines-visible: false;
+}
+
+.hbox {
+    /*-fx-border-color: #2e8b57;
+    -fx-border-width: 2px;*/
+    -fx-spacing: 5;
+}
+
+.list-cell
+{
+    -fx-border-color: black;
+    -fx-border-width: 0.3;
+    -fx-font-size: 100%;
+    /*-fx-font-weight: normal;*/
+}
+
+.list-cell:odd
+{
+    -fx-background-color: lightgrey;
+}
+
+.list-cell:selected
+{
+    -fx-background-color: #0093ff;
+}
+
+.padding {
+    -fx-padding: 5;
+}
+
+.table-cell
+{
+    -fx-border-color: black;
+    -fx-border-width: 0.3;
+    /*-fx-table-cell-border-color transparent transparent;*/
+}
+
+.table-column
+{
+    -fx-alignment: center-left;
+}
+
+.table-view .column-header
+{
+    -fx-alignment: center;
+    -fx-font-size: 115%;
+    -fx-font-weight: bold;
+}
+
+.table-row-cell:odd
+{
+    -fx-background-color: rgb(215,215,215);
+}
+
+.table-row-cell:selected
+{
+    -fx-background-color: #0093ff;
+}
+
+.titled-pane  {
+    -fx-animated: true;
+    -fx-collapsible: false;
+}
+
+.titled-pane .title {
+    -fx-alignment: center;
+    /*-fx-background-color: linear-gradient(aliceblue, lightslategray);*/
+    -fx-font-size: 115%;
+    -fx-font-weight: bold;
+    /*-fx-padding: 30px;*/
+    /*-fx-pref-height: 100.0;*/
+}
+
+.vbox {
+    /*-fx-border-color: #2e8b57;
+    -fx-border-width: 2px;*/
+    -fx-spacing: 5;
+}

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+		<groupId>de.freese.kodi</groupId>
+		<artifactId>kodi</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>kodi-core</artifactId>
+    <packaging>jar</packaging>
+
+    <name>${project.groupId} - ${project.artifactId}</name>
+    <description>API für KODI</description>
+    
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+
+				<!-- mvn exec:java; Ausführung in der gleichen Runtime-Instanz wie Maven. -->
+				<!--configuration>
+					<executable>java</executable>
+					<mainClass>de.freese.mediathek.musik.MusikUtils</mainClass>
+					<classpathScope>runtime</classpathScope>
+					</configuration -->
+
+				<!-- mvn exec:exec; Ausführung in einer separaten Runtime-Instanz. -->
+				<configuration>
+					<toolchain>jdk</toolchain>
+					<executable>java</executable>
+					<arguments>
+						<argument>-classpath</argument>
+						<classpath />
+						<argument>de.freese.mediathek.kodi.report.KodiReporter</argument>
+					</arguments>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>    
+
+    <dependencies>
+        <!-- compile scope -->
+        <dependency>
+            <groupId>de.freese.mediathek</groupId>
+            <artifactId>mediathek-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+		</dependency>        
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+
+        <!-- runtime scope -->
+        <!-- provided scope -->
+        <!-- test scope -->
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>

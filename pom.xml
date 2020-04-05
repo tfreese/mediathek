@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>de.freese</groupId>
+        <artifactId>maven-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <groupId>de.freese.mediathek</groupId>
+    <artifactId>mediathek</artifactId>
+    <packaging>pom</packaging>
+
+    <name>${project.groupId} - ${project.artifactId}</name>
+    <description>Parent für Online-Media-Datenbanken (www.themoviedb.org, www.thetvdb.com)</description>
+    <url>https://github.com/tfreese/mediathek</url>
+    <inceptionYear>2014</inceptionYear>
+
+    <organization>
+        <name>Thomas Freese</name>
+        <url>https://github.com/tfreese/mediathek</url>
+    </organization>
+
+    <scm>
+        <url>${project.url}</url>
+        <connection>scm:git:git://github.com/tfreese/mediathek.git</connection>
+        <developerConnection>scm:git:https://github.com/tfreese/mediathek.git</developerConnection>
+    </scm>
+
+    <modules>
+        <module>core</module>
+        <module>services</module>
+        <module>kodi</module>
+    </modules>
+
+    <dependencies>
+        <!-- compile scope -->
+        <!-- runtime scope -->
+        <!-- provided scope -->
+        <!-- test scope -->
+    </dependencies>
+</project>
