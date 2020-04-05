@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-		<groupId>de.freese.kodi</groupId>
+		<groupId>de.freese.mediathek.kodi</groupId>
 		<artifactId>kodi</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>

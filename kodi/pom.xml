@@ -9,7 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>de.freese.kodi</groupId>
+    <groupId>de.freese.mediathek.kodi</groupId>
     <artifactId>kodi</artifactId>
     <packaging>pom</packaging>
 
