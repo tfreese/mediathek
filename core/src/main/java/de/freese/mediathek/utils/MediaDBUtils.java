@@ -3,7 +3,6 @@
  */
 package de.freese.mediathek.utils;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -79,26 +78,23 @@ public abstract class MediaDBUtils
      * @param path {@link Path}
      * @throws IOException Falls was schief geht.
      */
-    public static void renameOrigin(final Path path) throws IOException
+    public static void rename(final Path path) throws IOException
     {
-        File file = path.toFile();
-        File dir = file.getParentFile();
-        File fileLast = new File(dir, file.getName() + ".last");
+        Path parent = path.getParent();
+        String fileName = path.getFileName().toString();
+        Path last = parent.resolve(fileName + ".last");
 
-        if (!dir.exists())
+        if (!Files.exists(parent))
         {
-            dir.mkdirs();
+            Files.createDirectories(parent);
         }
 
-        if (fileLast.exists())
+        if (Files.exists(last))
         {
-            fileLast.delete();
+            Files.delete(last);
         }
 
-        if (file.exists())
-        {
-            file.renameTo(fileLast);
-        }
+        Files.move(path, last);
     }
 
     /**
@@ -216,7 +212,7 @@ public abstract class MediaDBUtils
      */
     public static void writeCSV(final ResultSet resultSet, final Path path) throws SQLException, IOException
     {
-        renameOrigin(path);
+        rename(path);
 
         try (PrintStream ps = new PrintStream(Files.newOutputStream(path), true, StandardCharsets.UTF_8))
         {
