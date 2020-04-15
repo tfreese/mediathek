@@ -143,7 +143,7 @@ public class KodiAudioReporter extends AbstractMediaReporter
      */
     protected void writeMusicPlaylistM3U(final DataSource dataSource, final Path path) throws Exception
     {
-        MediaDBUtils.renameOrigin(path);
+        MediaDBUtils.rename(path);
 
         StringBuilder sql = new StringBuilder();
         sql.append(
@@ -180,7 +180,7 @@ public class KodiAudioReporter extends AbstractMediaReporter
      */
     protected void writeMusicPlaylistXSP(final DataSource dataSource, final Path path) throws Exception
     {
-        MediaDBUtils.renameOrigin(path);
+        MediaDBUtils.rename(path);
 
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT artist, operator");

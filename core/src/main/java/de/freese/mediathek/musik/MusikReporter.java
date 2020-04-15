@@ -9,7 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import javax.sql.DataSource;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
-import org.springframework.util.StopWatch;
+import de.freese.base.utils.StopWatch;
 import de.freese.mediathek.report.MediaReporter;
 
 /**
@@ -33,7 +33,9 @@ public final class MusikReporter
         // MediaReporter mediaReporter = new KodiMediaReporter();
         // MediaReporter mediaReporter = new PlexMediaReporter();
 
+        STOP_WATCH.start("connect");
         DataSource dataSource = mediaReporter.createDataSource(true);
+        STOP_WATCH.stop();
 
         try
         {
@@ -45,8 +47,6 @@ public final class MusikReporter
             // mediaReporter.updateDbFromReport(dataSource, path);
 
             STOP_WATCH.stop();
-            // System.out.println(STOP_WATCH.prettyPrint());
-            System.out.printf("Stopwatch: %s, %d ms%n", STOP_WATCH.getLastTaskName(), STOP_WATCH.getLastTaskTimeMillis());
         }
         catch (Exception ex)
         {
@@ -69,8 +69,7 @@ public final class MusikReporter
             STOP_WATCH.stop();
         }
 
-        // System.out.println(STOP_WATCH.prettyPrint());
-        System.out.printf("Stopwatch: %s, %d ms%n", STOP_WATCH.getLastTaskName(), STOP_WATCH.getLastTaskTimeMillis());
+        STOP_WATCH.prettyPrint(System.out);
         System.exit(0);
     }
 

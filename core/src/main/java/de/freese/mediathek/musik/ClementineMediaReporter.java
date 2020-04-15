@@ -4,10 +4,8 @@
 
 package de.freese.mediathek.musik;
 
-import java.io.PrintWriter;
 import java.nio.file.Path;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +40,7 @@ public class ClementineMediaReporter extends AbstractMediaReporter
         // System.setProperty("org.sqlite.lib.path", "/home/tommy");
         // System.setProperty("org.sqlite.lib.name", "sqlite-libsqlitejdbc.so");
 
-        DriverManager.setLogWriter(new PrintWriter(System.out, true));
+        // DriverManager.setLogWriter(new PrintWriter(System.out, true));
 
         SQLiteConfig config = new SQLiteConfig();
         config.setReadOnly(readonly);

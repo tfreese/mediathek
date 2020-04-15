@@ -4,9 +4,7 @@
 
 package de.freese.mediathek.musik;
 
-import java.io.PrintWriter;
 import java.nio.file.Path;
-import java.sql.DriverManager;
 import javax.sql.DataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.sqlite.SQLiteConfig;
@@ -39,7 +37,7 @@ public class KodiMediaReporter extends AbstractMediaReporter
         // System.setProperty("org.sqlite.lib.path", "/home/tommy");
         // System.setProperty("org.sqlite.lib.name", "sqlite-libsqlitejdbc.so");
 
-        DriverManager.setLogWriter(new PrintWriter(System.out, true));
+        // DriverManager.setLogWriter(new PrintWriter(System.out, true));
 
         SQLiteConfig config = new SQLiteConfig();
         config.setReadOnly(readonly);
