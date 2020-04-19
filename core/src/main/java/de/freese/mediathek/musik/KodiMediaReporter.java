@@ -73,7 +73,6 @@ public class KodiMediaReporter extends AbstractMediaReporter
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
         jdbcTemplate.query(sql.toString(), resultSet -> {
-            // writeCSV(resultSet, new File(fileName));
             MediaDBUtils.writeCSV(resultSet, System.out);
 
             return null;
