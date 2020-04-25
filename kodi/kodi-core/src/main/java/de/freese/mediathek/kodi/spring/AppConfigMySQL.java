@@ -53,8 +53,9 @@ public class AppConfigMySQL extends AbstractAppConfig
     @Bean(destroyMethod = "close")
     public DataSource dataSourceAudio()
     {
+        // @Value("${mysql.audio.db.url}") final String url
         HikariConfig config = createHikariConfig();
-        config.setJdbcUrl(getEnvironment().getProperty("sqlite.audio.db.url"));
+        config.setJdbcUrl(getEnvironment().getProperty("mysql.audio.db.url"));
         config.setPoolName("dataSourceMusik");
 
         DataSource dataSource = new HikariDataSource(config);
@@ -71,7 +72,7 @@ public class AppConfigMySQL extends AbstractAppConfig
     public DataSource dataSourceVideo()
     {
         HikariConfig config = createHikariConfig();
-        config.setJdbcUrl(getEnvironment().getProperty("sqlite.video.db.url"));
+        config.setJdbcUrl(getEnvironment().getProperty("mysql.video.db.url"));
         config.setPoolName("dataSourceVideo");
 
         DataSource dataSource = new HikariDataSource(config);

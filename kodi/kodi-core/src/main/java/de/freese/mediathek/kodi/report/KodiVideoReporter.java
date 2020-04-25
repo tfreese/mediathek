@@ -12,6 +12,8 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
+import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.env.StandardEnvironment;
 import de.freese.mediathek.kodi.spring.AbstractAppConfig;
 import de.freese.mediathek.kodi.spring.AppConfigSQLite;
 import de.freese.mediathek.report.AbstractMediaReporter;
@@ -35,7 +37,8 @@ public class KodiVideoReporter extends AbstractMediaReporter
     @Override
     public DataSource createDataSource(final boolean readonly) throws Exception
     {
-        MyPropertiesEnvironment environment = new MyPropertiesEnvironment();
+        ConfigurableEnvironment environment = new StandardEnvironment();
+        environment.getPropertySources().addLast(new KodiPropertySource());
 
         AbstractAppConfig appConfig = new AppConfigSQLite();
         appConfig.setEnvironment(environment);

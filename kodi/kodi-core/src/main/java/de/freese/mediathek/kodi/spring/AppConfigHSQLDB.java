@@ -49,8 +49,10 @@ public class AppConfigHSQLDB extends AbstractAppConfig
     @Bean
     public DataSource dataSourceAudio()
     {
+        // @Value("${hsqldb.audio.db.url}") final String url
+        // jdbc:hsqldb:mem:kodi_audio
         SingleConnectionDataSource dataSource = createSingleConnectionDataSource();
-        dataSource.setUrl("jdbc:hsqldb:mem:kodi_audio");
+        dataSource.setUrl(getEnvironment().getProperty("hsqldb.audio.db.url"));
 
         return dataSource;
     }

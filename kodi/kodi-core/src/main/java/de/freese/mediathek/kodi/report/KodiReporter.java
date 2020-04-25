@@ -31,8 +31,8 @@ public final class KodiReporter
 
         try
         {
-
-            Path path = Paths.get("/home/tommy/dokumente/kodi");
+            // Path path = Paths.get("/home/tommy/dokumente/kodi");
+            Path path = Paths.get("/tmp/kodi");
 
             mediaReporterAudio.writeReport(dataSourceAudio, path);
             // dataSourceAudio.updateDbFromReport(dataSourceAudio, path);
