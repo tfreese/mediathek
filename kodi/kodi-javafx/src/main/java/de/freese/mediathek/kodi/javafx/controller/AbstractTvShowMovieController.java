@@ -10,7 +10,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationContext;
-import org.springframework.core.io.Resource;
 import de.freese.mediathek.kodi.javafx.KODIJavaFXClient;
 import de.freese.mediathek.kodi.javafx.components.ModelListCellFactory;
 import de.freese.mediathek.kodi.javafx.components.PickList;
@@ -118,11 +117,11 @@ public abstract class AbstractTvShowMovieController<T extends IModel> extends Ab
 
                 if (StringUtils.isNotBlank(url))
                 {
-                    Optional<Resource> optional = getCache().getResource(url);
+                    Optional<InputStream> optional = getCache().getResource(url);
 
                     if (optional.isPresent())
                     {
-                        try (InputStream inputStream = optional.get().getInputStream())
+                        try (InputStream inputStream = optional.get())
                         {
                             return new Image(inputStream);
                         }

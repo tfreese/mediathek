@@ -20,14 +20,13 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.core.io.Resource;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
 import com.jgoodies.binding.value.ValueHolder;
 import com.jgoodies.binding.value.ValueModel;
-import de.freese.mediathek.cache.Cache;
-import de.freese.mediathek.cache.FileCache;
+import de.freese.base.core.cache.ResourceCache;
+import de.freese.base.core.cache.FileResourceCache;
 import de.freese.mediathek.kodi.model.Movie;
 import de.freese.mediathek.kodi.swing.KODISwingClient;
 import de.freese.mediathek.kodi.swing.components.rowfilter.RegExRowFilter;
@@ -43,22 +42,27 @@ public class MovieModel extends PresentationModel<MovieBean>
      *
      */
     private static final long serialVersionUID = 5768855611560857610L;
+
     /**
      *
      */
-    private Cache cache = null;
+    private final ResourceCache resourceCache;
+
     /**
      *
      */
     private JTable jTable = null;
+
     /**
      *
      */
     private final SelectionInList<Movie> movieSelection;
+
     /**
      *
      */
     private final ValueModel valueModelFilter;
+
     /**
      *
      */
@@ -74,7 +78,7 @@ public class MovieModel extends PresentationModel<MovieBean>
         this.movieSelection = new SelectionInList<>();
         this.valueModelPoster = new ValueHolder();
         this.valueModelFilter = new ValueHolder();
-        this.cache = new FileCache();
+        this.resourceCache = new FileResourceCache();
     }
 
     /**
@@ -210,11 +214,11 @@ public class MovieModel extends PresentationModel<MovieBean>
 
                 if (StringUtils.isNotBlank(url))
                 {
-                    Optional<Resource> optional = MovieModel.this.cache.getResource(url);
+                    Optional<InputStream> optional = MovieModel.this.resourceCache.getResource(url);
 
                     if (optional.isPresent())
                     {
-                        try (InputStream inputStream = optional.get().getInputStream())
+                        try (InputStream inputStream = optional.get())
                         {
                             BufferedImage image = ImageIO.read(inputStream);
 

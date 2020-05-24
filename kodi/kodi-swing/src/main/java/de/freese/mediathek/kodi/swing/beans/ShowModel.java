@@ -20,14 +20,13 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.core.io.Resource;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
 import com.jgoodies.binding.value.ValueHolder;
 import com.jgoodies.binding.value.ValueModel;
-import de.freese.mediathek.cache.Cache;
-import de.freese.mediathek.cache.FileCache;
+import de.freese.base.core.cache.ResourceCache;
+import de.freese.base.core.cache.FileResourceCache;
 import de.freese.mediathek.kodi.model.Show;
 import de.freese.mediathek.kodi.swing.KODISwingClient;
 import de.freese.mediathek.kodi.swing.components.rowfilter.RegExRowFilter;
@@ -43,22 +42,27 @@ public class ShowModel extends PresentationModel<ShowBean>
      *
      */
     private static final long serialVersionUID = -1759604850162069149L;
+
     /**
      *
      */
-    private Cache cache = null;
+    private final ResourceCache resourceCache;
+
     /**
      *
      */
     private JTable jTable = null;
+
     /**
      *
      */
     private final SelectionInList<Show> showSelection;
+
     /**
      *
      */
     private final ValueModel valueModelBanner;
+
     /**
      *
      */
@@ -74,7 +78,7 @@ public class ShowModel extends PresentationModel<ShowBean>
         this.showSelection = new SelectionInList<>();
         this.valueModelBanner = new ValueHolder();
         this.valueModelFilter = new ValueHolder();
-        this.cache = new FileCache();
+        this.resourceCache = new FileResourceCache();
     }
 
     /**
@@ -227,11 +231,11 @@ public class ShowModel extends PresentationModel<ShowBean>
 
                 if (StringUtils.isNotBlank(url))
                 {
-                    Optional<Resource> optional = ShowModel.this.cache.getResource(url);
+                    Optional<InputStream> optional = ShowModel.this.resourceCache.getResource(url);
 
                     if (optional.isPresent())
                     {
-                        try (InputStream inputStream = optional.get().getInputStream())
+                        try (InputStream inputStream = optional.get())
                         {
                             BufferedImage image = ImageIO.read(inputStream);
 

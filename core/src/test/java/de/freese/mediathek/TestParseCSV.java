@@ -1,7 +1,7 @@
 /**
  * Created: 22.05.2016
  */
-package de.freese.mediathek.cache;
+package de.freese.mediathek;
 
 
 import org.junit.jupiter.api.Disabled;
