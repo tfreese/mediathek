@@ -4,6 +4,7 @@
 package de.freese.mediathek.services.thetvdb;
 
 import java.awt.image.BufferedImage;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -12,7 +13,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import javax.imageio.ImageIO;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.core.io.Resource;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter;
 import org.springframework.util.CollectionUtils;
@@ -196,9 +196,12 @@ public class TVService extends AbstractService
         }
 
         String url = String.format("http://thetvdb.com/banners/%s", path);
+        BufferedImage image = null;
 
-        Resource resource = getCache().getResource(url).get();
-        BufferedImage image = ImageIO.read(resource.getURL());
+        try (InputStream inputStream = getCache().getResource(url).get())
+        {
+            image = ImageIO.read(inputStream);
+        }
 
         return image;
     }

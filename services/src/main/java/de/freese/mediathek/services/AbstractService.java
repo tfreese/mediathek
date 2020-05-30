@@ -9,8 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
-import de.freese.mediathek.cache.Cache;
-import de.freese.mediathek.cache.FileCache;
+import de.freese.base.core.cache.FileResourceCache;
+import de.freese.base.core.cache.ResourceCache;
 
 /**
  * Basisimplementierung für den Zugriff auf eine Online-Media-Datenbank (www.themoviedb.org, www.thetvdb.com).
@@ -26,7 +26,7 @@ public abstract class AbstractService implements InitializingBean
     /**
      *
      */
-    private Cache cache = null;
+    private ResourceCache cache = null;
 
     /**
      *
@@ -60,7 +60,7 @@ public abstract class AbstractService implements InitializingBean
 
         if (this.cache == null)
         {
-            this.cache = new FileCache();
+            this.cache = new FileResourceCache();
         }
     }
 
@@ -73,9 +73,9 @@ public abstract class AbstractService implements InitializingBean
     }
 
     /**
-     * @return {@link Cache}
+     * @return {@link ResourceCache}
      */
-    protected Cache getCache()
+    protected ResourceCache getCache()
     {
         return this.cache;
     }
@@ -97,9 +97,9 @@ public abstract class AbstractService implements InitializingBean
     }
 
     /**
-     * @param cache {@link Cache}
+     * @param cache {@link ResourceCache}
      */
-    public void setCache(final Cache cache)
+    public void setCache(final ResourceCache cache)
     {
         this.cache = cache;
     }
