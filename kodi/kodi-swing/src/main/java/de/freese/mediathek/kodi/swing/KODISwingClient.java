@@ -36,7 +36,7 @@ import de.freese.mediathek.kodi.swing.panel.ShowPanel;
 public class KODISwingClient
 {
     /**
-     * WindowListener zum beenden.
+     * WindowListener zum Beenden.
      *
      * @author Thomas Freese
      */
@@ -72,17 +72,41 @@ public class KODISwingClient
         System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
 
         SwingUtilities.invokeLater(() -> {
-            KODISwingClient main = new KODISwingClient();
+            KODISwingClient application = new KODISwingClient();
 
             try
             {
-                main.init(args);
+                application.init(args);
             }
             catch (Exception ex)
             {
                 throw new RuntimeException(ex);
             }
         });
+        
+        // Runnable task = () -> {
+        //        KODISwingClient application = new KODISwingClient();
+        //
+        //        try
+        //        {
+        //            application.init(args);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            throw new RuntimeException(ex);
+        //        }
+        // };
+        // task.run();
+
+        // // Eigene ThreadGroup für Handling von Runtime-Exceptions.
+        // ThreadGroup threadGroup = new ThreadGroup("jsync");
+        //
+        // // Kein Thread des gesamten Clients kann eine höhere Prio haben.
+        // threadGroup.setMaxPriority(Thread.NORM_PRIORITY + 1);
+        //
+        // Thread thread = new Thread(threadGroup, task, "JSyncJavaFx-Startup");
+        // // thread.setDaemon(false);
+        // thread.start();        
     }
 
     /**
@@ -198,8 +222,8 @@ public class KODISwingClient
         });
 
         // Ausnahmen
-        Font font_bold = font.deriveFont(Font.BOLD);
-        UIManager.put("TitledBorder.font", font_bold);
+        Font fontBold = font.deriveFont(Font.BOLD);
+        UIManager.put("TitledBorder.font", fontBold);
 
         // UIDefaults defaults = UIManager.getLookAndFeelDefaults();
         //

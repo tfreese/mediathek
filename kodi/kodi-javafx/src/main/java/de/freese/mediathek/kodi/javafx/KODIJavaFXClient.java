@@ -42,12 +42,14 @@ public class KODIJavaFXClient extends Application
     public static final Logger LOGGER = LoggerFactory.getLogger("KODI-Client");
 
     /**
-     * @return int
+     * @return int; Beispiel: 14.0.1 = 014.000.001 = 14000001
      */
     private static int getJavaVersion()
     {
         // String javaVersion = SystemUtils.JAVA_VERSION;
         String javaVersion = System.getProperty("java.version");
+        //String javaVersionDate = System.getProperty("java.version.date");
+        //String vmVersion = System.getProperty("java.vm.version");
         String[] splits = javaVersion.toLowerCase().split("[._]");
 
         // Major
