@@ -15,7 +15,7 @@ import de.freese.mediathek.services.Settings;
 /**
  * @author Thomas Freese
  */
-public class TestTVShowAPI
+class TestTVShowAPI
 {
     /**
     *
@@ -33,19 +33,11 @@ public class TestTVShowAPI
     }
 
     /**
-     * Erstellt ein neues {@link TestTVShowAPI} Object.
-     */
-    public TestTVShowAPI()
-    {
-        super();
-    }
-
-    /**
      * @throws Exception Falls was schief geht.
      */
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_TV_DB_API_KEY, matches = ".*")
-    public void testDetails() throws Exception
+    void testDetails() throws Exception
     {
         TVShow show = service.getDetails(TVShowAPIDebug.TEST_SHOW_ID);
 
@@ -75,7 +67,7 @@ public class TestTVShowAPI
      */
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_TV_DB_API_KEY, matches = ".*")
-    public void testDetailsAll() throws Exception
+    void testDetailsAll() throws Exception
     {
         TVShow show = service.getDetailsAll(TVShowAPIDebug.TEST_SHOW_ID);
 
@@ -123,7 +115,7 @@ public class TestTVShowAPI
      */
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_TV_DB_API_KEY, matches = ".*")
-    public void testSearch() throws Exception
+    void testSearch() throws Exception
     {
         List<TVShow> result = service.search(TVShowAPIDebug.TEST_SHOW);
 

@@ -3,24 +3,22 @@
  */
 package de.freese.mediathek;
 
-
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
-
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 /**
  * @author Thomas Freese
  */
-@TestMethodOrder(MethodOrderer.Alphanumeric.class)
+@TestMethodOrder(MethodOrderer.MethodName.class)
 @Disabled
-public class TestParseCSV
+class TestParseCSV
 {
     /**
      * Erstellt ein neues {@link TestParseCSV} Object.
@@ -34,7 +32,7 @@ public class TestParseCSV
      * @throws Exception Falls was schief geht.
      */
     @Test
-    public void test010ReadClementineMusik() throws Exception
+    void test010ReadClementineMusik() throws Exception
     {
         // @formatter:off
         Files.lines(Paths.get("/home/tommy/dokumente/linux/musik-playcount.csv"))
@@ -52,7 +50,7 @@ public class TestParseCSV
      * @throws Exception Falls was schief geht.
      */
     @Test
-    public void test020ReadKodiMusik() throws Exception
+    void test020ReadKodiMusik() throws Exception
     {
         // @formatter:off
         Files.lines(Paths.get("/home/tommy/dokumente/kodi/playcount-report-musik.csv"))
@@ -70,7 +68,7 @@ public class TestParseCSV
      * @throws Exception Falls was schief geht.
      */
     @Test
-    public void test030ReadKodiFilme() throws Exception
+    void test030ReadKodiFilme() throws Exception
     {
         // @formatter:off
         Files.lines(Paths.get("/home/tommy/dokumente/kodi/playcount-report-filme.csv"))
@@ -88,7 +86,7 @@ public class TestParseCSV
      * @throws Exception Falls was schief geht.
      */
     @Test
-    public void test040ReadKodiSerien() throws Exception
+    void test040ReadKodiSerien() throws Exception
     {
         // @formatter:off
         Files.lines(Paths.get("/home/tommy/dokumente/kodi/playcount-report-serien.csv"))

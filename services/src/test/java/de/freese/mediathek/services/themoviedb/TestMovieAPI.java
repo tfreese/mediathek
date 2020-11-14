@@ -26,7 +26,7 @@ import de.freese.mediathek.services.themoviedb.model.Search;
 /**
  * @author Thomas Freese
  */
-public class TestMovieAPI
+class TestMovieAPI
 {
     /**
      *
@@ -42,7 +42,7 @@ public class TestMovieAPI
      * @throws Exception Falls was schief geht.
      */
     @BeforeAll
-    public static void beforeAll() throws Exception
+    static void beforeAll() throws Exception
     {
         movieService = new DefaultMovieService(Settings.getMovieDbApiKey());
         ((DefaultMovieService) movieService).afterPropertiesSet();
@@ -52,19 +52,11 @@ public class TestMovieAPI
     }
 
     /**
-     * Erstellt ein neues {@link TestMovieAPI} Object.
-     */
-    public TestMovieAPI()
-    {
-        super();
-    }
-
-    /**
      * @throws Exception Falls was schief geht.
      */
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
-    public void testCasts() throws Exception
+    void testCasts() throws Exception
     {
         Casts casts = movieService.casts(Settings.TEST_MOVIE_ID);
 
@@ -84,7 +76,7 @@ public class TestMovieAPI
      */
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
-    public void testConfiguration() throws Exception
+    void testConfiguration() throws Exception
     {
         Configuration configuration = accountService.getConfiguration();
 
@@ -107,7 +99,7 @@ public class TestMovieAPI
      */
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
-    public void testDetails() throws Exception
+    void testDetails() throws Exception
     {
         MovieDetails details = movieService.details(Settings.TEST_MOVIE_ID);
 
@@ -136,7 +128,7 @@ public class TestMovieAPI
     // * @throws Exception Falls was schief geht.
     // */
     // @Test
-    // public void testPoster() throws Exception
+    // void testPoster() throws Exception
     // {
     // List<Image> poster = movieService.getPoster(Configuration.TEST_MOVIE_ID);
     //
@@ -149,7 +141,7 @@ public class TestMovieAPI
      */
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
-    public void testImages() throws Exception
+    void testImages() throws Exception
     {
         Images images = movieService.images(Settings.TEST_MOVIE_ID);
 
@@ -165,7 +157,7 @@ public class TestMovieAPI
      */
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
-    public void testSearch() throws Exception
+    void testSearch() throws Exception
     {
         Search result = movieService.search(Settings.TEST_MOVIE);
 
@@ -190,7 +182,7 @@ public class TestMovieAPI
      */
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
-    public void testSearchYear() throws Exception
+    void testSearchYear() throws Exception
     {
         Search result = movieService.search(Settings.TEST_MOVIE, Settings.TEST_MOVIE_YEAR);
 
