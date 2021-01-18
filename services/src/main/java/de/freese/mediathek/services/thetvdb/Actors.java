@@ -17,25 +17,25 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 class Actors
 {
-	/**
-	 *
-	 */
-	@XmlElement(name = "Actor")
-	private List<Actor> actors = null;
+    /**
+     *
+     */
+    @XmlElement(name = "Actor")
+    private List<Actor> actors;
 
-	/**
-	 * Erstellt ein neues {@link Actors} Object.
-	 */
-	Actors()
-	{
-		super();
-	}
+    /**
+     * Erstellt ein neues {@link Actors} Object.
+     */
+    Actors()
+    {
+        super();
+    }
 
-	/**
-	 * @return {@link List}<Actor>
-	 */
-	List<Actor> getActors()
-	{
-		return this.actors;
-	}
+    /**
+     * @return {@link List}<Actor>
+     */
+    List<Actor> getActors()
+    {
+        return this.actors;
+    }
 }

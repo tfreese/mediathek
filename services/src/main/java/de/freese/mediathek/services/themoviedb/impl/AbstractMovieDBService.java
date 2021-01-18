@@ -3,9 +3,9 @@
  */
 package de.freese.mediathek.services.themoviedb.impl;
 
-import de.freese.mediathek.services.AbstractService;
 import org.springframework.util.Assert;
 import org.springframework.web.client.RestTemplate;
+import de.freese.mediathek.services.AbstractService;
 
 /**
  * Abstracter Basisservice.
@@ -17,14 +17,14 @@ public abstract class AbstractMovieDBService extends AbstractService
     /**
      *
      */
-    private RestTemplate restTemplate = null;
+    private RestTemplate restTemplate;
 
     /**
      * Erstellt ein neues {@link AbstractMovieDBService} Object.
      *
      * @param apiKey String
      */
-    public AbstractMovieDBService(final String apiKey)
+    protected AbstractMovieDBService(final String apiKey)
     {
         super(apiKey);
     }

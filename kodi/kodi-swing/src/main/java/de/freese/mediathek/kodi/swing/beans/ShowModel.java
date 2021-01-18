@@ -25,8 +25,8 @@ import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
 import com.jgoodies.binding.value.ValueHolder;
 import com.jgoodies.binding.value.ValueModel;
-import de.freese.base.core.cache.ResourceCache;
 import de.freese.base.core.cache.FileResourceCache;
+import de.freese.base.core.cache.ResourceCache;
 import de.freese.mediathek.kodi.model.Show;
 import de.freese.mediathek.kodi.swing.KODISwingClient;
 import de.freese.mediathek.kodi.swing.components.rowfilter.RegExRowFilter;
@@ -46,12 +46,12 @@ public class ShowModel extends PresentationModel<ShowBean>
     /**
      *
      */
-    private final ResourceCache resourceCache;
+    private JTable jTable;
 
     /**
      *
      */
-    private JTable jTable = null;
+    private final ResourceCache resourceCache;
 
     /**
      *

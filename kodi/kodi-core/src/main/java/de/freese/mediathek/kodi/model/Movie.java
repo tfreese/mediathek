@@ -11,37 +11,37 @@ public class Movie extends AbstractModel
     /**
      *
      */
-    private String fanarts = null;
+    private String fanarts;
 
     /**
      *
      */
-    private String genres = null;
+    private String genres;
 
     /**
      *
      */
-    private String imdbID = null;
+    private String imdbID;
 
     /**
      *
      */
-    private String poster = null;
+    private String poster;
 
     /**
      *
      */
-    private String posters = null;
+    private String posters;
 
     /**
      *
      */
-    private int setID = 0;
+    private int setID;
 
     /**
      *
      */
-    private int year = 0;
+    private int year;
 
     /**
      * Erstellt ein neues {@link Movie} Object.

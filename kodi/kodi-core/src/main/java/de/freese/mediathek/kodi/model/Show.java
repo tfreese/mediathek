@@ -9,94 +9,95 @@ package de.freese.mediathek.kodi.model;
  */
 public class Show extends AbstractModel
 {
-	/**
-	 * 
-	 */
-	private String banner = null;
+    /**
+     *
+     */
+    private String banner;
 
-	/**
-	 * 
-	 */
-	private String fanart = null;
-	/**
-	 * 
-	 */
-	private String genres = null;
+    /**
+     *
+     */
+    private String fanart;
 
-	/**
-	 * 
-	 */
-	private String tvdbID = null;
+    /**
+     *
+     */
+    private String genres;
 
-	/**
-	 * Erstellt ein neues {@link Show} Object.
-	 */
-	public Show()
-	{
-		super();
-	}
+    /**
+     *
+     */
+    private String tvdbID;
 
-	/**
-	 * @return String
-	 */
-	public String getBanner()
-	{
-		return this.banner;
-	}
+    /**
+     * Erstellt ein neues {@link Show} Object.
+     */
+    public Show()
+    {
+        super();
+    }
 
-	/**
-	 * @return String
-	 */
-	public String getFanart()
-	{
-		return this.fanart;
-	}
+    /**
+     * @return String
+     */
+    public String getBanner()
+    {
+        return this.banner;
+    }
 
-	/**
-	 * @return String
-	 */
-	public String getGenres()
-	{
-		return this.genres;
-	}
+    /**
+     * @return String
+     */
+    public String getFanart()
+    {
+        return this.fanart;
+    }
 
-	/**
-	 * @return String
-	 */
-	public String getTvdbID()
-	{
-		return this.tvdbID;
-	}
+    /**
+     * @return String
+     */
+    public String getGenres()
+    {
+        return this.genres;
+    }
 
-	/**
-	 * @param banner String
-	 */
-	public void setBanner(final String banner)
-	{
-		this.banner = banner;
-	}
+    /**
+     * @return String
+     */
+    public String getTvdbID()
+    {
+        return this.tvdbID;
+    }
 
-	/**
-	 * @param fanart String
-	 */
-	public void setFanart(final String fanart)
-	{
-		this.fanart = fanart;
-	}
+    /**
+     * @param banner String
+     */
+    public void setBanner(final String banner)
+    {
+        this.banner = banner;
+    }
 
-	/**
-	 * @param genres String
-	 */
-	public void setGenres(final String genres)
-	{
-		this.genres = genres;
-	}
+    /**
+     * @param fanart String
+     */
+    public void setFanart(final String fanart)
+    {
+        this.fanart = fanart;
+    }
 
-	/**
-	 * @param tvdbID String
-	 */
-	public void setTvdbID(final String tvdbID)
-	{
-		this.tvdbID = tvdbID;
-	}
+    /**
+     * @param genres String
+     */
+    public void setGenres(final String genres)
+    {
+        this.genres = genres;
+    }
+
+    /**
+     * @param tvdbID String
+     */
+    public void setTvdbID(final String tvdbID)
+    {
+        this.tvdbID = tvdbID;
+    }
 }

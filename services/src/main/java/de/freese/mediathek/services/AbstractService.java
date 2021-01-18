@@ -23,10 +23,11 @@ public abstract class AbstractService implements InitializingBean
      *
      */
     private final String apiKey;
+
     /**
      *
      */
-    private ResourceCache cache = null;
+    private ResourceCache cache;
 
     /**
      *

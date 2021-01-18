@@ -182,17 +182,17 @@ public class GenreAuswahlDialog extends JDialog
     /**
      *
      */
-    private boolean canceled = false;
+    private boolean canceled;
 
     /**
      *
      */
-    private JList<Genre> listLinks = null;
+    private JList<Genre> listLinks;
 
     /**
      *
      */
-    private JList<Genre> listRechts = null;
+    private JList<Genre> listRechts;
 
     /**
      * Erstellt ein neues {@link GenreAuswahlDialog} Object.

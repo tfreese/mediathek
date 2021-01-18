@@ -24,7 +24,7 @@ import javafx.stage.Stage;
 /**
  * bidirectional bind: "https://community.oracle.com/thread/2462489"<br>
  * <br>
- * Geht momentan nicht aus der IDE, sondern nur per Console: mvn compile exec:java<br>
+ * Mit KODIJavaFXClientLauncher ausführen oder KODIJavaFXClient direkt mit foldenden Restruktionen:<br>
  * <br>
  * In Eclipse:<br>
  * <ol>
@@ -49,8 +49,8 @@ public class KODIJavaFXClient extends Application
     {
         // String javaVersion = SystemUtils.JAVA_VERSION;
         String javaVersion = System.getProperty("java.version");
-        //String javaVersionDate = System.getProperty("java.version.date");
-        //String vmVersion = System.getProperty("java.vm.version");
+        // String javaVersionDate = System.getProperty("java.version.date");
+        // String vmVersion = System.getProperty("java.vm.version");
         String[] splits = javaVersion.toLowerCase().split("[._]");
 
         // Major
@@ -107,7 +107,7 @@ public class KODIJavaFXClient extends Application
     /**
      *
      */
-    private AnnotationConfigApplicationContext applicationContext = null;
+    private AnnotationConfigApplicationContext applicationContext;
 
     /**
      * Erstellt ein neues {@link KODIJavaFXClient} Object.

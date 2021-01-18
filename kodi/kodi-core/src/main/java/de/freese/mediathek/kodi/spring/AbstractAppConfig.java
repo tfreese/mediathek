@@ -34,12 +34,12 @@ public abstract class AbstractAppConfig implements EnvironmentAware
     /**
      *
      */
-    private Environment environment = null;
+    private Environment environment;
 
     /**
      * Erstellt ein neues {@link AbstractAppConfig} Object.
      */
-    public AbstractAppConfig()
+    protected AbstractAppConfig()
     {
         super();
     }

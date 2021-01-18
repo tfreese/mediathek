@@ -4,10 +4,10 @@
 
 package de.freese.mediathek.services.themoviedb.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * @author Thomas Freese
@@ -15,73 +15,73 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Casts
 {
-	/**
-	 * 
-	 */
-	private List<Actor> cast = null;
+    /**
+     * 
+     */
+    private List<Actor> cast;
 
-	/**
-	 * 
-	 */
-	private List<Crew> crew = null;
+    /**
+     * 
+     */
+    private List<Crew> crew;
 
-	/**
-	 * Erstellt ein neues {@link Casts} Object.
-	 */
-	public Casts()
-	{
-		super();
-	}
+    /**
+     * Erstellt ein neues {@link Casts} Object.
+     */
+    public Casts()
+    {
+        super();
+    }
 
-	/**
-	 * @return {@link List}<Actor>
-	 */
-	public List<Actor> getCast()
-	{
-		return this.cast;
-	}
+    /**
+     * @return {@link List}<Actor>
+     */
+    public List<Actor> getCast()
+    {
+        return this.cast;
+    }
 
-	/**
-	 * @return {@link List}<Crew>
-	 */
-	public List<Crew> getCrew()
-	{
-		return this.crew;
-	}
+    /**
+     * @return {@link List}<Crew>
+     */
+    public List<Crew> getCrew()
+    {
+        return this.crew;
+    }
 
-	/**
-	 * @return {@link List}
-	 */
-	public List<Crew> getDirectors()
-	{
-		List<Crew> directors = new ArrayList<>();
+    /**
+     * @return {@link List}
+     */
+    public List<Crew> getDirectors()
+    {
+        List<Crew> directors = new ArrayList<>();
 
-		for (Crew crew : getCrew())
-		{
-			if ("Director".equals(crew.getJob()))
-			{
-				directors.add(crew);
-			}
-		}
+        for (Crew crew : getCrew())
+        {
+            if ("Director".equals(crew.getJob()))
+            {
+                directors.add(crew);
+            }
+        }
 
-		return directors;
-	}
+        return directors;
+    }
 
-	/**
-	 * @param cast {@link List}<Actor>
-	 */
-	public void setCast(final List<Actor> cast)
-	{
-		this.cast = cast;
+    /**
+     * @param cast {@link List}<Actor>
+     */
+    public void setCast(final List<Actor> cast)
+    {
+        this.cast = cast;
 
-		Collections.sort(this.cast);
-	}
+        Collections.sort(this.cast);
+    }
 
-	/**
-	 * @param crew {@link List}<Crew>
-	 */
-	public void setCrew(final List<Crew> crew)
-	{
-		this.crew = crew;
-	}
+    /**
+     * @param crew {@link List}<Crew>
+     */
+    public void setCrew(final List<Crew> crew)
+    {
+        this.crew = crew;
+    }
 }

@@ -24,58 +24,58 @@ public class TVShow implements Comparable<TVShow>
     *
     */
     @XmlElement(name = "Actors", required = false)
-    private String actors = null;
+    private String actors;
 
     /**
     *
     */
-    private List<Actor> actorsList = null;
+    private List<Actor> actorsList;
 
     /**
     *
     */
     @XmlElement()
-    private String banner = null;
+    private String banner;
 
     /**
     *
     */
     @XmlElement(name = "Overview")
-    private String beschreibung = null;
+    private String beschreibung;
 
     /**
     *
     */
-    private List<Episode> episodes = null;
+    private List<Episode> episodes;
 
     /**
     *
     */
     @XmlElement(required = false)
-    private String fanart = null;
+    private String fanart;
 
     /**
     *
     */
-    private List<Image> fanartList = null;
+    private List<Image> fanartList;
 
     /**
     *
     */
     @XmlElement(name = "Genre", required = false)
-    private String genres = null;
+    private String genres;
 
     /**
     *
     */
     @XmlElement(name = "id")
-    private String id = null;
+    private String id;
 
     /**
     *
     */
     @XmlElement(name = "IMDB_ID")
-    private String imdbID = null;
+    private String imdbID;
 
     /**
     *

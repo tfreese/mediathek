@@ -22,12 +22,12 @@ public abstract class AbstractPanel implements IPanel
     /**
      *
      */
-    private ApplicationContext applicationContext = null;
+    private ApplicationContext applicationContext;
 
     /**
      *
      */
-    private JComponent component = null;
+    private JComponent component;
 
     /**
      *
@@ -39,7 +39,7 @@ public abstract class AbstractPanel implements IPanel
      *
      * @param applicationContext {@link ApplicationContext}
      */
-    public AbstractPanel(final ApplicationContext applicationContext)
+    protected AbstractPanel(final ApplicationContext applicationContext)
     {
         super();
 

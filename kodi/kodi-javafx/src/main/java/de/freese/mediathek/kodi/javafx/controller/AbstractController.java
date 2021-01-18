@@ -6,8 +6,8 @@ package de.freese.mediathek.kodi.javafx.controller;
 import java.util.List;
 import java.util.concurrent.Executor;
 import org.springframework.context.ApplicationContext;
-import de.freese.base.core.cache.ResourceCache;
 import de.freese.base.core.cache.FileResourceCache;
+import de.freese.base.core.cache.ResourceCache;
 import de.freese.mediathek.kodi.api.MediaService;
 import de.freese.mediathek.kodi.model.IModel;
 import javafx.beans.value.ChangeListener;
@@ -32,11 +32,6 @@ public abstract class AbstractController<T extends IModel> implements Initializa
     /**
      *
      */
-    private final ResourceCache resourceCache;
-
-    /**
-     *
-     */
     private final Executor executor;
 
     /**
@@ -45,11 +40,16 @@ public abstract class AbstractController<T extends IModel> implements Initializa
     private final MediaService mediaService;
 
     /**
+     *
+     */
+    private final ResourceCache resourceCache;
+
+    /**
      * Erstellt ein neues Object.
      *
      * @param applicationContext {@link ApplicationContext}
      */
-    public AbstractController(final ApplicationContext applicationContext)
+    protected AbstractController(final ApplicationContext applicationContext)
     {
         super();
 

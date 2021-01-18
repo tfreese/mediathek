@@ -25,8 +25,8 @@ import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
 import com.jgoodies.binding.value.ValueHolder;
 import com.jgoodies.binding.value.ValueModel;
-import de.freese.base.core.cache.ResourceCache;
 import de.freese.base.core.cache.FileResourceCache;
+import de.freese.base.core.cache.ResourceCache;
 import de.freese.mediathek.kodi.model.Movie;
 import de.freese.mediathek.kodi.swing.KODISwingClient;
 import de.freese.mediathek.kodi.swing.components.rowfilter.RegExRowFilter;
@@ -46,17 +46,17 @@ public class MovieModel extends PresentationModel<MovieBean>
     /**
      *
      */
-    private final ResourceCache resourceCache;
-
-    /**
-     *
-     */
-    private JTable jTable = null;
+    private JTable jTable;
 
     /**
      *
      */
     private final SelectionInList<Movie> movieSelection;
+
+    /**
+     *
+     */
+    private final ResourceCache resourceCache;
 
     /**
      *

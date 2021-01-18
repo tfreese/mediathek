@@ -16,33 +16,33 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Thumb
 {
-	/**
-	 * 
-	 */
-	@XmlAttribute
-	private String preview = null;
+    /**
+     * 
+     */
+    @XmlAttribute
+    private String preview;
 
-	/**
-	 * Erstellt ein neues {@link Thumb} Object.
-	 */
-	public Thumb()
-	{
-		super();
-	}
+    /**
+     * Erstellt ein neues {@link Thumb} Object.
+     */
+    public Thumb()
+    {
+        super();
+    }
 
-	/**
-	 * @return String
-	 */
-	public String getPreview()
-	{
-		return this.preview;
-	}
+    /**
+     * @return String
+     */
+    public String getPreview()
+    {
+        return this.preview;
+    }
 
-	/**
-	 * @param preview String
-	 */
-	public void setPreview(final String preview)
-	{
-		this.preview = preview;
-	}
+    /**
+     * @param preview String
+     */
+    public void setPreview(final String preview)
+    {
+        this.preview = preview;
+    }
 }

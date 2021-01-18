@@ -21,12 +21,12 @@ public class FormattedTableCellFactory<S, T> implements Callback<TableColumn<S, 
     /**
      *
      */
-    private TextAlignment alignment = null;
+    private TextAlignment alignment;
 
     /**
      *
      */
-    private Format format = null;
+    private Format format;
 
     /**
      * Erstellt ein neues Object.

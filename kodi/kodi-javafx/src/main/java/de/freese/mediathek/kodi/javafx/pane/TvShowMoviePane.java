@@ -39,7 +39,7 @@ public class TvShowMoviePane<T extends IModel> extends VBox
     /**
      *
      */
-    private Button buttonEditGenres = null;
+    private Button buttonEditGenres;
 
     /**
      *

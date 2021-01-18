@@ -32,7 +32,7 @@ public class TVService extends AbstractService
     /**
     *
     */
-    private RestTemplate restTemplate = null;
+    private RestTemplate restTemplate;
 
     /**
      * Erstellt ein neues {@link TVService} Object.

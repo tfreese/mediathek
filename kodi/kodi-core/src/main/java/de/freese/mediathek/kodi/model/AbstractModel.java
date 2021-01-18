@@ -13,7 +13,7 @@ public abstract class AbstractModel implements IModel
     /**
      *
      */
-    private String name = null;
+    private String name;
 
     /**
      *
@@ -23,7 +23,7 @@ public abstract class AbstractModel implements IModel
     /**
      * Erstellt ein neues {@link AbstractModel} Object.
      */
-    public AbstractModel()
+    protected AbstractModel()
     {
         super();
     }
@@ -116,6 +116,7 @@ public abstract class AbstractModel implements IModel
     {
         final int prime = 31;
         int result = 1;
+
         result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
         result = (prime * result) + this.pk;
 

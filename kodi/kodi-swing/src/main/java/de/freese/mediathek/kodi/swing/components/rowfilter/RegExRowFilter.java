@@ -26,7 +26,7 @@ public class RegExRowFilter extends AbstractRowFilterIndexed
 
     /**
      * Erstellt ein neues {@link RegExRowFilter} Object.<br>
-     * 
+     *
      * @param matchFlags int
      * @param regex {@link String}
      * @param columns int[]
@@ -53,7 +53,7 @@ public class RegExRowFilter extends AbstractRowFilterIndexed
      * @see de.freese.mediathek.kodi.swing.components.rowfilter.AbstractRowFilterIndexed#include(javax.swing.RowFilter.Entry, int)
      */
     @Override
-    protected boolean include(final javax.swing.RowFilter.Entry<? extends Object, ? extends Object> value, final int index)
+    protected boolean include(final RowFilter.Entry<? extends Object, ? extends Object> value, final int index)
     {
         this.matcher.reset(value.getStringValue(index));
 

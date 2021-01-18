@@ -55,7 +55,7 @@ public class KODISwingClient
     /**
      *
      */
-    public static Frame FRAME = null;
+    public static Frame FRAME;
 
     /**
      *
@@ -83,18 +83,18 @@ public class KODISwingClient
                 throw new RuntimeException(ex);
             }
         });
-        
+
         // Runnable task = () -> {
-        //        KODISwingClient application = new KODISwingClient();
+        // KODISwingClient application = new KODISwingClient();
         //
-        //        try
-        //        {
-        //            application.init(args);
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            throw new RuntimeException(ex);
-        //        }
+        // try
+        // {
+        // application.init(args);
+        // }
+        // catch (Exception ex)
+        // {
+        // throw new RuntimeException(ex);
+        // }
         // };
         // task.run();
 
@@ -106,7 +106,7 @@ public class KODISwingClient
         //
         // Thread thread = new Thread(threadGroup, task, "JSyncJavaFx-Startup");
         // // thread.setDaemon(false);
-        // thread.start();        
+        // thread.start();
     }
 
     /**

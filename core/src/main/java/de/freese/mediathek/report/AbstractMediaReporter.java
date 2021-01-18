@@ -22,7 +22,7 @@ public abstract class AbstractMediaReporter implements MediaReporter
     /**
      * Erstellt ein neues {@link AbstractMediaReporter} Object.
      */
-    public AbstractMediaReporter()
+    protected AbstractMediaReporter()
     {
         super();
     }

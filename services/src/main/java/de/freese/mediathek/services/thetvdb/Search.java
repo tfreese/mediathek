@@ -21,13 +21,13 @@ class Search
     *
     */
     @XmlElement(name = "Episode", required = false)
-    private List<Episode> episodes = null;
+    private List<Episode> episodes;
 
     /**
     *
     */
     @XmlElement(name = "Series")
-    private List<TVShow> series = null;
+    private List<TVShow> series;
 
     /**
      * Erstellt ein neues {@link Search} Object.

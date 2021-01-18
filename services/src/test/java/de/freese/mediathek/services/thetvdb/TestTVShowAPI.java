@@ -50,16 +50,16 @@ class TestTVShowAPI
         assertTrue(show.getBeschreibung().startsWith("Die Fortsetzung des Films \"Stargate\" von 1994,"));
         assertNotNull(show.getFanart());
         assertNotNull(show.getGenres());
-        assertEquals(show.getGenres(), "|Action|Adventure|Fantasy|Science-Fiction|");
+        assertEquals("|Action|Adventure|Fantasy|Science-Fiction|", show.getGenres());
         assertNotNull(show.getID());
-        assertEquals(show.getID(), "72449");
+        assertEquals("72449", show.getID());
         assertNotNull(show.getLanguage());
-        assertEquals(show.getLanguage(), "de");
+        assertEquals("de", show.getLanguage());
         assertNotNull(show.getPoster());
         assertNotNull(show.getReleaseDate());
-        assertEquals(show.getReleaseDate(), "1997-07-01");
+        assertEquals("1997-07-01", show.getReleaseDate());
         assertNotNull(show.getTitle());
-        assertEquals(show.getTitle(), "Stargate SG-1");
+        assertEquals("Stargate SG-1", show.getTitle());
     }
 
     /**
@@ -80,16 +80,16 @@ class TestTVShowAPI
         assertTrue(show.getBeschreibung().startsWith("Die Fortsetzung des Films \"Stargate\" von 1994,"));
         assertNotNull(show.getFanart());
         assertNotNull(show.getGenres());
-        assertEquals(show.getGenres(), "|Action|Adventure|Fantasy|Science-Fiction|");
+        assertEquals("|Action|Adventure|Fantasy|Science-Fiction|", show.getGenres());
         assertNotNull(show.getID());
-        assertEquals(show.getID(), "72449");
+        assertEquals("72449", show.getID());
         assertNotNull(show.getLanguage());
-        assertEquals(show.getLanguage(), "de");
+        assertEquals("de", show.getLanguage());
         assertNotNull(show.getPoster());
         assertNotNull(show.getReleaseDate());
-        assertEquals(show.getReleaseDate(), "1997-07-01");
+        assertEquals("1997-07-01", show.getReleaseDate());
         assertNotNull(show.getTitle());
-        assertEquals(show.getTitle(), "Stargate SG-1");
+        assertEquals("Stargate SG-1", show.getTitle());
 
         assertNotNull(show.getEpisodes());
         assertTrue(show.getEpisodes().size() == 222);

@@ -18,7 +18,7 @@ public class Configuration
     /**
      * backdrop_sizes
      */
-    private List<String> backdropSizes = null;
+    private List<String> backdropSizes;
 
     // /**
     // *
@@ -28,22 +28,22 @@ public class Configuration
     /**
      * secure_base_url
      */
-    private String imageBaseURL = null;
+    private String imageBaseURL;
 
     /**
      * logo_sizes
      */
-    private List<String> logoSizes = null;
+    private List<String> logoSizes;
 
     /**
      * poster_sizes
      */
-    private List<String> posterSizes = null;
+    private List<String> posterSizes;
 
     /**
      * profile_sizes
      */
-    private List<String> profileSizes = null;
+    private List<String> profileSizes;
 
     /**
      * Erstellt ein neues {@link Configuration} Object.

@@ -45,7 +45,7 @@ public abstract class AbstractTvShowMovieController<T extends IModel> extends Ab
      * @param applicationContext {@link ApplicationContext}
      * @param resourceBundle {@link ResourceBundle}
      */
-    public AbstractTvShowMovieController(final ApplicationContext applicationContext, final ResourceBundle resourceBundle)
+    protected AbstractTvShowMovieController(final ApplicationContext applicationContext, final ResourceBundle resourceBundle)
     {
         super(applicationContext);
 

@@ -24,7 +24,7 @@ public abstract class AbstractRowFilterIndexed extends RowFilter<Object, Object>
      *
      * @param columns int[]
      */
-    public AbstractRowFilterIndexed(final int...columns)
+    protected AbstractRowFilterIndexed(final int...columns)
     {
         super();
 

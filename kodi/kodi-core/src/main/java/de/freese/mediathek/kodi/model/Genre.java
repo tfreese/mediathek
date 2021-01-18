@@ -9,53 +9,53 @@ package de.freese.mediathek.kodi.model;
  */
 public class Genre extends AbstractModel
 {
-	/**
-	 * 
-	 */
-	private int anzahlFilme = 0;
+    /**
+     * 
+     */
+    private int anzahlFilme;
 
-	/**
-	 * 
-	 */
-	private int anzahlSerien = 0;
+    /**
+     * 
+     */
+    private int anzahlSerien;
 
-	/**
-	 * Erstellt ein neues {@link Genre} Object.
-	 */
-	public Genre()
-	{
-		super();
-	}
+    /**
+     * Erstellt ein neues {@link Genre} Object.
+     */
+    public Genre()
+    {
+        super();
+    }
 
-	/**
-	 * @return int
-	 */
-	public int getAnzahlFilme()
-	{
-		return this.anzahlFilme;
-	}
+    /**
+     * @return int
+     */
+    public int getAnzahlFilme()
+    {
+        return this.anzahlFilme;
+    }
 
-	/**
-	 * @return int
-	 */
-	public int getAnzahlSerien()
-	{
-		return this.anzahlSerien;
-	}
+    /**
+     * @return int
+     */
+    public int getAnzahlSerien()
+    {
+        return this.anzahlSerien;
+    }
 
-	/**
-	 * @param anzahlFilme int
-	 */
-	public void setAnzahlFilme(final int anzahlFilme)
-	{
-		this.anzahlFilme = anzahlFilme;
-	}
+    /**
+     * @param anzahlFilme int
+     */
+    public void setAnzahlFilme(final int anzahlFilme)
+    {
+        this.anzahlFilme = anzahlFilme;
+    }
 
-	/**
-	 * @param anzahlSerien int
-	 */
-	public void setAnzahlSerien(final int anzahlSerien)
-	{
-		this.anzahlSerien = anzahlSerien;
-	}
+    /**
+     * @param anzahlSerien int
+     */
+    public void setAnzahlSerien(final int anzahlSerien)
+    {
+        this.anzahlSerien = anzahlSerien;
+    }
 }

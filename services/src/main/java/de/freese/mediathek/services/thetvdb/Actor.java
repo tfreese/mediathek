@@ -16,98 +16,98 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Actor implements Comparable<Actor>
 {
-	/**
-	 * 
-	 */
-	@XmlElement(name = "id")
-	private String id = null;
+    /**
+     * 
+     */
+    @XmlElement(name = "id")
+    private String id;
 
-	/**
-	 * 
-	 */
-	@XmlElement(name = "Image")
-	private String image = null;
+    /**
+     * 
+     */
+    @XmlElement(name = "Image")
+    private String image;
 
-	/**
-	 * 
-	 */
-	@XmlElement(name = "Name")
-	private String name = null;
+    /**
+     * 
+     */
+    @XmlElement(name = "Name")
+    private String name;
 
-	/**
-	 * 
-	 */
-	@XmlElement(name = "Role")
-	private String role = null;
+    /**
+     * 
+     */
+    @XmlElement(name = "Role")
+    private String role;
 
-	/**
-	 * 
-	 */
-	@XmlElement(name = "SortOrder")
-	private int sortOrder = -1;
+    /**
+     * 
+     */
+    @XmlElement(name = "SortOrder")
+    private int sortOrder = -1;
 
-	/**
-	 * Erstellt ein neues {@link Actor} Object.
-	 */
-	Actor()
-	{
-		super();
-	}
+    /**
+     * Erstellt ein neues {@link Actor} Object.
+     */
+    Actor()
+    {
+        super();
+    }
 
-	/**
-	 * @see java.lang.Comparable#compareTo(java.lang.Object)
-	 */
-	@Override
-	public int compareTo(final Actor o)
-	{
-		int comp = this.sortOrder - o.sortOrder;
+    /**
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    @Override
+    public int compareTo(final Actor o)
+    {
+        int comp = this.sortOrder - o.sortOrder;
 
-		if (comp == 0)
-		{
-			comp = getName().compareTo(o.getName());
-		}
+        if (comp == 0)
+        {
+            comp = getName().compareTo(o.getName());
+        }
 
-		return comp;
-	}
+        return comp;
+    }
 
-	/**
-	 * @return String
-	 */
-	public String getImage()
-	{
-		return this.image;
-	}
+    /**
+     * @return String
+     */
+    public String getImage()
+    {
+        return this.image;
+    }
 
-	/**
-	 * @return String
-	 */
-	public String getName()
-	{
-		return this.name;
-	}
+    /**
+     * @return String
+     */
+    public String getName()
+    {
+        return this.name;
+    }
 
-	/**
-	 * @return String
-	 */
-	public String getRole()
-	{
-		return this.role;
-	}
+    /**
+     * @return String
+     */
+    public String getRole()
+    {
+        return this.role;
+    }
 
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString()
-	{
-		StringBuilder builder = new StringBuilder();
-		builder.append("Actor [");
-		builder.append("id=").append(this.id);
-		builder.append(", name=").append(this.name);
-		builder.append(", role=").append(this.role);
-		builder.append(", sortOrder=").append(this.sortOrder);
-		builder.append(", image=").append(this.image);
-		builder.append("]");
-		return builder.toString();
-	}
+    /**
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Actor [");
+        builder.append("id=").append(this.id);
+        builder.append(", name=").append(this.name);
+        builder.append(", role=").append(this.role);
+        builder.append(", sortOrder=").append(this.sortOrder);
+        builder.append(", image=").append(this.image);
+        builder.append("]");
+        return builder.toString();
+    }
 }
