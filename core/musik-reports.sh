@@ -8,19 +8,17 @@ BASEDIR=$(dirname $0) #Verzeichnis des Skripts
 cd $BASEDIR
 
 if [ ! -f target/classes/de/freese/mediathek/musik/MusikReporter.class ]; then
-    mvn compile
+    mvn clean compile;
 fi
 
-# mvn -q
+# Ausführung in der gleichen Runtime-Instanz wie Maven, in POM definiert.
+# mvn -q exec:java -Dexec.mainClass="..." -Dexec.classpathScope=runtime -Dexec.daemonThreadJoinTimeout=120000 -Dexec.killAfter=-1
+# mvn -q exec:java -Dexec.mainClass="..." -D<PARAM>="..."
 
-# Ausführung in der gleichen Runtime-Instanz wie Maven.
-# mvn -q exec:java # In POM definiert
-# mvn -q exec:java -Dexec.mainClass="de.freese.mediathek.musik.MusikReporter" -Dexec.classpathScope=runtime
-#-Dexec.daemonThreadJoinTimeout=120000 -Dexec.killAfter=-1
+# Ausführung in einer separaten Runtime-Instanz, in POM definiert.
+#mvn -q exec:exec -Dexec.executable="java" -Dexec.args="%classpath" -Dexec.mainClass="..."
 
-# Ausführung in einer separaten Runtime-Instanz.
-mvn -q exec:exec # In POM definiert
-#mvn -q exec:exec -Dexec.executable="java" -Dexec.args="%classpath" -Dexec.mainClass="de.freese.mediathek.musik.MusikReporter"
+mvn exec:exec --offline;
 
 cd ~
 
