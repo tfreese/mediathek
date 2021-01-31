@@ -36,7 +36,7 @@
 						<argument>--enable-preview</argument>
 						<argument>-classpath</argument>
 						<classpath />
-						<argument>de.freese.mediathek.musik.MusikReporter</argument>						
+						<argument>de.freese.mediathek.musik.MusikReporter</argument>
 					</arguments>
 				</configuration>
 			</plugin>
