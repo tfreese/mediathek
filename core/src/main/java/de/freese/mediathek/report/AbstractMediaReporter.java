@@ -20,14 +20,6 @@ import de.freese.mediathek.utils.MediaDBUtils;
 public abstract class AbstractMediaReporter implements MediaReporter
 {
     /**
-     * Erstellt ein neues {@link AbstractMediaReporter} Object.
-     */
-    protected AbstractMediaReporter()
-    {
-        super();
-    }
-
-    /**
      * Auslesen der bereits geschauter Filme-Liste.<br>
      * Map-Keys:
      * <ul>

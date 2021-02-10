@@ -19,14 +19,6 @@ import de.freese.mediathek.utils.MediaDBUtils;
 public class KodiMediaReporter extends AbstractMediaReporter
 {
     /**
-     * Erstellt ein neues {@link KodiMediaReporter} Object.
-     */
-    public KodiMediaReporter()
-    {
-        super();
-    }
-
-    /**
      * @see de.freese.mediathek.report.MediaReporter#createDataSource(boolean)
      */
     @Override
@@ -34,8 +26,8 @@ public class KodiMediaReporter extends AbstractMediaReporter
     {
         // Native Libraries deaktivieren für den Zugriff auf die Dateien.
         System.setProperty("sqlite.purejava", "true");
-        
-        // Pfade für native Libraries.        
+
+        // Pfade für native Libraries.
         // System.setProperty("org.sqlite.lib.path", "/home/tommy");
         // System.setProperty("org.sqlite.lib.name", "sqlite-libsqlitejdbc.so");
 

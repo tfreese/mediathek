@@ -22,14 +22,6 @@ import de.freese.mediathek.report.AbstractMediaReporter;
 public class ClementineMediaReporter extends AbstractMediaReporter
 {
     /**
-     * Erstellt ein neues {@link ClementineMediaReporter} Object.
-     */
-    public ClementineMediaReporter()
-    {
-        super();
-    }
-
-    /**
      * @see de.freese.mediathek.report.MediaReporter#createDataSource(boolean)
      */
     @Override
@@ -37,7 +29,7 @@ public class ClementineMediaReporter extends AbstractMediaReporter
     {
         // Native Libraries deaktivieren für den Zugriff auf die Dateien.
         System.setProperty("sqlite.purejava", "true");
-        
+
         // Pfade für native Libraries.
         // System.setProperty("org.sqlite.lib.path", "/home/tommy");
         // System.setProperty("org.sqlite.lib.name", "sqlite-libsqlitejdbc.so");

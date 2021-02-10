@@ -21,14 +21,6 @@ import de.freese.mediathek.report.AbstractMediaReporter;
 public class PlexMediaReporter extends AbstractMediaReporter
 {
     /**
-     * Erstellt ein neues {@link PlexMediaReporter} Object.
-     */
-    public PlexMediaReporter()
-    {
-        super();
-    }
-
-    /**
      * @see de.freese.mediathek.report.MediaReporter#createDataSource(boolean)
      */
     @Override
@@ -36,8 +28,8 @@ public class PlexMediaReporter extends AbstractMediaReporter
     {
         // Native Libraries deaktivieren für den Zugriff auf die Dateien.
         System.setProperty("sqlite.purejava", "true");
-        
-        // Pfade für native Libraries.        
+
+        // Pfade für native Libraries.
         // System.setProperty("org.sqlite.lib.path", "/home/tommy");
         // System.setProperty("org.sqlite.lib.name", "sqlite-libsqlitejdbc.so");
 
