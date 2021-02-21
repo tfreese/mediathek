@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>de.freese.mediathek</groupId>
-		<artifactId>mediathek</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</parent>
+    <parent>
+        <groupId>de.freese.mediathek</groupId>
+        <artifactId>mediathek</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
 
-	<artifactId>mediathek-core</artifactId>
-	<packaging>jar</packaging>
+    <artifactId>mediathek-core</artifactId>
+    <packaging>jar</packaging>
 
-	<name>${project.groupId} - ${project.artifactId}</name>
-	<description>Basis-Projekt für Mediathek-Zugriffe</description>
+    <name>${project.groupId} - ${project.artifactId}</name>
+    <description>Basis-Projekt für Mediathek-Zugriffe</description>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
 
 				<!-- mvn exec:java; Ausführung in der gleichen Runtime-Instanz wie Maven. -->
 				<!--configuration>
@@ -29,65 +29,71 @@
 					</configuration -->
 
 				<!-- mvn exec:exec; Ausführung in einer separaten Runtime-Instanz. -->
-				<configuration>
-					<toolchain>jdk</toolchain>
-					<executable>java</executable>
-					<arguments>
-						<argument>--enable-preview</argument>
-						<argument>-classpath</argument>
-						<classpath />
-						<argument>de.freese.mediathek.musik.MusikReporter</argument>
-					</arguments>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+                <configuration>
+                    <toolchain>jdk</toolchain>
+                    <executable>java</executable>
+                    <arguments>
+                        <argument>--enable-preview</argument>
+                        <argument>-classpath</argument>
+                        <classpath />
+                        <argument>de.freese.mediathek.musik.MusikReporter</argument>
+                    </arguments>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
-	<dependencies>
+    <dependencies>
 		<!-- compile scope -->
-		<dependency>
-			<groupId>de.freese.base</groupId>
-			<artifactId>base-core</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>de.freese.base</groupId>
-			<artifactId>base-persistence</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.xerial</groupId>
-			<artifactId>sqlite-jdbc</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>de.freese.base</groupId>
+            <artifactId>base-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.freese.base</groupId>
+            <artifactId>base-persistence</artifactId>
+            <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>ch.qos.logback</groupId>
+                    <artifactId>logback-classic</artifactId>
+                </exclusion>
+            </exclusions>            
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+        </dependency>
 
 		<!-- runtime scope -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mariadb.jdbc</groupId>
-			<artifactId>mariadb-java-client</artifactId>
-			<scope>runtime</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <scope>runtime</scope>
+        </dependency>
 
 		<!-- provided scope -->
 		<!-- test scope -->
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-engine</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>
