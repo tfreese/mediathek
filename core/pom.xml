@@ -74,12 +74,12 @@
 		<!-- runtime scope -->
         <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
+            <artifactId>jcl-over-slf4j</artifactId>
             <scope>runtime</scope>
-        </dependency>
+        </dependency>        
         <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>jcl-over-slf4j</artifactId>
+            <artifactId>slf4j-simple</artifactId>
             <scope>runtime</scope>
         </dependency>
         <dependency>

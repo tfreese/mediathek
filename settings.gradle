@@ -1,0 +1,9 @@
+// Ohne rootProject.name würde der Name des Projekt-Verzeichnises verwendet werden.
+rootProject.name = "mediathek"
+
+include "core"
+include "services"
+include "kodi-core"
+include "kodi-swing"
+include "kodi-javafx"
+include "kodi-web"

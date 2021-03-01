@@ -1,0 +1,122 @@
+// Tasks im SubModul ausführen: gradle MODUL:clean build
+
+subprojects {
+    apply plugin: "java"
+    apply plugin: "io.spring.dependency-management"
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.boot:spring-boot-dependencies:$version_springBoot"
+        }
+
+        dependencies {
+        	dependency "com.jgoodies:jgoodies-binding:$version_jdoodies"
+        }
+    }
+    
+	dependencies {
+		testImplementation("org.junit.jupiter:junit-jupiter-engine")
+	}
+}
+
+project("core") {
+    apply plugin: "java-library"
+    apply plugin: "org.springframework.boot"
+    description "Basis-Projekt für Mediathek-Zugriffe"
+	configurations.all {
+		exclude group: "ch.qos.logback", module: "logback-classic"
+	}    
+    dependencies {
+	    api("de.freese.base:base-core:$version")
+	    implementation("de.freese.base:base-persistence:$version")
+	    
+	    api("org.springframework:spring-jdbc")
+	    
+	    implementation("org.xerial:sqlite-jdbc")
+	
+	    runtimeOnly("org.slf4j:jcl-over-slf4j")
+	    runtimeOnly("org.slf4j:slf4j-simple")
+	    runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
+    }
+	// Start: gradle bootRun
+	bootJar {
+	    mainClass = "de.freese.mediathek.musik.MusikReporter"
+	}    
+}
+
+project("services") {
+    apply plugin: "java-library"
+    description "API für Online-Media-Datenbanken (www.themoviedb.org, www.thetvdb.com)"
+    dependencies {
+    	//api(project(":core"))
+    	api("de.freese.base:base-core:$version")
+	    api("com.fasterxml.jackson.dataformat:jackson-dataformat-xml")
+	    api("javax.xml.bind:jaxb-api")
+	    api("org.springframework:spring-web")
+    }
+}
+
+project("kodi-core") {
+    apply plugin: "java-library"
+    apply plugin: "org.springframework.boot"
+    description "API für KODI"
+    dependencies {
+    	api(project(":core"))
+	    api("com.zaxxer:HikariCP")
+	    api("org.springframework:spring-context")
+	    
+		testImplementation("org.hsqldb:hsqldb")
+    }
+	// Start: gradle bootRun
+	bootJar {
+	    mainClass = "de.freese.mediathek.kodi.report.KodiReporter"
+	}     
+}
+
+project("kodi-swing") {
+    apply plugin: "org.springframework.boot"
+    description "Swing GUI für KODI"
+    dependencies {
+    	implementation(project(":kodi-core"))
+	    implementation("com.jgoodies:jgoodies-binding")
+    }
+	// Start: gradle bootRun
+	bootJar {
+	    mainClass = "de.freese.mediathek.kodi.swing.KODISwingClient"
+	}     
+}
+
+project("kodi-javafx") {
+    apply plugin: "org.springframework.boot"
+    apply plugin: "org.openjfx.javafxplugin"
+    description "JavaFX GUI für KODI"
+    dependencies {
+    	implementation(project(":kodi-core"))
+    	
+        javafx {
+        	version = "$version_javafxBase"
+            modules = ["javafx.controls", "javafx.fxml"]
+        }
+    }
+	// Start: gradle bootRun
+	bootJar {
+	    mainClass = "de.freese.mediathek.kodi.javafx.KODIJavaFXClientLauncher"
+	}     
+}
+
+project("kodi-web") {
+    description "WEB GUI für KODI"
+    dependencies {
+    	implementation(project(":kodi-core"))
+    	
+	    implementation("org.primefaces:primefaces")
+	    implementation("org.springframework:spring-web")
+	    
+	    runtimeOnly("com.sun.faces:jsf-api")
+	    runtimeOnly("com.sun.faces:jsf-impl")
+	    runtimeOnly("org.primefaces.extensions:primefaces-extensions")
+	    runtimeOnly("org.primefaces.themes:all-themes")
+	    
+	    testImplementation("javax:javaee-web-api")
+    }   
+}

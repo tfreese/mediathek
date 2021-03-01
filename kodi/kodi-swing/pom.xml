@@ -13,7 +13,7 @@
     <packaging>jar</packaging>
 
     <name>${project.groupId} - ${project.artifactId}</name>
-    <description>Swing GUI für XBMC</description>
+    <description>Swing GUI für KODI</description>
     
     <dependencies>
         <!-- compile scope -->
