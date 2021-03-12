@@ -19,7 +19,7 @@ import de.freese.base.utils.JdbcUtils;
  *
  * @author Thomas Freese
  */
-public abstract class MediaDBUtils
+public final class MediaDBUtils
 {
     /**
      * Benennt die bestehende Datei in *.last um.
@@ -38,10 +38,9 @@ public abstract class MediaDBUtils
      *
      * @param resultSet {@link ResultSet}
      * @param path {@link Path}
-     * @throws SQLException Falls was schief geht.
-     * @throws IOException Falls was schief geht.
+     * @throws Exception Falls was schief geht.
      */
-    public static void writeCSV(final ResultSet resultSet, final Path path) throws SQLException, IOException
+    public static void writeCSV(final ResultSet resultSet, final Path path) throws Exception
     {
         rename(path);
 
@@ -63,5 +62,13 @@ public abstract class MediaDBUtils
     public static void writeCSV(final ResultSet resultSet, final PrintStream ps) throws SQLException
     {
         JdbcUtils.writeCSV(resultSet, ps);
+    }
+
+    /**
+     * Erstellt ein neues {@link MediaDBUtils} Object.
+     */
+    private MediaDBUtils()
+    {
+        super();
     }
 }

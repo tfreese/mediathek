@@ -84,40 +84,40 @@ public class TVShow implements Comparable<TVShow>
     {
             @XmlElement(name = "language"), @XmlElement(name = "Language")
     })
-    private String language = null;
+    private String language;
 
     /**
     *
     */
     @XmlElement(required = false)
-    private String poster = null;
+    private String poster;
 
     /**
     *
     */
-    private List<Image> posterList = null;
+    private List<Image> posterList;
 
     /**
     *
     */
     @XmlElement(name = "FirstAired")
-    private String releaseDate = null;
+    private String releaseDate;
 
     /**
     *
     */
-    private List<Image> seasonList = null;
+    private List<Image> seasonList;
 
     /**
     *
     */
-    private List<Image> seriesList = null;
+    private List<Image> seriesList;
 
     /**
     *
     */
     @XmlElement(name = "SeriesName")
-    private String title = null;
+    private String title;
 
     /**
      * Erstellt ein neues {@link TVShow} Object.

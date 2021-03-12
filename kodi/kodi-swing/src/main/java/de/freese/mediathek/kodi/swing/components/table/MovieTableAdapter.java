@@ -32,16 +32,13 @@ public class MovieTableAdapter extends AbstractTableAdapter<Movie>
     {
         Movie movie = getRow(rowIndex);
 
-        switch (columnIndex)
+        return switch (columnIndex)
         {
-            case 0:
-                return movie.getPK();
+            case 0 -> movie.getPK();
 
-            case 1:
-                return movie.getName();
+            case 1 -> movie.getName();
 
-            default:
-                return null;
-        }
+            default -> null;
+        };
     }
 }

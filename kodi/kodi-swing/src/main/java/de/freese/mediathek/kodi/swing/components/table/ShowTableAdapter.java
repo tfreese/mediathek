@@ -32,16 +32,13 @@ public class ShowTableAdapter extends AbstractTableAdapter<Show>
     {
         Show show = getRow(rowIndex);
 
-        switch (columnIndex)
+        return switch (columnIndex)
         {
-            case 0:
-                return show.getPK();
+            case 0 -> show.getPK();
 
-            case 1:
-                return show.getName();
+            case 1 -> show.getName();
 
-            default:
-                return null;
-        }
+            default -> null;
+        };
     }
 }

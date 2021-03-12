@@ -92,10 +92,10 @@ class TestTVShowAPI
         assertEquals("Stargate SG-1", show.getTitle());
 
         assertNotNull(show.getEpisodes());
-        assertTrue(show.getEpisodes().size() == 222);
+        assertEquals(222, show.getEpisodes().size());
 
         assertNotNull(show.getActorsList());
-        assertTrue(show.getActorsList().size() == 23);
+        assertEquals(23, show.getActorsList().size());
 
         assertNotNull(show.getPosterList());
         assertTrue(show.getPosterList().size() > 1);

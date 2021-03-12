@@ -197,7 +197,7 @@ public class KODIJavaFXClient extends Application
         // Momentan kein Antialising wegen JavaFX-Bug.
         int javaVersion = getJavaVersion();
 
-        if (Platform.isSupported(ConditionalFeature.SCENE3D) && (javaVersion >= 1800072))
+        if (Platform.isSupported(ConditionalFeature.SCENE3D) && (javaVersion >= 1_800_072))
         {
 
             scene = new Scene(tabPane, 1280, 768, true, SceneAntialiasing.BALANCED);

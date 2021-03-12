@@ -175,23 +175,21 @@ public class TvShowMoviePane<T extends IModel> extends VBox
         FilteredList<T> filteredData = new FilteredList<>(this.tableList, p -> true);
 
         // Filter-Textfeld mit FilteredList verbinden.
-        propertyItemFilter.addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(value -> {
-                if (StringUtils.isBlank(newValue))
-                {
-                    return true;
-                }
+        propertyItemFilter.addListener((observable, oldValue, newValue) -> filteredData.setPredicate(value -> {
+            if (StringUtils.isBlank(newValue))
+            {
+                return true;
+            }
 
-                String text = value.getName();
+            String text = value.getName();
 
-                if (StringUtils.containsIgnoreCase(text, newValue))
-                {
-                    return true;
-                }
+            if (StringUtils.containsIgnoreCase(text, newValue))
+            {
+                return true;
+            }
 
-                return false;
-            });
-        });
+            return false;
+        }));
 
         // Da die ObservableList der TableItems neu gesetzt wird, muss auch die Sortierung neu gemacht werden.
         SortedList<T> sortedData = new SortedList<>(filteredData);

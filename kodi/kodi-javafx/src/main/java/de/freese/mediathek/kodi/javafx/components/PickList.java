@@ -62,9 +62,7 @@ public class PickList<T extends Comparable<? super T>> extends HBox
                 listRight.add(item);
             }
 
-            listRight.sort((o1, o2) -> {
-                return o1.compareTo(o2);
-            });
+            listRight.sort((o1, o2) -> o1.compareTo(o2));
         });
 
         buttonRightToLeft.disableProperty().bind(this.listViewRight.getSelectionModel().selectedItemProperty().isNull());

@@ -28,7 +28,7 @@ class KodiPropertySource extends PropertySource<String>
     {
         super("reportProperties");
 
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("kodi.properties"))
+        try (InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("kodi.properties"))
         {
             this.properties.load(inputStream);
         }

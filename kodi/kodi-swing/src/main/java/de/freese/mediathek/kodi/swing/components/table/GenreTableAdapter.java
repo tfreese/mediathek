@@ -35,19 +35,15 @@ public class GenreTableAdapter extends AbstractTableAdapter<Genre>
     {
         Genre genre = getRow(rowIndex);
 
-        switch (columnIndex)
+        return switch (columnIndex)
         {
-            case 0:
-                return String.format("%s (%d)", genre.getName(), genre.getPK());
+            case 0 -> String.format("%s (%d)", genre.getName(), genre.getPK());
 
-            case 1:
-                return genre.getAnzahlFilme();
+            case 1 -> genre.getAnzahlFilme();
 
-            case 2:
-                return genre.getAnzahlSerien();
+            case 2 -> genre.getAnzahlSerien();
 
-            default:
-                return null;
-        }
+            default -> null;
+        };
     }
 }
