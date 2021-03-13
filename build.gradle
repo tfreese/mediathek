@@ -48,8 +48,7 @@ project("services") {
     apply plugin: "java-library"
     description "API für Online-Media-Datenbanken (www.themoviedb.org, www.thetvdb.com)"
     dependencies {
-    	//api(project(":core"))
-    	api("de.freese.base:base-core:$version")
+    	api(project(":core"))
 	    api("com.fasterxml.jackson.dataformat:jackson-dataformat-xml")
 	    api("javax.xml.bind:jaxb-api")
 	    api("org.springframework:spring-web")
