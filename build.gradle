@@ -10,7 +10,7 @@ subprojects {
         }
 
         dependencies {
-        	dependency "com.jgoodies:jgoodies-binding:$version_jdoodies"
+        	dependency "com.jgoodies:jgoodies-binding:$version_jgoodies"
         }
     }
     
@@ -38,7 +38,7 @@ project("core") {
 	    runtimeOnly("org.slf4j:slf4j-simple")
 	    runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
     }
-	// Start: gradle bootRun
+	// Start: gradle bootRun --args="--spring.profiles.active=dev"
 	bootJar {
 	    mainClass = "de.freese.mediathek.musik.MusikReporter"
 	}    
@@ -66,7 +66,7 @@ project("kodi-core") {
 	    
 		testImplementation("org.hsqldb:hsqldb")
     }
-	// Start: gradle bootRun
+	// Start: gradle bootRun --args="--spring.profiles.active=dev"
 	bootJar {
 	    mainClass = "de.freese.mediathek.kodi.report.KodiReporter"
 	}     
@@ -79,7 +79,7 @@ project("kodi-swing") {
     	implementation(project(":kodi-core"))
 	    implementation("com.jgoodies:jgoodies-binding")
     }
-	// Start: gradle bootRun
+	// Start: gradle bootRun --args="--spring.profiles.active=dev"
 	bootJar {
 	    mainClass = "de.freese.mediathek.kodi.swing.KODISwingClient"
 	}     
@@ -97,7 +97,7 @@ project("kodi-javafx") {
             modules = ["javafx.controls", "javafx.fxml"]
         }
     }
-	// Start: gradle bootRun
+	// Start: gradle bootRun --args="--spring.profiles.active=dev"
 	bootJar {
 	    mainClass = "de.freese.mediathek.kodi.javafx.KODIJavaFXClientLauncher"
 	}     
