@@ -1,7 +1,4 @@
-/**
- * Created: 13.09.2014
- */
-
+// Created: 13.09.2014
 package de.freese.mediathek.kodi.impl;
 
 import java.sql.ResultSet;
@@ -14,14 +11,6 @@ import de.freese.mediathek.kodi.model.Show;
  */
 public class ShowRowMapper implements RowMapper<Show>
 {
-    /**
-     * Erstellt ein neues {@link ShowRowMapper} Object.
-     */
-    public ShowRowMapper()
-    {
-        super();
-    }
-
     /**
      * @see org.springframework.jdbc.core.RowMapper#mapRow(java.sql.ResultSet, int)
      */

@@ -113,7 +113,6 @@ public abstract class AbstractTvShowMovieController<T extends IModel> extends Ab
             protected Image call() throws Exception
             {
                 String url = getImageURL(value);
-                // XbmcClient.LOGGER.info("Load {}", url);
 
                 if (StringUtils.isNotBlank(url))
                 {
@@ -123,7 +122,7 @@ public abstract class AbstractTvShowMovieController<T extends IModel> extends Ab
                     {
                         try (InputStream inputStream = optional.get())
                         {
-                            return new Image(inputStream);
+                            return new Image(inputStream, 480, 853, true, true);
                         }
                     }
                 }

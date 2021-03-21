@@ -5,6 +5,7 @@ package de.freese.mediathek.kodi.swing.beans;
 
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -78,7 +79,7 @@ public class MovieModel extends PresentationModel<MovieBean>
         this.movieSelection = new SelectionInList<>();
         this.valueModelPoster = new ValueHolder();
         this.valueModelFilter = new ValueHolder();
-        this.resourceCache = new FileResourceCache();
+        this.resourceCache = new FileResourceCache(Paths.get(System.getProperty("java.io.tmpdir"), ".javacache"));
     }
 
     /**

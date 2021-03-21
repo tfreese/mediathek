@@ -19,14 +19,6 @@ import org.sqlite.SQLiteDataSource;
 public class AppConfigSQLite extends AbstractAppConfig
 {
     /**
-     * Erstellt ein neues {@link AppConfigSQLite} Object.
-     */
-    public AppConfigSQLite()
-    {
-        super();
-    }
-
-    /**
      * @return {@link SQLiteConfig}
      */
     private SQLiteConfig createSQLiteConfig()

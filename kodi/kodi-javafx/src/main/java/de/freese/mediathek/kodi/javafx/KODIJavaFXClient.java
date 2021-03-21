@@ -94,28 +94,9 @@ public class KODIJavaFXClient extends Application
     }
 
     /**
-     * The main() method is ignored in correctly deployed JavaFX application. main() serves only as fallback in case the application can not be launched through
-     * deployment artifacts, e.g., in IDEs with limited FX support. NetBeans ignores main().
-     *
-     * @param args String[]
-     */
-    public static void main(final String[] args)
-    {
-        launch(args);
-    }
-
-    /**
      *
      */
     private AnnotationConfigApplicationContext applicationContext;
-
-    /**
-     * Erstellt ein neues {@link KODIJavaFXClient} Object.
-     */
-    public KODIJavaFXClient()
-    {
-        super();
-    }
 
     /**
      * @see javafx.application.Application#init()
@@ -200,11 +181,11 @@ public class KODIJavaFXClient extends Application
         if (Platform.isSupported(ConditionalFeature.SCENE3D) && (javaVersion >= 1_800_072))
         {
 
-            scene = new Scene(tabPane, 1280, 768, true, SceneAntialiasing.BALANCED);
+            scene = new Scene(tabPane, 1920, 1080, true, SceneAntialiasing.BALANCED);
         }
         else
         {
-            scene = new Scene(tabPane, 1280, 768);
+            scene = new Scene(tabPane, 1920, 1080);
         }
 
         scene.getStylesheets().add("styles/styles.css");

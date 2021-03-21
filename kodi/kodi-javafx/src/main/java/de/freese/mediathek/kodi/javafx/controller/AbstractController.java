@@ -3,6 +3,7 @@
  */
 package de.freese.mediathek.kodi.javafx.controller;
 
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.Executor;
 import org.springframework.context.ApplicationContext;
@@ -56,7 +57,7 @@ public abstract class AbstractController<T extends IModel> implements Initializa
         this.applicationContext = applicationContext;
         this.executor = applicationContext.getBean(Executor.class);
         this.mediaService = applicationContext.getBean(MediaService.class);
-        this.resourceCache = new FileResourceCache();
+        this.resourceCache = new FileResourceCache(Paths.get(System.getProperty("java.io.tmpdir"), ".javacache"));
     }
 
     /**

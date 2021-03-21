@@ -1,7 +1,4 @@
-/**
- * Created: 13.09.2014
- */
-
+// Created: 13.09.2014
 package de.freese.mediathek.kodi.impl;
 
 import java.sql.ResultSet;
@@ -14,14 +11,6 @@ import de.freese.mediathek.kodi.model.Genre;
  */
 public class GenreRowMapper implements RowMapper<Genre>
 {
-    /**
-     * Erstellt ein neues {@link GenreRowMapper} Object.
-     */
-    public GenreRowMapper()
-    {
-        super();
-    }
-
     /**
      * @see org.springframework.jdbc.core.RowMapper#mapRow(java.sql.ResultSet, int)
      */

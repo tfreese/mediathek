@@ -1,6 +1,4 @@
-/**
- * Created: 13.09.2014
- */
+// Created: 13.09.2014
 package de.freese.mediathek.kodi.impl;
 
 import java.util.Iterator;
@@ -22,14 +20,6 @@ public class MediaDAOImpl extends JdbcDaoSupport implements MediaDAO
      *
      */
     private String schema = "";
-
-    /**
-     * Erstellt ein neues {@link MediaDAOImpl} Object.
-     */
-    public MediaDAOImpl()
-    {
-        super();
-    }
 
     /**
      * @see de.freese.mediathek.kodi.api.MediaDAO#deleteMovieGenres(int)

@@ -1,6 +1,4 @@
-/**
- * Created: 16.09.2014
- */
+// Created: 16.09.2014
 package de.freese.mediathek.kodi.impl;
 
 import java.util.Collections;

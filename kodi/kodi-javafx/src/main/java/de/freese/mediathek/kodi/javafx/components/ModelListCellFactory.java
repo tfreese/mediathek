@@ -14,14 +14,6 @@ import javafx.util.Callback;
 public class ModelListCellFactory implements Callback<ListView<IModel>, ListCell<IModel>>
 {
     /**
-     * Erstellt ein neues {@link ModelListCellFactory} Object.
-     */
-    public ModelListCellFactory()
-    {
-        super();
-    }
-
-    /**
      * @see javafx.util.Callback#call(java.lang.Object)
      */
     @Override

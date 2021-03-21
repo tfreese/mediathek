@@ -20,14 +20,6 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 public class AppConfigHSQLDB extends AbstractAppConfig
 {
     /**
-     * Erstellt ein neues {@link AppConfigHSQLDB} Object.
-     */
-    public AppConfigHSQLDB()
-    {
-        super();
-    }
-
-    /**
      * @return {@link SingleConnectionDataSource}
      */
     private SingleConnectionDataSource createSingleConnectionDataSource()

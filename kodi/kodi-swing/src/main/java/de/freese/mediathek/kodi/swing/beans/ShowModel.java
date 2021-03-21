@@ -3,8 +3,10 @@
  */
 package de.freese.mediathek.kodi.swing.beans;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -78,7 +80,7 @@ public class ShowModel extends PresentationModel<ShowBean>
         this.showSelection = new SelectionInList<>();
         this.valueModelBanner = new ValueHolder();
         this.valueModelFilter = new ValueHolder();
-        this.resourceCache = new FileResourceCache();
+        this.resourceCache = new FileResourceCache(Paths.get(System.getProperty("java.io.tmpdir"), ".javacache"));
     }
 
     /**
@@ -244,7 +246,20 @@ public class ShowModel extends PresentationModel<ShowBean>
                                 return null;
                             }
 
-                            return new ImageIcon(image);
+                            ImageIcon imageIcon = null;
+
+                            if (image.getHeight() > 853)
+                            {
+                                Image newimg = image.getScaledInstance(480, 853, Image.SCALE_SMOOTH);
+
+                                imageIcon = new ImageIcon(newimg);
+                            }
+                            else
+                            {
+                                imageIcon = new ImageIcon(image);
+                            }
+
+                            return imageIcon;
                         }
                     }
                 }

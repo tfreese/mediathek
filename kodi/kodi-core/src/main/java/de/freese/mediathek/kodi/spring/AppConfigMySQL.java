@@ -19,14 +19,6 @@ import com.zaxxer.hikari.HikariDataSource;
 public class AppConfigMySQL extends AbstractAppConfig
 {
     /**
-     * Erstellt ein neues {@link AppConfigMySQL} Object.
-     */
-    public AppConfigMySQL()
-    {
-        super();
-    }
-
-    /**
      * @return {@link HikariConfig}
      */
     private HikariConfig createHikariConfig()

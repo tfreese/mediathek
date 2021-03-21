@@ -1,6 +1,4 @@
-/**
- * Created: 13.09.2014
- */
+// Created: 13.09.2014
 package de.freese.mediathek.kodi.impl;
 
 import java.sql.ResultSet;
@@ -13,15 +11,6 @@ import de.freese.mediathek.kodi.model.Movie;
  */
 public class MovieRowMapper implements RowMapper<Movie>
 {
-
-    /**
-     * Erstellt ein neues {@link MovieRowMapper} Object.
-     */
-    public MovieRowMapper()
-    {
-        super();
-    }
-
     /**
      * @see org.springframework.jdbc.core.RowMapper#mapRow(java.sql.ResultSet, int)
      */

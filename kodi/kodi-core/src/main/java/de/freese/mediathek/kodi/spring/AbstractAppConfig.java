@@ -4,11 +4,11 @@
 package de.freese.mediathek.kodi.spring;
 
 import java.util.concurrent.Executor;
-import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.scheduling.concurrent.ThreadPoolExecutorFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import de.freese.mediathek.kodi.api.MediaDAO;
@@ -37,14 +38,6 @@ public abstract class AbstractAppConfig implements EnvironmentAware
     private Environment environment;
 
     /**
-     * Erstellt ein neues {@link AbstractAppConfig} Object.
-     */
-    protected AbstractAppConfig()
-    {
-        super();
-    }
-
-    /**
      * @return {@link DataSource}
      */
     public abstract DataSource dataSourceAudio();
@@ -54,15 +47,45 @@ public abstract class AbstractAppConfig implements EnvironmentAware
      */
     public abstract DataSource dataSourceVideo();
 
-    /**
-     * @return Executor
-     */
-    @Bean(destroyMethod = "shutdownNow")
-    public Executor executor()
-    {
-        ThreadPoolExecutor executor = new ThreadPoolExecutor(3, 10, 60L, TimeUnit.SECONDS, new SynchronousQueue<>(), new ThreadPoolExecutor.CallerRunsPolicy());
+    // /**
+    // * @return {@link Executor}
+    // */
+    // @Bean(destroyMethod = "shutdownNow")
+    // public Executor executor()
+    // {
+    // ThreadPoolExecutor executor = new ThreadPoolExecutor(3, 10, 60L, TimeUnit.SECONDS, new SynchronousQueue<>(), new ThreadPoolExecutor.CallerRunsPolicy());
+    //
+    // return executor;
+    // }
 
-        return executor;
+    /**
+     * @return {@link ThreadPoolExecutorFactoryBean}
+     */
+    @Bean
+    @ConditionalOnMissingBean(
+    {
+            Executor.class, ExecutorService.class
+    })
+    @Primary
+    public ThreadPoolExecutorFactoryBean executorService()
+    {
+        int coreSize = Math.max(2, Runtime.getRuntime().availableProcessors());
+        int maxSize = coreSize * 2;
+        int queueSize = maxSize * 2;
+        int keepAliveSeconds = 60;
+
+        ThreadPoolExecutorFactoryBean bean = new ThreadPoolExecutorFactoryBean();
+        bean.setCorePoolSize(coreSize);
+        bean.setMaxPoolSize(maxSize);
+        bean.setQueueCapacity(queueSize);
+        bean.setKeepAliveSeconds(keepAliveSeconds);
+        bean.setThreadPriority(Thread.NORM_PRIORITY);
+        bean.setThreadNamePrefix("kodi-");
+        bean.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        bean.setAllowCoreThreadTimeOut(false);
+        bean.setExposeUnconfigurableExecutor(true);
+
+        return bean;
     }
 
     /**

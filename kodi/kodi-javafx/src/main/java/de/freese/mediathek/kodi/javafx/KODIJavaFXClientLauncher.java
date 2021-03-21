@@ -1,6 +1,8 @@
 // Created: 18.01.2021
 package de.freese.mediathek.kodi.javafx;
 
+import javafx.application.Application;
+
 /**
  * @author Thomas Freese
  */
@@ -11,6 +13,6 @@ public class KODIJavaFXClientLauncher
      */
     public static void main(final String[] args)
     {
-        KODIJavaFXClient.main(args);
+        Application.launch(KODIJavaFXClient.class);
     }
 }

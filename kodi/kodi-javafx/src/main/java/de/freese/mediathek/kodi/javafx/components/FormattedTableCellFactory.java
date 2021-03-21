@@ -29,14 +29,6 @@ public class FormattedTableCellFactory<S, T> implements Callback<TableColumn<S, 
     private Format format;
 
     /**
-     * Erstellt ein neues Object.
-     */
-    public FormattedTableCellFactory()
-    {
-        super();
-    }
-
-    /**
      * @see javafx.util.Callback#call(java.lang.Object)
      */
     @Override

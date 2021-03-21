@@ -42,7 +42,7 @@ public class TvShowController extends AbstractTvShowMovieController<Show>
     @Override
     protected String getImageURL(final Show value)
     {
-        String url = StringUtils.substringBetween(value.getBanner(), "banner\">", "</thumb>");
+        String url = StringUtils.substringBetween(value.getBanner(), "preview=\"", "\">");
 
         return url;
     }

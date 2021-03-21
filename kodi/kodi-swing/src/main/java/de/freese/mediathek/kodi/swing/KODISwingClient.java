@@ -110,14 +110,6 @@ public class KODISwingClient
     }
 
     /**
-     * Erstellt ein neues {@link KODISwingClient} Object.
-     */
-    public KODISwingClient()
-    {
-        super();
-    }
-
-    /**
      * Initialisierung der GUI.
      *
      * @param args String[]
@@ -167,10 +159,10 @@ public class KODISwingClient
         frame.add(tabbedPane, BorderLayout.CENTER);
 
         // frame.setSize(800, 600);
-        frame.setSize(1280, 768);
+        // frame.setSize(1280, 768);
         // frame.setSize(1280, 1024);
         // frame.setSize(1680, 1050);
-        // frame.setSize(1920, 1080);
+        frame.setSize(1920, 1080);
         // frame.setExtendedState(Frame.MAXIMIZED_BOTH);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
