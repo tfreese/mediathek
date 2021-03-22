@@ -23,14 +23,6 @@ public class Genre implements Comparable<Genre>
     private String name;
 
     /**
-     * Erstellt ein neues {@link Genre} Object.
-     */
-    public Genre()
-    {
-        super();
-    }
-
-    /**
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override

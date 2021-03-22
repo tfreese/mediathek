@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Movie implements Comparable<Movie>
 {
     /**
-     * 
+     *
      */
     @JsonProperty("backdrop_path")
     private String backdrop;
@@ -37,7 +37,7 @@ public class Movie implements Comparable<Movie>
     // private ImageIcon imageIconPoster;
 
     /**
-     * 
+     *
      */
     private ImageIcon imageIcon;
 
@@ -48,7 +48,7 @@ public class Movie implements Comparable<Movie>
     private String originalTitle;
 
     /**
-     * 
+     *
      */
     @JsonProperty("poster_path")
     private String poster;
@@ -63,14 +63,6 @@ public class Movie implements Comparable<Movie>
      * title
      */
     private String title;
-
-    /**
-     * Erstellt ein neues {@link Movie} Object.
-     */
-    public Movie()
-    {
-        super();
-    }
 
     /**
      * @see java.lang.Comparable#compareTo(java.lang.Object)

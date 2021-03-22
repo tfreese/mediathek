@@ -187,7 +187,8 @@ public class KODISwingClient
         UIManager.put("FileChooser.useSystemIcons", Boolean.TRUE);
 
         // Farben
-        Color color = new Color(215, 215, 215);
+        // Color color = new Color(215, 215, 215); // Für helles L&F
+        Color color = new Color(60, 60, 60);  // Für dunkles L&F
         UIManager.put("Table.alternatingBackground", color);
         UIManager.put("Table.alternateRowColor", color);
         UIManager.put("List.alternatingBackground", color);

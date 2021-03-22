@@ -21,14 +21,6 @@ public class Search implements Iterable<Movie>
     private List<Movie> results;
 
     /**
-     * Erstellt ein neues {@link Search} Object.
-     */
-    public Search()
-    {
-        super();
-    }
-
-    /**
      * @return {@link List}<Movie>
      */
     public List<Movie> getResults()

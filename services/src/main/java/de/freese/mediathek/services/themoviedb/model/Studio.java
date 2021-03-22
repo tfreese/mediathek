@@ -23,14 +23,6 @@ public class Studio implements Comparable<Studio>
     private String name;
 
     /**
-     * Erstellt ein neues {@link Studio} Object.
-     */
-    public Studio()
-    {
-        super();
-    }
-
-    /**
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override

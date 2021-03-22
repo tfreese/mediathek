@@ -34,14 +34,6 @@ public class Image implements Comparable<Image>
     private int width;
 
     /**
-     * Erstellt ein neues {@link Image} Object.
-     */
-    public Image()
-    {
-        super();
-    }
-
-    /**
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override

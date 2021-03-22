@@ -4,11 +4,11 @@
 package de.freese.mediathek.kodi.javafx.controller;
 
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationContext;
 import de.freese.mediathek.kodi.javafx.KODIJavaFXClient;
 import de.freese.mediathek.kodi.javafx.components.ModelListCellFactory;
@@ -60,9 +60,9 @@ public abstract class AbstractTvShowMovieController<T extends IModel> extends Ab
 
     /**
      * @param value Entity
-     * @return String
+     * @return {@link URI}
      */
-    protected abstract String getImageURL(T value);
+    protected abstract URI getImageUri(T value);
 
     /**
      * @return {@link TvShowMoviePane}
@@ -112,17 +112,17 @@ public abstract class AbstractTvShowMovieController<T extends IModel> extends Ab
             @Override
             protected Image call() throws Exception
             {
-                String url = getImageURL(value);
+                URI uri = getImageUri(value);
 
-                if (StringUtils.isNotBlank(url))
+                if (uri != null)
                 {
-                    Optional<InputStream> optional = getCache().getResource(url);
+                    Optional<InputStream> optional = getCache().getResource(uri);
 
                     if (optional.isPresent())
                     {
                         try (InputStream inputStream = optional.get())
                         {
-                            return new Image(inputStream, 480, 853, true, true);
+                            return new Image(inputStream, 1024, 768, true, true);
                         }
                     }
                 }

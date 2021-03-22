@@ -25,14 +25,6 @@ public class Images
     private List<Image> posters;
 
     /**
-     * Erstellt ein neues {@link Images} Object.
-     */
-    public Images()
-    {
-        super();
-    }
-
-    /**
      * @return {@link List}<Image>
      */
     public List<Image> getBackdrops()

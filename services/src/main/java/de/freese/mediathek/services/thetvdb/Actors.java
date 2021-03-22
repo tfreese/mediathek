@@ -24,14 +24,6 @@ class Actors
     private List<Actor> actors;
 
     /**
-     * Erstellt ein neues {@link Actors} Object.
-     */
-    Actors()
-    {
-        super();
-    }
-
-    /**
      * @return {@link List}<Actor>
      */
     List<Actor> getActors()

@@ -1,9 +1,8 @@
-/**
- * Created: 08.11.2014
- */
+// Created: 08.11.2014
 package de.freese.mediathek.services;
 
 import java.net.URLEncoder;
+import java.nio.file.Paths;
 import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,7 +60,7 @@ public abstract class AbstractService implements InitializingBean
 
         if (this.cache == null)
         {
-            this.cache = new FileResourceCache();
+            this.cache = new FileResourceCache(Paths.get(System.getProperty("java.io.tmpdir"), ".javacache"));
         }
     }
 

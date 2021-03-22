@@ -17,42 +17,34 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Actor implements Comparable<Actor>
 {
     /**
-     * 
+     *
      */
     @XmlElement(name = "id")
     private String id;
 
     /**
-     * 
+     *
      */
     @XmlElement(name = "Image")
     private String image;
 
     /**
-     * 
+     *
      */
     @XmlElement(name = "Name")
     private String name;
 
     /**
-     * 
+     *
      */
     @XmlElement(name = "Role")
     private String role;
 
     /**
-     * 
+     *
      */
     @XmlElement(name = "SortOrder")
     private int sortOrder = -1;
-
-    /**
-     * Erstellt ein neues {@link Actor} Object.
-     */
-    Actor()
-    {
-        super();
-    }
 
     /**
      * @see java.lang.Comparable#compareTo(java.lang.Object)

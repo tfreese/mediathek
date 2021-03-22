@@ -30,14 +30,6 @@ class Search
     private List<TVShow> series;
 
     /**
-     * Erstellt ein neues {@link Search} Object.
-     */
-    Search()
-    {
-        super();
-    }
-
-    /**
      * @return {@link List}<Episode>
      */
     List<Episode> getEpisodes()

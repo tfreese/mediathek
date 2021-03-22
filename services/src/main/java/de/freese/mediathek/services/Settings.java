@@ -1,7 +1,4 @@
-/**
- * Created: 05.04.2020
- */
-
+// Created: 05.04.2020
 package de.freese.mediathek.services;
 
 /**

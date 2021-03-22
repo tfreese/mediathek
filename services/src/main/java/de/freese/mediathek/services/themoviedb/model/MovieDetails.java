@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 public class MovieDetails extends Movie
 {
     /**
-     * 
+     *
      */
     private List<Actor> actors;
 
@@ -31,7 +31,7 @@ public class MovieDetails extends Movie
     private List<Country> countries;
 
     /**
-     * 
+     *
      */
     private List<Crew> directors;
 
@@ -74,14 +74,6 @@ public class MovieDetails extends Movie
      * vote_count
      */
     private int voteCount;
-
-    /**
-     * Erstellt ein neues {@link MovieDetails} Object.
-     */
-    public MovieDetails()
-    {
-        super();
-    }
 
     /**
      * @return {@link List}<Actor>

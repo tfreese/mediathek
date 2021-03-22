@@ -23,14 +23,6 @@ public class Language implements Comparable<Language>
     private String name;
 
     /**
-     * Erstellt ein neues {@link Language} Object.
-     */
-    public Language()
-    {
-        super();
-    }
-
-    /**
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override

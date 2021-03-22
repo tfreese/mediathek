@@ -23,14 +23,6 @@ public class Country implements Comparable<Country>
     private String name;
 
     /**
-     * Erstellt ein neues {@link Country} Object.
-     */
-    public Country()
-    {
-        super();
-    }
-
-    /**
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override

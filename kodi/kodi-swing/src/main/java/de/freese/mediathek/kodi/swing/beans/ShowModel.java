@@ -3,9 +3,9 @@
  */
 package de.freese.mediathek.kodi.swing.beans;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
+import java.net.URI;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +29,7 @@ import com.jgoodies.binding.value.ValueHolder;
 import com.jgoodies.binding.value.ValueModel;
 import de.freese.base.core.cache.FileResourceCache;
 import de.freese.base.core.cache.ResourceCache;
+import de.freese.base.utils.ImageUtils;
 import de.freese.mediathek.kodi.model.Show;
 import de.freese.mediathek.kodi.swing.KODISwingClient;
 import de.freese.mediathek.kodi.swing.components.rowfilter.RegExRowFilter;
@@ -233,7 +234,7 @@ public class ShowModel extends PresentationModel<ShowBean>
 
                 if (StringUtils.isNotBlank(url))
                 {
-                    Optional<InputStream> optional = ShowModel.this.resourceCache.getResource(url);
+                    Optional<InputStream> optional = ShowModel.this.resourceCache.getResource(URI.create(url));
 
                     if (optional.isPresent())
                     {
@@ -246,18 +247,9 @@ public class ShowModel extends PresentationModel<ShowBean>
                                 return null;
                             }
 
-                            ImageIcon imageIcon = null;
+                            image = ImageUtils.scaleImageKeepRatio(image, 1024, 768);
 
-                            if (image.getHeight() > 853)
-                            {
-                                Image newimg = image.getScaledInstance(480, 853, Image.SCALE_SMOOTH);
-
-                                imageIcon = new ImageIcon(newimg);
-                            }
-                            else
-                            {
-                                imageIcon = new ImageIcon(image);
-                            }
+                            ImageIcon imageIcon = new ImageIcon(image);
 
                             return imageIcon;
                         }

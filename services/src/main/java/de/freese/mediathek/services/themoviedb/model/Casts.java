@@ -16,22 +16,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Casts
 {
     /**
-     * 
+     *
      */
     private List<Actor> cast;
 
     /**
-     * 
+     *
      */
     private List<Crew> crew;
-
-    /**
-     * Erstellt ein neues {@link Casts} Object.
-     */
-    public Casts()
-    {
-        super();
-    }
 
     /**
      * @return {@link List}<Actor>

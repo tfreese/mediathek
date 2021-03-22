@@ -18,37 +18,37 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Episode implements Comparable<Episode>
 {
     /**
-     * 
+     *
      */
     @XmlElement(name = "Overview")
     private String beschreibung;
 
     /**
-     * 
+     *
      */
     @XmlElement(name = "EpisodeNumber")
     private int episode = -1;
 
     /**
-     * 
+     *
      */
     @XmlElement(name = "GuestStars")
     private String guestStars;
 
     /**
-     * 
+     *
      */
     @XmlElement(name = "id")
     private String id;
 
     /**
-     * 
+     *
      */
     @XmlElement(name = "filename")
     private String image;
 
     /**
-     * 
+     *
      */
     @XmlElements(
     {
@@ -57,30 +57,22 @@ public class Episode implements Comparable<Episode>
     private String language;
 
     /**
-     * 
+     *
      */
     @XmlElement(name = "FirstAired")
     private String releaseDate;
 
     /**
-     * 
+     *
      */
     @XmlElement(name = "SeasonNumber")
     private int season = -1;
 
     /**
-     * 
+     *
      */
     @XmlElement(name = "EpisodeName")
     private String title;
-
-    /**
-     * Erstellt ein neues {@link Episode} Object.
-     */
-    Episode()
-    {
-        super();
-    }
 
     /**
      * @see java.lang.Comparable#compareTo(java.lang.Object)

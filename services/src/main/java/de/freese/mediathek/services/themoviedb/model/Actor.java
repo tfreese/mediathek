@@ -34,14 +34,6 @@ public class Actor implements Comparable<Actor>
     private String role;
 
     /**
-     * Erstellt ein neues {@link Actor} Object.
-     */
-    public Actor()
-    {
-        super();
-    }
-
-    /**
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override

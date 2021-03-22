@@ -120,14 +120,6 @@ public class TVShow implements Comparable<TVShow>
     private String title;
 
     /**
-     * Erstellt ein neues {@link TVShow} Object.
-     */
-    TVShow()
-    {
-        super();
-    }
-
-    /**
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override

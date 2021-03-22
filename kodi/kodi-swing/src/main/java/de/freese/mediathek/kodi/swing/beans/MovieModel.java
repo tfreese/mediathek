@@ -5,6 +5,7 @@ package de.freese.mediathek.kodi.swing.beans;
 
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
+import java.net.URI;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +29,7 @@ import com.jgoodies.binding.value.ValueHolder;
 import com.jgoodies.binding.value.ValueModel;
 import de.freese.base.core.cache.FileResourceCache;
 import de.freese.base.core.cache.ResourceCache;
+import de.freese.base.utils.ImageUtils;
 import de.freese.mediathek.kodi.model.Movie;
 import de.freese.mediathek.kodi.swing.KODISwingClient;
 import de.freese.mediathek.kodi.swing.components.rowfilter.RegExRowFilter;
@@ -215,7 +217,7 @@ public class MovieModel extends PresentationModel<MovieBean>
 
                 if (StringUtils.isNotBlank(url))
                 {
-                    Optional<InputStream> optional = MovieModel.this.resourceCache.getResource(url);
+                    Optional<InputStream> optional = MovieModel.this.resourceCache.getResource(URI.create(url));
 
                     if (optional.isPresent())
                     {
@@ -228,7 +230,11 @@ public class MovieModel extends PresentationModel<MovieBean>
                                 return null;
                             }
 
-                            return new ImageIcon(image);
+                            image = ImageUtils.scaleImageKeepRatio(image, 1024, 768);
+
+                            ImageIcon imageIcon = new ImageIcon(image);
+
+                            return imageIcon;
                         }
                     }
                 }

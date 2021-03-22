@@ -29,14 +29,6 @@ public class Crew
     private String profile;
 
     /**
-     * Erstellt ein neues {@link Crew} Object.
-     */
-    public Crew()
-    {
-        super();
-    }
-
-    /**
      * @return String
      */
     public String getJob()

@@ -46,14 +46,6 @@ public class Configuration
     private List<String> profileSizes;
 
     /**
-     * Erstellt ein neues {@link Configuration} Object.
-     */
-    public Configuration()
-    {
-        super();
-    }
-
-    /**
      * @return {@link List}<String>
      */
     public List<String> getBackdropSizes()

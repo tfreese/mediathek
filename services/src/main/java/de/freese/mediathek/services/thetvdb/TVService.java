@@ -5,6 +5,7 @@ package de.freese.mediathek.services.thetvdb;
 
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -198,7 +199,7 @@ public class TVService extends AbstractService
         String url = String.format("http://thetvdb.com/banners/%s", path);
         BufferedImage image = null;
 
-        try (InputStream inputStream = getCache().getResource(url).get())
+        try (InputStream inputStream = getCache().getResource(URI.create(url)).get())
         {
             image = ImageIO.read(inputStream);
         }

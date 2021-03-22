@@ -17,18 +17,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Thumb
 {
     /**
-     * 
+     *
      */
     @XmlAttribute
     private String preview;
-
-    /**
-     * Erstellt ein neues {@link Thumb} Object.
-     */
-    public Thumb()
-    {
-        super();
-    }
 
     /**
      * @return String
