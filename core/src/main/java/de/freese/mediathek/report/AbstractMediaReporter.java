@@ -12,6 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 import de.freese.mediathek.utils.MediaDBUtils;
 
 /**
@@ -97,7 +98,7 @@ public abstract class AbstractMediaReporter implements MediaReporter
     {
         // @formatter:off
         List<Map<String, Object>> list = Files.lines(path)
-                //.peek(System.out::println)
+                .peek(System.out::println)
                 .skip(1) // Header überspringen
                 .map(l -> l.replaceAll("^\"|\"$", "")) // Erstes und letztes " entfernen
                 .map(l -> l.replaceAll("\";\"", ";")) // ";"  durch ; ersetzen
@@ -107,7 +108,7 @@ public abstract class AbstractMediaReporter implements MediaReporter
                     map.put("ARTIST", array[0]);
                     map.put("SONG", array[1]);
                     map.put("PLAYCOUNT", array[2]);
-                    map.put("LASTPLAYED", array[3]);
+                    //map.put("LASTPLAYED", array[3]);
 
                     return map;
                 })
