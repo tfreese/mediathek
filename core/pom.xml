@@ -20,20 +20,13 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-
-				<!-- mvn exec:java; Ausführung in der gleichen Runtime-Instanz wie Maven. -->
-				<!--configuration>
-					<executable>java</executable>
-					<mainClass>de.freese.mediathek.musik.MusikUtils</mainClass>
-					<classpathScope>runtime</classpathScope>
-					</configuration -->
-
-				<!-- mvn exec:exec; Ausführung in einer separaten Runtime-Instanz. -->
+				<!-- mvn exec:java: Ausführung in der gleichen Runtime-Instanz wie Maven. -->
+				<!-- mvn exec:exec: Ausführung in einer separaten Runtime-Instanz. -->
                 <configuration>
                     <toolchain>jdk</toolchain>
                     <executable>java</executable>
+                    <classpathScope>runtime</classpathScope>
                     <arguments>
-                        <argument>--enable-preview</argument>
                         <argument>-classpath</argument>
                         <classpath />
                         <argument>de.freese.mediathek.musik.MusikReporter</argument>
