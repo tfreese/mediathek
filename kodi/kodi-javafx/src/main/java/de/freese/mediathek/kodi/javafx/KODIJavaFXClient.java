@@ -2,10 +2,12 @@ package de.freese.mediathek.kodi.javafx;
 
 import java.util.List;
 import java.util.ResourceBundle;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 import de.freese.mediathek.kodi.javafx.controller.GenreController;
 import de.freese.mediathek.kodi.javafx.controller.MovieController;
 import de.freese.mediathek.kodi.javafx.controller.TvShowController;
@@ -120,10 +122,6 @@ public class KODIJavaFXClient extends Application
             // clazz = Class.forName(parameters.get(0));
             profile = parameters.get(0);
         }
-
-        // Warn-Meldungen bei Bindings verhindern.
-        // Logging.getLogger().setLevel(Level.SEVERE);
-        System.setProperty("org.slf4j.simpleLogger.log.de.freese.mediathek.kodi.javafx", "DEBUG");
 
         // this.applicationContext = new AnnotationConfigApplicationContext(clazz);
         this.applicationContext = new AnnotationConfigApplicationContext();

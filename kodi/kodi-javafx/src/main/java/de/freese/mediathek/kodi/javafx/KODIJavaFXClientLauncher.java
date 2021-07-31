@@ -13,6 +13,10 @@ public class KODIJavaFXClientLauncher
      */
     public static void main(final String[] args)
     {
+        // Warn-Meldungen bei Bindings verhindern.
+        // Logging.getLogger().setLevel(Level.SEVERE);
+        System.setProperty("org.slf4j.simpleLogger.log.de.freese.mediathek.kodi.javafx", "DEBUG");
+
         Application.launch(KODIJavaFXClient.class);
     }
 }
