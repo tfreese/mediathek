@@ -3,6 +3,10 @@
 subprojects {
     apply plugin: "java"
     apply plugin: "io.spring.dependency-management"
+    
+    configurations.all {
+        exclude group: "ch.qos.logback", module: "logback-classic"
+    }     
 
     dependencyManagement {
         imports {
@@ -22,17 +26,13 @@ subprojects {
 project("core") {
     apply plugin: "java-library"
     apply plugin: "org.springframework.boot"
-    description "Basis-Projekt für Mediathek-Zugriffe"
-	configurations.all {
-		exclude group: "ch.qos.logback", module: "logback-classic"
-	}    
+    description "Basis-Projekt für Mediathek-Zugriffe"   
     dependencies {
 	    api("de.freese.base:base-core:$version")
 	    implementation("de.freese.base:base-persistence:$version")
 	    
 	    api("org.springframework:spring-jdbc")
-	    
-	    implementation("org.xerial:sqlite-jdbc")
+	    api("org.xerial:sqlite-jdbc")
 	
 	    runtimeOnly("org.slf4j:jcl-over-slf4j")
 	    runtimeOnly("org.slf4j:slf4j-simple")
@@ -58,14 +58,16 @@ project("services") {
     }
 }
 
-project("kodi-core") {
+project("kodi:kodi-core") {
     apply plugin: "java-library"
     apply plugin: "org.springframework.boot"
     description "API für KODI"
     dependencies {
     	api(project(":core"))
 	    api("com.zaxxer:HikariCP")
-	    api("org.springframework:spring-context")
+
+	    api("org.springframework.boot:spring-boot-starter")
+	    api("org.springframework.boot:spring-boot-starter-logging")
 	    
 		testImplementation("org.hsqldb:hsqldb")
     }
@@ -78,11 +80,11 @@ project("kodi-core") {
 	}     
 }
 
-project("kodi-swing") {
+project("kodi:kodi-swing") {
     apply plugin: "org.springframework.boot"
     description "Swing GUI für KODI"
     dependencies {
-    	implementation(project(":kodi-core"))
+    	implementation(project(":kodi:kodi-core"))
 	    implementation("com.jgoodies:jgoodies-binding")
     }
 	// Start: gradle bootRun --args="--spring.profiles.active=dev"
@@ -94,12 +96,12 @@ project("kodi-swing") {
 	}     
 }
 
-project("kodi-javafx") {
+project("kodi:kodi-javafx") {
     apply plugin: "org.springframework.boot"
     apply plugin: "org.openjfx.javafxplugin"
     description "JavaFX GUI für KODI"
     dependencies {
-    	implementation(project(":kodi-core"))
+    	implementation(project(":kodi:kodi-core"))
     	
         javafx {
         	version = "$version_javafxBase"
@@ -115,10 +117,10 @@ project("kodi-javafx") {
 	}     
 }
 
-project("kodi-web") {
+project("kodi:kodi-web") {
     description "WEB GUI für KODI"
     dependencies {
-    	implementation(project(":kodi-core"))
+    	implementation(project(":kodi:kodi-core"))
     	
 	    implementation("org.primefaces:primefaces")
 	    implementation("org.springframework:spring-web")
