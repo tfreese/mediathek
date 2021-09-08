@@ -19,6 +19,7 @@ fi
 #mvn -q exec:exec -Dexec.executable="java" -Dexec.args="%classpath" -Dexec.mainClass="..."
 
 mvn -o exec:exec;
+#mvn exec:exec;
 
 cd ~
 
