@@ -3,7 +3,6 @@ package de.freese.mediathek.kodi.javafx;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -112,7 +111,7 @@ public class KODIJavaFXClient extends Application
         String profile = null;
         // Class<?> clazz = null;
 
-        if (CollectionUtils.isEmpty(parameters))
+        if ((parameters != null) && !parameters.isEmpty())
         {
             // clazz = AppConfigMySQL.class;
             profile = "sqlite";

@@ -7,12 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+
 import javax.swing.SwingWorker;
-import org.apache.commons.collections4.CollectionUtils;
+
 import org.springframework.context.ApplicationContext;
+
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.beans.BeanAdapter;
 import com.jgoodies.binding.list.SelectionInList;
+
 import de.freese.mediathek.kodi.api.MediaService;
 import de.freese.mediathek.kodi.model.Genre;
 import de.freese.mediathek.kodi.model.IModel;
@@ -234,7 +237,7 @@ public class GenreModel extends PresentationModel<BeanAdapter<Genre>>
     {
         getGenreSelection().setList(genres);
 
-        if (CollectionUtils.isNotEmpty(genres) && !getGenreSelection().isEmpty())
+        if ((genres != null) && !genres.isEmpty() && !getGenreSelection().isEmpty())
         {
             getGenreSelection().setSelectionIndex(0);
         }

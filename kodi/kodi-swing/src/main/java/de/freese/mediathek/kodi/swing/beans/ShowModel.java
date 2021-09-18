@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
+
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -20,13 +21,15 @@ import javax.swing.SwingWorker;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import org.apache.commons.collections4.CollectionUtils;
+
 import org.apache.commons.lang3.StringUtils;
+
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
 import com.jgoodies.binding.value.ValueHolder;
 import com.jgoodies.binding.value.ValueModel;
+
 import de.freese.base.core.cache.FileResourceCache;
 import de.freese.base.core.cache.ResourceCache;
 import de.freese.base.utils.ImageUtils;
@@ -289,7 +292,7 @@ public class ShowModel extends PresentationModel<ShowBean>
     {
         this.showSelection.setList(shows);
 
-        if (CollectionUtils.isNotEmpty(shows) && !this.showSelection.isEmpty())
+        if ((shows != null) && !shows.isEmpty() && !this.showSelection.isEmpty())
         {
             this.showSelection.setSelectionIndex(0);
         }
