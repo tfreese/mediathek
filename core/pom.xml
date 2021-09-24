@@ -40,19 +40,8 @@
 		<!-- compile scope -->
         <dependency>
             <groupId>de.freese.base</groupId>
-            <artifactId>base-core</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>de.freese.base</groupId>
             <artifactId>base-persistence</artifactId>
             <version>${project.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>ch.qos.logback</groupId>
-                    <artifactId>logback-classic</artifactId>
-                </exclusion>
-            </exclusions>            
         </dependency>
 
         <dependency>

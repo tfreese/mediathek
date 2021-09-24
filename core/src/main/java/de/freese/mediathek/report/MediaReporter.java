@@ -1,10 +1,8 @@
-/**
- * Created: 05.04.2020
- */
-
+// Created: 05.04.2020
 package de.freese.mediathek.report;
 
 import java.nio.file.Path;
+
 import javax.sql.DataSource;
 
 /**
@@ -16,26 +14,30 @@ public interface MediaReporter
 {
     /**
      * @param readonly boolean
+     *
      * @return {@link DataSource}
+     *
      * @throws Exception Falls was schief geht.
      */
-    public DataSource createDataSource(final boolean readonly) throws Exception;
+    DataSource createDataSource(final boolean readonly) throws Exception;
 
     /**
      * Aktualisiert die Datenbank mit den Media-Infos aus der Datei.
      *
      * @param dataSource {@link DataSource}
      * @param path {@link Path}
+     *
      * @throws Exception Falls was schief geht.
      */
-    public void updateDbFromReport(final DataSource dataSource, final Path path) throws Exception;
+    void updateDbFromReport(final DataSource dataSource, final Path path) throws Exception;
 
     /**
      * Schreibt die Media-Infos aus der Datenbank in die Datei.
      *
      * @param dataSource {@link DataSource}
      * @param path {@link Path}
+     *
      * @throws Exception Falls was schief geht.
      */
-    public void writeReport(final DataSource dataSource, final Path path) throws Exception;
+    void writeReport(final DataSource dataSource, final Path path) throws Exception;
 }

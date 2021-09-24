@@ -1,6 +1,4 @@
-/**
- * Created on 03.11.2015 18:45:49
- */
+// Created: 03.11.2015
 package de.freese.mediathek.utils;
 
 import java.io.IOException;
@@ -11,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import de.freese.base.utils.FileUtils;
 import de.freese.base.utils.JdbcUtils;
 
@@ -25,6 +24,7 @@ public final class MediaDBUtils
      * Benennt die bestehende Datei in *.last um.
      *
      * @param path {@link Path}
+     *
      * @throws IOException Falls was schief geht.
      */
     public static void rename(final Path path) throws IOException
@@ -38,6 +38,7 @@ public final class MediaDBUtils
      *
      * @param resultSet {@link ResultSet}
      * @param path {@link Path}
+     *
      * @throws Exception Falls was schief geht.
      */
     public static void writeCSV(final ResultSet resultSet, final Path path) throws Exception
@@ -57,6 +58,7 @@ public final class MediaDBUtils
      *
      * @param resultSet {@link ResultSet}
      * @param ps {@link PrintWriter}
+     *
      * @throws SQLException Falls was schief geht.
      */
     public static void writeCSV(final ResultSet resultSet, final PrintStream ps) throws SQLException

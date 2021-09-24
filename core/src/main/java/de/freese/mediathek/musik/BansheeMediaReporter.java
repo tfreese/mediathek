@@ -1,15 +1,15 @@
-/**
- * Created: 05.04.2020
- */
-
+// Created: 05.04.2020
 package de.freese.mediathek.musik;
 
 import java.nio.file.Path;
+
 import javax.sql.DataSource;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.sqlite.SQLiteConfig;
 import org.sqlite.SQLiteDataSource;
 import org.sqlite.javax.SQLiteConnectionPoolDataSource;
+
 import de.freese.mediathek.report.AbstractMediaReporter;
 
 /**
@@ -18,14 +18,6 @@ import de.freese.mediathek.report.AbstractMediaReporter;
 public class BansheeMediaReporter extends AbstractMediaReporter
 {
     /**
-     * Erstellt ein neues {@link BansheeMediaReporter} Object.
-     */
-    public BansheeMediaReporter()
-    {
-        super();
-    }
-
-    /**
      * @see de.freese.mediathek.report.MediaReporter#createDataSource(boolean)
      */
     @Override
@@ -33,8 +25,8 @@ public class BansheeMediaReporter extends AbstractMediaReporter
     {
         // Native Libraries deaktivieren für den Zugriff auf die Dateien.
         System.setProperty("sqlite.purejava", "true");
-        
-        // Pfade für native Libraries.        
+
+        // Pfade für native Libraries.
         // System.setProperty("org.sqlite.lib.path", "/home/tommy");
         // System.setProperty("org.sqlite.lib.name", "sqlite-libsqlitejdbc.so");
 

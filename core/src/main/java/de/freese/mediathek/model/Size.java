@@ -1,6 +1,4 @@
-/**
- * Created: 08.11.2014
- */
+// Created: 08.11.2014
 package de.freese.mediathek.model;
 
 /**

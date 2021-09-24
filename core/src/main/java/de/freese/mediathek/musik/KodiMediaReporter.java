@@ -1,15 +1,15 @@
-/**
- * Created: 05.04.2020
- */
-
+// Created: 05.04.2020
 package de.freese.mediathek.musik;
 
 import java.nio.file.Path;
+
 import javax.sql.DataSource;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.sqlite.SQLiteConfig;
 import org.sqlite.SQLiteDataSource;
 import org.sqlite.javax.SQLiteConnectionPoolDataSource;
+
 import de.freese.mediathek.report.AbstractMediaReporter;
 import de.freese.mediathek.utils.MediaDBUtils;
 

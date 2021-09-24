@@ -1,7 +1,4 @@
-/**
- * Created: 05.04.2020
- */
-
+// Created: 05.04.2020
 package de.freese.mediathek.report;
 
 import java.io.IOException;
@@ -11,7 +8,7 @@ import java.sql.ResultSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import de.freese.mediathek.utils.MediaDBUtils;
 
@@ -30,29 +27,35 @@ public abstract class AbstractMediaReporter implements MediaReporter
      * </ul>
      *
      * @param path {@link Path}
+     *
      * @return {@link List}
+     *
      * @throws IOException Falls was schief geht.
      */
     protected List<Map<String, Object>> readMovies(final Path path) throws IOException
     {
-        // @formatter:off
-        List<Map<String, Object>> list = Files.lines(path)
-                //.peek(System.out::println)
-                .skip(1) // Header überspringen
-                .map(l -> l.replaceAll("^\"|\"$", "")) // Erstes und letztes " entfernen
-                .map(l -> l.replaceAll("\";\"", ";")) // ";"  durch ; ersetzen
-                .map(l -> l.split("[;]"))
-                .map(array -> {
-                    Map<String, Object> map = new LinkedHashMap<>();
-                    map.put("MOVIE", array[0]);
-                    map.put("PLAYCOUNT", array[1]);
-                    map.put("LASTPLAYED", array[2]);
+        List<Map<String, Object>> list = null;
 
-                    return map;
-                })
-                .collect(Collectors.toList())
-                ;
-        // @formatter:on
+        try (Stream<String> stream = Files.lines(path))
+        {
+            // @formatter:off
+            list = stream
+                    .skip(1) // Header überspringen
+                    .map(l -> l.replaceAll("^\"|\"$", "")) // Erstes und letztes " entfernen
+                    .map(l -> l.replaceAll("\";\"", ";")) // ";"  durch ; ersetzen
+                    .map(l -> l.split("[;]"))
+                    .map(array -> {
+                        Map<String, Object> map = new LinkedHashMap<>();
+                        map.put("MOVIE", array[0]);
+                        map.put("PLAYCOUNT", array[1]);
+                        map.put("LASTPLAYED", array[2]);
+
+                        return map;
+                    })
+                    .toList()
+                    ;
+            // @formatter:on
+        }
 
         // List<Map<String, Object>> list = new ArrayList<>();
         //
@@ -91,30 +94,36 @@ public abstract class AbstractMediaReporter implements MediaReporter
      * </ul>
      *
      * @param path {@link Path}
+     *
      * @return {@link List}
+     *
      * @throws IOException Falls was schief geht.
      */
     protected List<Map<String, Object>> readMusik(final Path path) throws IOException
     {
-        // @formatter:off
-        List<Map<String, Object>> list = Files.lines(path)
-                .peek(System.out::println)
-                .skip(1) // Header überspringen
-                .map(l -> l.replaceAll("^\"|\"$", "")) // Erstes und letztes " entfernen
-                .map(l -> l.replaceAll("\";\"", ";")) // ";"  durch ; ersetzen
-                .map(l -> l.split("[;]"))
-                .map(array -> {
-                    Map<String, Object> map = new LinkedHashMap<>();
-                    map.put("ARTIST", array[0]);
-                    map.put("SONG", array[1]);
-                    map.put("PLAYCOUNT", array[2]);
-                    //map.put("LASTPLAYED", array[3]);
+        List<Map<String, Object>> list = null;
 
-                    return map;
-                })
-                .collect(Collectors.toList())
-                ;
-        // @formatter:on
+        try (Stream<String> stream = Files.lines(path))
+        {
+            // @formatter:off
+            list = stream
+                    .skip(1) // Header überspringen
+                    .map(l -> l.replaceAll("^\"|\"$", "")) // Erstes und letztes " entfernen
+                    .map(l -> l.replaceAll("\";\"", ";")) // ";"  durch ; ersetzen
+                    .map(l -> l.split("[;]"))
+                    .map(array -> {
+                        Map<String, Object> map = new LinkedHashMap<>();
+                        map.put("ARTIST", array[0]);
+                        map.put("SONG", array[1]);
+                        map.put("PLAYCOUNT", array[2]);
+                        //map.put("LASTPLAYED", array[3]);
+
+                        return map;
+                    })
+                    .toList()
+                    ;
+            // @formatter:on
+        }
 
         // List<Map<String, Object>> list = new ArrayList<>();
         //
@@ -156,32 +165,39 @@ public abstract class AbstractMediaReporter implements MediaReporter
      * </ul>
      *
      * @param path {@link Path}
+     *
      * @return {@link List}
+     *
      * @throws IOException Falls was schief geht.
      */
     protected List<Map<String, Object>> readTVShows(final Path path) throws IOException
     {
-        // @formatter:off
-        List<Map<String, Object>> list = Files.lines(path)
-                //.peek(System.out::println)
-                .skip(1) // Header überspringen
-                .map(l -> l.replaceAll("^\"|\"$", "")) // Erstes und letztes " entfernen
-                .map(l -> l.replaceAll("\";\"", ";")) // ";"  durch ; ersetzen
-                .map(l -> l.split("[;]"))
-                .map(array -> {
-                    Map<String, Object> map = new LinkedHashMap<>();
-                    map.put("TVSHOW", array[0]);
-                    map.put("SEASON", array[1]);
-                    map.put("EPISODE", array[2]);
-                    map.put("TITLE", array[3]);
-                    map.put("PLAYCOUNT", array[4]);
-                    map.put("LASTPLAYED", array[5]);
+        List<Map<String, Object>> list = null;
 
-                    return map;
-                })
-                .collect(Collectors.toList())
-                ;
-        // @formatter:on
+        try (Stream<String> stream = Files.lines(path))
+        {
+            // @formatter:off
+            list = stream
+                    //.peek(System.out::println)
+                    .skip(1) // Header überspringen
+                    .map(l -> l.replaceAll("^\"|\"$", "")) // Erstes und letztes " entfernen
+                    .map(l -> l.replaceAll("\";\"", ";")) // ";"  durch ; ersetzen
+                    .map(l -> l.split("[;]"))
+                    .map(array -> {
+                        Map<String, Object> map = new LinkedHashMap<>();
+                        map.put("TVSHOW", array[0]);
+                        map.put("SEASON", array[1]);
+                        map.put("EPISODE", array[2]);
+                        map.put("TITLE", array[3]);
+                        map.put("PLAYCOUNT", array[4]);
+                        map.put("LASTPLAYED", array[5]);
+
+                        return map;
+                    })
+                    .toList()
+                    ;
+            // @formatter:on
+        }
 
         // List<Map<String, Object>> list = new ArrayList<>();
         //
