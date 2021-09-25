@@ -1,12 +1,11 @@
-/**
- * Created: 28.09.2014
- */
-
+// Created: 28.09.2014
 package de.freese.mediathek.kodi.swing.action;
 
 import java.awt.Desktop.Action;
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
+
 import de.freese.mediathek.kodi.swing.panel.IPanel;
 
 /**
@@ -20,7 +19,6 @@ public class ReloadAction extends AbstractAction
      *
      */
     private static final long serialVersionUID = -8049703427783670993L;
-
     /**
      *
      */
@@ -28,7 +26,7 @@ public class ReloadAction extends AbstractAction
 
     /**
      * Erstellt ein neues {@link ReloadAction} Object.
-     * 
+     *
      * @param panel {@link IPanel}
      */
     public ReloadAction(final IPanel panel)

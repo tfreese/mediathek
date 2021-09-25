@@ -1,6 +1,4 @@
-/**
- * Created on 12.04.2015 11:18:39
- */
+// Created: 12.04.2015
 package de.freese.mediathek.kodi.javafx.controller;
 
 import java.io.InputStream;
@@ -9,7 +7,9 @@ import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
 import org.springframework.context.ApplicationContext;
+
 import de.freese.mediathek.kodi.javafx.KODIJavaFXClient;
 import de.freese.mediathek.kodi.javafx.components.ModelListCellFactory;
 import de.freese.mediathek.kodi.javafx.components.PickList;
@@ -30,6 +30,7 @@ import javafx.scene.image.Image;
  * Basis-Controller für die Serien und Filme.
  *
  * @author Thomas Freese
+ *
  * @param <T> Entity
  */
 public abstract class AbstractTvShowMovieController<T extends IModel> extends AbstractController<T>
@@ -54,12 +55,14 @@ public abstract class AbstractTvShowMovieController<T extends IModel> extends Ab
 
     /**
      * @param value Entity
+     *
      * @return {@link List}
      */
     protected abstract List<Genre> getGenres(T value);
 
     /**
      * @param value Entity
+     *
      * @return {@link URI}
      */
     protected abstract URI getImageUri(T value);

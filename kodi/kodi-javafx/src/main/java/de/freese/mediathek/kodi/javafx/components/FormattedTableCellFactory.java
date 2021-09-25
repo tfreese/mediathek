@@ -1,9 +1,8 @@
-/**
- * Created on 11.04.2015 11:14:28
- */
+// Created: 11.04.2015
 package de.freese.mediathek.kodi.javafx.components;
 
 import java.text.Format;
+
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.TableCell;
@@ -13,6 +12,7 @@ import javafx.util.Callback;
 
 /**
  * @author Thomas Freese
+ *
  * @param <S> Entity Type
  * @param <T> Attribute Type
  */
@@ -22,7 +22,6 @@ public class FormattedTableCellFactory<S, T> implements Callback<TableColumn<S, 
      *
      */
     private TextAlignment alignment;
-
     /**
      *
      */
@@ -58,10 +57,10 @@ public class FormattedTableCellFactory<S, T> implements Callback<TableColumn<S, 
                 {
                     super.setText(FormattedTableCellFactory.this.format.format(item));
                 }
-                else if (item instanceof Node)
+                else if (item instanceof Node m)
                 {
                     super.setText(null);
-                    super.setGraphic((Node) item);
+                    super.setGraphic(m);
                 }
                 else
                 {

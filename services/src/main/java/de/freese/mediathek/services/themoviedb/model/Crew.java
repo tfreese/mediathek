@@ -1,7 +1,4 @@
-/**
- * Created: 26.04.2014
- */
-
+// Created: 26.04.2014
 package de.freese.mediathek.services.themoviedb.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -17,12 +14,10 @@ public class Crew
      * job
      */
     private String job;
-
     /**
      * name
      */
     private String name;
-
     /**
      * profile_path
      */

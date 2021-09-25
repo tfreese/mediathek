@@ -1,7 +1,7 @@
-/**
- * Created: 16.09.2014
- */
+// Created: 16.09.2014
 package de.freese.mediathek.kodi.model;
+
+import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -14,19 +14,10 @@ public abstract class AbstractModel implements IModel
      *
      */
     private String name;
-
     /**
      *
      */
     private int pk = -1;
-
-    /**
-     * Erstellt ein neues {@link AbstractModel} Object.
-     */
-    protected AbstractModel()
-    {
-        super();
-    }
 
     /**
      * @see java.lang.Comparable#compareTo(java.lang.Object)
@@ -36,7 +27,7 @@ public abstract class AbstractModel implements IModel
     {
         if (o == null)
         {
-            return Integer.MIN_VALUE;
+            return -1;
         }
 
         if (this == o)
@@ -58,31 +49,7 @@ public abstract class AbstractModel implements IModel
             return true;
         }
 
-        if (obj == null)
-        {
-            return false;
-        }
-
-        if (!(obj instanceof AbstractModel))
-        {
-            return false;
-        }
-
-        AbstractModel other = (AbstractModel) obj;
-
-        if (this.name == null)
-        {
-            if (other.name != null)
-            {
-                return false;
-            }
-        }
-        else if (!this.name.equals(other.name))
-        {
-            return false;
-        }
-
-        if (this.pk != other.pk)
+        if ((obj == null) || !(obj instanceof AbstractModel other) || !Objects.equals(this.name, other.name) || (this.pk != other.pk))
         {
             return false;
         }
@@ -114,13 +81,7 @@ public abstract class AbstractModel implements IModel
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
-
-        result = (prime * result) + ((this.name == null) ? 0 : this.name.hashCode());
-        result = (prime * result) + this.pk;
-
-        return result;
+        return Objects.hash(this.name, this.pk);
     }
 
     /**

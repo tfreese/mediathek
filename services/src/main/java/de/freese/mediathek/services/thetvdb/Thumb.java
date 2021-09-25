@@ -1,7 +1,4 @@
-/**
- * Created: 16.09.2014
- */
-
+// Created: 16.09.2014
 package de.freese.mediathek.services.thetvdb;
 
 import javax.xml.bind.annotation.XmlAccessType;

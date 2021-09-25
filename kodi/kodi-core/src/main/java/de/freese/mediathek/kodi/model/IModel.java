@@ -1,6 +1,4 @@
-/**
- * Created: 16.09.2014
- */
+// Created: 16.09.2014
 package de.freese.mediathek.kodi.model;
 
 /**
@@ -11,20 +9,20 @@ public interface IModel extends Comparable<IModel>
     /**
      * @return String
      */
-    public String getName();
+    String getName();
 
     /**
      * @return int
      */
-    public int getPK();
+    int getPK();
 
     /**
      * @param name String
      */
-    public void setName(final String name);
+    void setName(final String name);
 
     /**
      * @param pk int
      */
-    public void setPK(final int pk);
+    void setPK(final int pk);
 }

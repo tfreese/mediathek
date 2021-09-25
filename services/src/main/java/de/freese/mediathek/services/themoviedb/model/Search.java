@@ -1,12 +1,10 @@
-/**
- * Created: 24.04.2014
- */
-
+// Created: 24.04.2014
 package de.freese.mediathek.services.themoviedb.model;
 
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**

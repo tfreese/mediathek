@@ -1,13 +1,13 @@
-/**
- * Created: 28.09.2014
- */
+// Created: 28.09.2014
 package de.freese.mediathek.kodi.swing.beans;
 
-import com.jgoodies.binding.beans.Model;
-import de.freese.mediathek.kodi.model.Movie;
-import de.freese.mediathek.kodi.model.Show;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.jgoodies.binding.beans.Model;
+
+import de.freese.mediathek.kodi.model.Movie;
+import de.freese.mediathek.kodi.model.Show;
 
 /**
  * {@link Model} der {@link Show}.
@@ -20,22 +20,18 @@ public class MovieBean extends Model
      *
      */
     static final String PROPERTY_GENRES = "genres";
-
     /**
      *
      */
     static final String PROPERTY_IMDB_ID = "imdbID";
-
     /**
      *
      */
     private static final long serialVersionUID = 5961025455444774034L;
-
     /**
      *
      */
     private final Logger logger = LoggerFactory.getLogger(getClass());
-
     /**
      *
      */
@@ -72,6 +68,14 @@ public class MovieBean extends Model
     /**
      * @return String
      */
+    public String getName()
+    {
+        return this.movie.getName();
+    }
+
+    /**
+     * @return String
+     */
     public String getPoster()
     {
         return this.movie.getPoster();
@@ -83,14 +87,6 @@ public class MovieBean extends Model
     public String getPosters()
     {
         return this.movie.getPosters();
-    }
-
-    /**
-     * @return String
-     */
-    public String getName()
-    {
-        return this.movie.getName();
     }
 
     /**

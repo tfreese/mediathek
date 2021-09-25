@@ -1,16 +1,16 @@
-/**
- * Created: 08.11.2014
- */
-
+// Created: 08.11.2014
 package de.freese.mediathek.services.thetvdb;
 
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
+
 import org.apache.commons.lang3.StringUtils;
+
 import de.freese.mediathek.services.themoviedb.model.Image;
 
 /**
@@ -25,58 +25,48 @@ public class TVShow implements Comparable<TVShow>
     */
     @XmlElement(name = "Actors", required = false)
     private String actors;
-
     /**
     *
     */
     private List<Actor> actorsList;
-
     /**
     *
     */
     @XmlElement()
     private String banner;
-
     /**
     *
     */
     @XmlElement(name = "Overview")
     private String beschreibung;
-
     /**
     *
     */
     private List<Episode> episodes;
-
     /**
     *
     */
     @XmlElement(required = false)
     private String fanart;
-
     /**
     *
     */
     private List<Image> fanartList;
-
     /**
     *
     */
     @XmlElement(name = "Genre", required = false)
     private String genres;
-
     /**
     *
     */
     @XmlElement(name = "id")
     private String id;
-
     /**
     *
     */
     @XmlElement(name = "IMDB_ID")
     private String imdbID;
-
     /**
     *
     */
@@ -85,34 +75,28 @@ public class TVShow implements Comparable<TVShow>
             @XmlElement(name = "language"), @XmlElement(name = "Language")
     })
     private String language;
-
     /**
     *
     */
     @XmlElement(required = false)
     private String poster;
-
     /**
     *
     */
     private List<Image> posterList;
-
     /**
     *
     */
     @XmlElement(name = "FirstAired")
     private String releaseDate;
-
     /**
     *
     */
     private List<Image> seasonList;
-
     /**
     *
     */
     private List<Image> seriesList;
-
     /**
     *
     */

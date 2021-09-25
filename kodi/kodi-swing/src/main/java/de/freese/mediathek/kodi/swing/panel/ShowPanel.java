@@ -1,12 +1,11 @@
-/**
- * Created: 16.09.2014
- */
+// Created: 16.09.2014
 package de.freese.mediathek.kodi.swing.panel;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
 import java.util.Collections;
 import java.util.List;
+
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -20,7 +19,9 @@ import javax.swing.SwingWorker;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
 import org.springframework.context.ApplicationContext;
+
 import de.freese.mediathek.kodi.api.MediaService;
 import de.freese.mediathek.kodi.model.Show;
 import de.freese.mediathek.kodi.swing.GBCBuilder;

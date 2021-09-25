@@ -1,7 +1,4 @@
-/**
- * Created: 10.11.2014
- */
-
+// Created: 10.11.2014
 package de.freese.mediathek.services.thetvdb;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -22,31 +19,26 @@ public class Episode implements Comparable<Episode>
      */
     @XmlElement(name = "Overview")
     private String beschreibung;
-
     /**
      *
      */
     @XmlElement(name = "EpisodeNumber")
     private int episode = -1;
-
     /**
      *
      */
     @XmlElement(name = "GuestStars")
     private String guestStars;
-
     /**
      *
      */
     @XmlElement(name = "id")
     private String id;
-
     /**
      *
      */
     @XmlElement(name = "filename")
     private String image;
-
     /**
      *
      */
@@ -55,19 +47,16 @@ public class Episode implements Comparable<Episode>
             @XmlElement(name = "language"), @XmlElement(name = "Language")
     })
     private String language;
-
     /**
      *
      */
     @XmlElement(name = "FirstAired")
     private String releaseDate;
-
     /**
      *
      */
     @XmlElement(name = "SeasonNumber")
     private int season = -1;
-
     /**
      *
      */

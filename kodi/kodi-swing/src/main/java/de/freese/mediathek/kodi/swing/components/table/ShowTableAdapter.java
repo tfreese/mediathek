@@ -1,9 +1,8 @@
-/**
- * Created on 10.06.2016 15:35:25
- */
+// Created:n 10.06.2016
 package de.freese.mediathek.kodi.swing.components.table;
 
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
+
 import de.freese.mediathek.kodi.model.Show;
 
 /**

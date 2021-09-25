@@ -1,10 +1,9 @@
-/**
- * Created: 16.09.2014
- */
+// Created: 16.09.2014
 package de.freese.mediathek.services.thetvdb;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -18,7 +17,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ThumbList
 {
     /**
-     * 
+     *
      */
     @XmlElement(name = "thumb")
     private List<Thumb> thumbs = new ArrayList<>();

@@ -1,7 +1,4 @@
-/**
- * Created: 27.04.2014
- */
-
+// Created: 27.04.2014
 package de.freese.mediathek.services.themoviedb.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -16,7 +13,6 @@ public class Country implements Comparable<Country>
      * iso_3166_1
      */
     private String iso_3166_1;
-
     /**
      * name
      */

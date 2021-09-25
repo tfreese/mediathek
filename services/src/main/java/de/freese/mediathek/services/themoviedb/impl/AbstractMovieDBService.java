@@ -1,10 +1,9 @@
-/**
- * Created: 26.04.2014
- */
+// Created: 26.04.2014
 package de.freese.mediathek.services.themoviedb.impl;
 
 import org.springframework.util.Assert;
 import org.springframework.web.client.RestTemplate;
+
 import de.freese.mediathek.services.AbstractService;
 
 /**

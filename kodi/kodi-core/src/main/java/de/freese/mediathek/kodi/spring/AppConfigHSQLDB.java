@@ -1,9 +1,8 @@
-/**
- * Created: 16.09.2014
- */
+// Created: 16.09.2014
 package de.freese.mediathek.kodi.spring;
 
 import javax.sql.DataSource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;

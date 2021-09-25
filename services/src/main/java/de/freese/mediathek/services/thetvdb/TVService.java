@@ -1,6 +1,4 @@
-/**
- * Created: 24.04.2014
- */
+// Created: 24.04.2014
 package de.freese.mediathek.services.thetvdb;
 
 import java.awt.image.BufferedImage;
@@ -12,12 +10,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
 import javax.imageio.ImageIO;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
+
 import de.freese.mediathek.services.AbstractService;
 import de.freese.mediathek.services.themoviedb.model.Image;
 import de.freese.mediathek.services.themoviedb.model.Images;
@@ -68,6 +69,7 @@ public class TVService extends AbstractService
      * Liefert Details zur Serie ohne die Episoden, Actors und Images.<br>
      *
      * @param id String
+     *
      * @return {@link TVShow}
      */
     public TVShow getDetails(final String id)
@@ -89,6 +91,7 @@ public class TVService extends AbstractService
      * Liefert alle Details zur Serie mit Episoden, Actors und Images.<br>
      *
      * @param id String
+     *
      * @return {@link TVShow}
      */
     public TVShow getDetailsAll(final String id)
@@ -186,7 +189,9 @@ public class TVService extends AbstractService
      * Liefert das Bild
      *
      * @param path String
+     *
      * @return {@link BufferedImage}
+     *
      * @throws Exception Falls was schief geht.
      */
     public BufferedImage getImage(final String path) throws Exception
@@ -219,6 +224,7 @@ public class TVService extends AbstractService
      * Suche nach Name.
      *
      * @param name String
+     *
      * @return {@link List}
      */
     @SuppressWarnings(

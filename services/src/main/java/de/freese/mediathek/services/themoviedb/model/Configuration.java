@@ -1,11 +1,9 @@
-/**
- * Created: 24.04.2014
- */
-
+// Created: 24.04.2014
 package de.freese.mediathek.services.themoviedb.model;
 
 import java.util.List;
 import java.util.Map;
+
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -19,27 +17,22 @@ public class Configuration
      * backdrop_sizes
      */
     private List<String> backdropSizes;
-
     // /**
     // *
     // */
     // private List<String> changeKeys = null;
-
     /**
      * secure_base_url
      */
     private String imageBaseURL;
-
     /**
      * logo_sizes
      */
     private List<String> logoSizes;
-
     /**
      * poster_sizes
      */
     private List<String> posterSizes;
-
     /**
      * profile_sizes
      */

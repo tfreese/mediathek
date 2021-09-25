@@ -1,15 +1,15 @@
-/**
- * Created: 05.04.2020
- */
-
+// Created: 05.04.2020
 package de.freese.mediathek.kodi.report;
 
 import java.io.Closeable;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+
 import javax.sql.DataSource;
+
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
+
 import de.freese.mediathek.report.MediaReporter;
 
 /**
@@ -19,6 +19,7 @@ public final class KodiReporter
 {
     /**
      * @param args String[]
+     *
      * @throws Exception Falls was schief geht.
      */
     public static void main(final String[] args) throws Exception
@@ -51,13 +52,13 @@ public final class KodiReporter
             {
                 try
                 {
-                    if (dataSource instanceof SingleConnectionDataSource)
+                    if (dataSource instanceof SingleConnectionDataSource dc)
                     {
-                        ((SingleConnectionDataSource) dataSource).destroy();
+                        dc.destroy();
                     }
-                    else if (dataSource instanceof Closeable)
+                    else if (dataSource instanceof Closeable c)
                     {
-                        ((Closeable) dataSource).close();
+                        c.close();
                     }
                 }
                 catch (Exception ex2)

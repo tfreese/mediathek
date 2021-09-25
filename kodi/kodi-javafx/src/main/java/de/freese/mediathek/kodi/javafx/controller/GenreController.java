@@ -1,12 +1,12 @@
-/**
- * Created on 15.04.2015 17:20:03
- */
+// Created: 15.04.2015
 package de.freese.mediathek.kodi.javafx.controller;
 
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import org.springframework.context.ApplicationContext;
+
 import de.freese.mediathek.kodi.javafx.KODIJavaFXClient;
 import de.freese.mediathek.kodi.javafx.pane.GenrePane;
 import de.freese.mediathek.kodi.model.Genre;

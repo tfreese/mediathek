@@ -1,12 +1,12 @@
-/**
- * Created: 28.09.2014
- */
+// Created: 28.09.2014
 package de.freese.mediathek.kodi.swing.beans;
 
-import com.jgoodies.binding.beans.Model;
-import de.freese.mediathek.kodi.model.Show;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.jgoodies.binding.beans.Model;
+
+import de.freese.mediathek.kodi.model.Show;
 
 /**
  * {@link Model} der {@link Show}.
@@ -19,22 +19,18 @@ public class ShowBean extends Model
      *
      */
     static final String PROPERTY_GENRES = "genres";
-
     /**
      *
      */
     static final String PROPERTY_TVDB_ID = "tvdbID";
-
     /**
      *
      */
     private static final long serialVersionUID = 952793224295913500L;
-
     /**
      *
      */
     private final Logger logger = LoggerFactory.getLogger(getClass());
-
     /**
      *
      */
@@ -71,6 +67,14 @@ public class ShowBean extends Model
     /**
      * @return String
      */
+    public String getName()
+    {
+        return this.show.getName();
+    }
+
+    /**
+     * @return String
+     */
     public String getTvdbID()
     {
         return this.show.getTvdbID();
@@ -82,14 +86,6 @@ public class ShowBean extends Model
     public void setBanner(final String banner)
     {
         this.show.setBanner(banner);
-    }
-
-    /**
-     * @return String
-     */
-    public String getName()
-    {
-        return this.show.getName();
     }
 
     /**

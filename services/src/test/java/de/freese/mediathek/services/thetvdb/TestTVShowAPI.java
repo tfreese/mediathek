@@ -1,15 +1,16 @@
-/**
- * Created: 24.04.2014
- */
+// Created: 24.04.2014
 package de.freese.mediathek.services.thetvdb;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.List;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+
 import de.freese.mediathek.services.Settings;
 
 /**

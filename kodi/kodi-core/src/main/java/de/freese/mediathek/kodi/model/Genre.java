@@ -1,7 +1,4 @@
-/**
- * Created: 13.09.2014
- */
-
+// Created: 13.09.2014
 package de.freese.mediathek.kodi.model;
 
 /**
@@ -10,22 +7,13 @@ package de.freese.mediathek.kodi.model;
 public class Genre extends AbstractModel
 {
     /**
-     * 
+     *
      */
     private int anzahlFilme;
-
     /**
-     * 
+     *
      */
     private int anzahlSerien;
-
-    /**
-     * Erstellt ein neues {@link Genre} Object.
-     */
-    public Genre()
-    {
-        super();
-    }
 
     /**
      * @return int

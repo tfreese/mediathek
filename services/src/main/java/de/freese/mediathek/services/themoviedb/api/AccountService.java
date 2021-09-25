@@ -1,7 +1,4 @@
-/**
- * Created: 26.04.2014
- */
-
+// Created: 26.04.2014
 package de.freese.mediathek.services.themoviedb.api;
 
 import de.freese.mediathek.services.themoviedb.model.Configuration;
@@ -17,8 +14,8 @@ public interface AccountService
     /**
      * Liefert die Konfiguration des Accounts,<br>
      * Pfade, Bildergrößen etc.
-     * 
+     *
      * @return {@link Configuration}
      */
-    public Configuration getConfiguration();
+    Configuration getConfiguration();
 }

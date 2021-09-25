@@ -1,10 +1,10 @@
-/**
- * Created: 01.06.2016
- */
+// Created: 01.06.2016
 package de.freese.mediathek.kodi.javafx.pane;
 
 import java.util.ResourceBundle;
+
 import org.apache.commons.lang3.StringUtils;
+
 import de.freese.mediathek.kodi.model.IModel;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
@@ -32,6 +32,7 @@ import javafx.scene.layout.VBox;
 
 /**
  * @author Thomas Freese
+ *
  * @param <T> Konkreter Typ
  */
 public class TvShowMoviePane<T extends IModel> extends VBox
@@ -40,32 +41,26 @@ public class TvShowMoviePane<T extends IModel> extends VBox
      *
      */
     private Button buttonEditGenres;
-
     /**
      *
      */
     private final Button buttonReload;
-
     /**
      *
      */
     private final ImageView imageView;
-
     /**
      *
      */
     private final Label labelGenres;
-
     /**
      *
      */
     private final Label labelID;
-
     /**
      * Wird für die Filterung benötigt.
      */
     private final ObservableList<T> tableList = FXCollections.observableArrayList();
-
     /**
      *
      */
@@ -144,6 +139,7 @@ public class TvShowMoviePane<T extends IModel> extends VBox
     /**
      * @param propertyItemFilter {@link StringProperty}
      * @param resourceBundle {@link ResourceBundle}
+     *
      * @return {@link TableView}
      */
     @SuppressWarnings("unchecked")

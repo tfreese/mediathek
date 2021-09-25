@@ -1,12 +1,11 @@
-/**
- * Created: 16.09.2014
- */
+// Created: 16.09.2014
 package de.freese.mediathek.kodi.swing.panel;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
 import java.util.Collections;
 import java.util.List;
+
 import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -18,9 +17,12 @@ import javax.swing.SwingWorker;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
 import org.springframework.context.ApplicationContext;
+
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.beans.BeanAdapter;
+
 import de.freese.mediathek.kodi.api.MediaService;
 import de.freese.mediathek.kodi.model.Genre;
 import de.freese.mediathek.kodi.model.Movie;
@@ -68,7 +70,10 @@ public class GenrePanel extends AbstractPanel
 
             getGenreModel().setBean(new BeanAdapter<>(selectedGenre));
 
-            getLogger().debug(selectedGenre.toString());
+            if (getLogger().isDebugEnabled())
+            {
+                getLogger().debug(selectedGenre.toString());
+            }
         }
     }
 

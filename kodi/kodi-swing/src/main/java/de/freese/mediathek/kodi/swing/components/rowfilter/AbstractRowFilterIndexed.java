@@ -1,7 +1,4 @@
-/**
- * Created: 10.06.2016
- */
-
+// Created: 10.06.2016
 package de.freese.mediathek.kodi.swing.components.rowfilter;
 
 import javax.swing.RowFilter;
@@ -89,6 +86,7 @@ public abstract class AbstractRowFilterIndexed extends RowFilter<Object, Object>
     /**
      * @param value {@link javax.swing.RowFilter.Entry}
      * @param index int
+     *
      * @return boolean
      */
     protected abstract boolean include(Entry<? extends Object, ? extends Object> value, int index);

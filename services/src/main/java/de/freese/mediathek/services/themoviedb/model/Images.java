@@ -1,11 +1,9 @@
-/**
- * Created: 26.04.2014
- */
-
+// Created: 26.04.2014
 package de.freese.mediathek.services.themoviedb.model;
 
 import java.util.Collections;
 import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
@@ -18,7 +16,6 @@ public class Images
      * backdrops
      */
     private List<Image> backdrops;
-
     /**
      * posters
      */

@@ -1,7 +1,4 @@
-/**
- * Created: 26.04.2014
- */
-
+// Created: 26.04.2014
 package de.freese.mediathek.services.themoviedb.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -17,17 +14,14 @@ public class Image implements Comparable<Image>
      * height
      */
     private int height;
-
     /**
      * file_path
      */
     private String path;
-
     /**
      * vote_average
      */
     private float voteAverage;
-
     /**
      * width
      */

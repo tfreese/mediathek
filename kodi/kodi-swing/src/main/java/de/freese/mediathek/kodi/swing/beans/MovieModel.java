@@ -1,6 +1,4 @@
-/**
- * Created: 28.09.2014
- */
+// Created: 28.09.2014
 package de.freese.mediathek.kodi.swing.beans;
 
 import java.awt.image.BufferedImage;
@@ -48,27 +46,22 @@ public class MovieModel extends PresentationModel<MovieBean>
      *
      */
     private static final long serialVersionUID = 5768855611560857610L;
-
     /**
      *
      */
     private JTable jTable;
-
     /**
      *
      */
     private final SelectionInList<Movie> movieSelection;
-
     /**
      *
      */
     private final ResourceCache resourceCache;
-
     /**
      *
      */
     private final ValueModel valueModelFilter;
-
     /**
      *
      */

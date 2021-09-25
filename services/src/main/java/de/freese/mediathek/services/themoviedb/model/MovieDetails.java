@@ -1,11 +1,9 @@
-/**
- * Created: 24.04.2014
- */
-
+// Created: 24.04.2014
 package de.freese.mediathek.services.themoviedb.model;
 
 import java.util.Collections;
 import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
@@ -19,57 +17,46 @@ public class MovieDetails extends Movie
      *
      */
     private List<Actor> actors;
-
     /**
      * belongs_to_collection
      */
     private String collection;
-
     /**
      * production_countries
      */
     private List<Country> countries;
-
     /**
      *
      */
     private List<Crew> directors;
-
     /**
      * genres
      */
     private List<Genre> genres;
-
     /**
      * imdb_id
      */
     private String imdbID;
-
     /**
      * spoken_languages
      */
     private List<Language> languages;
-
     /**
      * runtime
      */
     private int runtime;
-
     /**
      * production_companies
      */
     private List<Studio> studios;
-
     /**
      * tagline
      */
     private String tagline;
-
     /**
      * vote_average
      */
     private float voteAverage;
-
     /**
      * vote_count
      */

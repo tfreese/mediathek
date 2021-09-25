@@ -1,12 +1,10 @@
-/**
- * Created: 25.04.2020
- */
-
+// Created: 25.04.2020
 package de.freese.mediathek.kodi.report;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+
 import org.springframework.core.env.PropertySource;
 
 /**

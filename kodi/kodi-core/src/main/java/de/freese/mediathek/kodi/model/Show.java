@@ -1,7 +1,4 @@
-/**
- * Created: 13.09.2014
- */
-
+// Created: 13.09.2014
 package de.freese.mediathek.kodi.model;
 
 /**
@@ -13,29 +10,18 @@ public class Show extends AbstractModel
      *
      */
     private String banner;
-
     /**
      *
      */
     private String fanart;
-
     /**
      *
      */
     private String genres;
-
     /**
      *
      */
     private String tvdbID;
-
-    /**
-     * Erstellt ein neues {@link Show} Object.
-     */
-    public Show()
-    {
-        super();
-    }
 
     /**
      * @return String

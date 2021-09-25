@@ -1,13 +1,12 @@
-/**
- * Created: 28.09.2014
- */
-
+// Created: 28.09.2014
 package de.freese.mediathek.kodi.swing.components.list;
 
 import java.awt.Component;
+
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
+
 import de.freese.mediathek.kodi.model.Movie;
 
 /**
@@ -25,17 +24,7 @@ public class MovieListCellRenderer extends DefaultListCellRenderer
     // /**
     // *
     // */
-    // private final Font BOLD_FONT;
-
-    /**
-     * Erstellt ein neues {@link MovieListCellRenderer} Object.
-     */
-    public MovieListCellRenderer()
-    {
-        super();
-
-        // this.BOLD_FONT = getFont().deriveFont(Font.BOLD, 20);
-    }
+    // private final Font BOLD_FONT = new JLabel().getFont().deriveFont(Font.BOLD, 20);
 
     /**
      * @see javax.swing.ListCellRenderer#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)

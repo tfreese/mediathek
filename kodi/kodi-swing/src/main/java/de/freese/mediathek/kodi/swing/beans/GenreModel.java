@@ -1,6 +1,4 @@
-/**
- * Created: 28.09.2014
- */
+// Created: 28.09.2014
 package de.freese.mediathek.kodi.swing.beans;
 
 import java.util.ArrayList;
@@ -34,22 +32,18 @@ public class GenreModel extends PresentationModel<BeanAdapter<Genre>>
      *
      */
     private static final long serialVersionUID = 2574749005329631553L;
-
     /**
      *
      */
     private final ApplicationContext applicationContext;
-
     /**
      *
      */
     private final SelectionInList<Genre> genreSelection;
-
     /**
      *
      */
     private final SelectionInList<Movie> movieSelection;
-
     /**
      *
      */

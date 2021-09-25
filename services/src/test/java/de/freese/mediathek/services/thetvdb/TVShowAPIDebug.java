@@ -1,15 +1,16 @@
-/**
- * Created: 26.04.2014
- */
+// Created: 26.04.2014
 package de.freese.mediathek.services.thetvdb;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Locale;
+
 import org.springframework.web.client.RestTemplate;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+
 import de.freese.mediathek.services.Settings;
 
 /**
@@ -23,7 +24,6 @@ public class TVShowAPIDebug
     *
     */
     public static final String TEST_SHOW = Settings.TEST_SHOW;
-
     /**
      * imdb_id: tt0374455; SG-1
      */
@@ -31,6 +31,7 @@ public class TVShowAPIDebug
 
     /**
      * @param args String[]
+     *
      * @throws Exception Falls was schief geht.
      */
     public static void main(final String[] args) throws Exception
@@ -69,6 +70,7 @@ public class TVShowAPIDebug
 
     /**
      * @param result String
+     *
      * @throws Exception Falls was schief geht.
      */
     private void prettyPrint(final String result) throws Exception

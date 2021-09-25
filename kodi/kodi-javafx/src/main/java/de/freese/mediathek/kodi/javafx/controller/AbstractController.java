@@ -1,12 +1,12 @@
-/**
- * Created on 12.04.2015 11:18:39
- */
+// Created: 12.04.2015
 package de.freese.mediathek.kodi.javafx.controller;
 
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.Executor;
+
 import org.springframework.context.ApplicationContext;
+
 import de.freese.base.core.cache.FileResourceCache;
 import de.freese.base.core.cache.ResourceCache;
 import de.freese.mediathek.kodi.api.MediaService;
@@ -21,6 +21,7 @@ import javafx.scene.control.TableView.TableViewSelectionModel;
 
 /**
  * @param <T> Entity
+ *
  * @author Thomas Freese
  */
 public abstract class AbstractController<T extends IModel> implements Initializable, ChangeListener<T>
@@ -29,17 +30,14 @@ public abstract class AbstractController<T extends IModel> implements Initializa
      *
      */
     private final ApplicationContext applicationContext;
-
     /**
      *
      */
     private final Executor executor;
-
     /**
      *
      */
     private final MediaService mediaService;
-
     /**
      *
      */
@@ -74,6 +72,7 @@ public abstract class AbstractController<T extends IModel> implements Initializa
     /**
      * @param <B> Bean
      * @param clazz Class
+     *
      * @return Object
      */
     protected <B> B getBean(final Class<B> clazz)

@@ -1,12 +1,12 @@
-/**
- * Created: 16.09.2014
- */
+// Created: 16.09.2014
 package de.freese.mediathek.kodi.spring;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ThreadPoolExecutor;
+
 import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.EnvironmentAware;
@@ -19,6 +19,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.scheduling.concurrent.ThreadPoolExecutorFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 import de.freese.mediathek.kodi.api.MediaDAO;
 import de.freese.mediathek.kodi.api.MediaService;
 import de.freese.mediathek.kodi.impl.MediaDAOImpl;
@@ -99,6 +100,7 @@ public abstract class AbstractAppConfig implements EnvironmentAware
     /**
      * @param dataSourceVideo {@link DataSource}
      * @param dataSourceAudio {@link DataSource}
+     *
      * @return {@link MediaDAO}
      */
     @Bean
@@ -112,6 +114,7 @@ public abstract class AbstractAppConfig implements EnvironmentAware
 
     /**
      * @param mediaDAO {@link MediaDAO}
+     *
      * @return {@link MediaService}
      */
     @Bean
@@ -133,6 +136,7 @@ public abstract class AbstractAppConfig implements EnvironmentAware
 
     /**
      * @param dataSource {@link DataSource}
+     *
      * @return {@link PlatformTransactionManager}
      */
     @Bean
@@ -144,6 +148,7 @@ public abstract class AbstractAppConfig implements EnvironmentAware
 
     /**
      * @param dataSource {@link DataSource}
+     *
      * @return {@link PlatformTransactionManager}
      */
     @Bean

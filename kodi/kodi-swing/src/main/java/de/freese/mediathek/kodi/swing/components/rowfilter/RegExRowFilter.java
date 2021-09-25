@@ -1,12 +1,10 @@
-/**
- * Created: 10.06.2016
- */
-
+// Created: 10.06.2016
 package de.freese.mediathek.kodi.swing.components.rowfilter;
 
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import javax.swing.RowFilter;
 
 /**

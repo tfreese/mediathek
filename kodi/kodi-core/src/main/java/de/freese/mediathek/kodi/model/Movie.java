@@ -1,6 +1,4 @@
-/**
- * Created: 13.09.2014
- */
+// Created: 13.09.2014
 package de.freese.mediathek.kodi.model;
 
 /**
@@ -12,44 +10,30 @@ public class Movie extends AbstractModel
      *
      */
     private String fanarts;
-
     /**
      *
      */
     private String genres;
-
     /**
      *
      */
     private String imdbID;
-
     /**
      *
      */
     private String poster;
-
     /**
      *
      */
     private String posters;
-
     /**
      *
      */
     private int setID;
-
     /**
      *
      */
     private int year;
-
-    /**
-     * Erstellt ein neues {@link Movie} Object.
-     */
-    public Movie()
-    {
-        super();
-    }
 
     /**
      * @return String

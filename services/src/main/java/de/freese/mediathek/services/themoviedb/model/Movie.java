@@ -1,11 +1,10 @@
-/**
- * Created: 24.04.2014
- */
-
+// Created: 24.04.2014
 package de.freese.mediathek.services.themoviedb.model;
 
 import javax.swing.ImageIcon;
+
 import org.apache.commons.lang3.StringUtils;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -20,45 +19,37 @@ public class Movie implements Comparable<Movie>
      */
     @JsonProperty("backdrop_path")
     private String backdrop;
-
     /**
      * id
      */
     private int id = -1;
-
     // /**
     // *
     // */
     // private ImageIcon imageIconBackdrop;
-    //
     // /**
     // *
     // */
     // private ImageIcon imageIconPoster;
-
     /**
      *
      */
     private ImageIcon imageIcon;
-
     /**
      *
      */
     @JsonProperty("original_title")
     private String originalTitle;
-
     /**
      *
      */
     @JsonProperty("poster_path")
     private String poster;
-
     /**
      *
      */
     @JsonProperty("release_date")
     private String releaseDate;
-
     /**
      * title
      */

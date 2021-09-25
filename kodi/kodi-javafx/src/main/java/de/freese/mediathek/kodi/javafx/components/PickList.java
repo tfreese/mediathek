@@ -1,7 +1,4 @@
-/**
- * Created: 12.04.2015
- */
-
+// Created: 12.04.2015
 package de.freese.mediathek.kodi.javafx.components;
 
 import javafx.collections.ObservableList;
@@ -13,6 +10,7 @@ import javafx.scene.layout.VBox;
 
 /**
  * @author Thomas Freese
+ *
  * @param <T> Entity
  */
 public class PickList<T extends Comparable<? super T>> extends HBox
@@ -21,7 +19,6 @@ public class PickList<T extends Comparable<? super T>> extends HBox
      *
      */
     private final ListView<T> listViewLeft;
-
     /**
      *
      */
@@ -62,7 +59,7 @@ public class PickList<T extends Comparable<? super T>> extends HBox
                 listRight.add(item);
             }
 
-            listRight.sort((o1, o2) -> o1.compareTo(o2));
+            listRight.sort(Comparable::compareTo);
         });
 
         buttonRightToLeft.disableProperty().bind(this.listViewRight.getSelectionModel().selectedItemProperty().isNull());

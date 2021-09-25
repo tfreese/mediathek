@@ -1,17 +1,18 @@
-/**
- * Created: 16.09.2014
- */
+// Created: 16.09.2014
 package de.freese.mediathek.kodi.swing.panel;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
+
 import de.freese.mediathek.kodi.swing.action.ReloadAction;
 
 /**
@@ -23,12 +24,10 @@ public abstract class AbstractPanel implements IPanel
      *
      */
     private ApplicationContext applicationContext;
-
     /**
      *
      */
     private JComponent component;
-
     /**
      *
      */

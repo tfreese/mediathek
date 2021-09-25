@@ -1,12 +1,10 @@
-/**
- * Created: 15.10.2015
- */
-
+// Created: 15.10.2015
 package de.freese.mediathek.kodi.model;
 
 import java.text.Collator;
 import java.util.Comparator;
 import java.util.Locale;
+
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -24,14 +22,6 @@ public class MovieSetIDYearComparator implements Comparator<Movie>
      *
      */
     private static final Collator COLLATOR = Collator.getInstance(Locale.GERMANY);
-
-    /**
-     * Erstellt ein neues {@link MovieSetIDYearComparator} Object.
-     */
-    public MovieSetIDYearComparator()
-    {
-        super();
-    }
 
     /**
      * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)

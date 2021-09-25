@@ -4,10 +4,12 @@ package de.freese.mediathek.services;
 import java.net.URLEncoder;
 import java.nio.file.Paths;
 import java.util.Locale;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
+
 import de.freese.base.core.cache.FileResourceCache;
 import de.freese.base.core.cache.ResourceCache;
 
@@ -22,17 +24,14 @@ public abstract class AbstractService implements InitializingBean
      *
      */
     private final String apiKey;
-
     /**
      *
      */
     private ResourceCache cache;
-
     /**
      *
      */
     private Locale locale = Locale.GERMANY;
-
     /**
      *
      */
@@ -114,6 +113,7 @@ public abstract class AbstractService implements InitializingBean
 
     /**
      * @param value String
+     *
      * @return String
      */
     protected String urlEncode(final String value)

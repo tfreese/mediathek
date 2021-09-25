@@ -1,6 +1,4 @@
-/**
- * Created: 14.09.2014
- */
+// Created: 14.09.2014
 package de.freese.mediathek.kodi.swing;
 
 import java.awt.BorderLayout;
@@ -9,6 +7,7 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
@@ -16,10 +15,12 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import javax.swing.plaf.FontUIResource;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 import de.freese.mediathek.kodi.spring.AppConfigSQLite;
 import de.freese.mediathek.kodi.swing.panel.GenrePanel;
 import de.freese.mediathek.kodi.swing.panel.IPanel;
@@ -40,7 +41,7 @@ public class KODISwingClient
      *
      * @author Thomas Freese
      */
-    private class MainFrameListener extends WindowAdapter
+    private static class MainFrameListener extends WindowAdapter
     {
         /**
          * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
@@ -56,7 +57,6 @@ public class KODISwingClient
      *
      */
     public static Frame FRAME;
-
     /**
      *
      */
@@ -64,6 +64,7 @@ public class KODISwingClient
 
     /**
      * @param args String[]
+     *
      * @throws Exception Falls was schief geht.
      */
     public static void main(final String[] args) throws Exception
@@ -113,6 +114,7 @@ public class KODISwingClient
      * Initialisierung der GUI.
      *
      * @param args String[]
+     *
      * @throws Exception Falls was schief geht.
      */
     private void init(final String[] args) throws Exception
@@ -129,7 +131,6 @@ public class KODISwingClient
         }
 
         // AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(clazz);
-        @SuppressWarnings("resource")
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
         ctx.getEnvironment().setActiveProfiles(profile);
         // ctx.register(AppConfigMySQL.class, AppConfigHSQLDB.class, AppConfigSQLite.class);

@@ -1,6 +1,4 @@
-/**
- * Created: 12.04.2015
- */
+// Created: 12.04.2015
 package de.freese.mediathek.kodi.javafx.components;
 
 import de.freese.mediathek.kodi.model.IModel;

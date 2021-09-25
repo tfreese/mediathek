@@ -1,7 +1,4 @@
-/**
- * Created: 27.04.2014
- */
-
+// Created: 27.04.2014
 package de.freese.mediathek.services.themoviedb.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -16,7 +13,6 @@ public class Studio implements Comparable<Studio>
      * id
      */
     private int id;
-
     /**
      * name
      */

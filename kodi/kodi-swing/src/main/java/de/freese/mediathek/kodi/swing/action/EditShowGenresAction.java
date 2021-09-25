@@ -1,16 +1,16 @@
-/**
- * Created: 28.09.2014
- */
-
+// Created: 28.09.2014
 package de.freese.mediathek.kodi.swing.action;
 
 import java.awt.Desktop.Action;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.AbstractAction;
 import javax.swing.SwingWorker;
+
 import org.springframework.context.ApplicationContext;
+
 import de.freese.mediathek.kodi.api.MediaService;
 import de.freese.mediathek.kodi.model.Genre;
 import de.freese.mediathek.kodi.model.Show;
@@ -29,12 +29,10 @@ public class EditShowGenresAction extends AbstractAction
      *
      */
     private static final long serialVersionUID = -8720949560687284814L;
-
     /**
      *
      */
     private final ApplicationContext applicationContext;
-
     /**
      *
      */

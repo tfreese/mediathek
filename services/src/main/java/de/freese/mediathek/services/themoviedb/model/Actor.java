@@ -1,7 +1,4 @@
-/**
- * Created: 26.04.2014
- */
-
+// Created: 26.04.2014
 package de.freese.mediathek.services.themoviedb.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -17,17 +14,14 @@ public class Actor implements Comparable<Actor>
      * name
      */
     private String name;
-
     /**
      * order
      */
     private int order;
-
     /**
      * profile_path
      */
     private String profile;
-
     /**
      * character
      */

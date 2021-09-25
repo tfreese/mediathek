@@ -1,6 +1,4 @@
-/**
- * Created: 28.09.2014
- */
+// Created: 28.09.2014
 package de.freese.mediathek.kodi.swing.beans;
 
 import java.awt.image.BufferedImage;
@@ -48,27 +46,22 @@ public class ShowModel extends PresentationModel<ShowBean>
      *
      */
     private static final long serialVersionUID = -1759604850162069149L;
-
     /**
      *
      */
     private JTable jTable;
-
     /**
      *
      */
     private final ResourceCache resourceCache;
-
     /**
      *
      */
     private final SelectionInList<Show> showSelection;
-
     /**
      *
      */
     private final ValueModel valueModelBanner;
-
     /**
      *
      */

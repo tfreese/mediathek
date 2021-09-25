@@ -1,15 +1,15 @@
-/**
- * Created: 26.04.2014
- */
-
+// Created: 26.04.2014
 package de.freese.mediathek.services.themoviedb;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Locale;
+
 import org.springframework.web.client.RestTemplate;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import de.freese.mediathek.services.Settings;
 
 /**
@@ -23,7 +23,6 @@ public class MovieAPIDebug
      *
      */
     public static final String TEST_MOVIE = Settings.TEST_MOVIE;
-
     /**
      *
      */
@@ -31,6 +30,7 @@ public class MovieAPIDebug
 
     /**
      * @param args String[]
+     *
      * @throws Exception Falls was schief geht.
      */
     public static void main(final String[] args) throws Exception
@@ -68,6 +68,7 @@ public class MovieAPIDebug
 
     /**
      * @param result String
+     *
      * @throws Exception Falls was schief geht.
      */
     private void prettyPrint(final String result) throws Exception

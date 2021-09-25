@@ -1,9 +1,8 @@
-/**
- * Created on 15.04.2015 16:55:59
- */
+// Created: 15.04.2015
 package de.freese.mediathek.kodi.javafx.pane;
 
 import java.util.ResourceBundle;
+
 import de.freese.mediathek.kodi.javafx.components.ModelListCellFactory;
 import de.freese.mediathek.kodi.model.Genre;
 import de.freese.mediathek.kodi.model.IModel;
@@ -31,17 +30,14 @@ public class GenrePane extends VBox
      *
      */
     private final Button buttonReload;
-
     /**
      *
      */
     private final ListView<IModel> listViewFilme;
-
     /**
      *
      */
     private final ListView<IModel> listViewSerien;
-
     /**
      *
      */
@@ -96,6 +92,7 @@ public class GenrePane extends VBox
 
     /**
      * @param resourceBundle {@link ResourceBundle}
+     *
      * @return {@link TableView}
      */
     private TableView<Genre> createTableViewGenres(final ResourceBundle resourceBundle)

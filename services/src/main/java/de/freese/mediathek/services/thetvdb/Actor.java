@@ -1,7 +1,4 @@
-/**
- * Created: 10.11.2014
- */
-
+// Created: 10.11.2014
 package de.freese.mediathek.services.thetvdb;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -21,25 +18,21 @@ public class Actor implements Comparable<Actor>
      */
     @XmlElement(name = "id")
     private String id;
-
     /**
      *
      */
     @XmlElement(name = "Image")
     private String image;
-
     /**
      *
      */
     @XmlElement(name = "Name")
     private String name;
-
     /**
      *
      */
     @XmlElement(name = "Role")
     private String role;
-
     /**
      *
      */

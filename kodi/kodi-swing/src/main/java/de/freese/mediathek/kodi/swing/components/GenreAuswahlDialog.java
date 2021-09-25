@@ -1,13 +1,11 @@
-/**
- * Created: 28.09.2014
- */
-
+// Created: 28.09.2014
 package de.freese.mediathek.kodi.swing.components;
 
 import java.awt.GridBagLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.util.List;
+
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -16,7 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
+
 import com.jgoodies.common.collect.ArrayListModel;
+
 import de.freese.mediathek.kodi.model.Genre;
 import de.freese.mediathek.kodi.swing.GBCBuilder;
 import de.freese.mediathek.kodi.swing.components.list.GenreListCellRenderer;
@@ -178,17 +178,14 @@ public class GenreAuswahlDialog extends JDialog
      *
      */
     private static final long serialVersionUID = -4384289197484325624L;
-
     /**
      *
      */
     private boolean canceled;
-
     /**
      *
      */
     private JList<Genre> listLinks;
-
     /**
      *
      */

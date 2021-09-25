@@ -1,7 +1,4 @@
-/**
- * Created: 05.04.2020
- */
-
+// Created: 05.04.2020
 package de.freese.mediathek.kodi.report;
 
 import java.io.PrintWriter;
@@ -14,9 +11,12 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
+
 import javax.sql.DataSource;
+
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.StandardEnvironment;
+
 import de.freese.mediathek.kodi.spring.AbstractAppConfig;
 import de.freese.mediathek.kodi.spring.AppConfigSQLite;
 import de.freese.mediathek.report.AbstractMediaReporter;
@@ -27,14 +27,6 @@ import de.freese.mediathek.utils.MediaDBUtils;
  */
 public class KodiAudioReporter extends AbstractMediaReporter
 {
-    /**
-     * Erstellt ein neues {@link KodiAudioReporter} Object.
-     */
-    public KodiAudioReporter()
-    {
-        super();
-    }
-
     /**
      * @see de.freese.mediathek.report.MediaReporter#createDataSource(boolean)
      */
@@ -121,6 +113,7 @@ public class KodiAudioReporter extends AbstractMediaReporter
     /**
      * @param dataSource {@link DataSource}
      * @param path {@link Path}
+     *
      * @throws Exception Falls was schief geht.
      */
     protected void writeMusic(final DataSource dataSource, final Path path) throws Exception
@@ -144,6 +137,7 @@ public class KodiAudioReporter extends AbstractMediaReporter
      *
      * @param dataSource {@link DataSource}
      * @param path {@link Path}
+     *
      * @throws Exception Falls was schief geht.
      */
     protected void writeMusicPlaylistM3U(final DataSource dataSource, final Path path) throws Exception
@@ -181,6 +175,7 @@ public class KodiAudioReporter extends AbstractMediaReporter
      *
      * @param dataSource {@link DataSource}
      * @param path {@link Path}
+     *
      * @throws Exception Falls was schief geht.
      */
     protected void writeMusicPlaylistXSP(final DataSource dataSource, final Path path) throws Exception
