@@ -8,7 +8,7 @@ BASEDIR=$(dirname $0) #Verzeichnis des Skripts
 cd $BASEDIR
 
 if [ ! -f target/classes/de/freese/mediathek/musik/MusikReporter.class ]; then
-    mvn -o clean compile;
+    mvn clean compile;
 fi
 
 # Ausführung in der gleichen Runtime-Instanz wie Maven, in POM definiert.
