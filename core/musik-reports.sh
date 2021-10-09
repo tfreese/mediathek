@@ -18,7 +18,7 @@ fi
 # Ausführung in einer separaten Runtime-Instanz, in POM definiert.
 #mvn -q exec:exec -Dexec.executable="java" -Dexec.args="%classpath" -Dexec.mainClass="..."
 
-mvn -o exec:exec;
+mvn -o -q exec:exec;
 #mvn exec:exec;
 
 cd ~
