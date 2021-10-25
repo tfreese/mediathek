@@ -70,7 +70,7 @@ public abstract class AbstractAppConfig implements EnvironmentAware
     @Primary
     public ThreadPoolExecutorFactoryBean executorService()
     {
-        int coreSize = Math.max(2, Runtime.getRuntime().availableProcessors());
+        int coreSize = Math.max(8, Runtime.getRuntime().availableProcessors());
         int maxSize = coreSize * 2;
         int queueSize = maxSize * 2;
         int keepAliveSeconds = 60;
@@ -120,9 +120,7 @@ public abstract class AbstractAppConfig implements EnvironmentAware
     @Bean
     public MediaService mediaService(final MediaDAO mediaDAO)
     {
-        MediaService service = new MediaServiceImpl(mediaDAO);
-
-        return service;
+        return new MediaServiceImpl(mediaDAO);
     }
 
     /**

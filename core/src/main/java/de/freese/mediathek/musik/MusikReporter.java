@@ -29,10 +29,10 @@ public final class MusikReporter
      */
     public static void main(final String[] args) throws Exception
     {
-        // MediaReporter mediaReporter = new BansheeMediaReporter();
-        MediaReporter mediaReporter = new ClementineMediaReporter();
-        // MediaReporter mediaReporter = new KodiMediaReporter();
-        // MediaReporter mediaReporter = new PlexMediaReporter();
+        // MediaReporter mediaReporter = new BansheeMusikReporter();
+        MediaReporter mediaReporter = new ClementineMusikReporter();
+        // MediaReporter mediaReporter = new KodiMusikReporter();
+        // MediaReporter mediaReporter = new PlexMusikReporter();
 
         STOP_WATCH.start("connect");
         DataSource dataSource = mediaReporter.createDataSource(true);
@@ -42,7 +42,7 @@ public final class MusikReporter
         {
             STOP_WATCH.start("writeReport");
 
-            Path path = Paths.get("/home/tommy/dokumente/linux/musik-playcount.csv");
+            Path path = Paths.get("/home/tommy/dokumente/linux/musik-report.csv");
 
             mediaReporter.writeReport(dataSource, path);
             // mediaReporter.updateDbFromReport(dataSource, path);
@@ -58,13 +58,17 @@ public final class MusikReporter
         {
             STOP_WATCH.start("disconnect");
 
-            if (dataSource instanceof SingleConnectionDataSource)
+            if (dataSource instanceof SingleConnectionDataSource ds)
             {
-                ((SingleConnectionDataSource) dataSource).destroy();
+                ds.destroy();
             }
-            else if (dataSource instanceof Closeable)
+            else if (dataSource instanceof Closeable c)
             {
-                ((Closeable) dataSource).close();
+                c.close();
+            }
+            else if (dataSource instanceof AutoCloseable ac)
+            {
+                ac.close();
             }
 
             STOP_WATCH.stop();

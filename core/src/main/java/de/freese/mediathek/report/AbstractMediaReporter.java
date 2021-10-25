@@ -57,29 +57,6 @@ public abstract class AbstractMediaReporter implements MediaReporter
             // @formatter:on
         }
 
-        // List<Map<String, Object>> list = new ArrayList<>();
-        //
-        // CellProcessor[] processors = new CellProcessor[]
-        // {
-        // new NotNull(), // MOVIE
-        // new NotNull(), // PLAYCOUNT
-        // new NotNull(), // LASTPLAYED
-        // };
-        //
-        // CsvPreference preference = CsvPreference.EXCEL_NORTH_EUROPE_PREFERENCE;
-        //
-        // try (ICsvMapReader reader = new CsvMapReader(new FileReader(fileName), preference))
-        // {
-        // // Header Columns sind die Keys in der Map.
-        // String[] header = reader.getHeader(true);
-        // Map<String, Object> map = null;
-        //
-        // while ((map = reader.read(header, processors)) != null)
-        // {
-        // list.add(map);
-        // }
-        // }
-
         return list;
     }
 
@@ -90,7 +67,6 @@ public abstract class AbstractMediaReporter implements MediaReporter
      * <li>ARTIST
      * <li>SONG
      * <li>PLAYCOUNT
-     * <li>LASTPLAYED
      * </ul>
      *
      * @param path {@link Path}
@@ -116,7 +92,6 @@ public abstract class AbstractMediaReporter implements MediaReporter
                         map.put("ARTIST", array[0]);
                         map.put("SONG", array[1]);
                         map.put("PLAYCOUNT", array[2]);
-                        //map.put("LASTPLAYED", array[3]);
 
                         return map;
                     })
@@ -124,30 +99,6 @@ public abstract class AbstractMediaReporter implements MediaReporter
                     ;
             // @formatter:on
         }
-
-        // List<Map<String, Object>> list = new ArrayList<>();
-        //
-        // CellProcessor[] processors = new CellProcessor[]
-        // {
-        // new NotNull(), // ARTIST
-        // new NotNull(), // SONG
-        // new NotNull(), // PLAYCOUNT
-        // new NotNull(), // LASTPLAYED
-        // };
-        //
-        // CsvPreference preference = CsvPreference.EXCEL_NORTH_EUROPE_PREFERENCE;
-        //
-        // try (ICsvMapReader reader = new CsvMapReader(new FileReader(fileName), preference))
-        // {
-        // // Header Columns sind die Keys in der Map.
-        // String[] header = reader.getHeader(true);
-        // Map<String, Object> map = null;
-        //
-        // while ((map = reader.read(header, processors)) != null)
-        // {
-        // list.add(map);
-        // }
-        // }
 
         return list;
     }
@@ -198,32 +149,6 @@ public abstract class AbstractMediaReporter implements MediaReporter
                     ;
             // @formatter:on
         }
-
-        // List<Map<String, Object>> list = new ArrayList<>();
-        //
-        // CellProcessor[] processors = new CellProcessor[]
-        // {
-        // new NotNull(), // TVSHOW
-        // new NotNull(), // SEASON
-        // new NotNull(), // EPISODE
-        // new NotNull(), // TITLE
-        // new NotNull(), // PLAYCOUNT
-        // new NotNull(), // LASTPLAYED
-        // };
-        //
-        // CsvPreference preference = CsvPreference.EXCEL_NORTH_EUROPE_PREFERENCE;
-        //
-        // try (ICsvMapReader reader = new CsvMapReader(new FileReader(fileName), preference))
-        // {
-        // // Header Columns sind die Keys in der Map.
-        // String[] header = reader.getHeader(true);
-        // Map<String, Object> map = null;
-        //
-        // while ((map = reader.read(header, processors)) != null)
-        // {
-        // list.add(map);
-        // }
-        // }
 
         return list;
     }

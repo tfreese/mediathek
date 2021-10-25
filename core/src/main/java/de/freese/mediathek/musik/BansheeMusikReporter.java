@@ -15,7 +15,7 @@ import de.freese.mediathek.report.AbstractMediaReporter;
 /**
  * @author Thomas Freese
  */
-public class BansheeMediaReporter extends AbstractMediaReporter
+public class BansheeMusikReporter extends AbstractMediaReporter
 {
     /**
      * @see de.freese.mediathek.report.MediaReporter#createDataSource(boolean)
@@ -35,15 +35,13 @@ public class BansheeMediaReporter extends AbstractMediaReporter
         SQLiteConfig config = new SQLiteConfig();
         config.setReadOnly(readonly);
         config.setReadUncommited(true);
-        // config.setTransactionMode(TransactionMode.EXCLUSIVE);
-        // System.out.println(config.toProperties());
 
         // SingleConnectionDataSource dataSource = new SingleConnectionDataSource();
         // dataSource.setDriverClassName("org.sqlite.JDBC");
         // dataSource.setUrl("jdbc:sqlite:/home/tommy/.config/banshee-1/banshee.db");
         // dataSource.setSuppressClose(true);
         // dataSource.setConnectionProperties(config.toProperties());
-        //
+
         SQLiteDataSource dataSource = new SQLiteConnectionPoolDataSource(config);
         dataSource.setUrl("jdbc:sqlite:/home/tommy/.config/banshee-1/banshee.db");
 
@@ -66,12 +64,8 @@ public class BansheeMediaReporter extends AbstractMediaReporter
     public void writeReport(final DataSource dataSource, final Path path) throws Exception
     {
         StringBuilder sql = new StringBuilder();
-        // sql.append("select car.name as artist, ifnull(cal.title,\"\") as album, ct.title as song, ct.playcount from coretracks ct");
-        // sql.append(" inner join coreartists car on car.artistid = ct.artistid");
-        // sql.append(" inner join corealbums cal on cal.albumid = ct.albumid");
-        // sql.append(" where ct.playcount > 0");
-        // sql.append(" order by artist asc, album asc, song asc");
-        sql.append("select car.name as artist, ct.title as song, ct.playcount from coretracks ct");
+        sql.append("select car.name as artist, ct.title as song, ct.playcount");
+        sql.append(" from coretracks ct");
         sql.append(" inner join coreartists car on car.artistid = ct.artistid");
         sql.append(" where ct.playcount > 0");
         sql.append(" order by artist asc, song asc");
@@ -83,16 +77,5 @@ public class BansheeMediaReporter extends AbstractMediaReporter
 
             return null;
         });
-
-        // List<Map<String, Object>> result = jdbcTemplate.queryForList(sql.toString());
-        //
-        // for (Map<String, Object> row : result)
-        // {
-        // String artist = (String) row.get("artist");
-        // String album = (String) row.get("album");
-        // String track = (String) row.get("track");
-        //
-        // System.out.printf("%s - %s - %s%n", artist, StringUtils.defaultString(album, ""), track);
-        // }
     }
 }

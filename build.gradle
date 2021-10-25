@@ -117,19 +117,3 @@ project("kodi:kodi-javafx") {
 	}     
 }
 
-project("kodi:kodi-web") {
-    description "WEB GUI für KODI"
-    dependencies {
-    	implementation(project(":kodi:kodi-core"))
-    	
-	    implementation("org.primefaces:primefaces")
-	    implementation("org.springframework:spring-web")
-	    
-	    runtimeOnly("com.sun.faces:jsf-api")
-	    runtimeOnly("com.sun.faces:jsf-impl")
-	    runtimeOnly("org.primefaces.extensions:primefaces-extensions")
-	    runtimeOnly("org.primefaces.themes:all-themes")
-	    
-	    testImplementation("javax:javaee-web-api")
-    }   
-}

@@ -2,6 +2,7 @@
 package de.freese.mediathek.services;
 
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.Locale;
 
@@ -120,9 +121,7 @@ public abstract class AbstractService implements InitializingBean
     {
         try
         {
-            String encoded = URLEncoder.encode(value.trim().toLowerCase(), "UTF-8");
-
-            return encoded;
+            return URLEncoder.encode(value.trim().toLowerCase(), StandardCharsets.UTF_8);
         }
         catch (Exception ex)
         {

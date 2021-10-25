@@ -16,7 +16,7 @@ import de.freese.mediathek.utils.MediaDBUtils;
 /**
  * @author Thomas Freese
  */
-public class KodiMediaReporter extends AbstractMediaReporter
+public class KodiMusikReporter extends AbstractMediaReporter
 {
     /**
      * @see de.freese.mediathek.report.MediaReporter#createDataSource(boolean)

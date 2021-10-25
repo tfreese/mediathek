@@ -50,9 +50,7 @@ public class AppConfigMySQL extends AbstractAppConfig
         config.setJdbcUrl(getEnvironment().getProperty("mysql.audio.db.url"));
         config.setPoolName("dataSourceMusik");
 
-        DataSource dataSource = new HikariDataSource(config);
-
-        return dataSource;
+        return new HikariDataSource(config);
     }
 
     /**
@@ -67,8 +65,6 @@ public class AppConfigMySQL extends AbstractAppConfig
         config.setJdbcUrl(getEnvironment().getProperty("mysql.video.db.url"));
         config.setPoolName("dataSourceVideo");
 
-        DataSource dataSource = new HikariDataSource(config);
-
-        return dataSource;
+        return new HikariDataSource(config);
     }
 }

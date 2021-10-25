@@ -39,11 +39,7 @@ public class KodiAudioReporter extends AbstractMediaReporter
         AbstractAppConfig appConfig = new AppConfigSQLite();
         appConfig.setEnvironment(environment);
 
-        DataSource dataSource = appConfig.dataSourceAudio();
-
-        environment.getProperty("test.property");
-
-        return dataSource;
+        return appConfig.dataSourceAudio();
     }
 
     /**
@@ -59,7 +55,7 @@ public class KodiAudioReporter extends AbstractMediaReporter
 
         StringBuilder sqlUpdate = new StringBuilder();
         sqlUpdate.append("UPDATE song");
-        sqlUpdate.append(" set iTimesPlayed = ?, lastplayed = ?");
+        sqlUpdate.append(" set iTimesPlayed = ?");
         sqlUpdate.append(" WHERE strArtists = ? AND strTitle = ?");
 
         List<Map<String, Object>> hearedMusic = readMusik(path);
@@ -76,7 +72,6 @@ public class KodiAudioReporter extends AbstractMediaReporter
                     String artist = (String) map.get("ARTIST");
                     String song = (String) map.get("SONG");
                     int playcount = Integer.parseInt((String) map.get("PLAYCOUNT"));
-                    String lastplayed = (String) map.get("LASTPLAYED");
 
                     stmtSelect.setString(1, artist);
                     stmtSelect.setString(2, song);
@@ -86,14 +81,14 @@ public class KodiAudioReporter extends AbstractMediaReporter
                         if (resultSet.next())
                         {
                             // Eintrag gefunden -> Update
-                            if ((playcount != resultSet.getInt("PLAYCOUNT")) || !lastplayed.equals(resultSet.getString("LASTPLAYED")))
+                            if (playcount != resultSet.getInt("PLAYCOUNT"))
                             {
                                 System.out.printf("Update Song: %s - %s%n", artist, song);
 
                                 stmtUpdate.setInt(1, playcount);
-                                stmtUpdate.setString(2, lastplayed);
-                                stmtUpdate.setString(3, artist);
-                                stmtUpdate.setString(4, song);
+                                stmtUpdate.setString(2, artist);
+                                stmtUpdate.setString(3, song);
+
                                 stmtUpdate.executeUpdate();
                             }
                         }
@@ -119,7 +114,7 @@ public class KodiAudioReporter extends AbstractMediaReporter
     protected void writeMusic(final DataSource dataSource, final Path path) throws Exception
     {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT strArtists AS artist, strTitle AS song, iTimesPlayed AS playcount, lastplayed");
+        sql.append("SELECT strArtists AS artist, strTitle AS song, iTimesPlayed AS playcount");
         sql.append(" FROM songView");
         sql.append(" WHERE iTimesPlayed > 0");
         sql.append(" ORDER BY artist asc, song asc");

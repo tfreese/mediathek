@@ -33,9 +33,7 @@ public class DefaultMovieService extends AbstractMovieDBService implements Movie
     {
         Appendable url = url().append("movie/{movieID}/casts?api_key={api_key}&language=de");
 
-        Casts casts = getRestTemplate().getForObject(url.toString(), Casts.class, id, getApiKey());
-
-        return casts;
+        return getRestTemplate().getForObject(url.toString(), Casts.class, id, getApiKey());
     }
 
     /**
@@ -46,9 +44,7 @@ public class DefaultMovieService extends AbstractMovieDBService implements Movie
     {
         Appendable url = url().append("movie/{movieID}?api_key={api_key}&language=de");
 
-        MovieDetails details = getRestTemplate().getForObject(url.toString(), MovieDetails.class, id, getApiKey());
-
-        return details;
+        return getRestTemplate().getForObject(url.toString(), MovieDetails.class, id, getApiKey());
     }
 
     /**
@@ -59,9 +55,7 @@ public class DefaultMovieService extends AbstractMovieDBService implements Movie
     {
         Appendable url = url().append("movie/{movieID}/images?api_key={api_key}"); // &language=de
 
-        Images images = getRestTemplate().getForObject(url.toString(), Images.class, id, getApiKey());
-
-        return images;
+        return getRestTemplate().getForObject(url.toString(), Images.class, id, getApiKey());
     }
 
     /**
@@ -72,9 +66,7 @@ public class DefaultMovieService extends AbstractMovieDBService implements Movie
     {
         Appendable url = url().append("search/movie?api_key={api_key}&language=de&query={query}");
 
-        Search search = getRestTemplate().getForObject(url.toString(), Search.class, getApiKey(), urlEncode(movie));
-
-        return search;
+        return getRestTemplate().getForObject(url.toString(), Search.class, getApiKey(), urlEncode(movie));
     }
 
     /**
@@ -85,8 +77,6 @@ public class DefaultMovieService extends AbstractMovieDBService implements Movie
     {
         Appendable url = url().append("search/movie?api_key={api_key}&language=de&query={query}&year={year}");
 
-        Search search = getRestTemplate().getForObject(url.toString(), Search.class, getApiKey(), urlEncode(movie), year);
-
-        return search;
+        return getRestTemplate().getForObject(url.toString(), Search.class, getApiKey(), urlEncode(movie), year);
     }
 }

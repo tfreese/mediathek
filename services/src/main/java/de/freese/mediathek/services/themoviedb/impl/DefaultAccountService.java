@@ -30,8 +30,6 @@ public class DefaultAccountService extends AbstractMovieDBService implements Acc
     {
         StringBuilder url = url().append("configuration?api_key={api_key}");
 
-        Configuration configuration = getRestTemplate().getForObject(url.toString(), Configuration.class, getApiKey());
-
-        return configuration;
+        return getRestTemplate().getForObject(url.toString(), Configuration.class, getApiKey());
     }
 }

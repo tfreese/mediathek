@@ -9,7 +9,6 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.sqlite.SQLiteConfig;
 import org.sqlite.SQLiteDataSource;
 import org.sqlite.javax.SQLiteConnectionPoolDataSource;
@@ -19,7 +18,7 @@ import de.freese.mediathek.report.AbstractMediaReporter;
 /**
  * @author Thomas Freese
  */
-public class ClementineMediaReporter extends AbstractMediaReporter
+public class PlexMusikReporter extends AbstractMediaReporter
 {
     /**
      * @see de.freese.mediathek.report.MediaReporter#createDataSource(boolean)
@@ -40,8 +39,20 @@ public class ClementineMediaReporter extends AbstractMediaReporter
         config.setReadOnly(readonly);
         config.setReadUncommited(true);
 
+        // SingleConnectionDataSource dataSource = new SingleConnectionDataSource();
+        // dataSource.setDriverClassName("org.sqlite.JDBC");
+        // dataSource.setUrl("jdbc:sqlite:/home/tommy/com.plexapp.plugins.library.db");
+        // dataSource.setSuppressClose(true);
+        // dataSource.setConnectionProperties(config.toProperties())
+
         SQLiteDataSource dataSource = new SQLiteConnectionPoolDataSource(config);
-        dataSource.setUrl("jdbc:sqlite:/home/tommy/.config/Clementine/clementine.db");
+        // dataSource.setUrl("jdbc:sqlite:/var/lib/plex/Plex\\ Media\\ Server/Plug-in\\ Support/Databases/com.plexapp.plugins.library.db");
+        // dataSource.setUrl("jdbc:sqlite:/opt/plexmediaserver/Resources/com.plexapp.plugins.library.db");
+        // dataSource.setUrl("jdbc:sqlite:/home/tommy/.config/plex/com.plexapp.plugins.library.db");
+        dataSource.setUrl("jdbc:sqlite:/home/tommy/com.plexapp.plugins.library.db");
+
+        // Export View-Status: echo ".dump metadata_item_settings" | sqlite3 com.plexapp.plugins.library.db | grep -v TABLE | grep -v INDEX > settings.sql
+        // Import View-Status: cat settings.sql | sqlite3 com.plexapp.plugins.library.db
 
         return dataSource;
     }
@@ -52,16 +63,13 @@ public class ClementineMediaReporter extends AbstractMediaReporter
     @Override
     public void updateDbFromReport(final DataSource dataSource, final Path path) throws Exception
     {
-        // TODO
-        // TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
-        // TransactionStatus transactionStatus = transactionManager.getTransaction(transactionDefinition);
-
         // ZoneId zoneId = ZoneId.of("Europe/Berlin");
         // ZoneOffset zoneOffset = ZoneOffset.ofHours(+1);
 
         StringBuilder sql = new StringBuilder();
-        sql.append("update songs set playcount = ?"); // , lastplayed = ?
-        sql.append(" where artist = ? and title = ?");
+        sql.append("update metadata_item_settings");
+        sql.append(" set view_count = ?");
+        sql.append(" where guid = (select guid from metadata_items where original_title = ? and title = ?)");
 
         List<Map<String, Object>> hearedMusic = readMusik(path);
 
@@ -77,14 +85,11 @@ public class ClementineMediaReporter extends AbstractMediaReporter
                     String artist = (String) map.get("ARTIST");
                     String song = (String) map.get("SONG");
                     int playcount = Integer.parseInt((String) map.get("PLAYCOUNT"));
-                    // LocalDateTime lastPlayed = LocalDateTime.parse((String) map.get("LASTPLAYED"));
 
                     System.out.printf("Update Song: %s - %s%n", artist, song);
 
                     // pstmt.clearParameters();
                     pstmt.setInt(1, playcount);
-                    // pstmt.setInt(2, Long.valueOf(lastPlayed.toInstant(zoneOffset).toEpochMilli()).intValue());
-                    // pstmt.setTimestamp(2, Timestamp.from(lastPlayed));
                     pstmt.setString(2, artist);
                     pstmt.setString(3, song);
                     pstmt.addBatch();
@@ -101,9 +106,6 @@ public class ClementineMediaReporter extends AbstractMediaReporter
                 ex.printStackTrace();
             }
         }
-
-        // transactionManager.commit(transactionStatus);
-        // transactionManager.rollback(transactionStatus);
     }
 
     /**
@@ -112,22 +114,6 @@ public class ClementineMediaReporter extends AbstractMediaReporter
     @Override
     public void writeReport(final DataSource dataSource, final Path path) throws Exception
     {
-        // select distinct filetype from songs;
-        // select count(*), filetype from songs group by filetype;
-        // select filename from songs where filetype = 5;
-        // select ARTIST, TITLE as SONG, PLAYCOUNT, FILETYPE from songs where PLAYCOUNT = 0 order by ARTIST asc, SONG asc;
-
-        StringBuilder sql = new StringBuilder();
-        sql.append("select ARTIST, TITLE as SONG, PLAYCOUNT from songs");
-        sql.append(" where PLAYCOUNT > 0");
-        sql.append(" order by ARTIST asc, SONG asc");
-
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-
-        jdbcTemplate.query(sql.toString(), resultSet -> {
-            writeResultSet(resultSet, path);
-
-            return null;
-        });
+        throw new UnsupportedOperationException("writeReport not implemented");
     }
 }

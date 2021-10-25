@@ -35,9 +35,7 @@ public class KodiVideoReporter extends AbstractMediaReporter
         AbstractAppConfig appConfig = new AppConfigSQLite();
         appConfig.setEnvironment(environment);
 
-        DataSource dataSource = appConfig.dataSourceVideo();
-
-        return dataSource;
+        return appConfig.dataSourceVideo();
     }
 
     /**
@@ -52,10 +50,6 @@ public class KodiVideoReporter extends AbstractMediaReporter
     protected void reportMovies(final DataSource dataSource, final Path path) throws Exception
     {
         StringBuilder sql = new StringBuilder();
-        // sql.append("SELECT movie.c00 AS film, files.playcount, files.lastplayed");
-        // sql.append(" FROM movie");
-        // sql.append(" INNER JOIN files ON files.idfile = movie.idfile AND files.playcount > 0");
-        // sql.append(" ORDER BY film asc");
         sql.append("SELECT c00 AS movie, playcount, lastplayed");
         sql.append(" FROM movie_view");
         sql.append(" WHERE playcount > 0");
@@ -81,11 +75,6 @@ public class KodiVideoReporter extends AbstractMediaReporter
     protected void reportTVShows(final DataSource dataSource, final Path path) throws Exception
     {
         StringBuilder sql = new StringBuilder();
-        // sql.append("SELECT tvshow.c00 AS serie, episode.c12 AS season, episode.c00 AS folge, episode.c13 AS nummer, files.playcount, files.lastplayed");
-        // sql.append(" FROM episode");
-        // sql.append(" INNER JOIN tvshow ON tvshow.idshow = episode.idshow");
-        // sql.append(" INNER JOIN files ON files.idfile = episode.idfile AND files.playcount > 0");
-        // sql.append(" ORDER BY serie asc, season asc, CAST(nummer AS UNSIGNED) asc");
         sql.append("SELECT strTitle AS tvshow, c12 AS season, c13 AS episode, c00 AS title, playcount, lastplayed");
         sql.append(" FROM episode_view");
         sql.append(" WHERE playcount > 0");
@@ -105,8 +94,8 @@ public class KodiVideoReporter extends AbstractMediaReporter
     @Override
     public void updateDbFromReport(final DataSource dataSource, final Path path) throws Exception
     {
-        updateMovies(dataSource, path.resolve("playcount-report-filme.csv"));
-        updateTVShows(dataSource, path.resolve("playcount-report-serien.csv"));
+        updateMovies(dataSource, path.resolve("filme-report.csv"));
+        updateTVShows(dataSource, path.resolve("serien-report.csv"));
     }
 
     /**
@@ -168,7 +157,7 @@ public class KodiVideoReporter extends AbstractMediaReporter
                                 stmtUpdate.setInt(1, playcount);
                                 stmtUpdate.setString(2, lastplayed);
                                 stmtUpdate.setInt(3, idFile);
-                                // stmtUpdate.setString(3, movie);
+
                                 stmtUpdate.executeUpdate();
                             }
                         }
@@ -252,10 +241,7 @@ public class KodiVideoReporter extends AbstractMediaReporter
                                 stmtUpdate.setInt(1, playcount);
                                 stmtUpdate.setString(2, lastplayed);
                                 stmtUpdate.setInt(3, playcount);
-                                // stmtUpdate.setString(3, tvshow);
-                                // stmtUpdate.setString(4, season);
-                                // stmtUpdate.setString(5, episode);
-                                // statement.setString(6, title);
+
                                 stmtUpdate.executeUpdate();
                             }
                         }

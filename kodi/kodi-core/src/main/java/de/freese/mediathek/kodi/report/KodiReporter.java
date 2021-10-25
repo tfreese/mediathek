@@ -60,6 +60,10 @@ public final class KodiReporter
                     {
                         c.close();
                     }
+                    else if (dataSource instanceof AutoCloseable ac)
+                    {
+                        ac.close();
+                    }
                 }
                 catch (Exception ex2)
                 {
