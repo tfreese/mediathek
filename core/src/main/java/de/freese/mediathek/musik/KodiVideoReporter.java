@@ -1,5 +1,5 @@
 // Created: 05.04.2020
-package de.freese.mediathek.kodi.report;
+package de.freese.mediathek.musik;
 
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -11,11 +11,6 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.springframework.core.env.ConfigurableEnvironment;
-import org.springframework.core.env.StandardEnvironment;
-
-import de.freese.mediathek.kodi.spring.AbstractAppConfig;
-import de.freese.mediathek.kodi.spring.AppConfigSQLite;
 import de.freese.mediathek.report.AbstractMediaReporter;
 
 /**
@@ -23,21 +18,6 @@ import de.freese.mediathek.report.AbstractMediaReporter;
  */
 public class KodiVideoReporter extends AbstractMediaReporter
 {
-    /**
-     * @see de.freese.mediathek.report.MediaReporter#createDataSource(boolean)
-     */
-    @Override
-    public DataSource createDataSource(final boolean readonly) throws Exception
-    {
-        ConfigurableEnvironment environment = new StandardEnvironment();
-        environment.getPropertySources().addLast(new KodiPropertySource());
-
-        AbstractAppConfig appConfig = new AppConfigSQLite();
-        appConfig.setEnvironment(environment);
-
-        return appConfig.dataSourceVideo();
-    }
-
     /**
      * Erzeugt eine CSV-Datei bereits gesehener Filme.<br>
      * Siehe auch movieview.
@@ -94,8 +74,8 @@ public class KodiVideoReporter extends AbstractMediaReporter
     @Override
     public void updateDbFromReport(final DataSource dataSource, final Path path) throws Exception
     {
-        updateMovies(dataSource, path.resolve("filme-report.csv"));
-        updateTVShows(dataSource, path.resolve("serien-report.csv"));
+        updateMovies(dataSource, path.resolve("filme-report-kodi.csv"));
+        updateTVShows(dataSource, path.resolve("serien-report-kodi.csv"));
     }
 
     /**
@@ -264,7 +244,7 @@ public class KodiVideoReporter extends AbstractMediaReporter
     @Override
     public void writeReport(final DataSource dataSource, final Path path) throws Exception
     {
-        reportMovies(dataSource, path.resolve("playcount-report-filme.csv"));
-        reportTVShows(dataSource, path.resolve("playcount-report-serien.csv"));
+        reportMovies(dataSource, path.resolve("filme-report-kodi.csv"));
+        reportTVShows(dataSource, path.resolve("serien-report-kodi.csv"));
     }
 }

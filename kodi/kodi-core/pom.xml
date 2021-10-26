@@ -14,33 +14,6 @@
 
     <name>${project.groupId} - ${project.artifactId}</name>
     <description>API für KODI</description>
-    
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-
-				<!-- mvn exec:java; Ausführung in der gleichen Runtime-Instanz wie Maven. -->
-				<!--configuration>
-					<executable>java</executable>
-					<mainClass>de.freese.mediathek.musik.MusikUtils</mainClass>
-					<classpathScope>runtime</classpathScope>
-					</configuration -->
-
-				<!-- mvn exec:exec; Ausführung in einer separaten Runtime-Instanz. -->
-				<configuration>
-					<toolchain>jdk</toolchain>
-					<executable>java</executable>
-					<arguments>
-						<argument>-classpath</argument>
-						<classpath />
-						<argument>de.freese.mediathek.kodi.report.KodiReporter</argument>
-					</arguments>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>    
 
     <dependencies>
         <!-- compile scope -->

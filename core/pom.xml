@@ -29,7 +29,7 @@
                     <arguments>
                         <argument>-classpath</argument>
                         <classpath />
-                        <argument>de.freese.mediathek.musik.MusikReporter</argument>
+                        <argument>de.freese.mediathek.musik.MultimediaReporter</argument>
                     </arguments>
                 </configuration>
             </plugin>

@@ -1,5 +1,5 @@
 // Created: 05.04.2020
-package de.freese.mediathek.kodi.report;
+package de.freese.mediathek.musik;
 
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
@@ -14,11 +14,6 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.springframework.core.env.ConfigurableEnvironment;
-import org.springframework.core.env.StandardEnvironment;
-
-import de.freese.mediathek.kodi.spring.AbstractAppConfig;
-import de.freese.mediathek.kodi.spring.AppConfigSQLite;
 import de.freese.mediathek.report.AbstractMediaReporter;
 import de.freese.mediathek.utils.MediaDBUtils;
 
@@ -27,21 +22,6 @@ import de.freese.mediathek.utils.MediaDBUtils;
  */
 public class KodiAudioReporter extends AbstractMediaReporter
 {
-    /**
-     * @see de.freese.mediathek.report.MediaReporter#createDataSource(boolean)
-     */
-    @Override
-    public DataSource createDataSource(final boolean readonly) throws Exception
-    {
-        ConfigurableEnvironment environment = new StandardEnvironment();
-        environment.getPropertySources().addLast(new KodiPropertySource());
-
-        AbstractAppConfig appConfig = new AppConfigSQLite();
-        appConfig.setEnvironment(environment);
-
-        return appConfig.dataSourceAudio();
-    }
-
     /**
      * @see de.freese.mediathek.report.MediaReporter#updateDbFromReport(javax.sql.DataSource, java.nio.file.Path)
      */
@@ -58,7 +38,7 @@ public class KodiAudioReporter extends AbstractMediaReporter
         sqlUpdate.append(" set iTimesPlayed = ?");
         sqlUpdate.append(" WHERE strArtists = ? AND strTitle = ?");
 
-        List<Map<String, Object>> hearedMusic = readMusik(path);
+        List<Map<String, Object>> hearedMusic = readMusik(path.resolve("musik-report-kodi.csv"));
 
         try (Connection connection = dataSource.getConnection())
         {
@@ -211,11 +191,11 @@ public class KodiAudioReporter extends AbstractMediaReporter
     @Override
     public void writeReport(final DataSource dataSource, final Path path) throws Exception
     {
-        writeMusic(dataSource, path.resolve("playcount-report-musik.csv"));
+        writeMusic(dataSource, path.resolve("musik-report-kodi.csv"));
 
         // Playlisten
         // Nur mit expliziter Tabelle möglich: tommy.playlist_music_artist
-        writeMusicPlaylistM3U(dataSource, path.resolve("Musik.m3u"));
-        writeMusicPlaylistXSP(dataSource, path.resolve("Musik.xsp"));
+        // writeMusicPlaylistM3U(dataSource, path.resolve("Musik.m3u"));
+        // writeMusicPlaylistXSP(dataSource, path.resolve("Musik.xsp"));
     }
 }

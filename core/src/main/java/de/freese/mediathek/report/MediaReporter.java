@@ -13,15 +13,6 @@ import javax.sql.DataSource;
 public interface MediaReporter
 {
     /**
-     * @param readonly boolean
-     *
-     * @return {@link DataSource}
-     *
-     * @throws Exception Falls was schief geht.
-     */
-    DataSource createDataSource(final boolean readonly) throws Exception;
-
-    /**
      * Aktualisiert die Datenbank mit den Media-Infos aus der Datei.
      *
      * @param dataSource {@link DataSource}

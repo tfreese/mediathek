@@ -9,54 +9,13 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.sqlite.SQLiteConfig;
-import org.sqlite.SQLiteDataSource;
-import org.sqlite.javax.SQLiteConnectionPoolDataSource;
-
 import de.freese.mediathek.report.AbstractMediaReporter;
 
 /**
  * @author Thomas Freese
  */
-public class PlexMusikReporter extends AbstractMediaReporter
+public class PlexAudioReporter extends AbstractMediaReporter
 {
-    /**
-     * @see de.freese.mediathek.report.MediaReporter#createDataSource(boolean)
-     */
-    @Override
-    public DataSource createDataSource(final boolean readonly) throws Exception
-    {
-        // Native Libraries deaktivieren für den Zugriff auf die Dateien.
-        System.setProperty("sqlite.purejava", "true");
-
-        // Pfade für native Libraries.
-        // System.setProperty("org.sqlite.lib.path", "/home/tommy");
-        // System.setProperty("org.sqlite.lib.name", "sqlite-libsqlitejdbc.so");
-
-        // DriverManager.setLogWriter(new PrintWriter(System.out, true));
-
-        SQLiteConfig config = new SQLiteConfig();
-        config.setReadOnly(readonly);
-        config.setReadUncommited(true);
-
-        // SingleConnectionDataSource dataSource = new SingleConnectionDataSource();
-        // dataSource.setDriverClassName("org.sqlite.JDBC");
-        // dataSource.setUrl("jdbc:sqlite:/home/tommy/com.plexapp.plugins.library.db");
-        // dataSource.setSuppressClose(true);
-        // dataSource.setConnectionProperties(config.toProperties())
-
-        SQLiteDataSource dataSource = new SQLiteConnectionPoolDataSource(config);
-        // dataSource.setUrl("jdbc:sqlite:/var/lib/plex/Plex\\ Media\\ Server/Plug-in\\ Support/Databases/com.plexapp.plugins.library.db");
-        // dataSource.setUrl("jdbc:sqlite:/opt/plexmediaserver/Resources/com.plexapp.plugins.library.db");
-        // dataSource.setUrl("jdbc:sqlite:/home/tommy/.config/plex/com.plexapp.plugins.library.db");
-        dataSource.setUrl("jdbc:sqlite:/home/tommy/com.plexapp.plugins.library.db");
-
-        // Export View-Status: echo ".dump metadata_item_settings" | sqlite3 com.plexapp.plugins.library.db | grep -v TABLE | grep -v INDEX > settings.sql
-        // Import View-Status: cat settings.sql | sqlite3 com.plexapp.plugins.library.db
-
-        return dataSource;
-    }
-
     /**
      * @see de.freese.mediathek.report.MediaReporter#updateDbFromReport(javax.sql.DataSource, java.nio.file.Path)
      */
@@ -71,7 +30,7 @@ public class PlexMusikReporter extends AbstractMediaReporter
         sql.append(" set view_count = ?");
         sql.append(" where guid = (select guid from metadata_items where original_title = ? and title = ?)");
 
-        List<Map<String, Object>> hearedMusic = readMusik(path);
+        List<Map<String, Object>> hearedMusic = readMusik(path.resolve("musik-report-plex.csv"));
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement pstmt = con.prepareStatement(sql.toString()))
@@ -114,6 +73,7 @@ public class PlexMusikReporter extends AbstractMediaReporter
     @Override
     public void writeReport(final DataSource dataSource, final Path path) throws Exception
     {
+        // path.resolve("musik-report-plex.csv")
         throw new UnsupportedOperationException("writeReport not implemented");
     }
 }
