@@ -1,13 +1,11 @@
 // Created: 05.04.2020
-package de.freese.mediathek.musik;
+package de.freese.mediathek.report;
 
 import java.nio.file.Path;
 
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-
-import de.freese.mediathek.report.AbstractMediaReporter;
 
 /**
  * @author Thomas Freese

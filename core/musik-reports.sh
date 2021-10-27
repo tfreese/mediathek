@@ -7,7 +7,7 @@ echo Musik Reports
 BASEDIR=$(dirname $0) #Verzeichnis des Skripts
 cd $BASEDIR
 
-if [ ! -f target/classes/de/freese/mediathek/musik/MultimediaReporter.class ]; then
+if [ ! -f target/classes/de/freese/mediathek/report/MultimediaReporter.class ]; then
     mvn clean compile;
 fi
 

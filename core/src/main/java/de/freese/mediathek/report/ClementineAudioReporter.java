@@ -1,5 +1,5 @@
 // Created: 05.04.2020
-package de.freese.mediathek.musik;
+package de.freese.mediathek.report;
 
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -10,8 +10,6 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-
-import de.freese.mediathek.report.AbstractMediaReporter;
 
 /**
  * @author Thomas Freese

@@ -1,5 +1,5 @@
 // Created: 05.04.2020
-package de.freese.mediathek.musik;
+package de.freese.mediathek.report;
 
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
@@ -14,7 +14,6 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import de.freese.mediathek.report.AbstractMediaReporter;
 import de.freese.mediathek.utils.MediaDBUtils;
 
 /**
@@ -29,14 +28,14 @@ public class KodiAudioReporter extends AbstractMediaReporter
     public void updateDbFromReport(final DataSource dataSource, final Path path) throws Exception
     {
         StringBuilder sqlSelect = new StringBuilder();
-        sqlSelect.append("select iTimesPlayed as playcount, lastplayed");
+        sqlSelect.append("select iTimesPlayed as playcount");
         sqlSelect.append(" from song");
-        sqlSelect.append(" where strArtists = ? and strTitle = ?");
+        sqlSelect.append(" where strArtistDisp = ? and strTitle = ?");
 
         StringBuilder sqlUpdate = new StringBuilder();
         sqlUpdate.append("UPDATE song");
         sqlUpdate.append(" set iTimesPlayed = ?");
-        sqlUpdate.append(" WHERE strArtists = ? AND strTitle = ?");
+        sqlUpdate.append(" WHERE strArtistDisp = ? AND strTitle = ?");
 
         List<Map<String, Object>> hearedMusic = readMusik(path.resolve("musik-report-kodi.csv"));
 
