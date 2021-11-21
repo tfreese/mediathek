@@ -8,7 +8,7 @@ import org.springframework.core.env.StandardEnvironment;
 
 import de.freese.mediathek.kodi.spring.AbstractAppConfig;
 import de.freese.mediathek.kodi.spring.AppConfigSQLite;
-import de.freese.mediathek.musik.KodiVideoReporter;
+import de.freese.mediathek.report.KodiVideoReporter;
 
 /**
  * @author Thomas Freese
