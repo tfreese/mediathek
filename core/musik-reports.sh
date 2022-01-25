@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Thomas Freese
-echo Musik Reports
+echo "Musik Reports"
 
 #BASEDIR=$PWD #Verzeichnis des Callers, aktuelles Verzeichnis
 BASEDIR=$(dirname $0) #Verzeichnis des Skripts
@@ -16,10 +16,15 @@ fi
 # mvn -q exec:java -Dexec.mainClass="..." -D<PARAM>="..."
 
 # Ausführung in einer separaten Runtime-Instanz, in POM definiert.
-#mvn -q exec:exec -Dexec.executable="java" -Dexec.args="%classpath" -Dexec.mainClass="..."
+# mvn -q exec:exec -Dexec.executable="java" -Dexec.args="%classpath" -Dexec.mainClass="..."
 
-mvn -o -q exec:exec;
-#mvn exec:exec;
+# Ohne Plugin-Konfiguration
+# mvn -o -q exec:java -Dexec.mainClass="..." -Dexec.classpathScope=runtime
+
+# Mit Plugin-Konfiguration
+# mvn -o -q exec:exec;
+mvn -q exec:exec;
+# mvn exec:exec;
 
 cd ~
 
