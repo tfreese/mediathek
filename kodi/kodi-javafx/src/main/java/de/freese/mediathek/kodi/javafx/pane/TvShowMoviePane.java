@@ -3,8 +3,6 @@ package de.freese.mediathek.kodi.javafx.pane;
 
 import java.util.ResourceBundle;
 
-import org.apache.commons.lang3.StringUtils;
-
 import de.freese.mediathek.kodi.model.IModel;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
@@ -29,18 +27,19 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import org.apache.commons.lang3.StringUtils;
 
 /**
- * @author Thomas Freese
- *
  * @param <T> Konkreter Typ
+ *
+ * @author Thomas Freese
  */
 public class TvShowMoviePane<T extends IModel> extends VBox
 {
     /**
      *
      */
-    private Button buttonEditGenres;
+    private final Button buttonEditGenres;
     /**
      *
      */
@@ -137,66 +136,6 @@ public class TvShowMoviePane<T extends IModel> extends VBox
     }
 
     /**
-     * @param propertyItemFilter {@link StringProperty}
-     * @param resourceBundle {@link ResourceBundle}
-     *
-     * @return {@link TableView}
-     */
-    @SuppressWarnings("unchecked")
-    private TableView<T> createTableView(final StringProperty propertyItemFilter, final ResourceBundle resourceBundle)
-    {
-        TableView<T> tableView = new TableView<>();
-        tableView.setEditable(false);
-        tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-
-        // Tabellenalignment über CellStyle
-        TableColumn<T, Integer> columnID = new TableColumn<>(resourceBundle.getString("id"));
-        columnID.setResizable(false);
-        columnID.prefWidthProperty().bind(tableView.widthProperty().multiply(0.1D)); // 10% Breite
-        columnID.setCellValueFactory(new PropertyValueFactory<>("PK"));
-        columnID.setStyle("-fx-alignment: CENTER-RIGHT;");
-
-        // Sortierung auf Name-Spalte
-        TableColumn<T, String> columnName = new TableColumn<>(resourceBundle.getString("name"));
-        columnName.prefWidthProperty().bind(tableView.widthProperty().multiply(0.9D)); // 90% Breite
-        columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        // columnName.setSortType(TableColumn.SortType.ASCENDING);
-
-        tableView.getColumns().addAll(columnID, columnName);
-
-        // Aller verfügbarer Platz für Genre-Spalte, Rest hat feste Breite
-        // columnName.prefWidthProperty().bind(tableView.widthProperty().subtract(columnID.getMaxWidth() + 16D));
-
-        // Für Filter
-        FilteredList<T> filteredData = new FilteredList<>(this.tableList, p -> true);
-
-        // Filter-Textfeld mit FilteredList verbinden.
-        propertyItemFilter.addListener((observable, oldValue, newValue) -> filteredData.setPredicate(value -> {
-            if (StringUtils.isBlank(newValue))
-            {
-                return true;
-            }
-
-            String text = value.getName();
-
-            if (StringUtils.containsIgnoreCase(text, newValue))
-            {
-                return true;
-            }
-
-            return false;
-        }));
-
-        // Da die ObservableList der TableItems neu gesetzt wird, muss auch die Sortierung neu gemacht werden.
-        SortedList<T> sortedData = new SortedList<>(filteredData);
-        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
-
-        tableView.setItems(sortedData);
-
-        return tableView;
-    }
-
-    /**
      * @return {@link Button}
      */
     public Button getButtonEditGenres()
@@ -251,5 +190,61 @@ public class TvShowMoviePane<T extends IModel> extends VBox
     public TableViewSelectionModel<T> getTableSelectionModel()
     {
         return this.tableView.getSelectionModel();
+    }
+
+    /**
+     * @param propertyItemFilter {@link StringProperty}
+     * @param resourceBundle {@link ResourceBundle}
+     *
+     * @return {@link TableView}
+     */
+    @SuppressWarnings("unchecked")
+    private TableView<T> createTableView(final StringProperty propertyItemFilter, final ResourceBundle resourceBundle)
+    {
+        TableView<T> tableView = new TableView<>();
+        tableView.setEditable(false);
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        // Tabellenalignment über CellStyle
+        TableColumn<T, Integer> columnID = new TableColumn<>(resourceBundle.getString("id"));
+        columnID.setResizable(false);
+        columnID.prefWidthProperty().bind(tableView.widthProperty().multiply(0.1D)); // 10% Breite
+        columnID.setCellValueFactory(new PropertyValueFactory<>("PK"));
+        columnID.setStyle("-fx-alignment: CENTER-RIGHT;");
+
+        // Sortierung auf Name-Spalte
+        TableColumn<T, String> columnName = new TableColumn<>(resourceBundle.getString("name"));
+        columnName.prefWidthProperty().bind(tableView.widthProperty().multiply(0.9D)); // 90% Breite
+        columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        // columnName.setSortType(TableColumn.SortType.ASCENDING);
+
+        tableView.getColumns().addAll(columnID, columnName);
+
+        // Aller verfügbarer Platz für Genre-Spalte, Rest hat feste Breite
+        // columnName.prefWidthProperty().bind(tableView.widthProperty().subtract(columnID.getMaxWidth() + 16D));
+
+        // Für Filter
+        FilteredList<T> filteredData = new FilteredList<>(this.tableList, p -> true);
+
+        // Filter-Textfeld mit FilteredList verbinden.
+        propertyItemFilter.addListener((observable, oldValue, newValue) -> filteredData.setPredicate(value ->
+        {
+            if (StringUtils.isBlank(newValue))
+            {
+                return true;
+            }
+
+            String text = value.getName();
+
+            return StringUtils.containsIgnoreCase(text, newValue);
+        }));
+
+        // Da die ObservableList der TableItems neu gesetzt wird, muss auch die Sortierung neu gemacht werden.
+        SortedList<T> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+
+        tableView.setItems(sortedData);
+
+        return tableView;
     }
 }

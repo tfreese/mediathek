@@ -3,17 +3,17 @@ package de.freese.mediathek.kodi.swing.panel;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.util.Objects;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
+import de.freese.mediathek.kodi.swing.action.ReloadAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
-
-import de.freese.mediathek.kodi.swing.action.ReloadAction;
 
 /**
  * @author Thomas Freese
@@ -23,15 +23,15 @@ public abstract class AbstractPanel implements IPanel
     /**
      *
      */
-    private ApplicationContext applicationContext;
+    public final Logger logger = LoggerFactory.getLogger(getClass());
+    /**
+     *
+     */
+    private final ApplicationContext applicationContext;
     /**
      *
      */
     private JComponent component;
-    /**
-     *
-     */
-    public final Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
      * Erstellt ein neues {@link AbstractPanel} Object.
@@ -42,7 +42,7 @@ public abstract class AbstractPanel implements IPanel
     {
         super();
 
-        this.applicationContext = applicationContext;
+        this.applicationContext = Objects.requireNonNull(applicationContext, "applicationContext required");
     }
 
     /**
@@ -59,13 +59,6 @@ public abstract class AbstractPanel implements IPanel
 
         return panel;
     }
-
-    /**
-     * Aufbau der GUI.
-     *
-     * @param component {@link JComponent}
-     */
-    protected abstract void buildPanel(JComponent component);
 
     /**
      * @see de.freese.mediathek.kodi.swing.panel.IPanel#getApplicationContext()
@@ -86,6 +79,22 @@ public abstract class AbstractPanel implements IPanel
     }
 
     /**
+     * @see de.freese.mediathek.kodi.swing.panel.IPanel#getLogger()
+     */
+    @Override
+    public Logger getLogger()
+    {
+        return this.logger;
+    }
+
+    /**
+     * Aufbau der GUI.
+     *
+     * @param component {@link JComponent}
+     */
+    protected abstract void buildPanel(JComponent component);
+
+    /**
      * Liefert die {@link Component} des Panels.
      *
      * @return {@link JComponent}
@@ -93,14 +102,5 @@ public abstract class AbstractPanel implements IPanel
     protected JComponent getComponent()
     {
         return this.component;
-    }
-
-    /**
-     * @see de.freese.mediathek.kodi.swing.panel.IPanel#getLogger()
-     */
-    @Override
-    public Logger getLogger()
-    {
-        return this.logger;
     }
 }

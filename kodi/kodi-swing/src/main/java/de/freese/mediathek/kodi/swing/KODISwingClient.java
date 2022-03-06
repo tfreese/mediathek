@@ -16,16 +16,15 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import javax.swing.plaf.FontUIResource;
 
-import org.apache.commons.lang3.ArrayUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
 import de.freese.mediathek.kodi.spring.AppConfigSQLite;
 import de.freese.mediathek.kodi.swing.panel.GenrePanel;
 import de.freese.mediathek.kodi.swing.panel.IPanel;
 import de.freese.mediathek.kodi.swing.panel.MoviePanel;
 import de.freese.mediathek.kodi.swing.panel.ShowPanel;
+import org.apache.commons.lang3.ArrayUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
  * Um Comparator Fehler zu vermeiden.<br>
@@ -36,6 +35,11 @@ import de.freese.mediathek.kodi.swing.panel.ShowPanel;
  */
 public class KODISwingClient
 {
+    /**
+     *
+     */
+    public static final Logger LOGGER = LoggerFactory.getLogger("KODI-Client");
+
     /**
      * WindowListener zum Beenden.
      *
@@ -52,15 +56,10 @@ public class KODISwingClient
             System.exit(0);
         }
     }
-
     /**
      *
      */
     public static Frame FRAME;
-    /**
-     *
-     */
-    public static final Logger LOGGER = LoggerFactory.getLogger("KODI-Client");
 
     /**
      * @param args String[]
@@ -72,7 +71,8 @@ public class KODISwingClient
         // Um Comparator Fehler zu vermeiden.
         System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
 
-        SwingUtilities.invokeLater(() -> {
+        SwingUtilities.invokeLater(() ->
+        {
             KODISwingClient application = new KODISwingClient();
 
             try
@@ -198,7 +198,8 @@ public class KODISwingClient
         // Fonts: Dialog, Monospaced, Arial, DejaVu Sans
         Font font = new Font("DejaVu Sans", Font.PLAIN, 16);
 
-        UIManager.getLookAndFeelDefaults().entrySet().stream().forEach(entry -> {
+        UIManager.getLookAndFeelDefaults().entrySet().forEach(entry ->
+        {
             Object key = entry.getKey();
             Object value = entry.getValue();
 
