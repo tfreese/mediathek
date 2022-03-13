@@ -4,8 +4,7 @@ package de.freese.mediathek.kodi.model;
 import java.text.Collator;
 import java.util.Comparator;
 import java.util.Locale;
-
-import org.apache.commons.lang3.StringUtils;
+import java.util.Objects;
 
 /**
  * Sortiert Filem in einem Set nach Jahr und nicht nach Name.<br>
@@ -43,8 +42,8 @@ public class MovieSetIDYearComparator implements Comparator<Movie>
 
         if (comp == 0)
         {
-            String name1 = StringUtils.defaultIfBlank(o1.getName(), "");
-            String name2 = StringUtils.defaultIfBlank(o2.getName(), "");
+            String name1 = Objects.toString(o1.getName()).trim();
+            String name2 = Objects.toString(o2.getName()).trim();
 
             comp = COLLATOR.compare(name1, name2);
             // comp = name1.compareTo(name2);

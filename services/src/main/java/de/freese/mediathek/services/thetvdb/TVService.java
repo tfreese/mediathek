@@ -13,15 +13,13 @@ import java.util.Map.Entry;
 
 import javax.imageio.ImageIO;
 
-import org.apache.commons.lang3.StringUtils;
+import de.freese.mediathek.services.AbstractService;
+import de.freese.mediathek.services.themoviedb.model.Image;
+import de.freese.mediathek.services.themoviedb.model.Images;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
-
-import de.freese.mediathek.services.AbstractService;
-import de.freese.mediathek.services.themoviedb.model.Image;
-import de.freese.mediathek.services.themoviedb.model.Images;
 
 /***
  * Implementierung für den Zugriff auf http:// www.thetvdb.com.<br>
@@ -32,8 +30,8 @@ import de.freese.mediathek.services.themoviedb.model.Images;
 public class TVService extends AbstractService
 {
     /**
-    *
-    */
+     *
+     */
     private RestTemplate restTemplate;
 
     /**
@@ -196,7 +194,7 @@ public class TVService extends AbstractService
      */
     public BufferedImage getImage(final String path) throws Exception
     {
-        if (StringUtils.isBlank(path))
+        if (path == null || path.isBlank())
         {
             return null;
         }
@@ -213,14 +211,6 @@ public class TVService extends AbstractService
     }
 
     /**
-     * @return {@link RestTemplate}
-     */
-    private RestTemplate getRestTemplate()
-    {
-        return this.restTemplate;
-    }
-
-    /**
      * Suche nach Name.
      *
      * @param name String
@@ -228,9 +218,9 @@ public class TVService extends AbstractService
      * @return {@link List}
      */
     @SuppressWarnings(
-    {
-            "unchecked", "rawtypes"
-    })
+            {
+                    "unchecked", "rawtypes"
+            })
     public List<TVShow> search(final String name)
     {
         // http://thetvdb.com/api/GetSeries.php?seriesname=stargate&language=de
@@ -286,6 +276,14 @@ public class TVService extends AbstractService
     public void setRestTemplate(final RestTemplate restTemplate)
     {
         this.restTemplate = restTemplate;
+    }
+
+    /**
+     * @return {@link RestTemplate}
+     */
+    private RestTemplate getRestTemplate()
+    {
+        return this.restTemplate;
     }
 
     /**

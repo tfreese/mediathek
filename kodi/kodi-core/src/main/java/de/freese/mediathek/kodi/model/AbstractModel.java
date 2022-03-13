@@ -3,8 +3,6 @@ package de.freese.mediathek.kodi.model;
 
 import java.util.Objects;
 
-import org.apache.commons.lang3.StringUtils;
-
 /**
  * @author Thomas Freese
  */
@@ -35,7 +33,10 @@ public abstract class AbstractModel implements IModel
             return 0;
         }
 
-        return StringUtils.defaultIfBlank(getName(), "").compareTo(StringUtils.defaultIfBlank(o.getName(), ""));
+        String value1 = Objects.toString(getName()).trim();
+        String value2 = Objects.toString(o.getName()).trim();
+
+        return value1.compareTo(value2);
     }
 
     /**
@@ -49,12 +50,7 @@ public abstract class AbstractModel implements IModel
             return true;
         }
 
-        if ((obj == null) || !(obj instanceof AbstractModel other) || !Objects.equals(this.name, other.name) || (this.pk != other.pk))
-        {
-            return false;
-        }
-
-        return true;
+        return (obj != null) && obj instanceof AbstractModel other && Objects.equals(this.name, other.name) && (this.pk == other.pk);
     }
 
     /**

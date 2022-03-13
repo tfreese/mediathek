@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-		<groupId>de.freese.mediathek.kodi</groupId>
-		<artifactId>kodi</artifactId>
+        <groupId>de.freese.mediathek.kodi</groupId>
+        <artifactId>kodi</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
@@ -18,15 +18,20 @@
     <dependencies>
         <!-- compile scope -->
         <dependency>
+            <groupId>de.freese.base</groupId>
+            <artifactId>base-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>de.freese.mediathek</groupId>
             <artifactId>mediathek-core</artifactId>
             <version>${project.version}</version>
         </dependency>
-        
-		<dependency>
-			<groupId>com.zaxxer</groupId>
-			<artifactId>HikariCP</artifactId>
-		</dependency>        
+
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -39,8 +44,8 @@
                     <groupId>ch.qos.logback</groupId>
                     <artifactId>logback-classic</artifactId>
                 </exclusion>
-            </exclusions>             
-        </dependency>        
+            </exclusions>
+        </dependency>
 
         <!-- runtime scope -->
         <!-- provided scope -->

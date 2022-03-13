@@ -21,7 +21,6 @@ import de.freese.mediathek.kodi.swing.panel.GenrePanel;
 import de.freese.mediathek.kodi.swing.panel.IPanel;
 import de.freese.mediathek.kodi.swing.panel.MoviePanel;
 import de.freese.mediathek.kodi.swing.panel.ShowPanel;
-import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -56,6 +55,7 @@ public class KODISwingClient
             System.exit(0);
         }
     }
+
     /**
      *
      */
@@ -121,7 +121,7 @@ public class KODISwingClient
     {
         String profile = null;
 
-        if (ArrayUtils.isEmpty(args))
+        if (args == null || args.length == 0)
         {
             profile = "sqlite";
         }

@@ -3,8 +3,6 @@ package de.freese.mediathek.services.themoviedb.model;
 
 import javax.swing.ImageIcon;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -114,9 +112,7 @@ public class Movie implements Comparable<Movie>
      */
     public String getJahr()
     {
-        String jahr = StringUtils.substring(getReleaseDate(), 0, 4);
-
-        return StringUtils.defaultString(jahr);
+        return getReleaseDate().substring(0, 4);
     }
 
     /**

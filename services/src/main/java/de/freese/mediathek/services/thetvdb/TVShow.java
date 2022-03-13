@@ -9,8 +9,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.apache.commons.lang3.StringUtils;
-
 import de.freese.mediathek.services.themoviedb.model.Image;
 
 /**
@@ -21,85 +19,85 @@ import de.freese.mediathek.services.themoviedb.model.Image;
 public class TVShow implements Comparable<TVShow>
 {
     /**
-    *
-    */
+     *
+     */
     @XmlElement(name = "Actors", required = false)
     private String actors;
     /**
-    *
-    */
+     *
+     */
     private List<Actor> actorsList;
     /**
-    *
-    */
+     *
+     */
     @XmlElement()
     private String banner;
     /**
-    *
-    */
+     *
+     */
     @XmlElement(name = "Overview")
     private String beschreibung;
     /**
-    *
-    */
+     *
+     */
     private List<Episode> episodes;
     /**
-    *
-    */
+     *
+     */
     @XmlElement(required = false)
     private String fanart;
     /**
-    *
-    */
+     *
+     */
     private List<Image> fanartList;
     /**
-    *
-    */
+     *
+     */
     @XmlElement(name = "Genre", required = false)
     private String genres;
     /**
-    *
-    */
+     *
+     */
     @XmlElement(name = "id")
     private String id;
     /**
-    *
-    */
+     *
+     */
     @XmlElement(name = "IMDB_ID")
     private String imdbID;
     /**
-    *
-    */
+     *
+     */
     @XmlElements(
-    {
-            @XmlElement(name = "language"), @XmlElement(name = "Language")
-    })
+            {
+                    @XmlElement(name = "language"), @XmlElement(name = "Language")
+            })
     private String language;
     /**
-    *
-    */
+     *
+     */
     @XmlElement(required = false)
     private String poster;
     /**
-    *
-    */
+     *
+     */
     private List<Image> posterList;
     /**
-    *
-    */
+     *
+     */
     @XmlElement(name = "FirstAired")
     private String releaseDate;
     /**
-    *
-    */
+     *
+     */
     private List<Image> seasonList;
     /**
-    *
-    */
+     *
+     */
     private List<Image> seriesList;
     /**
-    *
-    */
+     *
+     */
     @XmlElement(name = "SeriesName")
     private String title;
 
@@ -204,12 +202,7 @@ public class TVShow implements Comparable<TVShow>
      */
     public String getJahr()
     {
-        if (StringUtils.isNoneBlank(getReleaseDate()))
-        {
-            return getReleaseDate().substring(0, 4);
-        }
-
-        return null;
+        return getReleaseDate().substring(0, 4);
     }
 
     /**
@@ -269,6 +262,23 @@ public class TVShow implements Comparable<TVShow>
     }
 
     /**
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Serie [");
+        builder.append("id=").append(this.id);
+        builder.append(", releaseDate=").append(this.releaseDate);
+        builder.append(", title=").append(this.title);
+        builder.append(", language=").append(this.language);
+        builder.append("]");
+
+        return builder.toString();
+    }
+
+    /**
      * @param actors String
      */
     void setActors(final String actors)
@@ -322,22 +332,5 @@ public class TVShow implements Comparable<TVShow>
     void setSeriesList(final List<Image> seriesList)
     {
         this.seriesList = seriesList;
-    }
-
-    /**
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString()
-    {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Serie [");
-        builder.append("id=").append(this.id);
-        builder.append(", releaseDate=").append(this.releaseDate);
-        builder.append(", title=").append(this.title);
-        builder.append(", language=").append(this.language);
-        builder.append("]");
-
-        return builder.toString();
     }
 }

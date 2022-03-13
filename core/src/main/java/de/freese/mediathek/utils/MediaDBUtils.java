@@ -8,10 +8,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-
-import de.freese.base.utils.FileUtils;
-import de.freese.base.utils.JdbcUtils;
+import java.util.Objects;
+import java.util.StringJoiner;
+import java.util.function.Function;
 
 /**
  * Utils für Mediatheken.
@@ -29,7 +30,26 @@ public final class MediaDBUtils
      */
     public static void rename(final Path path) throws IOException
     {
-        FileUtils.rename(path);
+        Objects.requireNonNull(path, "path required");
+
+        Path parent = path.getParent();
+        String fileName = path.getFileName().toString();
+        Path last = parent.resolve(fileName + ".last");
+
+        if (!Files.exists(parent))
+        {
+            Files.createDirectories(parent);
+        }
+
+        if (Files.exists(last))
+        {
+            Files.delete(last);
+        }
+
+        if (Files.exists(path))
+        {
+            Files.move(path, last); // StandardCopyOption
+        }
     }
 
     /**
@@ -63,7 +83,68 @@ public final class MediaDBUtils
      */
     public static void writeCSV(final ResultSet resultSet, final PrintStream ps) throws SQLException
     {
-        JdbcUtils.writeCSV(resultSet, ps);
+        // Enthaltene Anführungszeichen escapen und den Wert selbst in Anführungszeichen setzen.
+        Function<String, String> valueFunction = value ->
+        {
+            String v = value;
+
+            if (v.contains("\""))
+            {
+                v = v.replace("\"", "\"\"");
+            }
+
+            return "\"" + v + "\"";
+        };
+
+        ResultSetMetaData metaData = resultSet.getMetaData();
+        int columnCount = metaData.getColumnCount();
+
+        StringJoiner stringJoiner = new StringJoiner(";");
+
+        // Header
+        for (int column = 1; column <= columnCount; column++)
+        {
+            stringJoiner.add(valueFunction.apply(metaData.getColumnLabel(column).toUpperCase()));
+        }
+
+        ps.println(stringJoiner);
+
+        // Daten
+        while (resultSet.next())
+        {
+            stringJoiner = new StringJoiner(";");
+
+            for (int column = 1; column <= columnCount; column++)
+            {
+                Object obj = resultSet.getObject(column);
+                String value;
+
+                if (obj == null)
+                {
+                    value = "";
+                }
+                else if (obj instanceof byte[] bytes)
+                {
+                    value = new String(bytes, StandardCharsets.UTF_8);
+                }
+                else
+                {
+                    value = obj.toString();
+                }
+
+                stringJoiner.add(valueFunction.apply(value));
+            }
+
+            ps.println(stringJoiner);
+        }
+
+        ps.flush();
+
+        // ResultSet wieder zurück auf Anfang.
+        if (resultSet.getType() != ResultSet.TYPE_FORWARD_ONLY)
+        {
+            resultSet.first();
+        }
     }
 
     /**

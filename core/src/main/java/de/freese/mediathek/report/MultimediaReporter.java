@@ -7,18 +7,22 @@ import java.nio.file.Paths;
 
 import javax.sql.DataSource;
 
+import de.freese.mediathek.utils.StopWatch;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.sqlite.SQLiteConfig;
 import org.sqlite.SQLiteDataSource;
 import org.sqlite.javax.SQLiteConnectionPoolDataSource;
-
-import de.freese.base.utils.StopWatch;
 
 /**
  * @author Thomas Freese
  */
 public final class MultimediaReporter
 {
+    /**
+     *
+     */
+    private static final StopWatch STOP_WATCH = new StopWatch();
+
     /**
      * @author Thomas Freese
      */
@@ -46,6 +50,33 @@ public final class MultimediaReporter
         static DataSource clementineSqLite(final boolean readonly) throws Exception
         {
             return createSqLite(readonly, "jdbc:sqlite:/home/tommy/.config/Clementine/clementine.db");
+        }
+
+        /**
+         * @param readonly boolean
+         *
+         * @return {@link DataSource}
+         *
+         * @throws Exception Falls was schief geht.
+         */
+        static DataSource kodiMusikSqLite(final boolean readonly) throws Exception
+        {
+            return createSqLite(readonly, "jdbc:sqlite:/home/tommy/.kodi/userdata/Database/MyMusic82.db");
+        }
+
+        /**
+         * @param readonly boolean
+         *
+         * @return {@link DataSource}
+         *
+         * @throws Exception Falls was schief geht.
+         */
+        static DataSource plexSqlite(final boolean readonly) throws Exception
+        {
+            // jdbc:sqlite:/var/lib/plex/Plex\\ Media\\ Server/Plug-in\\ Support/Databases/com.plexapp.plugins.library.db
+            // jdbc:sqlite:/opt/plexmediaserver/Resources/com.plexapp.plugins.library.db
+            // jdbc:sqlite:/home/tommy/.config/plex/com.plexapp.plugins.library.db
+            return createSqLite(readonly, "jdbc:sqlite:/home/tommy/com.plexapp.plugins.library.db");
         }
 
         /**
@@ -90,33 +121,6 @@ public final class MultimediaReporter
         }
 
         /**
-         * @param readonly boolean
-         *
-         * @return {@link DataSource}
-         *
-         * @throws Exception Falls was schief geht.
-         */
-        static DataSource kodiMusikSqLite(final boolean readonly) throws Exception
-        {
-            return createSqLite(readonly, "jdbc:sqlite:/home/tommy/.kodi/userdata/Database/MyMusic82.db");
-        }
-
-        /**
-         * @param readonly boolean
-         *
-         * @return {@link DataSource}
-         *
-         * @throws Exception Falls was schief geht.
-         */
-        static DataSource plexSqlite(final boolean readonly) throws Exception
-        {
-            // jdbc:sqlite:/var/lib/plex/Plex\\ Media\\ Server/Plug-in\\ Support/Databases/com.plexapp.plugins.library.db
-            // jdbc:sqlite:/opt/plexmediaserver/Resources/com.plexapp.plugins.library.db
-            // jdbc:sqlite:/home/tommy/.config/plex/com.plexapp.plugins.library.db
-            return createSqLite(readonly, "jdbc:sqlite:/home/tommy/com.plexapp.plugins.library.db");
-        }
-
-        /**
          * Erstellt ein neues {@link DataSources} Object.
          */
         private DataSources()
@@ -124,11 +128,6 @@ public final class MultimediaReporter
             super();
         }
     }
-
-    /**
-    *
-    */
-    private static final StopWatch STOP_WATCH = new StopWatch();
 
     /**
      * @param args String[]

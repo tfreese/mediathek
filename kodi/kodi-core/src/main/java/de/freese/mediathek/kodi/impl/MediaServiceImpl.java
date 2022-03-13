@@ -4,13 +4,13 @@ package de.freese.mediathek.kodi.impl;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import org.apache.commons.lang3.ArrayUtils;
-import org.springframework.transaction.annotation.Transactional;
+
 import de.freese.mediathek.kodi.api.MediaDAO;
 import de.freese.mediathek.kodi.api.MediaService;
 import de.freese.mediathek.kodi.model.Genre;
 import de.freese.mediathek.kodi.model.Movie;
 import de.freese.mediathek.kodi.model.Show;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implementierung für den Service.
@@ -49,18 +49,6 @@ public class MediaServiceImpl implements MediaService
     }
 
     /**
-     * @see de.freese.mediathek.kodi.api.MediaService#getGenres()
-     */
-    @Override
-    public List<Genre> getGenres()
-    {
-        List<Genre> genres = getMediaDAO().getGenres();
-        Collections.sort(genres);
-
-        return genres;
-    }
-
-    /**
      * @see de.freese.mediathek.kodi.api.MediaService#getGenreShows(int)
      */
     @Override
@@ -73,11 +61,15 @@ public class MediaServiceImpl implements MediaService
     }
 
     /**
-     * @return {@link MediaDAO}
+     * @see de.freese.mediathek.kodi.api.MediaService#getGenres()
      */
-    protected MediaDAO getMediaDAO()
+    @Override
+    public List<Genre> getGenres()
     {
-        return this.mediaDAO;
+        List<Genre> genres = getMediaDAO().getGenres();
+        Collections.sort(genres);
+
+        return genres;
     }
 
     /**
@@ -136,9 +128,9 @@ public class MediaServiceImpl implements MediaService
      */
     @Override
     @Transactional("txManagerVideo")
-    public String updateMovieGenres(final int movieID, final int...genreIDs)
+    public String updateMovieGenres(final int movieID, final int... genreIDs)
     {
-        if (ArrayUtils.isEmpty(genreIDs))
+        if (genreIDs == null || genreIDs.length == 0)
         {
             return null;
         }
@@ -158,9 +150,9 @@ public class MediaServiceImpl implements MediaService
      */
     @Override
     @Transactional("txManagerVideo")
-    public String updateShowGenres(final int showID, final int...genreIDs)
+    public String updateShowGenres(final int showID, final int... genreIDs)
     {
-        if (ArrayUtils.isEmpty(genreIDs))
+        if (genreIDs == null || genreIDs.length == 0)
         {
             return null;
         }
@@ -173,5 +165,13 @@ public class MediaServiceImpl implements MediaService
         }
 
         return getMediaDAO().updateShowGenres(showID);
+    }
+
+    /**
+     * @return {@link MediaDAO}
+     */
+    protected MediaDAO getMediaDAO()
+    {
+        return this.mediaDAO;
     }
 }

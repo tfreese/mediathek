@@ -20,20 +20,18 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
 import com.jgoodies.binding.value.ValueHolder;
 import com.jgoodies.binding.value.ValueModel;
-
 import de.freese.base.core.cache.FileResourceCache;
 import de.freese.base.core.cache.ResourceCache;
 import de.freese.base.utils.ImageUtils;
 import de.freese.mediathek.kodi.model.Movie;
 import de.freese.mediathek.kodi.swing.KODISwingClient;
 import de.freese.mediathek.kodi.swing.components.rowfilter.RegExRowFilter;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * {@link PresentationModel} der {@link ShowBean}.
@@ -46,10 +44,6 @@ public class MovieModel extends PresentationModel<MovieBean>
      *
      */
     private static final long serialVersionUID = 5768855611560857610L;
-    /**
-     *
-     */
-    private JTable jTable;
     /**
      *
      */
@@ -66,6 +60,10 @@ public class MovieModel extends PresentationModel<MovieBean>
      *
      */
     private final ValueModel valueModelPoster;
+    /**
+     *
+     */
+    private JTable jTable;
 
     /**
      * Erstellt ein neues {@link MovieModel} Object.
@@ -113,10 +111,11 @@ public class MovieModel extends PresentationModel<MovieBean>
         TableRowSorter<TableModel> sorter = new TableRowSorter<>(jTable.getModel());
         jTable.setRowSorter(sorter);
 
-        this.valueModelFilter.addValueChangeListener(event -> {
+        this.valueModelFilter.addValueChangeListener(event ->
+        {
             String text = (String) event.getNewValue();
 
-            if (StringUtils.isBlank(text))
+            if (text == null || text.isBlank())
             {
                 sorter.setRowFilter(null);
             }
@@ -204,14 +203,14 @@ public class MovieModel extends PresentationModel<MovieBean>
 
                 String url = StringUtils.substringBetween(getBean().getPosters(), "preview=\"", "\">");
 
-                if (StringUtils.isBlank(url))
+                if (url.isBlank())
                 {
                     url = StringUtils.substringBetween(getBean().getPosters(), ">", "<");
                 }
 
-                url = StringUtils.replace(url, "t/p/w500", "t/p/w342"); // w92, w154, w185, w342, w500
+                url = url.replace("t/p/w500", "t/p/w342"); // w92, w154, w185, w342, w500
 
-                if (StringUtils.isNotBlank(url))
+                if (!url.isBlank())
                 {
                     Optional<InputStream> optional = MovieModel.this.resourceCache.getResource(URI.create(url));
 

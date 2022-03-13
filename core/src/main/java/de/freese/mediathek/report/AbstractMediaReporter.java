@@ -43,6 +43,7 @@ public abstract class AbstractMediaReporter implements MediaReporter
                     .skip(1) // Header überspringen
                     .map(l -> l.replaceAll("^\"|\"$", "")) // Erstes und letztes " entfernen
                     .map(l -> l.replaceAll("\";\"", ";")) // ";"  durch ; ersetzen
+                    .map(l -> l.replace("\"\"", "\"")) // Escapte Anführungszeichen ersetzen: "" -> "
                     .map(l -> l.split("[;]"))
                     .map(array -> {
                         Map<String, Object> map = new LinkedHashMap<>();
@@ -86,6 +87,7 @@ public abstract class AbstractMediaReporter implements MediaReporter
                     .skip(1) // Header überspringen
                     .map(l -> l.replaceAll("^\"|\"$", "")) // Erstes und letztes " entfernen
                     .map(l -> l.replaceAll("\";\"", ";")) // ";"  durch ; ersetzen
+                    .map(l -> l.replace("\"\"", "\"")) // Escapte Anführungszeichen ersetzen: "" -> "
                     .map(l -> l.split("[;]"))
                     .map(array -> {
                         Map<String, Object> map = new LinkedHashMap<>();
@@ -133,6 +135,7 @@ public abstract class AbstractMediaReporter implements MediaReporter
                     .skip(1) // Header überspringen
                     .map(l -> l.replaceAll("^\"|\"$", "")) // Erstes und letztes " entfernen
                     .map(l -> l.replaceAll("\";\"", ";")) // ";"  durch ; ersetzen
+                    .map(l -> l.replace("\"\"", "\"")) // Escapte Anführungszeichen ersetzen: "" -> "
                     .map(l -> l.split("[;]"))
                     .map(array -> {
                         Map<String, Object> map = new LinkedHashMap<>();
