@@ -20,20 +20,18 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
 import com.jgoodies.binding.value.ValueHolder;
 import com.jgoodies.binding.value.ValueModel;
-
-import de.freese.base.core.cache.FileResourceCache;
-import de.freese.base.core.cache.ResourceCache;
-import de.freese.base.utils.ImageUtils;
 import de.freese.mediathek.kodi.model.Show;
 import de.freese.mediathek.kodi.swing.KODISwingClient;
 import de.freese.mediathek.kodi.swing.components.rowfilter.RegExRowFilter;
+import de.freese.mediathek.utils.ImageUtils;
+import de.freese.mediathek.utils.cache.FileResourceCache;
+import de.freese.mediathek.utils.cache.ResourceCache;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * {@link PresentationModel} der {@link ShowBean}.
@@ -46,10 +44,6 @@ public class ShowModel extends PresentationModel<ShowBean>
      *
      */
     private static final long serialVersionUID = -1759604850162069149L;
-    /**
-     *
-     */
-    private JTable jTable;
     /**
      *
      */
@@ -66,6 +60,10 @@ public class ShowModel extends PresentationModel<ShowBean>
      *
      */
     private final ValueModel valueModelFilter;
+    /**
+     *
+     */
+    private JTable jTable;
 
     /**
      * Erstellt ein neues {@link ShowModel} Object.
@@ -113,10 +111,11 @@ public class ShowModel extends PresentationModel<ShowBean>
         TableRowSorter<TableModel> sorter = new TableRowSorter<>(jTable.getModel());
         jTable.setRowSorter(sorter);
 
-        this.valueModelFilter.addValueChangeListener(event -> {
+        this.valueModelFilter.addValueChangeListener(event ->
+        {
             String text = (String) event.getNewValue();
 
-            if (StringUtils.isBlank(text))
+            if (text == null || text.isBlank())
             {
                 sorter.setRowFilter(null);
             }
@@ -129,19 +128,19 @@ public class ShowModel extends PresentationModel<ShowBean>
     }
 
     /**
-     * @param textFieldFilter {@link JTextField}
-     */
-    public void bindTextFieldFilter(final JTextField textFieldFilter)
-    {
-        Bindings.bind(textFieldFilter, this.valueModelFilter);
-    }
-
-    /**
      * @param jLabel {@link JLabel}
      */
     public void bindTVDIDLabel(final JLabel jLabel)
     {
         Bindings.bind(jLabel, getModel(ShowBean.PROPERTY_TVDB_ID));
+    }
+
+    /**
+     * @param textFieldFilter {@link JTextField}
+     */
+    public void bindTextFieldFilter(final JTextField textFieldFilter)
+    {
+        Bindings.bind(textFieldFilter, this.valueModelFilter);
     }
 
     /**
@@ -223,12 +222,12 @@ public class ShowModel extends PresentationModel<ShowBean>
                 String url = StringUtils.substringBetween(getBean().getBanner(), "preview=\"", "\">");
                 // url = StringUtils.replace(url, "t/p/w500", "t/p/w92");
 
-                if (StringUtils.isBlank(url))
+                if (url == null || url.isBlank())
                 {
                     url = StringUtils.substringBetween(getBean().getBanner(), ">", "<");
                 }
 
-                if (StringUtils.isNotBlank(url))
+                if (url != null && !url.isBlank())
                 {
                     Optional<InputStream> optional = ShowModel.this.resourceCache.getResource(URI.create(url));
 

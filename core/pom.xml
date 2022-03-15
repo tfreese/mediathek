@@ -38,12 +38,10 @@
 
     <dependencies>
         <!-- compile scope -->
-        <!--dependency>
-            <groupId>de.freese.base</groupId>
-            <artifactId>base-persistence</artifactId>
-            <version>${project.version}</version>
-        </dependency-->
-
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>

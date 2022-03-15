@@ -25,12 +25,12 @@ import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
 import com.jgoodies.binding.value.ValueHolder;
 import com.jgoodies.binding.value.ValueModel;
-import de.freese.base.core.cache.FileResourceCache;
-import de.freese.base.core.cache.ResourceCache;
-import de.freese.base.utils.ImageUtils;
 import de.freese.mediathek.kodi.model.Movie;
 import de.freese.mediathek.kodi.swing.KODISwingClient;
 import de.freese.mediathek.kodi.swing.components.rowfilter.RegExRowFilter;
+import de.freese.mediathek.utils.ImageUtils;
+import de.freese.mediathek.utils.cache.FileResourceCache;
+import de.freese.mediathek.utils.cache.ResourceCache;
 import org.apache.commons.lang3.StringUtils;
 
 /**

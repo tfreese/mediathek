@@ -6,13 +6,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.Locale;
 
+import de.freese.mediathek.utils.cache.FileResourceCache;
+import de.freese.mediathek.utils.cache.ResourceCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
-
-import de.freese.base.core.cache.FileResourceCache;
-import de.freese.base.core.cache.ResourceCache;
 
 /**
  * Basisimplementierung für den Zugriff auf eine Online-Media-Datenbank (www.themoviedb.org, www.thetvdb.com).
@@ -28,15 +27,15 @@ public abstract class AbstractService implements InitializingBean
     /**
      *
      */
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+    /**
+     *
+     */
     private ResourceCache cache;
     /**
      *
      */
     private Locale locale = Locale.GERMANY;
-    /**
-     *
-     */
-    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
      * Erstellt ein neues {@link AbstractService} Object.
@@ -62,6 +61,22 @@ public abstract class AbstractService implements InitializingBean
         {
             this.cache = new FileResourceCache(Paths.get(System.getProperty("java.io.tmpdir"), ".javacache"));
         }
+    }
+
+    /**
+     * @param cache {@link ResourceCache}
+     */
+    public void setCache(final ResourceCache cache)
+    {
+        this.cache = cache;
+    }
+
+    /**
+     * @param locale {@link Locale}
+     */
+    public void setLocale(final Locale locale)
+    {
+        this.locale = locale;
     }
 
     /**
@@ -94,22 +109,6 @@ public abstract class AbstractService implements InitializingBean
     protected Logger getLogger()
     {
         return this.logger;
-    }
-
-    /**
-     * @param cache {@link ResourceCache}
-     */
-    public void setCache(final ResourceCache cache)
-    {
-        this.cache = cache;
-    }
-
-    /**
-     * @param locale {@link Locale}
-     */
-    public void setLocale(final Locale locale)
-    {
-        this.locale = locale;
     }
 
     /**

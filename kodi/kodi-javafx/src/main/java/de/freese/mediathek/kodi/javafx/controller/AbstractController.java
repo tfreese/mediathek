@@ -5,12 +5,10 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.Executor;
 
-import org.springframework.context.ApplicationContext;
-
-import de.freese.base.core.cache.FileResourceCache;
-import de.freese.base.core.cache.ResourceCache;
 import de.freese.mediathek.kodi.api.MediaService;
 import de.freese.mediathek.kodi.model.IModel;
+import de.freese.mediathek.utils.cache.FileResourceCache;
+import de.freese.mediathek.utils.cache.ResourceCache;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -18,6 +16,7 @@ import javafx.concurrent.Task;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
+import org.springframework.context.ApplicationContext;
 
 /**
  * @param <T> Entity
@@ -125,7 +124,8 @@ public abstract class AbstractController<T extends IModel> implements Initializa
                 return load();
             }
         };
-        task.setOnSucceeded(event -> {
+        task.setOnSucceeded(event ->
+        {
             List<T> media = task.getValue();
             dataList.addAll(media);
             // selectionModel.select(0);
