@@ -29,9 +29,9 @@ public class RegExRowFilter extends AbstractRowFilterIndexed
      * @param regex {@link String}
      * @param columns int[]
      */
-    public RegExRowFilter(final int matchFlags, final String regex, final int...columns)
+    public RegExRowFilter(final int matchFlags, final String regex, final int... columns)
     {
-        this(Pattern.compile(Objects.requireNonNull(regex), Objects.requireNonNull(matchFlags)), columns);
+        this(Pattern.compile(Objects.requireNonNull(regex), matchFlags), columns);
     }
 
     /**
@@ -40,7 +40,7 @@ public class RegExRowFilter extends AbstractRowFilterIndexed
      * @param regexPattern {@link Pattern}
      * @param columns int[]
      */
-    public RegExRowFilter(final Pattern regexPattern, final int...columns)
+    public RegExRowFilter(final Pattern regexPattern, final int... columns)
     {
         super(columns);
 

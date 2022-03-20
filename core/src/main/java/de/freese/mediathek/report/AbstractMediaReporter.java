@@ -2,13 +2,11 @@
 package de.freese.mediathek.report;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.ResultSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import de.freese.mediathek.utils.MediaDBUtils;
 
@@ -32,33 +30,19 @@ public abstract class AbstractMediaReporter implements MediaReporter
      *
      * @throws IOException Falls was schief geht.
      */
-    protected List<Map<String, Object>> readMovies(final Path path) throws IOException
+    protected List<Map<String, String>> readMovies(final Path path) throws IOException
     {
-        List<Map<String, Object>> list = null;
+        return MediaDBUtils.parseCsv(path).stream()
+                .skip(1)// Header überspringen
+                .map(row ->
+                {
+                    Map<String, String> map = new LinkedHashMap<>();
+                    map.put("MOVIE", row[0]);
+                    map.put("PLAYCOUNT", row[1]);
+                    map.put("LASTPLAYED", row[2]);
 
-        try (Stream<String> stream = Files.lines(path))
-        {
-            // @formatter:off
-            list = stream
-                    .skip(1) // Header überspringen
-                    .map(l -> l.replaceAll("^\"|\"$", "")) // Erstes und letztes " entfernen
-                    .map(l -> l.replaceAll("\";\"", ";")) // ";"  durch ; ersetzen
-                    .map(l -> l.replace("\"\"", "\"")) // Escapte Anführungszeichen ersetzen: "" -> "
-                    .map(l -> l.split("[;]"))
-                    .map(array -> {
-                        Map<String, Object> map = new LinkedHashMap<>();
-                        map.put("MOVIE", array[0]);
-                        map.put("PLAYCOUNT", array[1]);
-                        map.put("LASTPLAYED", array[2]);
-
-                        return map;
-                    })
-                    .toList()
-                    ;
-            // @formatter:on
-        }
-
-        return list;
+                    return map;
+                }).toList();
     }
 
     /**
@@ -76,33 +60,19 @@ public abstract class AbstractMediaReporter implements MediaReporter
      *
      * @throws IOException Falls was schief geht.
      */
-    protected List<Map<String, Object>> readMusik(final Path path) throws IOException
+    protected List<Map<String, String>> readMusik(final Path path) throws IOException
     {
-        List<Map<String, Object>> list = null;
+        return MediaDBUtils.parseCsv(path).stream()
+                .skip(1)// Header überspringen
+                .map(row ->
+                {
+                    Map<String, String> map = new LinkedHashMap<>();
+                    map.put("ARTIST", row[0]);
+                    map.put("SONG", row[1]);
+                    map.put("PLAYCOUNT", row[2]);
 
-        try (Stream<String> stream = Files.lines(path))
-        {
-            // @formatter:off
-            list = stream
-                    .skip(1) // Header überspringen
-                    .map(l -> l.replaceAll("^\"|\"$", "")) // Erstes und letztes " entfernen
-                    .map(l -> l.replaceAll("\";\"", ";")) // ";"  durch ; ersetzen
-                    .map(l -> l.replace("\"\"", "\"")) // Escapte Anführungszeichen ersetzen: "" -> "
-                    .map(l -> l.split("[;]"))
-                    .map(array -> {
-                        Map<String, Object> map = new LinkedHashMap<>();
-                        map.put("ARTIST", array[0]);
-                        map.put("SONG", array[1]);
-                        map.put("PLAYCOUNT", array[2]);
-
-                        return map;
-                    })
-                    .toList()
-                    ;
-            // @formatter:on
-        }
-
-        return list;
+                    return map;
+                }).toList();
     }
 
     /**
@@ -123,37 +93,22 @@ public abstract class AbstractMediaReporter implements MediaReporter
      *
      * @throws IOException Falls was schief geht.
      */
-    protected List<Map<String, Object>> readTVShows(final Path path) throws IOException
+    protected List<Map<String, String>> readTVShows(final Path path) throws IOException
     {
-        List<Map<String, Object>> list = null;
+        return MediaDBUtils.parseCsv(path).stream()
+                .skip(1)// Header überspringen
+                .map(row ->
+                {
+                    Map<String, String> map = new LinkedHashMap<>();
+                    map.put("TVSHOW", row[0]);
+                    map.put("SEASON", row[1]);
+                    map.put("EPISODE", row[2]);
+                    map.put("TITLE", row[3]);
+                    map.put("PLAYCOUNT", row[4]);
+                    map.put("LASTPLAYED", row[5]);
 
-        try (Stream<String> stream = Files.lines(path))
-        {
-            // @formatter:off
-            list = stream
-                    //.peek(System.out::println)
-                    .skip(1) // Header überspringen
-                    .map(l -> l.replaceAll("^\"|\"$", "")) // Erstes und letztes " entfernen
-                    .map(l -> l.replaceAll("\";\"", ";")) // ";"  durch ; ersetzen
-                    .map(l -> l.replace("\"\"", "\"")) // Escapte Anführungszeichen ersetzen: "" -> "
-                    .map(l -> l.split("[;]"))
-                    .map(array -> {
-                        Map<String, Object> map = new LinkedHashMap<>();
-                        map.put("TVSHOW", array[0]);
-                        map.put("SEASON", array[1]);
-                        map.put("EPISODE", array[2]);
-                        map.put("TITLE", array[3]);
-                        map.put("PLAYCOUNT", array[4]);
-                        map.put("LASTPLAYED", array[5]);
-
-                        return map;
-                    })
-                    .toList()
-                    ;
-            // @formatter:on
-        }
-
-        return list;
+                    return map;
+                }).toList();
     }
 
     /**
@@ -167,7 +122,7 @@ public abstract class AbstractMediaReporter implements MediaReporter
     {
         try
         {
-            MediaDBUtils.writeCSV(resultSet, path);
+            MediaDBUtils.writeCsv(resultSet, path);
         }
         catch (Exception ex)
         {

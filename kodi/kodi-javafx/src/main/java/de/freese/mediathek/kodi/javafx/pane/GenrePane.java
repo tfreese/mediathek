@@ -91,74 +91,6 @@ public class GenrePane extends VBox
     }
 
     /**
-     * @param resourceBundle {@link ResourceBundle}
-     *
-     * @return {@link TableView}
-     */
-    private TableView<Genre> createTableViewGenres(final ResourceBundle resourceBundle)
-    {
-        TableView<Genre> tableView = new TableView<>();
-        tableView.setEditable(false);
-        tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-
-        // Tabellenalignment über CellStyle
-        TableColumn<Genre, Integer> columnID = new TableColumn<>(resourceBundle.getString("id"));
-        columnID.setResizable(false);
-        columnID.prefWidthProperty().bind(tableView.widthProperty().multiply(0.1D)); // 10% Breite
-        columnID.setCellValueFactory(new PropertyValueFactory<>("PK"));
-        // columnID.setCellValueFactory(cell -> cell.getValue().getPK());
-        columnID.setStyle("-fx-alignment: CENTER-RIGHT;");
-
-        // Sortierung auf Genrespalte
-        TableColumn<Genre, String> columnGenre = new TableColumn<>(resourceBundle.getString("genre"));
-        columnGenre.prefWidthProperty().bind(tableView.widthProperty().multiply(0.58D)); // 58% Breite
-        columnGenre.setCellValueFactory(new PropertyValueFactory<>("name"));
-        // columnGenre.setCellValueFactory(cell -> cell.getValue().getName());
-        // columnGenre.setSortType(TableColumn.SortType.ASCENDING);
-
-        TableColumn<Genre, Integer> columnFilme = new TableColumn<>(resourceBundle.getString("filme"));
-        columnFilme.setResizable(false);
-        columnFilme.prefWidthProperty().bind(tableView.widthProperty().multiply(0.16D)); // 16% Breite
-        columnFilme.setCellValueFactory(new PropertyValueFactory<>("anzahlFilme"));
-        // columnFilme.setCellValueFactory(cell -> cell.getValue().getAnzahlFilme());
-        columnFilme.setStyle("-fx-alignment: CENTER-RIGHT;");
-
-        // Alignment über CellFactory
-        TableColumn<Genre, String> columnSerien = new TableColumn<>(resourceBundle.getString("serien"));
-        columnSerien.setResizable(false);
-        columnSerien.prefWidthProperty().bind(tableView.widthProperty().multiply(0.16D)); // 16% Breite
-        columnSerien.setCellValueFactory(new PropertyValueFactory<>("anzahlSerien"));
-        // columnSerien.setCellValueFactory(cell -> cell.getValue().getAnzahlSerien());
-        columnSerien.setStyle("-fx-alignment: CENTER-RIGHT;");
-        // FormattedTableCellFactory<Genre, String> cellFactorySerien = new FormattedTableCellFactory<>();
-        // cellFactorySerien.setAlignment(TextAlignment.RIGHT);
-        // columnSerien.setCellFactory(cellFactorySerien);
-        // columnSerien.setCellFactory(TextFieldTableCell.forTableColumn());
-        // columnSerien.setOnEditCommit(
-        // new EventHandler<CellEditEvent<Person, String>>()
-        // {
-        // @Override
-        // public void handle(CellEditEvent<Person, String> t)
-        // {
-        // ((Person) t.getTableView().getItems().get(
-        // t.getTablePosition().getRow())).setFirstName(t.getNewValue());
-        // }
-        // }
-        // );
-
-        tableView.getColumns().add(columnID);
-        tableView.getColumns().add(columnGenre);
-        tableView.getColumns().add(columnFilme);
-        tableView.getColumns().add(columnSerien);
-
-        // Aller verfügbarer Platz für Genre-Spalte, Rest hat feste Breite.
-        // columnGenre.prefWidthProperty()
-        // .bind(tableView.widthProperty().subtract(columnID.getMaxWidth() + columnFilme.getMinWidth() + columnSerien.getMinWidth() + 16D));
-
-        return tableView;
-    }
-
-    /**
      * @return {@link Button}
      */
     public Button getButtonReload()
@@ -196,5 +128,73 @@ public class GenrePane extends VBox
     public TableViewSelectionModel<Genre> getTableSelectionModel()
     {
         return this.tableViewGenres.getSelectionModel();
+    }
+
+    /**
+     * @param resourceBundle {@link ResourceBundle}
+     *
+     * @return {@link TableView}
+     */
+    private TableView<Genre> createTableViewGenres(final ResourceBundle resourceBundle)
+    {
+        TableView<Genre> tableView = new TableView<>();
+        tableView.setEditable(false);
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        // Tabellenalignment über CellStyle
+        TableColumn<Genre, Integer> columnID = new TableColumn<>(resourceBundle.getString("id"));
+        columnID.setResizable(false);
+        columnID.prefWidthProperty().bind(tableView.widthProperty().multiply(0.1D)); // 10 % Breite
+        columnID.setCellValueFactory(new PropertyValueFactory<>("PK"));
+        // columnID.setCellValueFactory(cell -> cell.getValue().getPK());
+        columnID.setStyle("-fx-alignment: CENTER-RIGHT;");
+
+        // Sortierung auf Genrespalte
+        TableColumn<Genre, String> columnGenre = new TableColumn<>(resourceBundle.getString("genre"));
+        columnGenre.prefWidthProperty().bind(tableView.widthProperty().multiply(0.58D)); // 58 % Breite
+        columnGenre.setCellValueFactory(new PropertyValueFactory<>("name"));
+        // columnGenre.setCellValueFactory(cell -> cell.getValue().getName());
+        // columnGenre.setSortType(TableColumn.SortType.ASCENDING);
+
+        TableColumn<Genre, Integer> columnFilme = new TableColumn<>(resourceBundle.getString("filme"));
+        columnFilme.setResizable(false);
+        columnFilme.prefWidthProperty().bind(tableView.widthProperty().multiply(0.16D)); // 16 % Breite
+        columnFilme.setCellValueFactory(new PropertyValueFactory<>("anzahlFilme"));
+        // columnFilme.setCellValueFactory(cell -> cell.getValue().getAnzahlFilme());
+        columnFilme.setStyle("-fx-alignment: CENTER-RIGHT;");
+
+        // Alignment über CellFactory
+        TableColumn<Genre, String> columnSerien = new TableColumn<>(resourceBundle.getString("serien"));
+        columnSerien.setResizable(false);
+        columnSerien.prefWidthProperty().bind(tableView.widthProperty().multiply(0.16D)); // 16 % Breite
+        columnSerien.setCellValueFactory(new PropertyValueFactory<>("anzahlSerien"));
+        // columnSerien.setCellValueFactory(cell -> cell.getValue().getAnzahlSerien());
+        columnSerien.setStyle("-fx-alignment: CENTER-RIGHT;");
+        // FormattedTableCellFactory<Genre, String> cellFactorySerien = new FormattedTableCellFactory<>();
+        // cellFactorySerien.setAlignment(TextAlignment.RIGHT);
+        // columnSerien.setCellFactory(cellFactorySerien);
+        // columnSerien.setCellFactory(TextFieldTableCell.forTableColumn());
+        // columnSerien.setOnEditCommit(
+        // new EventHandler<CellEditEvent<Person, String>>()
+        // {
+        // @Override
+        // public void handle(CellEditEvent<Person, String> t)
+        // {
+        // ((Person) t.getTableView().getItems().get(
+        // t.getTablePosition().getRow())).setFirstName(t.getNewValue());
+        // }
+        // }
+        // );
+
+        tableView.getColumns().add(columnID);
+        tableView.getColumns().add(columnGenre);
+        tableView.getColumns().add(columnFilme);
+        tableView.getColumns().add(columnSerien);
+
+        // Aller verfügbarer Platz für Genre-Spalte, Rest hat feste Breite.
+        // columnGenre.prefWidthProperty()
+        // .bind(tableView.widthProperty().subtract(columnID.getMaxWidth() + columnFilme.getMinWidth() + columnSerien.getMinWidth() + 16D));
+
+        return tableView;
     }
 }

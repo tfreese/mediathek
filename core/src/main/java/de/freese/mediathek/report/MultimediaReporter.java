@@ -138,12 +138,12 @@ public final class MultimediaReporter
     {
         // MediaReporter mediaReporter = new BansheeAudioReporter();
         MediaReporter mediaReporter = new ClementineAudioReporter();
-        // MediaReporter mediaReporter = new KodiAudioReporter();
+        //MediaReporter mediaReporter = new KodiAudioReporter();
         // MediaReporter mediaReporter = new PlexAudioReporter();
 
         STOP_WATCH.start("connect");
         DataSource dataSource = DataSources.clementineSqLite(true);
-        // DataSource dataSource = DataSources.kodiMusikSqLite(true);
+        //DataSource dataSource = DataSources.kodiMusikSqLite(true);
         STOP_WATCH.stop();
 
         try
@@ -157,7 +157,7 @@ public final class MultimediaReporter
             System.out.println();
 
             mediaReporter.writeReport(dataSource, path);
-            // mediaReporter.updateDbFromReport(dataSource, path);
+            //mediaReporter.updateDbFromReport(dataSource, path);
 
             STOP_WATCH.stop();
         }

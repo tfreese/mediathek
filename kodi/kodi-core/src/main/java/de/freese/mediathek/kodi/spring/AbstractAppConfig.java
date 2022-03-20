@@ -7,6 +7,10 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 import javax.sql.DataSource;
 
+import de.freese.mediathek.kodi.api.MediaDAO;
+import de.freese.mediathek.kodi.api.MediaService;
+import de.freese.mediathek.kodi.impl.MediaDAOImpl;
+import de.freese.mediathek.kodi.impl.MediaServiceImpl;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.EnvironmentAware;
@@ -19,11 +23,6 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.scheduling.concurrent.ThreadPoolExecutorFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import de.freese.mediathek.kodi.api.MediaDAO;
-import de.freese.mediathek.kodi.api.MediaService;
-import de.freese.mediathek.kodi.impl.MediaDAOImpl;
-import de.freese.mediathek.kodi.impl.MediaServiceImpl;
 
 /**
  * @author Thomas Freese
@@ -64,9 +63,9 @@ public abstract class AbstractAppConfig implements EnvironmentAware
      */
     @Bean
     @ConditionalOnMissingBean(
-    {
-            Executor.class, ExecutorService.class
-    })
+            {
+                    Executor.class, ExecutorService.class
+            })
     @Primary
     public ThreadPoolExecutorFactoryBean executorService()
     {
@@ -87,14 +86,6 @@ public abstract class AbstractAppConfig implements EnvironmentAware
         bean.setExposeUnconfigurableExecutor(true);
 
         return bean;
-    }
-
-    /**
-     * @return {@link Environment}
-     */
-    protected Environment getEnvironment()
-    {
-        return this.environment;
     }
 
     /**
@@ -155,5 +146,13 @@ public abstract class AbstractAppConfig implements EnvironmentAware
     public PlatformTransactionManager txManagerVideo(@Qualifier("dataSourceVideo") final DataSource dataSource)
     {
         return new DataSourceTransactionManager(dataSource);
+    }
+
+    /**
+     * @return {@link Environment}
+     */
+    protected Environment getEnvironment()
+    {
+        return this.environment;
     }
 }

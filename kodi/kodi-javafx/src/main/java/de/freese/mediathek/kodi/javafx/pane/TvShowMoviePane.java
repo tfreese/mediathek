@@ -208,13 +208,13 @@ public class TvShowMoviePane<T extends IModel> extends VBox
         // Tabellenalignment über CellStyle
         TableColumn<T, Integer> columnID = new TableColumn<>(resourceBundle.getString("id"));
         columnID.setResizable(false);
-        columnID.prefWidthProperty().bind(tableView.widthProperty().multiply(0.1D)); // 10% Breite
+        columnID.prefWidthProperty().bind(tableView.widthProperty().multiply(0.1D)); // 10 % Breite
         columnID.setCellValueFactory(new PropertyValueFactory<>("PK"));
         columnID.setStyle("-fx-alignment: CENTER-RIGHT;");
 
         // Sortierung auf Name-Spalte
         TableColumn<T, String> columnName = new TableColumn<>(resourceBundle.getString("name"));
-        columnName.prefWidthProperty().bind(tableView.widthProperty().multiply(0.9D)); // 90% Breite
+        columnName.prefWidthProperty().bind(tableView.widthProperty().multiply(0.9D)); // 90 % Breite
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         // columnName.setSortType(TableColumn.SortType.ASCENDING);
 

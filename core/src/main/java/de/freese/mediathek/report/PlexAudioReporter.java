@@ -28,7 +28,7 @@ public class PlexAudioReporter extends AbstractMediaReporter
         sql.append(" set view_count = ?");
         sql.append(" where guid = (select guid from metadata_items where original_title = ? and title = ?)");
 
-        List<Map<String, Object>> hearedMusic = readMusik(path.resolve("musik-report-plex.csv"));
+        List<Map<String, String>> hearedMusic = readMusik(path.resolve("musik-report-plex.csv"));
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement pstmt = con.prepareStatement(sql.toString()))
@@ -37,11 +37,11 @@ public class PlexAudioReporter extends AbstractMediaReporter
 
             try
             {
-                for (Map<String, Object> map : hearedMusic)
+                for (Map<String, String> map : hearedMusic)
                 {
-                    String artist = (String) map.get("ARTIST");
-                    String song = (String) map.get("SONG");
-                    int playcount = Integer.parseInt((String) map.get("PLAYCOUNT"));
+                    String artist = map.get("ARTIST");
+                    String song = map.get("SONG");
+                    int playcount = Integer.parseInt(map.get("PLAYCOUNT"));
 
                     System.out.printf("Update Song: %s - %s%n", artist, song);
 

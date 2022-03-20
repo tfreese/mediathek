@@ -17,6 +17,26 @@ import javax.sql.DataSource;
 public class KodiVideoReporter extends AbstractMediaReporter
 {
     /**
+     * @see de.freese.mediathek.report.MediaReporter#updateDbFromReport(javax.sql.DataSource, java.nio.file.Path)
+     */
+    @Override
+    public void updateDbFromReport(final DataSource dataSource, final Path path) throws Exception
+    {
+        updateMovies(dataSource, path.resolve("filme-report-kodi.csv"));
+        updateTVShows(dataSource, path.resolve("serien-report-kodi.csv"));
+    }
+
+    /**
+     * @see de.freese.mediathek.report.MediaReporter#writeReport(javax.sql.DataSource, java.nio.file.Path)
+     */
+    @Override
+    public void writeReport(final DataSource dataSource, final Path path) throws Exception
+    {
+        reportMovies(dataSource, path.resolve("filme-report-kodi.csv"));
+        reportTVShows(dataSource, path.resolve("serien-report-kodi.csv"));
+    }
+
+    /**
      * Erzeugt eine CSV-Datei bereits gesehener Filme.<br>
      * Siehe auch movieview.
      *
@@ -67,16 +87,6 @@ public class KodiVideoReporter extends AbstractMediaReporter
     }
 
     /**
-     * @see de.freese.mediathek.report.MediaReporter#updateDbFromReport(javax.sql.DataSource, java.nio.file.Path)
-     */
-    @Override
-    public void updateDbFromReport(final DataSource dataSource, final Path path) throws Exception
-    {
-        updateMovies(dataSource, path.resolve("filme-report-kodi.csv"));
-        updateTVShows(dataSource, path.resolve("serien-report-kodi.csv"));
-    }
-
-    /**
      * Auslesen der CSV-Datei bereits gesehener Filme und aktualisieren der Datenbank.<br>
      *
      * @param dataSource {@link DataSource}
@@ -104,7 +114,7 @@ public class KodiVideoReporter extends AbstractMediaReporter
         sqlUpdate.append(" set playcount = ?, lastplayed = ?");
         sqlUpdate.append(" where idfile = ?");
 
-        List<Map<String, Object>> watchedMovies = readMovies(path);
+        List<Map<String, String>> watchedMovies = readMovies(path);
 
         try (Connection connection = dataSource.getConnection())
         {
@@ -113,11 +123,11 @@ public class KodiVideoReporter extends AbstractMediaReporter
             try (PreparedStatement stmtUpdate = connection.prepareStatement(sqlUpdate.toString());
                  PreparedStatement stmtSelect = connection.prepareStatement(sqlSelect.toString()))
             {
-                for (Map<String, Object> map : watchedMovies)
+                for (Map<String, String> map : watchedMovies)
                 {
-                    String movie = (String) map.get("MOVIE");
-                    int playcount = Integer.parseInt((String) map.get("PLAYCOUNT"));
-                    String lastplayed = (String) map.get("LASTPLAYED");
+                    String movie = map.get("MOVIE");
+                    int playcount = Integer.parseInt(map.get("PLAYCOUNT"));
+                    String lastplayed = map.get("LASTPLAYED");
 
                     stmtSelect.setString(1, movie);
 
@@ -182,7 +192,7 @@ public class KodiVideoReporter extends AbstractMediaReporter
         sqlUpdate.append(" set playcount = ?, lastplayed = ?");
         sqlUpdate.append(" where idfile = ?");
 
-        List<Map<String, Object>> watchedShows = readTVShows(path);
+        List<Map<String, String>> watchedShows = readTVShows(path);
 
         try (Connection connection = dataSource.getConnection())
         {
@@ -191,14 +201,14 @@ public class KodiVideoReporter extends AbstractMediaReporter
             try (PreparedStatement stmtUpdate = connection.prepareStatement(sqlUpdate.toString());
                  PreparedStatement stmtSelect = connection.prepareStatement(sqlSelect.toString()))
             {
-                for (Map<String, Object> map : watchedShows)
+                for (Map<String, String> map : watchedShows)
                 {
-                    String tvshow = (String) map.get("TVSHOW");
-                    String season = (String) map.get("SEASON");
-                    String episode = (String) map.get("EPISODE");
-                    String title = (String) map.get("TITLE");
-                    int playcount = Integer.parseInt((String) map.get("PLAYCOUNT"));
-                    String lastplayed = (String) map.get("LASTPLAYED");
+                    String tvshow = map.get("TVSHOW");
+                    String season = map.get("SEASON");
+                    String episode = map.get("EPISODE");
+                    String title = map.get("TITLE");
+                    int playcount = Integer.parseInt(map.get("PLAYCOUNT"));
+                    String lastplayed = map.get("LASTPLAYED");
 
                     stmtSelect.setString(1, tvshow);
                     stmtSelect.setString(2, season);
@@ -234,15 +244,5 @@ public class KodiVideoReporter extends AbstractMediaReporter
                 throw ex;
             }
         }
-    }
-
-    /**
-     * @see de.freese.mediathek.report.MediaReporter#writeReport(javax.sql.DataSource, java.nio.file.Path)
-     */
-    @Override
-    public void writeReport(final DataSource dataSource, final Path path) throws Exception
-    {
-        reportMovies(dataSource, path.resolve("filme-report-kodi.csv"));
-        reportTVShows(dataSource, path.resolve("serien-report-kodi.csv"));
     }
 }

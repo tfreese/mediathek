@@ -16,18 +16,22 @@ import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
 
 import com.jgoodies.common.collect.ArrayListModel;
-
 import de.freese.mediathek.kodi.model.Genre;
 import de.freese.mediathek.kodi.swing.GBCBuilder;
 import de.freese.mediathek.kodi.swing.components.list.GenreListCellRenderer;
 
 /**
- * Dialog zum Auswahl der Genres.
+ * Dialog zur Auswahl der Genres.
  *
  * @author Thomas Freese
  */
 public class GenreAuswahlDialog extends JDialog
 {
+    /**
+     *
+     */
+    private static final long serialVersionUID = -4384289197484325624L;
+
     /**
      * @author Thomas Freese
      */
@@ -173,11 +177,6 @@ public class GenreAuswahlDialog extends JDialog
             listModel.add(genre);
         }
     }
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4384289197484325624L;
     /**
      *
      */

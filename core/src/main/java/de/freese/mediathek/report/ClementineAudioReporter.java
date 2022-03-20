@@ -33,7 +33,7 @@ public class ClementineAudioReporter extends AbstractMediaReporter
         sql.append("update songs set playcount = ?"); // , lastplayed = ?
         sql.append(" where artist = ? and title = ?");
 
-        List<Map<String, Object>> hearedMusic = readMusik(path.resolve("musik-report-clementine.csv"));
+        List<Map<String, String>> hearedMusic = readMusik(path.resolve("musik-report-clementine.csv"));
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement pstmt = con.prepareStatement(sql.toString()))
@@ -42,11 +42,11 @@ public class ClementineAudioReporter extends AbstractMediaReporter
 
             try
             {
-                for (Map<String, Object> map : hearedMusic)
+                for (Map<String, String> map : hearedMusic)
                 {
-                    String artist = (String) map.get("ARTIST");
-                    String song = (String) map.get("SONG");
-                    int playcount = Integer.parseInt((String) map.get("PLAYCOUNT"));
+                    String artist = map.get("ARTIST");
+                    String song = map.get("SONG");
+                    int playcount = Integer.parseInt(map.get("PLAYCOUNT"));
                     // LocalDateTime lastPlayed = LocalDateTime.parse((String) map.get("LASTPLAYED"));
 
                     System.out.printf("Update Song: %s - %s%n", artist, song);
@@ -90,7 +90,8 @@ public class ClementineAudioReporter extends AbstractMediaReporter
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
-        jdbcTemplate.query(sql.toString(), resultSet -> {
+        jdbcTemplate.query(sql.toString(), resultSet ->
+        {
             writeResultSet(resultSet, path.resolve("musik-report-clementine.csv"));
 
             return null;

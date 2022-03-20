@@ -37,7 +37,7 @@ public class KodiAudioReporter extends AbstractMediaReporter
         sqlUpdate.append(" set iTimesPlayed = ?");
         sqlUpdate.append(" WHERE strArtistDisp = ? AND strTitle = ?");
 
-        List<Map<String, Object>> hearedMusic = readMusik(path.resolve("musik-report-kodi.csv"));
+        List<Map<String, String>> hearedMusic = readMusik(path.resolve("musik-report-kodi.csv"));
 
         try (Connection connection = dataSource.getConnection())
         {
@@ -46,11 +46,11 @@ public class KodiAudioReporter extends AbstractMediaReporter
             try (PreparedStatement stmtUpdate = connection.prepareStatement(sqlUpdate.toString());
                  PreparedStatement stmtSelect = connection.prepareStatement(sqlSelect.toString()))
             {
-                for (Map<String, Object> map : hearedMusic)
+                for (Map<String, String> map : hearedMusic)
                 {
-                    String artist = (String) map.get("ARTIST");
-                    String song = (String) map.get("SONG");
-                    int playcount = Integer.parseInt((String) map.get("PLAYCOUNT"));
+                    String artist = map.get("ARTIST");
+                    String song = map.get("SONG");
+                    int playcount = Integer.parseInt(map.get("PLAYCOUNT"));
 
                     stmtSelect.setString(1, artist);
                     stmtSelect.setString(2, song);
@@ -82,6 +82,20 @@ public class KodiAudioReporter extends AbstractMediaReporter
                 throw ex;
             }
         }
+    }
+
+    /**
+     * @see de.freese.mediathek.report.MediaReporter#writeReport(javax.sql.DataSource, java.nio.file.Path)
+     */
+    @Override
+    public void writeReport(final DataSource dataSource, final Path path) throws Exception
+    {
+        writeMusic(dataSource, path.resolve("musik-report-kodi.csv"));
+
+        // Playlisten
+        // Nur mit expliziter Tabelle möglich: tommy.playlist_music_artist
+        // writeMusicPlaylistM3U(dataSource, path.resolve("Musik.m3u"));
+        // writeMusicPlaylistXSP(dataSource, path.resolve("Musik.xsp"));
     }
 
     /**
@@ -182,19 +196,5 @@ public class KodiAudioReporter extends AbstractMediaReporter
             pw.println("    <order direction=\"ascending\">random</order>");
             pw.println("</smartplaylist>");
         }
-    }
-
-    /**
-     * @see de.freese.mediathek.report.MediaReporter#writeReport(javax.sql.DataSource, java.nio.file.Path)
-     */
-    @Override
-    public void writeReport(final DataSource dataSource, final Path path) throws Exception
-    {
-        writeMusic(dataSource, path.resolve("musik-report-kodi.csv"));
-
-        // Playlisten
-        // Nur mit expliziter Tabelle möglich: tommy.playlist_music_artist
-        // writeMusicPlaylistM3U(dataSource, path.resolve("Musik.m3u"));
-        // writeMusicPlaylistXSP(dataSource, path.resolve("Musik.xsp"));
     }
 }

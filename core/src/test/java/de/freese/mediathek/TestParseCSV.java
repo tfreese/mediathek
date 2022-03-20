@@ -1,15 +1,17 @@
 // Created: 22.05.2016
 package de.freese.mediathek;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import java.nio.file.Files;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.stream.Stream;
+import java.util.List;
 
+import de.freese.mediathek.utils.MediaDBUtils;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -23,111 +25,64 @@ import org.junit.jupiter.api.TestMethodOrder;
 class TestParseCSV
 {
     /**
-     * @throws Exception Falls was schief geht.
+     * @throws IOException Falls was schief geht
      */
     @Test
-    void testReadClementineMusik() throws Exception
+    void testParseClementine() throws IOException
     {
-        try (Stream<String> stream = Files.lines(Paths.get("/home/tommy/dokumente/linux/musik-playcount.csv")))
-        {
-            // @formatter:off
-            stream
-                .peek(System.out::println)
-                .map(l -> l.replaceAll("^\"|\"$", "")) // Erstes und letztes " entfernen
-                .peek(System.out::println)
-                .map(l -> l.replaceAll("\";\"", ";")) // ";"  durch ; ersetzen
-                .peek(System.out::println)
-                .map(l -> l.split("[;]"))
-                .forEach(ar -> System.out.println(Arrays.toString(ar)))
-                ;
-            // @formatter:on
-        }
+        Path path = Paths.get("/home/tommy/dokumente/linux/musik-report-clementine.csv");
 
-        assertTrue(true);
+        List<String> list = MediaDBUtils.parseCsv(path).stream().limit(3).map(Arrays::toString).toList();
+
+        assertFalse(list.isEmpty());
+        assertEquals(3, list.size());
+
+        list.forEach(System.out::println);
     }
 
     /**
-     * @throws Exception Falls was schief geht.
+     *
      */
     @Test
-    void testReadKodiFilme() throws Exception
+    void testParseCsvRow()
     {
-        try (Stream<String> stream = Files.lines(Paths.get("/home/tommy/dokumente/kodi/playcount-report-filme.csv")))
+        String line = "\"\"\"A\"\" b\",\"c\",\"d\",,\"e\",\"\",\"f\"";
+
+        String row = line;
+        List<String> token = new ArrayList<>();
+
+        while (!row.isBlank())
         {
-            // @formatter:off
-            stream
-                .peek(System.out::println)
-                .map(l -> l.replaceAll("^\"|\"$", "")) // Erstes und letztes " entfernen
-                .peek(System.out::println)
-                .map(l -> l.replaceAll("\";\"", ";")) // ";"  durch ; ersetzen
-                .peek(System.out::println)
-                .map(l -> l.split("[;]"))
-                .forEach(ar -> System.out.println(Arrays.toString(ar)))
-                ;
-            // @formatter:on
+            // Leerer Wert
+            if (row.startsWith(","))
+            {
+                token.add("");
+                row = row.substring(1);
+                continue;
+            }
+
+            int endIndex = row.indexOf("\",");
+
+            if (endIndex < 0)
+            {
+                // Letzter Wert -> Ende
+                token.add(row);
+                break;
+            }
+
+            token.add(row.substring(0, endIndex + 1));
+            row = row.substring(endIndex + 2);
         }
 
-        assertTrue(true);
-    }
+        assertFalse(token.isEmpty());
+        assertEquals(7, token.size());
 
-    /**
-     * @throws Exception Falls was schief geht.
-     */
-    @Test
-    void testReadKodiMusik() throws Exception
-    {
-        try (Stream<String> stream = Files.lines(Paths.get("/home/tommy/dokumente/kodi/playcount-report-musik.csv")))
-        {
-            // @formatter:off
-            stream
-                .peek(System.out::println)
-                .map(l -> l.replaceAll("^\"|\"$", "")) // Erstes und letztes " entfernen
-                .peek(System.out::println)
-                .map(l -> l.replaceAll("\";\"", ";")) // ";"  durch ; ersetzen
-                .peek(System.out::println)
-                .map(l -> l.split("[;]"))
-                .forEach(ar -> System.out.println(Arrays.toString(ar)))
-                ;
-            // @formatter:on
-        }
-
-        assertTrue(true);
-    }
-
-    /**
-     * @throws Exception Falls was schief geht.
-     */
-    @Test
-    void testReadKodiSerien() throws Exception
-    {
-        try (Stream<String> stream = Files.lines(Paths.get("/home/tommy/dokumente/kodi/playcount-report-serien.csv")))
-        {
-            // @formatter:off
-            stream
-                .peek(System.out::println)
-                .skip(1) // Header überspringen
-                .map(l -> l.replaceAll("^\"|\"$", "")) // Erstes und letztes " entfernen
-                .peek(System.out::println)
-                .map(l -> l.replaceAll("\";\"", ";")) // ";"  durch ; ersetzen
-                .peek(System.out::println)
-                .map(l -> l.split("[;]"))
-                .peek(array -> System.out.println(Arrays.toString(array)))
-                .map(array -> {
-                    Map<String, Object> map = new LinkedHashMap<>();
-                    map.put("TVSHOW", array[0]);
-                    map.put("SEASON", Integer.parseInt(array[1]));
-                    map.put("EPISODE", Integer.parseInt(array[2]));
-                    map.put("TITLE", array[3]);
-                    map.put("PLAYCOUNT", Integer.parseInt(array[4]));
-                    map.put("LASTPLAYED", array[5]);
-
-                    return map;
-                })
-                .forEach(System.out::println)
-                ;
-            // @formatter:on
-        }
-
-        assertTrue(true);
+        token = token.stream()
+                .map(t -> t.replaceAll("^\"|\"$", "")) // Erstes und letztes '"' entfernen
+                .map(l -> l.replace("\"\"", "\"")) // Escapte Anführungszeichen ersetzen: "" -> "
+                .map(String::strip)
+                .toList()
+        ;
+        System.out.println(token);
     }
 }
