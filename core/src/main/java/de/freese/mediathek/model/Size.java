@@ -47,5 +47,5 @@ public enum Size
     /**
      *
      */
-    w92;
+    w92
 }
