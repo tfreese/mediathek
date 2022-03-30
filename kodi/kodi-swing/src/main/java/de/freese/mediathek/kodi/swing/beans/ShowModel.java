@@ -26,7 +26,7 @@ import com.jgoodies.binding.list.SelectionInList;
 import com.jgoodies.binding.value.ValueHolder;
 import com.jgoodies.binding.value.ValueModel;
 import de.freese.mediathek.kodi.model.Show;
-import de.freese.mediathek.kodi.swing.KODISwingClient;
+import de.freese.mediathek.kodi.swing.KodiSwingClient;
 import de.freese.mediathek.kodi.swing.components.rowfilter.RegExRowFilter;
 import de.freese.mediathek.utils.ImageUtils;
 import de.freese.mediathek.utils.cache.FileResourceCache;
@@ -252,7 +252,7 @@ public class ShowModel extends PresentationModel<ShowBean>
                 }
                 else
                 {
-                    KODISwingClient.LOGGER.error("{}: No valid url: {}", getBean().getName(), getBean().getBanner());
+                    KodiSwingClient.LOGGER.error("{}: No valid url: {}", getBean().getName(), getBean().getBanner());
                 }
 
                 return null;
@@ -270,7 +270,7 @@ public class ShowModel extends PresentationModel<ShowBean>
                 }
                 catch (Exception ex)
                 {
-                    KODISwingClient.LOGGER.error(null, ex);
+                    KodiSwingClient.LOGGER.error(null, ex);
                 }
             }
         };

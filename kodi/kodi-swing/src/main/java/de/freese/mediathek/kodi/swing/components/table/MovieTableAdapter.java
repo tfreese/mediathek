@@ -2,7 +2,6 @@
 package de.freese.mediathek.kodi.swing.components.table;
 
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
-
 import de.freese.mediathek.kodi.model.Movie;
 
 /**
@@ -32,12 +31,10 @@ public class MovieTableAdapter extends AbstractTableAdapter<Movie>
         Movie movie = getRow(rowIndex);
 
         return switch (columnIndex)
-        {
-            case 0 -> movie.getPK();
-
-            case 1 -> movie.getName();
-
-            default -> null;
-        };
+                {
+                    case 0 -> movie.getPK();
+                    case 1 -> movie.getName();
+                    default -> null;
+                };
     }
 }

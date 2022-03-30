@@ -26,7 +26,7 @@ import com.jgoodies.binding.list.SelectionInList;
 import com.jgoodies.binding.value.ValueHolder;
 import com.jgoodies.binding.value.ValueModel;
 import de.freese.mediathek.kodi.model.Movie;
-import de.freese.mediathek.kodi.swing.KODISwingClient;
+import de.freese.mediathek.kodi.swing.KodiSwingClient;
 import de.freese.mediathek.kodi.swing.components.rowfilter.RegExRowFilter;
 import de.freese.mediathek.utils.ImageUtils;
 import de.freese.mediathek.utils.cache.FileResourceCache;
@@ -60,10 +60,14 @@ public class MovieModel extends PresentationModel<MovieBean>
      *
      */
     private final ValueModel valueModelPoster;
+//    /**
+//     *
+//     */
+//    private Consumer<MovieBean> imdbIdLabelConsumer;
     /**
      *
      */
-    private JTable jTable;
+    private JTable table;
 
     /**
      * Erstellt ein neues {@link MovieModel} Object.
@@ -79,37 +83,39 @@ public class MovieModel extends PresentationModel<MovieBean>
     }
 
     /**
-     * @param jLabel {@link JLabel}
+     * @param label {@link JLabel}
      */
-    public void bindGenreLabel(final JLabel jLabel)
+    public void bindGenreLabel(final JLabel label)
     {
-        Bindings.bind(jLabel, getModel(MovieBean.PROPERTY_GENRES));
+        Bindings.bind(label, getModel(MovieBean.PROPERTY_GENRES));
     }
 
     /**
-     * @param jLabel {@link JLabel}
+     * @param label {@link JLabel}
      */
-    public void bindIMDBIDLabel(final JLabel jLabel)
+    public void bindImdbIdLabel(final JLabel label)
     {
-        Bindings.bind(jLabel, getModel(MovieBean.PROPERTY_IMDB_ID));
+        Bindings.bind(label, getModel(MovieBean.PROPERTY_IMDB_ID));
+//        imdbIdLabelConsumer = movie ->
+//                label.setText(Optional.ofNullable(movie).map(MovieBean::getImdbID).orElse(null))
+//        ;
     }
 
     /**
-     * @param jTable {@link JTable}
+     * @param table {@link JTable}
      * @param listSelectionListener {@link ListSelectionListener}
      */
-    public void bindMovieTable(final JTable jTable, final ListSelectionListener listSelectionListener)
+    public void bindMovieTable(final JTable table, final ListSelectionListener listSelectionListener)
     {
-        this.jTable = jTable; // Wird in #getSelectedMovie benötigt
+        this.table = table; // Wird in #getSelectedMovie benötigt
 
-        Bindings.bind(jTable, this.movieSelection);
+        Bindings.bind(this.table, this.movieSelection);
 
-        jTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        // jTable.setCellRenderer(new MovieListCellRenderer());
-        jTable.getSelectionModel().addListSelectionListener(listSelectionListener);
+        this.table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        this.table.getSelectionModel().addListSelectionListener(listSelectionListener);
 
-        TableRowSorter<TableModel> sorter = new TableRowSorter<>(jTable.getModel());
-        jTable.setRowSorter(sorter);
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(this.table.getModel());
+        this.table.setRowSorter(sorter);
 
         this.valueModelFilter.addValueChangeListener(event ->
         {
@@ -128,11 +134,11 @@ public class MovieModel extends PresentationModel<MovieBean>
     }
 
     /**
-     * @param jLabel {@link JLabel}
+     * @param label {@link JLabel}
      */
-    public void bindPosterLabel(final JLabel jLabel)
+    public void bindPosterLabel(final JLabel label)
     {
-        Bindings.bind(jLabel, "icon", this.valueModelPoster);
+        Bindings.bind(label, "icon", this.valueModelPoster);
     }
 
     /**
@@ -156,10 +162,9 @@ public class MovieModel extends PresentationModel<MovieBean>
             return null;
         }
 
-        int modelIndex = this.jTable.convertRowIndexToModel(selectedIndex);
+        int modelIndex = this.table.convertRowIndexToModel(selectedIndex);
 
         return this.movieSelection.getElementAt(modelIndex);
-        // return this.movieSelection.getSelection();
     }
 
     /**
@@ -169,6 +174,8 @@ public class MovieModel extends PresentationModel<MovieBean>
     public void setBean(final MovieBean newBean)
     {
         super.setBean(newBean);
+
+//        imdbIdLabelConsumer.accept(newBean);
 
         this.valueModelPoster.setValue(null);
 
@@ -235,7 +242,7 @@ public class MovieModel extends PresentationModel<MovieBean>
                 }
                 else
                 {
-                    KODISwingClient.LOGGER.error("{}: No valid url: {}", getBean().getName(), getBean().getPosters());
+                    KodiSwingClient.LOGGER.error("{}: No valid url: {}", getBean().getName(), getBean().getPosters());
                 }
 
                 return null;
@@ -253,7 +260,7 @@ public class MovieModel extends PresentationModel<MovieBean>
                 }
                 catch (Exception ex)
                 {
-                    KODISwingClient.LOGGER.error(null, ex);
+                    KodiSwingClient.LOGGER.error(null, ex);
                 }
             }
         };

@@ -2,7 +2,6 @@
 package de.freese.mediathek.kodi.swing.components.table;
 
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
-
 import de.freese.mediathek.kodi.model.Show;
 
 /**
@@ -32,12 +31,10 @@ public class ShowTableAdapter extends AbstractTableAdapter<Show>
         Show show = getRow(rowIndex);
 
         return switch (columnIndex)
-        {
-            case 0 -> show.getPK();
-
-            case 1 -> show.getName();
-
-            default -> null;
-        };
+                {
+                    case 0 -> show.getPK();
+                    case 1 -> show.getName();
+                    default -> null;
+                };
     }
 }

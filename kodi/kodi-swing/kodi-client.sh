@@ -8,7 +8,7 @@ BASEDIR=$PWD #Verzeichnis des Callers, aktuelles Verzeichnis
 #BASEDIR=$(dirname $0) #Verzeichnis des Skripts
 cd $(dirname $0)
 
-if [ ! -f target/classes/de/freese/mediathek/kodi/swing/KODISwingClient.class ]; then
+if [ ! -f target/classes/de/freese/mediathek/kodi/swing/KodiSwingClient.class ]; then
     mvn -q compile
 fi
 
@@ -19,7 +19,7 @@ mvn -q exec:java -Dexec.mainClass="de.freese.mediathek.kodi.swing.KODISwingClien
 
 # Ausführung in einer separaten Runtime-Instanz.
 #mvn -q exec:exec # In POM definiert
-#mvn -q exec:exec -Dexec.executable="java" -Dexec.args="%classpath" -Dexec.mainClass="de.freese.mediathek.kodi.swing.KODISwingClient"
+#mvn -q exec:exec -Dexec.executable="java" -Dexec.args="%classpath" -Dexec.mainClass="de.freese.mediathek.kodi.swing.KodiSwingClient"
 
 cd "$BASEDIR"
 

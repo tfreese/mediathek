@@ -9,14 +9,13 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.SwingWorker;
 
-import org.springframework.context.ApplicationContext;
-
 import de.freese.mediathek.kodi.api.MediaService;
 import de.freese.mediathek.kodi.model.Genre;
 import de.freese.mediathek.kodi.model.Movie;
-import de.freese.mediathek.kodi.swing.KODISwingClient;
+import de.freese.mediathek.kodi.swing.KodiSwingClient;
 import de.freese.mediathek.kodi.swing.beans.MovieModel;
 import de.freese.mediathek.kodi.swing.components.GenreAuswahlDialog;
+import org.springframework.context.ApplicationContext;
 
 /**
  * {@link Action} zum Editieren der Genres.
@@ -89,7 +88,7 @@ public class EditMovieGenresAction extends AbstractAction
                 {
                     List<List<Genre>> result = get();
 
-                    GenreAuswahlDialog dialog = new GenreAuswahlDialog(KODISwingClient.FRAME);
+                    GenreAuswahlDialog dialog = new GenreAuswahlDialog(KodiSwingClient.FRAME);
                     dialog.open(result.get(0), result.get(1));
 
                     if (dialog.hasBeenCanceled())
@@ -112,7 +111,7 @@ public class EditMovieGenresAction extends AbstractAction
                 }
                 catch (Exception ex)
                 {
-                    KODISwingClient.LOGGER.error(null, ex);
+                    KodiSwingClient.LOGGER.error(null, ex);
                 }
             }
         };

@@ -2,7 +2,6 @@
 package de.freese.mediathek.kodi.swing.components.table;
 
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
-
 import de.freese.mediathek.kodi.model.Genre;
 
 /**
@@ -34,14 +33,11 @@ public class GenreTableAdapter extends AbstractTableAdapter<Genre>
         Genre genre = getRow(rowIndex);
 
         return switch (columnIndex)
-        {
-            case 0 -> String.format("%s (%d)", genre.getName(), genre.getPK());
-
-            case 1 -> genre.getAnzahlFilme();
-
-            case 2 -> genre.getAnzahlSerien();
-
-            default -> null;
-        };
+                {
+                    case 0 -> String.format("%s (%d)", genre.getName(), genre.getPK());
+                    case 1 -> genre.getAnzahlFilme();
+                    case 2 -> genre.getAnzahlSerien();
+                    default -> null;
+                };
     }
 }

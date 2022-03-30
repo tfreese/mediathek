@@ -17,7 +17,7 @@ import javax.swing.border.TitledBorder;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import de.freese.mediathek.kodi.model.Genre;
-import de.freese.mediathek.kodi.swing.GBCBuilder;
+import de.freese.mediathek.kodi.swing.GbcBuilder;
 import de.freese.mediathek.kodi.swing.components.list.GenreListCellRenderer;
 
 /**
@@ -54,7 +54,7 @@ public class GenreAuswahlDialog extends JDialog
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
-        public void actionPerformed(final ActionEvent e)
+        public void actionPerformed(final ActionEvent event)
         {
             // AlbumEditorDialog.this.albumPresentationModel.triggerFlush();
             GenreAuswahlDialog.this.canceled = true;
@@ -84,7 +84,7 @@ public class GenreAuswahlDialog extends JDialog
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
-        public void actionPerformed(final ActionEvent e)
+        public void actionPerformed(final ActionEvent event)
         {
             // AlbumEditorDialog.this.albumPresentationModel.triggerCommit();
             GenreAuswahlDialog.this.canceled = false;
@@ -115,7 +115,7 @@ public class GenreAuswahlDialog extends JDialog
          */
         @SuppressWarnings("unchecked")
         @Override
-        public void actionPerformed(final ActionEvent e)
+        public void actionPerformed(final ActionEvent event)
         {
             Genre genre = GenreAuswahlDialog.this.listRechts.getSelectedValue();
 
@@ -158,7 +158,7 @@ public class GenreAuswahlDialog extends JDialog
          */
         @SuppressWarnings("unchecked")
         @Override
-        public void actionPerformed(final ActionEvent e)
+        public void actionPerformed(final ActionEvent event)
         {
             Genre genre = GenreAuswahlDialog.this.listLinks.getSelectedValue();
 
@@ -177,6 +177,7 @@ public class GenreAuswahlDialog extends JDialog
             listModel.add(genre);
         }
     }
+
     /**
      *
      */
@@ -256,25 +257,25 @@ public class GenreAuswahlDialog extends JDialog
         this.listLinks.setCellRenderer(new GenreListCellRenderer());
         JScrollPane scrollPane = new JScrollPane(this.listLinks);
         scrollPane.setBorder(new TitledBorder("Verfügbar"));
-        panel.add(scrollPane, new GBCBuilder(0, 0).gridheight(10).gridwidth(2).fillBoth());
+        panel.add(scrollPane, new GbcBuilder(0, 0).gridheight(10).gridwidth(2).fillBoth());
 
         // Buttons
         JButton button = new JButton(new ToRightAction());
-        panel.add(button, new GBCBuilder(2, 3).fillVertical().anchorCenter());
+        panel.add(button, new GbcBuilder(2, 3).fillVertical().anchorCenter());
         button = new JButton(new ToLeftAction());
-        panel.add(button, new GBCBuilder(2, 7).fillVertical().anchorCenter());
+        panel.add(button, new GbcBuilder(2, 7).fillVertical().anchorCenter());
 
         // Rechts
         this.listRechts = new JList<>(new ArrayListModel<>(rechts));
         this.listRechts.setCellRenderer(new GenreListCellRenderer());
         scrollPane = new JScrollPane(this.listRechts);
         scrollPane.setBorder(new TitledBorder("Auswahl"));
-        panel.add(scrollPane, new GBCBuilder(3, 0).gridheight(10).gridwidth(2).fillBoth());
+        panel.add(scrollPane, new GbcBuilder(3, 0).gridheight(10).gridwidth(2).fillBoth());
 
         button = new JButton(new OKAction());
-        panel.add(button, new GBCBuilder(0, 11).gridwidth(2).fillHorizontal());
+        panel.add(button, new GbcBuilder(0, 11).gridwidth(2).fillHorizontal());
         button = new JButton(new CancelAction());
-        panel.add(button, new GBCBuilder(3, 11).gridwidth(2).fillHorizontal());
+        panel.add(button, new GbcBuilder(3, 11).gridwidth(2).fillHorizontal());
 
         setContentPane(panel);
         setSize(600, 600);

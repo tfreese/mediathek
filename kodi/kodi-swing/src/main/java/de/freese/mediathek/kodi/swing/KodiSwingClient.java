@@ -32,7 +32,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  *
  * @author Thomas Freese
  */
-public class KODISwingClient
+public class KodiSwingClient
 {
     /**
      *
@@ -73,7 +73,7 @@ public class KODISwingClient
 
         SwingUtilities.invokeLater(() ->
         {
-            KODISwingClient application = new KODISwingClient();
+            KodiSwingClient application = new KodiSwingClient();
 
             try
             {
@@ -86,7 +86,7 @@ public class KODISwingClient
         });
 
         // Runnable task = () -> {
-        // KODISwingClient application = new KODISwingClient();
+        // KodiSwingClient application = new KodiSwingClient();
         //
         // try
         // {

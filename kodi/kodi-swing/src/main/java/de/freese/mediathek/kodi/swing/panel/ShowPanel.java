@@ -20,15 +20,14 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.springframework.context.ApplicationContext;
-
 import de.freese.mediathek.kodi.api.MediaService;
 import de.freese.mediathek.kodi.model.Show;
-import de.freese.mediathek.kodi.swing.GBCBuilder;
+import de.freese.mediathek.kodi.swing.GbcBuilder;
 import de.freese.mediathek.kodi.swing.action.EditShowGenresAction;
 import de.freese.mediathek.kodi.swing.beans.ShowBean;
 import de.freese.mediathek.kodi.swing.beans.ShowModel;
 import de.freese.mediathek.kodi.swing.components.table.ShowTableAdapter;
+import org.springframework.context.ApplicationContext;
 
 /**
  * {@link IPanel} der Serien.
@@ -90,88 +89,6 @@ public class ShowPanel extends AbstractPanel
     }
 
     /**
-     * @see de.freese.mediathek.kodi.swing.panel.AbstractPanel#buildPanel(javax.swing.JComponent)
-     */
-    @Override
-    protected void buildPanel(final JComponent component)
-    {
-        JSplitPane splitPane = new JSplitPane();
-        splitPane.setOneTouchExpandable(true);
-        splitPane.setContinuousLayout(true);
-        splitPane.setDividerLocation(500);
-
-        // Liste
-        JPanel leftPanel = new JPanel();
-        leftPanel.setLayout(new GridBagLayout());
-
-        JLabel label = new JLabel("Filter:");
-        leftPanel.add(label, new GBCBuilder(0, 0));
-
-        JTextField textFieldFilter = new JTextField();
-        getShowModel().bindTextFieldFilter(textFieldFilter);
-        leftPanel.add(textFieldFilter, new GBCBuilder(1, 0).fillHorizontal());
-
-        JTable jTable = new JTable(new ShowTableAdapter());
-        getShowModel().bindShowTable(jTable, new ShowSelectionListener());
-        JScrollPane scrollPane = new JScrollPane(jTable);
-        jTable.getColumnModel().getColumn(0).setMinWidth(50);
-        jTable.getColumnModel().getColumn(0).setMaxWidth(50);
-
-        leftPanel.add(scrollPane, new GBCBuilder(0, 1).gridwidth(2).fillBoth());
-        splitPane.setLeftComponent(leftPanel);
-
-        JPanel rightPanel = new JPanel();
-        rightPanel.setLayout(new GridBagLayout());
-        splitPane.setRightComponent(rightPanel);
-
-        // Details
-        JPanel detailPanel = new JPanel();
-        detailPanel.setLayout(new GridBagLayout());
-        detailPanel.setBorder(new TitledBorder("Details"));
-
-        // Details Banner
-        label = new JLabel();
-        getShowModel().bindBannerLabel(label);
-        detailPanel.add(label, new GBCBuilder(0, 0).gridwidth(2).weightx(1.0D).fillHorizontal().anchorCenter());
-
-        // Details Genres
-        label = new JLabel("Genres:");
-        detailPanel.add(label, new GBCBuilder(0, 1));
-        label = new JLabel();
-        getShowModel().bindGenreLabel(label);
-        detailPanel.add(label, new GBCBuilder(1, 1));
-
-        // Details TVDB_ID
-        label = new JLabel("TVDB_ID:");
-        detailPanel.add(label, new GBCBuilder(0, 2));
-        label = new JLabel();
-        getShowModel().bindTVDIDLabel(label);
-        detailPanel.add(label, new GBCBuilder(1, 2));
-
-        rightPanel.add(detailPanel, new GBCBuilder(0, 0).weightx(1.0D).fillHorizontal());
-
-        // Genres
-        JButton button = new JButton(new EditShowGenresAction(getApplicationContext(), getShowModel()));
-        rightPanel.add(button, new GBCBuilder(0, 1));
-        // JPanel genrePanel = new JPanel();
-        // genrePanel.setBorder(new TitledBorder("Genres"));
-        // panel.add(genrePanel, new GBCBuilder(0, 1).weightx(1.0D).fillBoth());
-
-        // Alles nach oben drücken.
-        rightPanel.add(Box.createGlue(), new GBCBuilder(0, 2).fillBoth());
-
-        component.add(splitPane, BorderLayout.CENTER);
-    }
-
-    /**
-     * @return {@link ShowModel}
-     */
-    private ShowModel getShowModel()
-    {
-        return this.showModel;
-    }
-
-    /**
      * @see de.freese.mediathek.kodi.swing.panel.IPanel#reload()
      */
     @Override
@@ -211,5 +128,87 @@ public class ShowPanel extends AbstractPanel
             }
         };
         worker.execute();
+    }
+
+    /**
+     * @see de.freese.mediathek.kodi.swing.panel.AbstractPanel#buildPanel(javax.swing.JComponent)
+     */
+    @Override
+    protected void buildPanel(final JComponent component)
+    {
+        JSplitPane splitPane = new JSplitPane();
+        splitPane.setOneTouchExpandable(true);
+        splitPane.setContinuousLayout(true);
+        splitPane.setDividerLocation(500);
+
+        // Liste
+        JPanel leftPanel = new JPanel();
+        leftPanel.setLayout(new GridBagLayout());
+
+        JLabel label = new JLabel("Filter:");
+        leftPanel.add(label, new GbcBuilder(0, 0));
+
+        JTextField textFieldFilter = new JTextField();
+        getShowModel().bindTextFieldFilter(textFieldFilter);
+        leftPanel.add(textFieldFilter, new GbcBuilder(1, 0).fillHorizontal());
+
+        JTable jTable = new JTable(new ShowTableAdapter());
+        getShowModel().bindShowTable(jTable, new ShowSelectionListener());
+        JScrollPane scrollPane = new JScrollPane(jTable);
+        jTable.getColumnModel().getColumn(0).setMinWidth(50);
+        jTable.getColumnModel().getColumn(0).setMaxWidth(50);
+
+        leftPanel.add(scrollPane, new GbcBuilder(0, 1).gridwidth(2).fillBoth());
+        splitPane.setLeftComponent(leftPanel);
+
+        JPanel rightPanel = new JPanel();
+        rightPanel.setLayout(new GridBagLayout());
+        splitPane.setRightComponent(rightPanel);
+
+        // Details
+        JPanel detailPanel = new JPanel();
+        detailPanel.setLayout(new GridBagLayout());
+        detailPanel.setBorder(new TitledBorder("Details"));
+
+        // Details Banner
+        label = new JLabel();
+        getShowModel().bindBannerLabel(label);
+        detailPanel.add(label, new GbcBuilder(0, 0).gridwidth(2).weightx(1.0D).fillHorizontal().anchorCenter());
+
+        // Details Genres
+        label = new JLabel("Genres:");
+        detailPanel.add(label, new GbcBuilder(0, 1));
+        label = new JLabel();
+        getShowModel().bindGenreLabel(label);
+        detailPanel.add(label, new GbcBuilder(1, 1));
+
+        // Details TVDB_ID
+        label = new JLabel("TVDB_ID:");
+        detailPanel.add(label, new GbcBuilder(0, 2));
+        label = new JLabel();
+        getShowModel().bindTVDIDLabel(label);
+        detailPanel.add(label, new GbcBuilder(1, 2));
+
+        rightPanel.add(detailPanel, new GbcBuilder(0, 0).weightx(1.0D).fillHorizontal());
+
+        // Genres
+        JButton button = new JButton(new EditShowGenresAction(getApplicationContext(), getShowModel()));
+        rightPanel.add(button, new GbcBuilder(0, 1));
+        // JPanel genrePanel = new JPanel();
+        // genrePanel.setBorder(new TitledBorder("Genres"));
+        // panel.add(genrePanel, new GbcBuilder(0, 1).weightx(1.0D).fillBoth());
+
+        // Alles nach oben drücken.
+        rightPanel.add(Box.createGlue(), new GbcBuilder(0, 2).fillBoth());
+
+        component.add(splitPane, BorderLayout.CENTER);
+    }
+
+    /**
+     * @return {@link ShowModel}
+     */
+    private ShowModel getShowModel()
+    {
+        return this.showModel;
     }
 }

@@ -8,18 +8,16 @@ import java.util.function.Supplier;
 
 import javax.swing.SwingWorker;
 
-import org.springframework.context.ApplicationContext;
-
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.beans.BeanAdapter;
 import com.jgoodies.binding.list.SelectionInList;
-
 import de.freese.mediathek.kodi.api.MediaService;
 import de.freese.mediathek.kodi.model.Genre;
 import de.freese.mediathek.kodi.model.IModel;
 import de.freese.mediathek.kodi.model.Movie;
 import de.freese.mediathek.kodi.model.Show;
-import de.freese.mediathek.kodi.swing.KODISwingClient;
+import de.freese.mediathek.kodi.swing.KodiSwingClient;
+import org.springframework.context.ApplicationContext;
 
 /**
  * {@link PresentationModel} der {@link Genre}.
@@ -97,43 +95,6 @@ public class GenreModel extends PresentationModel<BeanAdapter<Genre>>
     }
 
     /**
-     * @param <B> Typ für SwingWorker#doInBackground
-     * @param backgroundSupplier {@link Supplier}
-     * @param doneConsumer {@link Consumer}
-     */
-    private <B> void loadGenres(final Supplier<B> backgroundSupplier, final Consumer<B> doneConsumer)
-    {
-        SwingWorker<B, Void> worker = new SwingWorker<>()
-        {
-            /**
-             * @see javax.swing.SwingWorker#doInBackground()
-             */
-            @Override
-            protected B doInBackground() throws Exception
-            {
-                return backgroundSupplier.get();
-            }
-
-            /**
-             * @see javax.swing.SwingWorker#done()
-             */
-            @Override
-            protected void done()
-            {
-                try
-                {
-                    doneConsumer.accept(get());
-                }
-                catch (Exception ex)
-                {
-                    KODISwingClient.LOGGER.error(null, ex);
-                }
-            }
-        };
-        worker.execute();
-    }
-
-    /**
      * @see com.jgoodies.binding.PresentationModel#setBean(java.lang.Object)
      */
     @SuppressWarnings("unchecked")
@@ -151,7 +112,8 @@ public class GenreModel extends PresentationModel<BeanAdapter<Genre>>
         }
 
         // Genre Laden
-        loadGenres(() -> {
+        loadGenres(() ->
+        {
             Genre genre = getGenreSelection().getSelection();
 
             if (genre == null)
@@ -169,7 +131,8 @@ public class GenreModel extends PresentationModel<BeanAdapter<Genre>>
             results.add(movies);
 
             return results;
-        }, results -> {
+        }, results ->
+        {
             GenreModel.this.showSelection.setList((List<Show>) results.get(0));
             GenreModel.this.movieSelection.setList((List<Movie>) results.get(1));
         });
@@ -217,7 +180,7 @@ public class GenreModel extends PresentationModel<BeanAdapter<Genre>>
         // }
         // catch (Exception ex)
         // {
-        // KODISwingClient.LOGGER.error(null, ex);
+        // KodiSwingClient.LOGGER.error(null, ex);
         // }
         // }
         // };
@@ -235,5 +198,42 @@ public class GenreModel extends PresentationModel<BeanAdapter<Genre>>
         {
             getGenreSelection().setSelectionIndex(0);
         }
+    }
+
+    /**
+     * @param <B> Typ für SwingWorker#doInBackground
+     * @param backgroundSupplier {@link Supplier}
+     * @param doneConsumer {@link Consumer}
+     */
+    private <B> void loadGenres(final Supplier<B> backgroundSupplier, final Consumer<B> doneConsumer)
+    {
+        SwingWorker<B, Void> worker = new SwingWorker<>()
+        {
+            /**
+             * @see javax.swing.SwingWorker#doInBackground()
+             */
+            @Override
+            protected B doInBackground() throws Exception
+            {
+                return backgroundSupplier.get();
+            }
+
+            /**
+             * @see javax.swing.SwingWorker#done()
+             */
+            @Override
+            protected void done()
+            {
+                try
+                {
+                    doneConsumer.accept(get());
+                }
+                catch (Exception ex)
+                {
+                    KodiSwingClient.LOGGER.error(null, ex);
+                }
+            }
+        };
+        worker.execute();
     }
 }
