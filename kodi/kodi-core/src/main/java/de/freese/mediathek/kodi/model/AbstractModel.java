@@ -33,8 +33,8 @@ public abstract class AbstractModel implements IModel
             return 0;
         }
 
-        String value1 = Objects.toString(getName()).trim();
-        String value2 = Objects.toString(o.getName()).trim();
+        String value1 = Objects.toString(getName()).strip();
+        String value2 = Objects.toString(o.getName()).strip();
 
         return value1.compareTo(value2);
     }

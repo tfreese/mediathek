@@ -120,7 +120,7 @@ public abstract class AbstractService implements InitializingBean
     {
         try
         {
-            return URLEncoder.encode(value.trim().toLowerCase(), StandardCharsets.UTF_8);
+            return URLEncoder.encode(value.strip().toLowerCase(), StandardCharsets.UTF_8);
         }
         catch (Exception ex)
         {
