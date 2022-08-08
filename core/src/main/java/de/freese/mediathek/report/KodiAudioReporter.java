@@ -102,7 +102,7 @@ public class KodiAudioReporter extends AbstractMediaReporter
      * @param dataSource {@link DataSource}
      * @param path {@link Path}
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     protected void writeMusic(final DataSource dataSource, final Path path) throws Exception
     {
@@ -126,7 +126,7 @@ public class KodiAudioReporter extends AbstractMediaReporter
      * @param dataSource {@link DataSource}
      * @param path {@link Path}
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     protected void writeMusicPlaylistM3U(final DataSource dataSource, final Path path) throws Exception
     {
@@ -164,7 +164,7 @@ public class KodiAudioReporter extends AbstractMediaReporter
      * @param dataSource {@link DataSource}
      * @param path {@link Path}
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     protected void writeMusicPlaylistXSP(final DataSource dataSource, final Path path) throws Exception
     {

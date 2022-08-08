@@ -3,10 +3,6 @@ package de.freese.mediathek.kodi.javafx;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
 import de.freese.mediathek.kodi.javafx.controller.GenreController;
 import de.freese.mediathek.kodi.javafx.controller.MovieController;
 import de.freese.mediathek.kodi.javafx.controller.TvShowController;
@@ -21,11 +17,14 @@ import javafx.scene.SceneAntialiasing;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
  * bidirectional bind: "https://community.oracle.com/thread/2462489"<br>
  * <br>
- * Mit KODIJavaFXClientLauncher ausführen oder KODIJavaFXClient direkt mit foldenden Restruktionen:<br>
+ * Mit KodiJavaFXClientLauncher ausführen oder KodiJavaFXClient direkt mit foldenden Restruktionen:<br>
  * <br>
  * In Eclipse:<br>
  * <ol>
@@ -36,7 +35,7 @@ import javafx.stage.Stage;
  *
  * @author Thomas Freese
  */
-public class KODIJavaFXClient extends Application
+public class KodiJavaFXClient extends Application
 {
     /**
      *

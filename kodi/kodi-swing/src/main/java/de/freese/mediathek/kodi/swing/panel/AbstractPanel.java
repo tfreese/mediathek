@@ -18,7 +18,7 @@ import org.springframework.context.ApplicationContext;
 /**
  * @author Thomas Freese
  */
-public abstract class AbstractPanel implements IPanel
+public abstract class AbstractPanel implements Panel
 {
     /**
      *
@@ -46,7 +46,7 @@ public abstract class AbstractPanel implements IPanel
     }
 
     /**
-     * @see de.freese.mediathek.kodi.swing.panel.IPanel#buildPanel()
+     * @see Panel#buildPanel()
      */
     @Override
     public JComponent buildPanel()
@@ -61,7 +61,7 @@ public abstract class AbstractPanel implements IPanel
     }
 
     /**
-     * @see de.freese.mediathek.kodi.swing.panel.IPanel#getApplicationContext()
+     * @see Panel#getApplicationContext()
      */
     @Override
     public ApplicationContext getApplicationContext()
@@ -70,7 +70,7 @@ public abstract class AbstractPanel implements IPanel
     }
 
     /**
-     * @see de.freese.mediathek.kodi.swing.panel.IPanel#getBean(java.lang.Class)
+     * @see Panel#getBean(java.lang.Class)
      */
     @Override
     public <T> T getBean(final Class<T> requiredType) throws BeansException
@@ -79,7 +79,7 @@ public abstract class AbstractPanel implements IPanel
     }
 
     /**
-     * @see de.freese.mediathek.kodi.swing.panel.IPanel#getLogger()
+     * @see Panel#getLogger()
      */
     @Override
     public Logger getLogger()

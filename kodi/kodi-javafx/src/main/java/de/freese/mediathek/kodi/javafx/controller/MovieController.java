@@ -4,11 +4,13 @@ import java.net.URI;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.context.ApplicationContext;
+
 import de.freese.mediathek.kodi.model.Genre;
+import de.freese.mediathek.kodi.model.Model;
 import de.freese.mediathek.kodi.model.Movie;
 import javafx.beans.binding.Bindings;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.ApplicationContext;
 
 /**
  * @author Thomas Freese
@@ -29,7 +31,7 @@ public class MovieController extends AbstractTvShowMovieController<Movie>
     }
 
     /**
-     * @see de.freese.mediathek.kodi.javafx.controller.AbstractTvShowMovieController#getGenres(de.freese.mediathek.kodi.model.IModel)
+     * @see de.freese.mediathek.kodi.javafx.controller.AbstractTvShowMovieController#getGenres(Model)
      */
     @Override
     protected List<Genre> getGenres(final Movie value)
@@ -38,7 +40,7 @@ public class MovieController extends AbstractTvShowMovieController<Movie>
     }
 
     /**
-     * @see de.freese.mediathek.kodi.javafx.controller.AbstractTvShowMovieController#getImageUri(de.freese.mediathek.kodi.model.IModel)
+     * @see de.freese.mediathek.kodi.javafx.controller.AbstractTvShowMovieController#getImageUri(Model)
      */
     @Override
     protected URI getImageUri(final Movie value)
@@ -77,7 +79,7 @@ public class MovieController extends AbstractTvShowMovieController<Movie>
     }
 
     /**
-     * @see de.freese.mediathek.kodi.javafx.controller.AbstractTvShowMovieController#updateDetails(de.freese.mediathek.kodi.model.IModel)
+     * @see de.freese.mediathek.kodi.javafx.controller.AbstractTvShowMovieController#updateDetails(Model)
      */
     @Override
     protected void updateDetails(final Movie value)
@@ -93,7 +95,7 @@ public class MovieController extends AbstractTvShowMovieController<Movie>
     }
 
     /**
-     * @see de.freese.mediathek.kodi.javafx.controller.AbstractTvShowMovieController#updateGenres(de.freese.mediathek.kodi.model.IModel, int[])
+     * @see de.freese.mediathek.kodi.javafx.controller.AbstractTvShowMovieController#updateGenres(Model, int[])
      */
     @Override
     protected void updateGenres(final Movie value, final int[] genreIDs)

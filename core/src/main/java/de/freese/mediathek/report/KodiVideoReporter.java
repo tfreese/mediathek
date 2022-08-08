@@ -43,7 +43,7 @@ public class KodiVideoReporter extends AbstractMediaReporter
      * @param dataSource {@link DataSource}
      * @param path {@link Path}
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     protected void reportMovies(final DataSource dataSource, final Path path) throws Exception
     {
@@ -68,7 +68,7 @@ public class KodiVideoReporter extends AbstractMediaReporter
      * @param dataSource {@link DataSource}
      * @param path {@link Path}
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     protected void reportTVShows(final DataSource dataSource, final Path path) throws Exception
     {
@@ -92,7 +92,7 @@ public class KodiVideoReporter extends AbstractMediaReporter
      * @param dataSource {@link DataSource}
      * @param path {@link Path}
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     protected void updateMovies(final DataSource dataSource, final Path path) throws Exception
     {
@@ -168,7 +168,7 @@ public class KodiVideoReporter extends AbstractMediaReporter
      * @param dataSource {@link DataSource}
      * @param path {@link Path}
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     protected void updateTVShows(final DataSource dataSource, final Path path) throws Exception
     {

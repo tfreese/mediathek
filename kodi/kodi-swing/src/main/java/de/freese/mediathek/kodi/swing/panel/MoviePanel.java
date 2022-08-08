@@ -30,7 +30,7 @@ import de.freese.mediathek.kodi.swing.components.table.MovieTableAdapter;
 import org.springframework.context.ApplicationContext;
 
 /**
- * {@link IPanel} der Filme.
+ * {@link Panel} der Filme.
  *
  * @author Thomas Freese
  */
@@ -87,7 +87,7 @@ public class MoviePanel extends AbstractPanel
     }
 
     /**
-     * @see de.freese.mediathek.kodi.swing.panel.IPanel#reload()
+     * @see Panel#reload()
      */
     @Override
     public void reload()

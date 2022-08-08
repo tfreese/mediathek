@@ -32,7 +32,7 @@ import de.freese.mediathek.kodi.swing.components.table.GenreTableAdapter;
 import org.springframework.context.ApplicationContext;
 
 /**
- * {@link IPanel} der Genres.<br>
+ * {@link Panel} der Genres.<br>
  * com.jgoodies.jsdl.component.JGComponentFactory
  *
  * @author Thomas Freese
@@ -97,7 +97,7 @@ public class GenrePanel extends AbstractPanel
     }
 
     /**
-     * @see de.freese.mediathek.kodi.swing.panel.IPanel#reload()
+     * @see Panel#reload()
      */
     @Override
     public void reload()

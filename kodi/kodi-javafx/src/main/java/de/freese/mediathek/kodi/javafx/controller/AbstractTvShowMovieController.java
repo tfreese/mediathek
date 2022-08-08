@@ -8,14 +8,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import org.springframework.context.ApplicationContext;
-
-import de.freese.mediathek.kodi.javafx.KODIJavaFXClient;
+import de.freese.mediathek.kodi.javafx.KodiJavaFXClient;
 import de.freese.mediathek.kodi.javafx.components.ModelListCellFactory;
 import de.freese.mediathek.kodi.javafx.components.PickList;
 import de.freese.mediathek.kodi.javafx.pane.TvShowMoviePane;
 import de.freese.mediathek.kodi.model.Genre;
-import de.freese.mediathek.kodi.model.IModel;
+import de.freese.mediathek.kodi.model.Model;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -25,15 +23,16 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.image.Image;
+import org.springframework.context.ApplicationContext;
 
 /**
  * Basis-Controller für die Serien und Filme.
  *
- * @author Thomas Freese
- *
  * @param <T> Entity
+ *
+ * @author Thomas Freese
  */
-public abstract class AbstractTvShowMovieController<T extends IModel> extends AbstractController<T>
+public abstract class AbstractTvShowMovieController<T extends Model> extends AbstractController<T>
 {
     /**
      *
@@ -95,7 +94,7 @@ public abstract class AbstractTvShowMovieController<T extends IModel> extends Ab
     }
 
     /**
-     * @see de.freese.mediathek.kodi.javafx.controller.AbstractController#updateDetails(de.freese.mediathek.kodi.model.IModel)
+     * @see de.freese.mediathek.kodi.javafx.controller.AbstractController#updateDetails(Model)
      */
     @Override
     protected void updateDetails(final T value)
@@ -133,13 +132,15 @@ public abstract class AbstractTvShowMovieController<T extends IModel> extends Ab
                 return null;
             }
         };
-        task.setOnSucceeded(event -> {
+        task.setOnSucceeded(event ->
+        {
             Image image = task.getValue();
             getPane().getImageProperty().set(image);
 
         });
-        task.setOnFailed(event -> {
-            KODIJavaFXClient.LOGGER.info("failed");
+        task.setOnFailed(event ->
+        {
+            KodiJavaFXClient.LOGGER.info("failed");
 
             Alert alert = new Alert(AlertType.ERROR, task.getException().getMessage());
             alert.showAndWait();
@@ -164,7 +165,7 @@ public abstract class AbstractTvShowMovieController<T extends IModel> extends Ab
     {
         T model = selectionModel.getSelectedItem();
 
-        final PickList<IModel> pickList = new PickList<>();
+        final PickList<Model> pickList = new PickList<>();
         pickList.getListViewLeft().getItems().addAll(getMediaService().getGenres());
         pickList.getListViewRight().getItems().addAll(getGenres(model));
 
@@ -172,12 +173,13 @@ public abstract class AbstractTvShowMovieController<T extends IModel> extends Ab
         pickList.getListViewLeft().setCellFactory(new ModelListCellFactory());
         pickList.getListViewRight().setCellFactory(new ModelListCellFactory());
 
-        ChoiceDialog<List<IModel>> dialog = new ChoiceDialog<>();
+        ChoiceDialog<List<Model>> dialog = new ChoiceDialog<>();
         dialog.setTitle("Genre Editor");
         dialog.setHeaderText(model.getName());
         dialog.setGraphic(null);
         dialog.getDialogPane().setContent(pickList);
-        dialog.setResultConverter(type -> {
+        dialog.setResultConverter(type ->
+        {
             if (ButtonType.OK.equals(type))
             {
                 return pickList.getListViewRight().getItems();
@@ -186,11 +188,11 @@ public abstract class AbstractTvShowMovieController<T extends IModel> extends Ab
             return null;
         });
 
-        Optional<List<IModel>> result = dialog.showAndWait();
+        Optional<List<Model>> result = dialog.showAndWait();
 
         if (result.isPresent())
         {
-            List<IModel> genres = result.get();
+            List<Model> genres = result.get();
             int[] genreIDs = new int[genres.size()];
 
             for (int i = 0; i < genreIDs.length; i++)

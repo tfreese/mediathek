@@ -3,11 +3,12 @@ package de.freese.mediathek.kodi.impl;
 
 import java.util.Iterator;
 import java.util.List;
-import org.springframework.jdbc.core.support.JdbcDaoSupport;
+
 import de.freese.mediathek.kodi.api.MediaDAO;
 import de.freese.mediathek.kodi.model.Genre;
 import de.freese.mediathek.kodi.model.Movie;
 import de.freese.mediathek.kodi.model.Show;
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 /**
  * Implementierung für das DAO.
@@ -73,9 +74,7 @@ public class MediaDAOImpl extends JdbcDaoSupport implements MediaDAO
         sql.append(" gl.media_type = 'movie'");
         sql.append(" and gl.genre_id = ?");
 
-        List<Movie> movies = getJdbcTemplate().query(sql.toString(), new MovieRowMapper(), genreID);
-
-        return movies;
+        return getJdbcTemplate().query(sql.toString(), new MovieRowMapper(), genreID);
     }
 
     /**
@@ -118,9 +117,7 @@ public class MediaDAOImpl extends JdbcDaoSupport implements MediaDAO
         // sql.append(" group by g.strgenre");
         // sql.append(") as shows");
         // sql.append(" from xbmc_video75.genre g");
-        List<Genre> genres = getJdbcTemplate().query(sql.toString(), new GenreRowMapper());
-
-        return genres;
+        return getJdbcTemplate().query(sql.toString(), new GenreRowMapper());
     }
 
     /**
@@ -143,9 +140,7 @@ public class MediaDAOImpl extends JdbcDaoSupport implements MediaDAO
         sql.append(" gl.media_type = 'tvshow'");
         sql.append(" and gl.genre_id = ?");
 
-        List<Show> shows = getJdbcTemplate().query(sql.toString(), new ShowRowMapper(), genreID);
-
-        return shows;
+        return getJdbcTemplate().query(sql.toString(), new ShowRowMapper(), genreID);
     }
 
     /**
@@ -167,9 +162,7 @@ public class MediaDAOImpl extends JdbcDaoSupport implements MediaDAO
         sql.append(" and gl.media_id = ?");
         // sql.append(" order by name");
 
-        List<Genre> genres = getJdbcTemplate().query(sql.toString(), new GenreRowMapper(), movieID);
-
-        return genres;
+        return getJdbcTemplate().query(sql.toString(), new GenreRowMapper(), movieID);
     }
 
     /**
@@ -197,9 +190,7 @@ public class MediaDAOImpl extends JdbcDaoSupport implements MediaDAO
         // sql.append(" inner join xbmc_video75.genre g on g.idgenre = glm.idgenre");
         // sql.append(" group by name");
 
-        List<Movie> movies = getJdbcTemplate().query(sql.toString(), new MovieRowMapper());
-
-        return movies;
+        return getJdbcTemplate().query(sql.toString(), new MovieRowMapper());
     }
 
     /**
@@ -220,9 +211,7 @@ public class MediaDAOImpl extends JdbcDaoSupport implements MediaDAO
         sql.append(" gl.media_type = 'tvshow'");
         sql.append(" and gl.media_id = ?");
 
-        List<Genre> genres = getJdbcTemplate().query(sql.toString(), new GenreRowMapper(), showID);
-
-        return genres;
+        return getJdbcTemplate().query(sql.toString(), new GenreRowMapper(), showID);
     }
 
     /**
@@ -248,9 +237,7 @@ public class MediaDAOImpl extends JdbcDaoSupport implements MediaDAO
         // sql.append(" inner join xbmc_video75.genre g on g.idgenre = gls.idgenre");
         // sql.append(" group by name;");
 
-        List<Show> shows = getJdbcTemplate().query(sql.toString(), new ShowRowMapper());
-
-        return shows;
+        return getJdbcTemplate().query(sql.toString(), new ShowRowMapper());
     }
 
     /**
@@ -283,6 +270,7 @@ public class MediaDAOImpl extends JdbcDaoSupport implements MediaDAO
 
     /**
      * @param table String
+     *
      * @return String; SCHEMA.TABLE
      */
     private String prependSchema(final String table)
@@ -336,7 +324,7 @@ public class MediaDAOImpl extends JdbcDaoSupport implements MediaDAO
         List<String> genreList = getJdbcTemplate().queryForList(sql.toString(), String.class, movieID);
         StringBuilder genres = new StringBuilder();
 
-        for (Iterator<String> iterator = genreList.iterator(); iterator.hasNext();)
+        for (Iterator<String> iterator = genreList.iterator(); iterator.hasNext(); )
         {
             genres.append(iterator.next());
 
@@ -394,7 +382,7 @@ public class MediaDAOImpl extends JdbcDaoSupport implements MediaDAO
         List<String> genreList = getJdbcTemplate().queryForList(sql.toString(), String.class, showID);
         StringBuilder genres = new StringBuilder();
 
-        for (Iterator<String> iterator = genreList.iterator(); iterator.hasNext();)
+        for (Iterator<String> iterator = genreList.iterator(); iterator.hasNext(); )
         {
             genres.append(iterator.next());
 

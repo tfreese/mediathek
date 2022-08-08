@@ -28,13 +28,13 @@ public final class MediaDBUtils
      *
      * @return List
      *
-     * @throws IOException Falls was schief geht
+     * @throws IOException Falls was schiefgeht
      */
     public static List<String[]> parseCsv(final Path path) throws IOException
     {
-//        try (Stream<String> stream = Files.lines(path))
-//        {
-//            // @formatter:off
+        //        try (Stream<String> stream = Files.lines(path))
+        //        {
+        //            // @formatter:off
 //            return stream
 //                    .map(MediaDBUtils::splitCsvRow)
 //                    .filter(Objects::nonNull)
@@ -42,7 +42,7 @@ public final class MediaDBUtils
 //                    .toList()
 //            ;
 //            // @formatter:on
-//        }
+        //        }
 
         // @formatter:off
         return Files.readAllLines(path).stream()
@@ -59,7 +59,7 @@ public final class MediaDBUtils
      *
      * @param path {@link Path}
      *
-     * @throws IOException Falls was schief geht.
+     * @throws IOException Falls was schiefgeht.
      */
     public static void rename(final Path path) throws IOException
     {
@@ -92,7 +92,7 @@ public final class MediaDBUtils
      * @param resultSet {@link ResultSet}
      * @param path {@link Path}
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     public static void writeCsv(final ResultSet resultSet, final Path path) throws Exception
     {

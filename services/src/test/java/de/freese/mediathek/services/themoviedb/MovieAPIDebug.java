@@ -6,11 +6,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Locale;
 
-import org.springframework.web.client.RestTemplate;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import de.freese.mediathek.services.Settings;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * API-Debug für http://www.thetvdb.com.
@@ -31,7 +29,7 @@ public class MovieAPIDebug
     /**
      * @param args String[]
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     public static void main(final String[] args) throws Exception
     {
@@ -69,7 +67,7 @@ public class MovieAPIDebug
     /**
      * @param result String
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     private void prettyPrint(final String result) throws Exception
     {
@@ -79,7 +77,7 @@ public class MovieAPIDebug
     }
 
     /**
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     // @Test
     public void testActors() throws Exception
@@ -92,7 +90,7 @@ public class MovieAPIDebug
     }
 
     /**
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     // @Test
     public void testConfiguration() throws Exception
@@ -108,7 +106,7 @@ public class MovieAPIDebug
     }
 
     /**
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     // @Test
     public void testDetails() throws Exception
@@ -121,7 +119,7 @@ public class MovieAPIDebug
     }
 
     /**
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     // @Test
     public void testHTTP() throws Exception
@@ -162,7 +160,7 @@ public class MovieAPIDebug
     }
 
     /**
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     // @Test
     public void testImages() throws Exception
@@ -175,7 +173,7 @@ public class MovieAPIDebug
     }
 
     /**
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     // @Test
     public void testSearch() throws Exception

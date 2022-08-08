@@ -12,7 +12,7 @@ import org.springframework.context.ApplicationContext;
  *
  * @author Thomas Freese
  */
-public interface IPanel
+public interface Panel
 {
     /**
      * Aufbau der GUI.
@@ -36,7 +36,7 @@ public interface IPanel
      *
      * @return Object
      *
-     * @throws BeansException Falls was schief geht.
+     * @throws BeansException Falls was schiefgeht.
      */
     <T> T getBean(final Class<T> requiredType) throws BeansException;
 

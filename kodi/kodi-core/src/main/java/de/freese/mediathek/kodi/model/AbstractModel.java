@@ -6,7 +6,7 @@ import java.util.Objects;
 /**
  * @author Thomas Freese
  */
-public abstract class AbstractModel implements IModel
+public abstract class AbstractModel implements Model
 {
     /**
      *
@@ -21,7 +21,7 @@ public abstract class AbstractModel implements IModel
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override
-    public int compareTo(final IModel o)
+    public int compareTo(final Model o)
     {
         if (o == null)
         {
@@ -54,7 +54,7 @@ public abstract class AbstractModel implements IModel
     }
 
     /**
-     * @see de.freese.mediathek.kodi.model.IModel#getName()
+     * @see Model#getName()
      */
     @Override
     public String getName()
@@ -63,7 +63,7 @@ public abstract class AbstractModel implements IModel
     }
 
     /**
-     * @see de.freese.mediathek.kodi.model.IModel#getPK()
+     * @see Model#getPK()
      */
     @Override
     public int getPK()
@@ -81,7 +81,7 @@ public abstract class AbstractModel implements IModel
     }
 
     /**
-     * @see de.freese.mediathek.kodi.model.IModel#setName(java.lang.String)
+     * @see Model#setName(java.lang.String)
      */
     @Override
     public void setName(final String name)
@@ -90,7 +90,7 @@ public abstract class AbstractModel implements IModel
     }
 
     /**
-     * @see de.freese.mediathek.kodi.model.IModel#setPK(int)
+     * @see Model#setPK(int)
      */
     @Override
     public void setPK(final int pk)

@@ -7,11 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
+import de.freese.mediathek.services.Settings;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
-
-import de.freese.mediathek.services.Settings;
 
 /**
  * @author Thomas Freese
@@ -19,12 +18,12 @@ import de.freese.mediathek.services.Settings;
 class TestTVShowAPI
 {
     /**
-    *
-    */
+     *
+     */
     private static TVService service = null;
 
     /**
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     @BeforeAll
     public static void beforeClass() throws Exception
@@ -34,7 +33,7 @@ class TestTVShowAPI
     }
 
     /**
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_TV_DB_API_KEY, matches = ".*")
@@ -64,7 +63,7 @@ class TestTVShowAPI
     }
 
     /**
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_TV_DB_API_KEY, matches = ".*")
@@ -112,7 +111,7 @@ class TestTVShowAPI
     }
 
     /**
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_TV_DB_API_KEY, matches = ".*")

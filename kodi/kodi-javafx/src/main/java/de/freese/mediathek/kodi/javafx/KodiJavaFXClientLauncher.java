@@ -6,7 +6,7 @@ import javafx.application.Application;
 /**
  * @author Thomas Freese
  */
-public class KODIJavaFXClientLauncher
+public class KodiJavaFXClientLauncher
 {
     /**
      * @param args String[]
@@ -17,6 +17,6 @@ public class KODIJavaFXClientLauncher
         // Logging.getLogger().setLevel(Level.SEVERE);
         System.setProperty("org.slf4j.simpleLogger.log.de.freese.mediathek.kodi.javafx", "DEBUG");
 
-        Application.launch(KODIJavaFXClient.class);
+        Application.launch(KodiJavaFXClient.class);
     }
 }

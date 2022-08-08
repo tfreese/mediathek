@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import de.freese.mediathek.kodi.swing.panel.IPanel;
+import de.freese.mediathek.kodi.swing.panel.Panel;
 
 /**
  * {@link Action} zum Neuladen der Daten.
@@ -22,14 +22,14 @@ public class ReloadAction extends AbstractAction
     /**
      *
      */
-    private final IPanel panel;
+    private final Panel panel;
 
     /**
      * Erstellt ein neues {@link ReloadAction} Object.
      *
-     * @param panel {@link IPanel}
+     * @param panel {@link Panel}
      */
-    public ReloadAction(final IPanel panel)
+    public ReloadAction(final Panel panel)
     {
         super("Reload");
 

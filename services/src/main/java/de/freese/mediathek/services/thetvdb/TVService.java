@@ -190,7 +190,7 @@ public class TVService extends AbstractService
      *
      * @return {@link BufferedImage}
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     public BufferedImage getImage(final String path) throws Exception
     {

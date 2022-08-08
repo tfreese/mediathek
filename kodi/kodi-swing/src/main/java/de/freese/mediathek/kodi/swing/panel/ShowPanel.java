@@ -30,7 +30,7 @@ import de.freese.mediathek.kodi.swing.components.table.ShowTableAdapter;
 import org.springframework.context.ApplicationContext;
 
 /**
- * {@link IPanel} der Serien.
+ * {@link Panel} der Serien.
  *
  * @author Thomas Freese
  */
@@ -89,7 +89,7 @@ public class ShowPanel extends AbstractPanel
     }
 
     /**
-     * @see de.freese.mediathek.kodi.swing.panel.IPanel#reload()
+     * @see Panel#reload()
      */
     @Override
     public void reload()

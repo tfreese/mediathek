@@ -25,7 +25,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 class TestParseCSV
 {
     /**
-     * @throws IOException Falls was schief geht
+     * @throws IOException Falls was schiefgeht
      */
     @Test
     void testParseClementine() throws IOException

@@ -78,7 +78,7 @@ package de.freese.mediathek.kodi.javafx.controller;
 //    }
 //
 //    /**
-//     * @see de.freese.mediadb.kodi.javafx.controller.AbstractMediaController#getGenres(de.freese.mediadb.kodi.model.IModel)
+//     * @see de.freese.mediadb.kodi.javafx.controller.AbstractMediaController#getGenres(de.freese.mediadb.kodi.model.Model)
 //     */
 //    @Override
 //    protected List<Genre> getGenres(final Movie value)
@@ -87,7 +87,7 @@ package de.freese.mediathek.kodi.javafx.controller;
 //    }
 //
 //    /**
-//     * @see de.freese.mediadb.kodi.javafx.controller.AbstractMediaController#getImageURL(de.freese.mediadb.kodi.model.IModel)
+//     * @see de.freese.mediadb.kodi.javafx.controller.AbstractMediaController#getImageURL(de.freese.mediadb.kodi.model.Model)
 //     */
 //    @Override
 //    protected String getImageURL(final Movie value)
@@ -160,7 +160,7 @@ package de.freese.mediathek.kodi.javafx.controller;
 //    }
 //
 //    /**
-//     * @see de.freese.mediadb.kodi.javafx.controller.AbstractMediaController#updateDetails(de.freese.mediadb.kodi.model.IModel)
+//     * @see de.freese.mediadb.kodi.javafx.controller.AbstractMediaController#updateDetails(de.freese.mediadb.kodi.model.Model)
 //     */
 //    @Override
 //    protected void updateDetails(final Movie value)
@@ -176,7 +176,7 @@ package de.freese.mediathek.kodi.javafx.controller;
 //    }
 //
 //    /**
-//     * @see de.freese.mediadb.kodi.javafx.controller.AbstractMediaController#updateGenres(de.freese.mediadb.kodi.model.IModel, int[])
+//     * @see de.freese.mediadb.kodi.javafx.controller.AbstractMediaController#updateGenres(de.freese.mediadb.kodi.model.Model, int[])
 //     */
 //    @Override
 //    protected void updateGenres(final Movie value, final int[] genreIDs)

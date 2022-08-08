@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 
 import de.freese.mediathek.kodi.javafx.components.ModelListCellFactory;
 import de.freese.mediathek.kodi.model.Genre;
-import de.freese.mediathek.kodi.model.IModel;
+import de.freese.mediathek.kodi.model.Model;
 import javafx.collections.ObservableList;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
@@ -33,11 +33,11 @@ public class GenrePane extends VBox
     /**
      *
      */
-    private final ListView<IModel> listViewFilme;
+    private final ListView<Model> listViewFilme;
     /**
      *
      */
-    private final ListView<IModel> listViewSerien;
+    private final ListView<Model> listViewSerien;
     /**
      *
      */
@@ -101,7 +101,7 @@ public class GenrePane extends VBox
     /**
      * @return {@link ObservableList}
      */
-    public ObservableList<IModel> getFilmeItems()
+    public ObservableList<Model> getFilmeItems()
     {
         return this.listViewFilme.getItems();
     }
@@ -109,7 +109,7 @@ public class GenrePane extends VBox
     /**
      * @return {@link ObservableList}
      */
-    public ObservableList<IModel> getSerienItems()
+    public ObservableList<Model> getSerienItems()
     {
         return this.listViewSerien.getItems();
     }

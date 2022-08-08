@@ -13,7 +13,7 @@ import com.jgoodies.binding.beans.BeanAdapter;
 import com.jgoodies.binding.list.SelectionInList;
 import de.freese.mediathek.kodi.api.MediaService;
 import de.freese.mediathek.kodi.model.Genre;
-import de.freese.mediathek.kodi.model.IModel;
+import de.freese.mediathek.kodi.model.Model;
 import de.freese.mediathek.kodi.model.Movie;
 import de.freese.mediathek.kodi.model.Show;
 import de.freese.mediathek.kodi.swing.KodiSwingClient;
@@ -126,7 +126,7 @@ public class GenreModel extends PresentationModel<BeanAdapter<Genre>>
             List<Show> shows = service.getGenreShows(genre.getPK());
             List<Movie> movies = service.getGenreMovies(genre.getPK());
 
-            List<List<? extends IModel>> results = new ArrayList<>();
+            List<List<? extends Model>> results = new ArrayList<>();
             results.add(shows);
             results.add(movies);
 

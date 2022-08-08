@@ -4,7 +4,7 @@ package de.freese.mediathek.kodi.model;
 /**
  * @author Thomas Freese
  */
-public interface IModel extends Comparable<IModel>
+public interface Model extends Comparable<Model>
 {
     /**
      * @return String

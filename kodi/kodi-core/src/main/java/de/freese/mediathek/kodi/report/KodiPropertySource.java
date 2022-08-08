@@ -15,7 +15,7 @@ class KodiPropertySource extends PropertySource<Properties>
     /**
      * Erstellt ein neues {@link KodiPropertySource} Object.
      *
-     * @throws IOException Falls was schief geht.
+     * @throws IOException Falls was schiefgeht.
      */
     public KodiPropertySource() throws IOException
     {

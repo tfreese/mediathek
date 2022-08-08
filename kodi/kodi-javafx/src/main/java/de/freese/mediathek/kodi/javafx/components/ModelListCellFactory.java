@@ -1,7 +1,7 @@
 // Created: 12.04.2015
 package de.freese.mediathek.kodi.javafx.components;
 
-import de.freese.mediathek.kodi.model.IModel;
+import de.freese.mediathek.kodi.model.Model;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.util.Callback;
@@ -9,21 +9,21 @@ import javafx.util.Callback;
 /**
  * @author Thomas Freese
  */
-public class ModelListCellFactory implements Callback<ListView<IModel>, ListCell<IModel>>
+public class ModelListCellFactory implements Callback<ListView<Model>, ListCell<Model>>
 {
     /**
      * @see javafx.util.Callback#call(java.lang.Object)
      */
     @Override
-    public ListCell<IModel> call(final ListView<IModel> param)
+    public ListCell<Model> call(final ListView<Model> param)
     {
-        ListCell<IModel> cell = new ListCell<>()
+        ListCell<Model> cell = new ListCell<>()
         {
             /**
              * @see javafx.scene.control.Cell#updateItem(java.lang.Object, boolean)
              */
             @Override
-            protected void updateItem(final IModel model, final boolean empty)
+            protected void updateItem(final Model model, final boolean empty)
             {
                 super.updateItem(model, empty);
 

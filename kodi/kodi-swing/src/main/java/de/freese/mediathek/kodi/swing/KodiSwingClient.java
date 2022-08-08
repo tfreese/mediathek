@@ -18,8 +18,8 @@ import javax.swing.plaf.FontUIResource;
 
 import de.freese.mediathek.kodi.spring.AppConfigSQLite;
 import de.freese.mediathek.kodi.swing.panel.GenrePanel;
-import de.freese.mediathek.kodi.swing.panel.IPanel;
 import de.freese.mediathek.kodi.swing.panel.MoviePanel;
+import de.freese.mediathek.kodi.swing.panel.Panel;
 import de.freese.mediathek.kodi.swing.panel.ShowPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,7 +64,7 @@ public class KodiSwingClient
     /**
      * @param args String[]
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     public static void main(final String[] args) throws Exception
     {
@@ -115,7 +115,7 @@ public class KodiSwingClient
      *
      * @param args String[]
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     private void init(final String[] args) throws Exception
     {
@@ -148,7 +148,7 @@ public class KodiSwingClient
 
         JTabbedPane tabbedPane = new JTabbedPane();
 
-        IPanel panel = new ShowPanel(ctx);
+        Panel panel = new ShowPanel(ctx);
         tabbedPane.addTab("Serien", panel.buildPanel());
 
         panel = new MoviePanel(ctx);

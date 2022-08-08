@@ -3,7 +3,7 @@ package de.freese.mediathek.kodi.javafx.pane;
 
 import java.util.ResourceBundle;
 
-import de.freese.mediathek.kodi.model.IModel;
+import de.freese.mediathek.kodi.model.Model;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -34,7 +34,7 @@ import org.apache.commons.lang3.StringUtils;
  *
  * @author Thomas Freese
  */
-public class TvShowMoviePane<T extends IModel> extends VBox
+public class TvShowMoviePane<T extends Model> extends VBox
 {
     /**
      *

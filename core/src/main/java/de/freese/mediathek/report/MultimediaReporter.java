@@ -33,7 +33,7 @@ public final class MultimediaReporter
          *
          * @return {@link DataSource}
          *
-         * @throws Exception Falls was schief geht.
+         * @throws Exception Falls was schiefgeht.
          */
         static DataSource bansheeSqLite(final boolean readonly) throws Exception
         {
@@ -45,7 +45,7 @@ public final class MultimediaReporter
          *
          * @return {@link DataSource}
          *
-         * @throws Exception Falls was schief geht.
+         * @throws Exception Falls was schiefgeht.
          */
         static DataSource clementineSqLite(final boolean readonly) throws Exception
         {
@@ -57,7 +57,7 @@ public final class MultimediaReporter
          *
          * @return {@link DataSource}
          *
-         * @throws Exception Falls was schief geht.
+         * @throws Exception Falls was schiefgeht.
          */
         static DataSource kodiMusikSqLite(final boolean readonly) throws Exception
         {
@@ -69,7 +69,7 @@ public final class MultimediaReporter
          *
          * @return {@link DataSource}
          *
-         * @throws Exception Falls was schief geht.
+         * @throws Exception Falls was schiefgeht.
          */
         static DataSource plexSqlite(final boolean readonly) throws Exception
         {
@@ -85,7 +85,7 @@ public final class MultimediaReporter
          *
          * @return {@link DataSource}
          *
-         * @throws Exception Falls was schief geht.
+         * @throws Exception Falls was schiefgeht.
          */
         private static DataSource createSqLite(final boolean readonly, final String url) throws Exception
         {
@@ -132,7 +132,7 @@ public final class MultimediaReporter
     /**
      * @param args String[]
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     public static void main(final String[] args) throws Exception
     {

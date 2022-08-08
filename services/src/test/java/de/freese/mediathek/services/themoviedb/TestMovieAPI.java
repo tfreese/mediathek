@@ -7,10 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
-
 import de.freese.mediathek.services.Settings;
 import de.freese.mediathek.services.themoviedb.api.AccountService;
 import de.freese.mediathek.services.themoviedb.api.MovieService;
@@ -23,6 +19,9 @@ import de.freese.mediathek.services.themoviedb.model.Images;
 import de.freese.mediathek.services.themoviedb.model.Movie;
 import de.freese.mediathek.services.themoviedb.model.MovieDetails;
 import de.freese.mediathek.services.themoviedb.model.Search;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
 /**
  * @author Thomas Freese
@@ -39,7 +38,7 @@ class TestMovieAPI
     private static MovieService movieService = null;
 
     /**
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     @BeforeAll
     static void beforeAll() throws Exception
@@ -52,7 +51,7 @@ class TestMovieAPI
     }
 
     /**
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
@@ -72,7 +71,7 @@ class TestMovieAPI
     }
 
     /**
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
@@ -95,7 +94,7 @@ class TestMovieAPI
     }
 
     /**
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
@@ -137,7 +136,7 @@ class TestMovieAPI
     // }
 
     /**
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
@@ -153,7 +152,7 @@ class TestMovieAPI
     }
 
     /**
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
@@ -179,7 +178,7 @@ class TestMovieAPI
     }
 
     /**
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")

@@ -5,12 +5,10 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.springframework.context.ApplicationContext;
-
-import de.freese.mediathek.kodi.javafx.KODIJavaFXClient;
+import de.freese.mediathek.kodi.javafx.KodiJavaFXClient;
 import de.freese.mediathek.kodi.javafx.pane.GenrePane;
 import de.freese.mediathek.kodi.model.Genre;
-import de.freese.mediathek.kodi.model.IModel;
+import de.freese.mediathek.kodi.model.Model;
 import de.freese.mediathek.kodi.model.Movie;
 import de.freese.mediathek.kodi.model.Show;
 import javafx.collections.ObservableList;
@@ -19,6 +17,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView.TableViewSelectionModel;
+import org.springframework.context.ApplicationContext;
 
 /**
  * Controller für die Genre-Übersicht.
@@ -82,7 +81,7 @@ public class GenreController extends AbstractController<Genre>
     }
 
     /**
-     * @see de.freese.mediathek.kodi.javafx.controller.AbstractController#updateDetails(de.freese.mediathek.kodi.model.IModel)
+     * @see de.freese.mediathek.kodi.javafx.controller.AbstractController#updateDetails(Model)
      */
     @Override
     protected void updateDetails(final Genre value)
@@ -90,32 +89,34 @@ public class GenreController extends AbstractController<Genre>
         getPane().getFilmeItems().clear();
         getPane().getSerienItems().clear();
 
-        final Task<List<IModel>[]> task = new Task<>()
+        final Task<List<Model>[]> task = new Task<>()
         {
             /**
              * @see javafx.concurrent.Task#call()
              */
             @SuppressWarnings("unchecked")
             @Override
-            protected List<IModel>[] call() throws Exception
+            protected List<Model>[] call() throws Exception
             {
                 final List<Movie> movies = getMediaService().getGenreMovies(value.getPK());
                 final List<Show> shows = getMediaService().getGenreShows(value.getPK());
 
-                return (List<IModel>[]) new List<?>[]
-                {
-                        movies, shows
-                };
+                return (List<Model>[]) new List<?>[]
+                        {
+                                movies, shows
+                        };
             }
         };
-        task.setOnSucceeded(event -> {
-            final List<? extends IModel>[] media = task.getValue();
+        task.setOnSucceeded(event ->
+        {
+            final List<? extends Model>[] media = task.getValue();
             getPane().getFilmeItems().addAll(media[0]);
             getPane().getSerienItems().addAll(media[1]);
 
         });
-        task.setOnFailed(event -> {
-            KODIJavaFXClient.LOGGER.info("failed");
+        task.setOnFailed(event ->
+        {
+            KodiJavaFXClient.LOGGER.info("failed");
 
             Alert alert = new Alert(AlertType.ERROR, task.getException().getMessage());
             alert.showAndWait();

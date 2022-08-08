@@ -28,7 +28,7 @@ public abstract class AbstractMediaReporter implements MediaReporter
      *
      * @return {@link List}
      *
-     * @throws IOException Falls was schief geht.
+     * @throws IOException Falls was schiefgeht.
      */
     protected List<Map<String, String>> readMovies(final Path path) throws IOException
     {
@@ -58,7 +58,7 @@ public abstract class AbstractMediaReporter implements MediaReporter
      *
      * @return {@link List}
      *
-     * @throws IOException Falls was schief geht.
+     * @throws IOException Falls was schiefgeht.
      */
     protected List<Map<String, String>> readMusik(final Path path) throws IOException
     {
@@ -91,7 +91,7 @@ public abstract class AbstractMediaReporter implements MediaReporter
      *
      * @return {@link List}
      *
-     * @throws IOException Falls was schief geht.
+     * @throws IOException Falls was schiefgeht.
      */
     protected List<Map<String, String>> readTVShows(final Path path) throws IOException
     {

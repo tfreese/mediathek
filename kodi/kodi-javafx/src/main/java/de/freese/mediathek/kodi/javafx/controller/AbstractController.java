@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.concurrent.Executor;
 
 import de.freese.mediathek.kodi.api.MediaService;
-import de.freese.mediathek.kodi.model.IModel;
+import de.freese.mediathek.kodi.model.Model;
 import de.freese.mediathek.utils.cache.FileResourceCache;
 import de.freese.mediathek.utils.cache.ResourceCache;
 import javafx.beans.value.ChangeListener;
@@ -23,7 +23,7 @@ import org.springframework.context.ApplicationContext;
  *
  * @author Thomas Freese
  */
-public abstract class AbstractController<T extends IModel> implements Initializable, ChangeListener<T>
+public abstract class AbstractController<T extends Model> implements Initializable, ChangeListener<T>
 {
     /**
      *

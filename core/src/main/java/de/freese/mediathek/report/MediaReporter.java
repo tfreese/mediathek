@@ -18,7 +18,7 @@ public interface MediaReporter
      * @param dataSource {@link DataSource}
      * @param path {@link Path}
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     void updateDbFromReport(final DataSource dataSource, final Path path) throws Exception;
 
@@ -28,7 +28,7 @@ public interface MediaReporter
      * @param dataSource {@link DataSource}
      * @param path {@link Path}
      *
-     * @throws Exception Falls was schief geht.
+     * @throws Exception Falls was schiefgeht.
      */
     void writeReport(final DataSource dataSource, final Path path) throws Exception;
 }
