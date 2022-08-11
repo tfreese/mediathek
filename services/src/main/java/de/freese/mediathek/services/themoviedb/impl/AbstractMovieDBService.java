@@ -1,10 +1,9 @@
 // Created: 26.04.2014
 package de.freese.mediathek.services.themoviedb.impl;
 
+import de.freese.mediathek.services.AbstractService;
 import org.springframework.util.Assert;
 import org.springframework.web.client.RestTemplate;
-
-import de.freese.mediathek.services.AbstractService;
 
 /**
  * Abstracter Basisservice.
@@ -59,7 +58,7 @@ public abstract class AbstractMovieDBService extends AbstractService
     }
 
     /**
-     * Liefert 'https://api.themoviedb.org/3/'.
+     * Liefert <a href="https://api.themoviedb.org/3/">themoviedb</a>.
      *
      * @return {@link StringBuilder}
      */

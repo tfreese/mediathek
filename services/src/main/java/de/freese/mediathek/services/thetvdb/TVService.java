@@ -287,7 +287,7 @@ public class TVService extends AbstractService
     }
 
     /**
-     * Liefert 'http://thetvdb.com/api/'.<br>
+     * Liefert '<a href="http://thetvdb.com/api/">thetvdb-api</a>'.<br>
      * http://thetvdb.com/api/1D62F2F90030C444/mirrors.xml<br>
      *
      * @return {@link StringBuilder}

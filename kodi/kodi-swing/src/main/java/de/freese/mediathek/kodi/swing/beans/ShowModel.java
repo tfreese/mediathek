@@ -3,6 +3,7 @@ package de.freese.mediathek.kodi.swing.beans;
 
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
+import java.io.Serial;
 import java.net.URI;
 import java.nio.file.Paths;
 import java.util.List;
@@ -43,6 +44,7 @@ public class ShowModel extends PresentationModel<ShowBean>
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = -1759604850162069149L;
     /**
      *

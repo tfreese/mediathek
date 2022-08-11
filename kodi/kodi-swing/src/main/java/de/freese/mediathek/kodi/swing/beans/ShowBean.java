@@ -1,12 +1,12 @@
 // Created: 28.09.2014
 package de.freese.mediathek.kodi.swing.beans;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.Serial;
 
 import com.jgoodies.binding.beans.Model;
-
 import de.freese.mediathek.kodi.model.Show;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * {@link Model} der {@link Show}.
@@ -26,6 +26,7 @@ public class ShowBean extends Model
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = 952793224295913500L;
     /**
      *

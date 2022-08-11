@@ -1,6 +1,8 @@
 // Created: 17.09.2014
 package de.freese.mediathek.kodi.swing.components.table;
 
+import java.io.Serial;
+
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
 import de.freese.mediathek.kodi.model.Genre;
 
@@ -14,6 +16,7 @@ public class GenreTableAdapter extends AbstractTableAdapter<Genre>
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = -7235372423320630854L;
 
     /**

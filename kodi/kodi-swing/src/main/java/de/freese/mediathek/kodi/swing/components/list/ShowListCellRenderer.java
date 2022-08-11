@@ -2,6 +2,7 @@
 package de.freese.mediathek.kodi.swing.components.list;
 
 import java.awt.Component;
+import java.io.Serial;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
@@ -19,6 +20,7 @@ public class ShowListCellRenderer extends DefaultListCellRenderer
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = 3721555812207440061L;
 
     // /**

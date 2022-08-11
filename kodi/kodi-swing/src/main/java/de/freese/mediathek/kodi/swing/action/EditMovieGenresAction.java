@@ -3,6 +3,7 @@ package de.freese.mediathek.kodi.swing.action;
 
 import java.awt.Desktop.Action;
 import java.awt.event.ActionEvent;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,8 @@ public class EditMovieGenresAction extends AbstractAction
     /**
      *
      */
+    @Serial
+    @Serial
     private static final long serialVersionUID = -3961368866360343742L;
     /**
      *

@@ -11,7 +11,7 @@ import de.freese.mediathek.services.Settings;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * API-Debug für http://www.thetvdb.com.
+ * API-Debug für <a href="http://www.thetvdb.com">thetvdb</a>.
  *
  * @author Thomas Freese
  */

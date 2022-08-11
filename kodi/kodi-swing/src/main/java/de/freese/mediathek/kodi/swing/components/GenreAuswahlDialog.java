@@ -4,6 +4,7 @@ package de.freese.mediathek.kodi.swing.components;
 import java.awt.GridBagLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
+import java.io.Serial;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -30,6 +31,7 @@ public class GenreAuswahlDialog extends JDialog
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = -4384289197484325624L;
 
     /**
@@ -40,6 +42,7 @@ public class GenreAuswahlDialog extends JDialog
         /**
          *
          */
+        @Serial
         private static final long serialVersionUID = -5694877960473295271L;
 
         /**
@@ -70,6 +73,7 @@ public class GenreAuswahlDialog extends JDialog
         /**
          *
          */
+        @Serial
         private static final long serialVersionUID = -7913222539942539301L;
 
         /**
@@ -100,6 +104,7 @@ public class GenreAuswahlDialog extends JDialog
         /**
          *
          */
+        @Serial
         private static final long serialVersionUID = 3818570430470000410L;
 
         /**
@@ -143,6 +148,7 @@ public class GenreAuswahlDialog extends JDialog
         /**
          *
          */
+        @Serial
         private static final long serialVersionUID = 3818570430470000410L;
 
         /**

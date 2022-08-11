@@ -198,11 +198,8 @@ public class KodiSwingClient
         // Fonts: Dialog, Monospaced, Arial, DejaVu Sans
         Font font = new Font("DejaVu Sans", Font.PLAIN, 16);
 
-        UIManager.getLookAndFeelDefaults().entrySet().forEach(entry ->
+        UIManager.getLookAndFeelDefaults().forEach((key, value) ->
         {
-            Object key = entry.getKey();
-            Object value = entry.getValue();
-
             if (value instanceof FontUIResource)
             {
                 UIManager.put(key, new FontUIResource(font));

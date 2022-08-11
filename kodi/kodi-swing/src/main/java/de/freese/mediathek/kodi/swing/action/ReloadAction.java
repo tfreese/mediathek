@@ -3,6 +3,7 @@ package de.freese.mediathek.kodi.swing.action;
 
 import java.awt.Desktop.Action;
 import java.awt.event.ActionEvent;
+import java.io.Serial;
 
 import javax.swing.AbstractAction;
 
@@ -18,6 +19,7 @@ public class ReloadAction extends AbstractAction
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = -8049703427783670993L;
     /**
      *

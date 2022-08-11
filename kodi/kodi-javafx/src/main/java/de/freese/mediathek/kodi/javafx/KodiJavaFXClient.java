@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
- * bidirectional bind: "https://community.oracle.com/thread/2462489"<br>
+ * bidirectional bind: "<a href="https://community.oracle.com/thread/2462489">community.oracle.com</a>"<br>
  * <br>
  * Mit KodiJavaFXClientLauncher ausführen oder KodiJavaFXClient direkt mit foldenden Restruktionen:<br>
  * <br>

@@ -1,6 +1,8 @@
 // Created:n 10.06.2016
 package de.freese.mediathek.kodi.swing.components.table;
 
+import java.io.Serial;
+
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
 import de.freese.mediathek.kodi.model.Show;
 
@@ -12,6 +14,7 @@ public class ShowTableAdapter extends AbstractTableAdapter<Show>
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = 5258240913718717061L;
 
     /**

@@ -1,6 +1,7 @@
 // Created: 28.09.2014
 package de.freese.mediathek.kodi.swing.beans;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -29,6 +30,7 @@ public class GenreModel extends PresentationModel<BeanAdapter<Genre>>
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = 2574749005329631553L;
     /**
      *

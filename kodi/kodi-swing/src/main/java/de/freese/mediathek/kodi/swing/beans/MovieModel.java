@@ -3,6 +3,7 @@ package de.freese.mediathek.kodi.swing.beans;
 
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
+import java.io.Serial;
 import java.net.URI;
 import java.nio.file.Paths;
 import java.util.List;
@@ -43,6 +44,7 @@ public class MovieModel extends PresentationModel<MovieBean>
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = 5768855611560857610L;
     /**
      *
@@ -60,10 +62,10 @@ public class MovieModel extends PresentationModel<MovieBean>
      *
      */
     private final ValueModel valueModelPoster;
-//    /**
-//     *
-//     */
-//    private Consumer<MovieBean> imdbIdLabelConsumer;
+    //    /**
+    //     *
+    //     */
+    //    private Consumer<MovieBean> imdbIdLabelConsumer;
     /**
      *
      */
@@ -96,9 +98,9 @@ public class MovieModel extends PresentationModel<MovieBean>
     public void bindImdbIdLabel(final JLabel label)
     {
         Bindings.bind(label, getModel(MovieBean.PROPERTY_IMDB_ID));
-//        imdbIdLabelConsumer = movie ->
-//                label.setText(Optional.ofNullable(movie).map(MovieBean::getImdbID).orElse(null))
-//        ;
+        //        imdbIdLabelConsumer = movie ->
+        //                label.setText(Optional.ofNullable(movie).map(MovieBean::getImdbID).orElse(null))
+        //        ;
     }
 
     /**
@@ -175,7 +177,7 @@ public class MovieModel extends PresentationModel<MovieBean>
     {
         super.setBean(newBean);
 
-//        imdbIdLabelConsumer.accept(newBean);
+        //        imdbIdLabelConsumer.accept(newBean);
 
         this.valueModelPoster.setValue(null);
 
