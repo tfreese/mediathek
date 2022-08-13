@@ -40,20 +40,6 @@ public abstract class AbstractModel implements Model
     }
 
     /**
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-
-        return (obj != null) && obj instanceof AbstractModel other && Objects.equals(this.name, other.name) && (this.pk == other.pk);
-    }
-
-    /**
      * @see Model#getName()
      */
     @Override
@@ -69,15 +55,6 @@ public abstract class AbstractModel implements Model
     public int getPK()
     {
         return this.pk;
-    }
-
-    /**
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode()
-    {
-        return Objects.hash(this.name, this.pk);
     }
 
     /**
@@ -110,5 +87,27 @@ public abstract class AbstractModel implements Model
         builder.append(this.name).append("]");
 
         return builder.toString();
+    }
+
+    @Override
+    public boolean equals(final Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        
+        if (!(o instanceof AbstractModel model))
+        {
+            return false;
+        }
+
+        return pk == model.pk && Objects.equals(getName(), model.getName());
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(getName(), pk);
     }
 }
