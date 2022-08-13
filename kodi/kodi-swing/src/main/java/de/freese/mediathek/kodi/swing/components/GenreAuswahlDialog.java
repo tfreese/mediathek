@@ -118,7 +118,6 @@ public class GenreAuswahlDialog extends JDialog
         /**
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
-        @SuppressWarnings("unchecked")
         @Override
         public void actionPerformed(final ActionEvent event)
         {
@@ -162,7 +161,6 @@ public class GenreAuswahlDialog extends JDialog
         /**
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
-        @SuppressWarnings("unchecked")
         @Override
         public void actionPerformed(final ActionEvent event)
         {

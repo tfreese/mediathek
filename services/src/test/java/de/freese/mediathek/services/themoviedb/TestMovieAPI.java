@@ -2,6 +2,7 @@
 package de.freese.mediathek.services.themoviedb;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -103,7 +104,7 @@ class TestMovieAPI
         MovieDetails details = movieService.details(Settings.TEST_MOVIE_ID);
 
         assertNotNull(details);
-        assertNotNull(details.getId());
+        assertNotEquals(0, details.getId());
         assertNotNull(details.getTitle());
         assertNotNull(details.getOriginalTitle());
         assertNotNull(details.getReleaseDate());
@@ -166,7 +167,7 @@ class TestMovieAPI
         for (Movie mov : result.getResults())
         {
             assertNotNull(mov);
-            assertNotNull(mov.getId());
+            assertNotEquals(0, mov.getId());
             assertNotNull(mov.getTitle());
             assertNotNull(mov.getOriginalTitle());
             // assertNotNull(mov.getReleaseDate());
@@ -192,7 +193,7 @@ class TestMovieAPI
         for (Movie mov : result.getResults())
         {
             assertNotNull(mov);
-            assertNotNull(mov.getId());
+            assertNotEquals(0, mov.getId());
             assertNotNull(mov.getTitle());
             assertNotNull(mov.getOriginalTitle());
             assertNotNull(mov.getReleaseDate());

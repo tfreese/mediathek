@@ -11,10 +11,10 @@ import javafx.scene.text.TextAlignment;
 import javafx.util.Callback;
 
 /**
- * @author Thomas Freese
- *
  * @param <S> Entity Type
  * @param <T> Attribute Type
+ *
+ * @author Thomas Freese
  */
 public class FormattedTableCellFactory<S, T> implements Callback<TableColumn<S, T>, TableCell<S, T>>
 {
@@ -74,15 +74,9 @@ public class FormattedTableCellFactory<S, T> implements Callback<TableColumn<S, 
 
         switch (this.alignment)
         {
-            case CENTER:
-                cell.setAlignment(Pos.CENTER);
-                break;
-            case RIGHT:
-                cell.setAlignment(Pos.CENTER_RIGHT);
-                break;
-            default:
-                cell.setAlignment(Pos.CENTER_LEFT);
-                break;
+            case CENTER -> cell.setAlignment(Pos.CENTER);
+            case RIGHT -> cell.setAlignment(Pos.CENTER_RIGHT);
+            default -> cell.setAlignment(Pos.CENTER_LEFT);
         }
 
         return cell;
