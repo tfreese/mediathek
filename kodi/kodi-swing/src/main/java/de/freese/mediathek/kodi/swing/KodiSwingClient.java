@@ -182,7 +182,7 @@ public class KodiSwingClient
         }
         catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex)
         {
-            LOGGER.error(null, ex);
+            LOGGER.error(ex.getMessage(), ex);
         }
 
         UIManager.put("FileChooser.useSystemIcons", Boolean.TRUE);

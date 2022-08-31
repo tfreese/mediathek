@@ -182,7 +182,7 @@ public class GenreModel extends PresentationModel<BeanAdapter<Genre>>
         // }
         // catch (Exception ex)
         // {
-        // KodiSwingClient.LOGGER.error(null, ex);
+        // KodiSwingClient.LOGGER.error(ex.getMessage(), ex);
         // }
         // }
         // };
@@ -232,7 +232,7 @@ public class GenreModel extends PresentationModel<BeanAdapter<Genre>>
                 }
                 catch (Exception ex)
                 {
-                    KodiSwingClient.LOGGER.error(null, ex);
+                    KodiSwingClient.LOGGER.error(ex.getMessage(), ex);
                 }
             }
         };

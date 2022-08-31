@@ -262,7 +262,7 @@ public class MovieModel extends PresentationModel<MovieBean>
                 }
                 catch (Exception ex)
                 {
-                    KodiSwingClient.LOGGER.error(null, ex);
+                    KodiSwingClient.LOGGER.error(ex.getMessage(), ex);
                 }
             }
         };

@@ -131,7 +131,7 @@ public class GenrePanel extends AbstractPanel
                 }
                 catch (Exception ex)
                 {
-                    getLogger().error(null, ex);
+                    getLogger().error(ex.getMessage(), ex);
                 }
             }
         };
