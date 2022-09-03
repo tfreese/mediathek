@@ -233,7 +233,7 @@ public class TVService extends AbstractService
             return null;
         }
 
-        // Reduntante Treffer für Sprache filtern.
+        // Redundante Treffer für Sprache filtern.
         Map<String, TVShow> map = new HashMap<>();
         Map<String, TVShow> map2 = new HashMap<>();
 

@@ -7,7 +7,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 /**
- * Sortiert Filem in einem Set nach Jahr und nicht nach Name.<br>
+ * Sortiert Filme in einem Set nach Jahr und nicht nach Name.<br>
  * Comparison method violates its general contract!<br>
  * Reflexivität -> compare(a,a)==0<br>
  * Antisymmetrie -> compare(a,b)==-compare(b,a)<br>

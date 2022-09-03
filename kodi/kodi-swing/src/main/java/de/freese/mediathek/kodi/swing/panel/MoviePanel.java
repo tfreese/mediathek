@@ -104,9 +104,8 @@ public class MoviePanel extends AbstractPanel
             protected List<Movie> doInBackground() throws Exception
             {
                 MediaService service = getBean(MediaService.class);
-                List<Movie> movies = service.getMovies();
 
-                return movies;
+                return service.getMovies();
             }
 
             /**

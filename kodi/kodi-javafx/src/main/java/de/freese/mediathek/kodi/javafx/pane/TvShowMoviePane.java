@@ -205,7 +205,7 @@ public class TvShowMoviePane<T extends Model> extends VBox
         tableView.setEditable(false);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-        // Tabellenalignment über CellStyle
+        // Tabellen alignment über CellStyle
         TableColumn<T, Integer> columnID = new TableColumn<>(resourceBundle.getString("id"));
         columnID.setResizable(false);
         columnID.prefWidthProperty().bind(tableView.widthProperty().multiply(0.1D)); // 10 % Breite

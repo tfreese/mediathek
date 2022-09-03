@@ -54,7 +54,7 @@ public abstract class AbstractController<T extends Model> implements Initializab
         this.applicationContext = applicationContext;
         this.executor = applicationContext.getBean(Executor.class);
         this.mediaService = applicationContext.getBean(MediaService.class);
-        this.resourceCache = new FileResourceCache(Paths.get(System.getProperty("java.io.tmpdir"), ".javacache"));
+        this.resourceCache = new FileResourceCache(Paths.get(System.getProperty("java.io.tmpdir"), ".javaCache"));
     }
 
     /**

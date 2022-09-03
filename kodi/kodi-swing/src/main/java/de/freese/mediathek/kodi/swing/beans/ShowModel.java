@@ -246,9 +246,7 @@ public class ShowModel extends PresentationModel<ShowBean>
 
                             image = ImageUtils.scaleImageKeepRatio(image, 1024, 768);
 
-                            ImageIcon imageIcon = new ImageIcon(image);
-
-                            return imageIcon;
+                            return new ImageIcon(image);
                         }
                     }
                 }

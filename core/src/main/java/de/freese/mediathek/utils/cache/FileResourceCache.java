@@ -28,11 +28,11 @@ public class FileResourceCache extends AbstractResourceCache
     private final Path cacheDirectory;
 
     /**
-     * Erstellt ein neues {@link FileResourceCache} Object im Ordner "java.io.tmpdir/.javacache".
+     * Erstellt ein neues {@link FileResourceCache} Object im Ordner "java.io.tmpdir/.javaCache".
      */
     public FileResourceCache()
     {
-        this(Paths.get(System.getProperty("java.io.tmpdir"), ".javacache"));
+        this(Paths.get(System.getProperty("java.io.tmpdir"), ".javaCache"));
     }
 
     /**
@@ -55,7 +55,7 @@ public class FileResourceCache extends AbstractResourceCache
     {
         try
         {
-            // Files.deleteIfExists(directory); // Funktioniert nur, wenn das Verzeichniss leer ist.
+            // Files.deleteIfExists(directory); // Funktioniert nur, wenn das Verzeichnis leer ist.
 
             Files.walkFileTree(this.cacheDirectory, new SimpleFileVisitor<>()
             {
@@ -99,10 +99,10 @@ public class FileResourceCache extends AbstractResourceCache
         Path path = this.cacheDirectory;
 
         // Verzeichnisstruktur innerhalb des Cache-Verzeichnisses aufbauen.
-//        for (int i = 0; i < 3; i++)
-//        {
-//            path = path.resolve(key.substring(i * 2, (i * 2) + 2));
-//        }
+        //        for (int i = 0; i < 3; i++)
+        //        {
+        //            path = path.resolve(key.substring(i * 2, (i * 2) + 2));
+        //        }
 
         path = path.resolve(key);
 

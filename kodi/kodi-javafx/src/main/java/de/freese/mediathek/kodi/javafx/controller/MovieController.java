@@ -31,6 +31,17 @@ public class MovieController extends AbstractTvShowMovieController<Movie>
     }
 
     /**
+     * @see de.freese.mediathek.kodi.javafx.controller.AbstractTvShowMovieController#initialize(java.net.URL, java.util.ResourceBundle)
+     */
+    @Override
+    public void initialize(final URL url, final ResourceBundle rb)
+    {
+        super.initialize(url, rb);
+
+        getPane().getIDProperty().bind(Bindings.selectString(getPane().getTableSelectionModel().selectedItemProperty(), "imdbID"));
+    }
+
+    /**
      * @see de.freese.mediathek.kodi.javafx.controller.AbstractTvShowMovieController#getGenres(Model)
      */
     @Override
@@ -57,25 +68,12 @@ public class MovieController extends AbstractTvShowMovieController<Movie>
     }
 
     /**
-     * @see de.freese.mediathek.kodi.javafx.controller.AbstractTvShowMovieController#initialize(java.net.URL, java.util.ResourceBundle)
-     */
-    @Override
-    public void initialize(final URL url, final ResourceBundle rb)
-    {
-        super.initialize(url, rb);
-
-        getPane().getIDProperty().bind(Bindings.selectString(getPane().getTableSelectionModel().selectedItemProperty(), "imdbID"));
-    }
-
-    /**
      * @see de.freese.mediathek.kodi.javafx.controller.AbstractTvShowMovieController#load()
      */
     @Override
     protected List<Movie> load()
     {
-        List<Movie> movies = getMediaService().getMovies();
-
-        return movies;
+        return getMediaService().getMovies();
     }
 
     /**

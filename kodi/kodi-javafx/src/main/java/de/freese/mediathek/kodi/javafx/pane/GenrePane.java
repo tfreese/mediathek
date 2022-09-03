@@ -141,7 +141,7 @@ public class GenrePane extends VBox
         tableView.setEditable(false);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-        // Tabellenalignment über CellStyle
+        // Tabellen alignment über CellStyle
         TableColumn<Genre, Integer> columnID = new TableColumn<>(resourceBundle.getString("id"));
         columnID.setResizable(false);
         columnID.prefWidthProperty().bind(tableView.widthProperty().multiply(0.1D)); // 10 % Breite
@@ -149,7 +149,7 @@ public class GenrePane extends VBox
         // columnID.setCellValueFactory(cell -> cell.getValue().getPK());
         columnID.setStyle("-fx-alignment: CENTER-RIGHT;");
 
-        // Sortierung auf Genrespalte
+        // Sortierung auf Genre Spalte
         TableColumn<Genre, String> columnGenre = new TableColumn<>(resourceBundle.getString("genre"));
         columnGenre.prefWidthProperty().bind(tableView.widthProperty().multiply(0.58D)); // 58 % Breite
         columnGenre.setCellValueFactory(new PropertyValueFactory<>("name"));

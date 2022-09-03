@@ -81,7 +81,7 @@ public class MovieModel extends PresentationModel<MovieBean>
         this.movieSelection = new SelectionInList<>();
         this.valueModelPoster = new ValueHolder();
         this.valueModelFilter = new ValueHolder();
-        this.resourceCache = new FileResourceCache(Paths.get(System.getProperty("java.io.tmpdir"), ".javacache"));
+        this.resourceCache = new FileResourceCache(Paths.get(System.getProperty("java.io.tmpdir"), ".javaCache"));
     }
 
     /**
@@ -236,9 +236,7 @@ public class MovieModel extends PresentationModel<MovieBean>
 
                             image = ImageUtils.scaleImageKeepRatio(image, 1024, 768);
 
-                            ImageIcon imageIcon = new ImageIcon(image);
-
-                            return imageIcon;
+                            return new ImageIcon(image);
                         }
                     }
                 }

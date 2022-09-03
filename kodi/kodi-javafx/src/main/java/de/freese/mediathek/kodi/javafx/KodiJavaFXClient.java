@@ -24,7 +24,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 /**
  * bidirectional bind: "<a href="https://community.oracle.com/thread/2462489">community.oracle.com</a>"<br>
  * <br>
- * Mit KodiJavaFXClientLauncher ausführen oder KodiJavaFXClient direkt mit foldenden Restruktionen:<br>
+ * Mit KodiJavaFXClientLauncher ausführen oder KodiJavaFXClient direkt mit folgenden Restriktionen:<br>
  * <br>
  * In Eclipse:<br>
  * <ol>
@@ -41,6 +41,14 @@ public class KodiJavaFXClient extends Application
      *
      */
     public static final Logger LOGGER = LoggerFactory.getLogger("KODI-Client");
+
+    /**
+     * @return {@link Logger}
+     */
+    public static Logger getLogger()
+    {
+        return LOGGER;
+    }
 
     /**
      * @return int; Beispiel: 14.0.1 = 014.000.001 = 14000001
@@ -74,7 +82,7 @@ public class KodiJavaFXClient extends Application
             }
             catch (Exception ex)
             {
-                System.err.println(ex.getMessage());
+                getLogger().error(ex.getMessage(), ex);
             }
         }
 
@@ -83,14 +91,6 @@ public class KodiJavaFXClient extends Application
         getLogger().info("JavaVersion = {} = {} = {}", javaVersion, versionString, version);
 
         return version;
-    }
-
-    /**
-     * @return {@link Logger}
-     */
-    public static Logger getLogger()
-    {
-        return LOGGER;
     }
 
     /**
@@ -171,7 +171,7 @@ public class KodiJavaFXClient extends Application
         // Scene
         Scene scene = null;
 
-        // Momentan kein Antialising wegen JavaFX-Bug.
+        // Momentan kein Antialiasing wegen JavaFX-Bug.
         int javaVersion = getJavaVersion();
 
         if (Platform.isSupported(ConditionalFeature.SCENE3D) && (javaVersion >= 1_800_072))
@@ -186,7 +186,7 @@ public class KodiJavaFXClient extends Application
 
         scene.getStylesheets().add("styles/styles.css");
 
-        getLogger().info("Antialising: {}", scene.getAntiAliasing());
+        getLogger().info("Antialiasing: {}", scene.getAntiAliasing());
 
         stage.setTitle("KODI-Client");
         stage.setScene(scene);

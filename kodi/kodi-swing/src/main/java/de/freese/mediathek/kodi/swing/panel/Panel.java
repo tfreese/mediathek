@@ -29,7 +29,7 @@ public interface Panel
     ApplicationContext getApplicationContext();
 
     /**
-     * Liefert eine Bean des ApplicationContextes.
+     * Liefert eine Bean aus dem ApplicationContext.
      *
      * @param <T> Konkreter Typ
      * @param requiredType Class

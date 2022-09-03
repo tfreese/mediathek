@@ -275,13 +275,4 @@ public class MovieDetails extends Movie
     {
         this.voteCount = voteCount;
     }
-
-    /**
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString()
-    {
-        return super.toString();
-    }
 }

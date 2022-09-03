@@ -106,9 +106,8 @@ public class ShowPanel extends AbstractPanel
             protected List<Show> doInBackground() throws Exception
             {
                 MediaService service = getBean(MediaService.class);
-                List<Show> shows = service.getShows();
 
-                return shows;
+                return service.getShows();
             }
 
             /**

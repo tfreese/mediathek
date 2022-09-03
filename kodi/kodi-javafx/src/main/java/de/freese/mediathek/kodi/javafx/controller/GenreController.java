@@ -75,9 +75,7 @@ public class GenreController extends AbstractController<Genre>
     @Override
     protected List<Genre> load()
     {
-        final List<Genre> genres = getMediaService().getGenres();
-
-        return genres;
+        return getMediaService().getGenres();
     }
 
     /**

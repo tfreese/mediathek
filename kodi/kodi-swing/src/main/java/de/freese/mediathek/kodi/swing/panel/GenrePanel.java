@@ -114,9 +114,8 @@ public class GenrePanel extends AbstractPanel
             protected List<Genre> doInBackground() throws Exception
             {
                 MediaService service = getBean(MediaService.class);
-                List<Genre> genres = service.getGenres();
 
-                return genres;
+                return service.getGenres();
             }
 
             /**

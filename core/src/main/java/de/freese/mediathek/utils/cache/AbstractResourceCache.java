@@ -121,9 +121,7 @@ public abstract class AbstractResourceCache implements ResourceCache
         {
             Path path = Path.of(uri);
 
-            long length = Files.size(path);
-
-            return length;
+            return Files.size(path);
         }
         else if ("http".equals(protocol) || "https".equals(protocol))
         {
@@ -134,9 +132,7 @@ public abstract class AbstractResourceCache implements ResourceCache
                 con.setRequestMethod("HEAD");
             }
 
-            long length = connection.getContentLengthLong();
-
-            return length;
+            return connection.getContentLengthLong();
         }
 
         throw new IOException("unsupported protocol");

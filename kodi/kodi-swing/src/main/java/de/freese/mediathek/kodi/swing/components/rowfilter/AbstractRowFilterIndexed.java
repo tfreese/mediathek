@@ -21,7 +21,7 @@ public abstract class AbstractRowFilterIndexed extends RowFilter<Object, Object>
      *
      * @param columns int[]
      */
-    protected AbstractRowFilterIndexed(final int...columns)
+    protected AbstractRowFilterIndexed(final int... columns)
     {
         super();
 
@@ -30,26 +30,10 @@ public abstract class AbstractRowFilterIndexed extends RowFilter<Object, Object>
     }
 
     /**
-     * Throws an IllegalArgumentException if any of the values in columns are < 0.
-     *
-     * @param columns int[]
-     */
-    protected void checkIndices(final int[] columns)
-    {
-        for (int i = columns.length - 1; i >= 0; i--)
-        {
-            if (columns[i] < 0)
-            {
-                throw new IllegalArgumentException("Index must be >= 0");
-            }
-        }
-    }
-
-    /**
      * @see javax.swing.RowFilter#include(javax.swing.RowFilter.Entry)
      */
     @Override
-    public boolean include(final Entry<? extends Object, ? extends Object> value)
+    public boolean include(final Entry<?, ?> value)
     {
         int count = value.getValueCount();
 
@@ -84,10 +68,26 @@ public abstract class AbstractRowFilterIndexed extends RowFilter<Object, Object>
     }
 
     /**
+     * Throws an IllegalArgumentException if any of the values in columns are < 0.
+     *
+     * @param columns int[]
+     */
+    protected void checkIndices(final int[] columns)
+    {
+        for (int i = columns.length - 1; i >= 0; i--)
+        {
+            if (columns[i] < 0)
+            {
+                throw new IllegalArgumentException("Index must be >= 0");
+            }
+        }
+    }
+
+    /**
      * @param value {@link javax.swing.RowFilter.Entry}
      * @param index int
      *
      * @return boolean
      */
-    protected abstract boolean include(Entry<? extends Object, ? extends Object> value, int index);
+    protected abstract boolean include(Entry<?, ?> value, int index);
 }
