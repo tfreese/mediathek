@@ -50,7 +50,7 @@ public class KodiAudioReporter extends AbstractMediaReporter
                 {
                     String artist = map.get("ARTIST");
                     String song = map.get("SONG");
-                    int playcount = Integer.parseInt(map.get("PLAYCOUNT"));
+                    int playCount = Integer.parseInt(map.get("PLAYCOUNT"));
 
                     stmtSelect.setString(1, artist);
                     stmtSelect.setString(2, song);
@@ -60,11 +60,11 @@ public class KodiAudioReporter extends AbstractMediaReporter
                         if (resultSet.next())
                         {
                             // Eintrag gefunden -> Update
-                            if (playcount != resultSet.getInt("PLAYCOUNT"))
+                            if (playCount != resultSet.getInt("PLAYCOUNT"))
                             {
-                                System.out.printf("Update Song: %s - %s%n", artist, song);
+                                getLogger().info("Update Song: {} - {}", artist, song);
 
-                                stmtUpdate.setInt(1, playcount);
+                                stmtUpdate.setInt(1, playCount);
                                 stmtUpdate.setString(2, artist);
                                 stmtUpdate.setString(3, song);
 
@@ -79,7 +79,8 @@ public class KodiAudioReporter extends AbstractMediaReporter
             catch (Exception ex)
             {
                 connection.rollback();
-                throw ex;
+
+                getLogger().error(ex.getMessage(), ex);
             }
         }
     }

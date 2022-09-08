@@ -46,13 +46,13 @@ public class ClementineAudioReporter extends AbstractMediaReporter
                 {
                     String artist = map.get("ARTIST");
                     String song = map.get("SONG");
-                    int playcount = Integer.parseInt(map.get("PLAYCOUNT"));
+                    int playCount = Integer.parseInt(map.get("PLAYCOUNT"));
                     // LocalDateTime lastPlayed = LocalDateTime.parse((String) map.get("LASTPLAYED"));
 
-                    System.out.printf("Update Song: %s - %s%n", artist, song);
+                    getLogger().info("Update Song: {} - {}", artist, song);
 
                     // pstmt.clearParameters();
-                    pstmt.setInt(1, playcount);
+                    pstmt.setInt(1, playCount);
                     // pstmt.setInt(2, Long.valueOf(lastPlayed.toInstant(zoneOffset).toEpochMilli()).intValue());
                     // pstmt.setTimestamp(2, Timestamp.from(lastPlayed));
                     pstmt.setString(2, artist);
@@ -61,14 +61,15 @@ public class ClementineAudioReporter extends AbstractMediaReporter
                 }
 
                 int[] affectedRows = pstmt.executeBatch();
-                System.out.printf("%nAffected Rows: %d%n", affectedRows.length);
+                getLogger().info("Affected Rows: {}}", affectedRows.length);
 
                 con.commit();
             }
             catch (Exception ex)
             {
                 con.rollback();
-                ex.printStackTrace();
+
+                getLogger().error(ex.getMessage(), ex);
             }
         }
 

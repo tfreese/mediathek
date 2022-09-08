@@ -41,26 +41,27 @@ public class PlexAudioReporter extends AbstractMediaReporter
                 {
                     String artist = map.get("ARTIST");
                     String song = map.get("SONG");
-                    int playcount = Integer.parseInt(map.get("PLAYCOUNT"));
+                    int playCount = Integer.parseInt(map.get("PLAYCOUNT"));
 
-                    System.out.printf("Update Song: %s - %s%n", artist, song);
+                    getLogger().info("Update Song: {} - {}", artist, song);
 
                     // pstmt.clearParameters();
-                    pstmt.setInt(1, playcount);
+                    pstmt.setInt(1, playCount);
                     pstmt.setString(2, artist);
                     pstmt.setString(3, song);
                     pstmt.addBatch();
                 }
 
                 int[] affectedRows = pstmt.executeBatch();
-                System.out.printf("%nAffected Rows: %d%n", affectedRows.length);
+                getLogger().info("Affected Rows: {}", affectedRows.length);
 
                 con.commit();
             }
             catch (Exception ex)
             {
                 con.rollback();
-                ex.printStackTrace();
+
+                getLogger().error(ex.getMessage(), ex);
             }
         }
     }

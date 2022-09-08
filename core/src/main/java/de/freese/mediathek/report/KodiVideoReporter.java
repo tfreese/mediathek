@@ -126,8 +126,8 @@ public class KodiVideoReporter extends AbstractMediaReporter
                 for (Map<String, String> map : watchedMovies)
                 {
                     String movie = map.get("MOVIE");
-                    int playcount = Integer.parseInt(map.get("PLAYCOUNT"));
-                    String lastplayed = map.get("LASTPLAYED");
+                    int playCount = Integer.parseInt(map.get("PLAYCOUNT"));
+                    String lastPlayed = map.get("LASTPLAYED");
 
                     stmtSelect.setString(1, movie);
 
@@ -136,14 +136,14 @@ public class KodiVideoReporter extends AbstractMediaReporter
                         if (resultSet.next())
                         {
                             // Eintrag gefunden -> Update
-                            if ((playcount != resultSet.getInt("PLAYCOUNT")) || !lastplayed.equals(resultSet.getString("LASTPLAYED")))
+                            if ((playCount != resultSet.getInt("PLAYCOUNT")) || !lastPlayed.equals(resultSet.getString("LASTPLAYED")))
                             {
                                 int idFile = resultSet.getInt("IDFILE");
 
-                                System.out.printf("Update Movie: IDFile=%d, %s%n", idFile, movie);
+                                getLogger().info("Update Movie: IDFile={}, {}", idFile, movie);
 
-                                stmtUpdate.setInt(1, playcount);
-                                stmtUpdate.setString(2, lastplayed);
+                                stmtUpdate.setInt(1, playCount);
+                                stmtUpdate.setString(2, lastPlayed);
                                 stmtUpdate.setInt(3, idFile);
 
                                 stmtUpdate.executeUpdate();
@@ -157,7 +157,8 @@ public class KodiVideoReporter extends AbstractMediaReporter
             catch (Exception ex)
             {
                 connection.rollback();
-                throw ex;
+
+                getLogger().error(ex.getMessage(), ex);
             }
         }
     }
@@ -207,8 +208,8 @@ public class KodiVideoReporter extends AbstractMediaReporter
                     String season = map.get("SEASON");
                     String episode = map.get("EPISODE");
                     String title = map.get("TITLE");
-                    int playcount = Integer.parseInt(map.get("PLAYCOUNT"));
-                    String lastplayed = map.get("LASTPLAYED");
+                    int playCount = Integer.parseInt(map.get("PLAYCOUNT"));
+                    String lastPlayed = map.get("LASTPLAYED");
 
                     stmtSelect.setString(1, tvshow);
                     stmtSelect.setString(2, season);
@@ -219,16 +220,16 @@ public class KodiVideoReporter extends AbstractMediaReporter
                         if (resultSet.next())
                         {
                             // Eintrag gefunden -> Update
-                            if ((playcount != resultSet.getInt("PLAYCOUNT")) || !lastplayed.equals(resultSet.getString("LASTPLAYED")))
+                            if ((playCount != resultSet.getInt("PLAYCOUNT")) || !lastPlayed.equals(resultSet.getString("LASTPLAYED")))
                             {
                                 int idFile = resultSet.getInt("IDFILE");
 
-                                System.out.printf("Update TvShow: IDFile=%d, %s - S%02dE%02d - %s%n", idFile, tvshow, Integer.parseInt(season),
-                                        Integer.parseInt(episode), title);
+                                getLogger().info(String.format("Update TvShow: IDFile=%d, %s - S%02dE%02d - %s%n", idFile, tvshow, Integer.parseInt(season),
+                                        Integer.parseInt(episode), title));
 
-                                stmtUpdate.setInt(1, playcount);
-                                stmtUpdate.setString(2, lastplayed);
-                                stmtUpdate.setInt(3, playcount);
+                                stmtUpdate.setInt(1, playCount);
+                                stmtUpdate.setString(2, lastPlayed);
+                                stmtUpdate.setInt(3, playCount);
 
                                 stmtUpdate.executeUpdate();
                             }
@@ -241,7 +242,8 @@ public class KodiVideoReporter extends AbstractMediaReporter
             catch (Exception ex)
             {
                 connection.rollback();
-                throw ex;
+
+                getLogger().error(ex.getMessage(), ex);
             }
         }
     }

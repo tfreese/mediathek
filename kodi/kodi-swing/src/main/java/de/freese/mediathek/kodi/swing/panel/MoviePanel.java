@@ -155,7 +155,7 @@ public class MoviePanel extends AbstractPanel
         jTable.getColumnModel().getColumn(0).setMaxWidth(50);
 
         JScrollPane scrollPane = new JScrollPane(jTable);
-        leftPanel.add(scrollPane, new GbcBuilder(0, 1).gridwidth(2).fillBoth());
+        leftPanel.add(scrollPane, new GbcBuilder(0, 1).gridWidth(2).fillBoth());
         splitPane.setLeftComponent(leftPanel);
 
         JPanel rightPanel = new JPanel();
@@ -170,7 +170,7 @@ public class MoviePanel extends AbstractPanel
         // Details Poster
         label = new JLabel();
         getMovieModel().bindPosterLabel(label);
-        detailPanel.add(label, new GbcBuilder(0, 0).gridheight(5).weighty(1.0D).fillVertical());
+        detailPanel.add(label, new GbcBuilder(0, 0).gridHeight(5).weightY(1.0D).fillVertical());
 
         // Details Genres
         label = new JLabel("Genres:");
@@ -186,14 +186,14 @@ public class MoviePanel extends AbstractPanel
         getMovieModel().bindImdbIdLabel(label);
         detailPanel.add(label, new GbcBuilder(2, 1));
 
-        rightPanel.add(detailPanel, new GbcBuilder(0, 0).weightx(1.0D).fillHorizontal());
+        rightPanel.add(detailPanel, new GbcBuilder(0, 0).weightX(1.0D).fillHorizontal());
 
         // Genres
         JButton button = new JButton(new EditMovieGenresAction(getApplicationContext(), getMovieModel()));
         rightPanel.add(button, new GbcBuilder(0, 1));
         // JPanel genrePanel = new JPanel();
         // genrePanel.setBorder(new TitledBorder("Genres"));
-        // panel.add(genrePanel, new GbcBuilder(0, 1).weightx(1.0D).fillBoth());
+        // panel.add(genrePanel, new GbcBuilder(0, 1).weightX(1.0D).fillBoth());
 
         // Alles nach oben drücken.
         rightPanel.add(Box.createGlue(), new GbcBuilder(0, 2).fillBoth());

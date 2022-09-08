@@ -138,7 +138,7 @@ public class TVService extends AbstractService
         Images images = getRestTemplate().getForObject(url.toString(), Images.class, getApiKey(), id);
         // List<Image> banners = images.getBanners();
         List<Image> poster = images.getPosters();
-        List<Image> fanart = new ArrayList<>();
+        List<Image> fanArt = new ArrayList<>();
         List<Image> series = images.getBackdrops();
         List<Image> season = new ArrayList<>();
 
@@ -171,12 +171,12 @@ public class TVService extends AbstractService
         // }
 
         Collections.sort(poster);
-        Collections.sort(fanart);
+        Collections.sort(fanArt);
         Collections.sort(series);
         Collections.sort(season);
 
         show.setPosterList(poster);
-        show.setFanartList(fanart);
+        show.setFanartList(fanArt);
         show.setSeriesList(series);
         show.setSeasonList(season);
 

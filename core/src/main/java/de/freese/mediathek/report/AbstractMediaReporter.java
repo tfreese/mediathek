@@ -9,12 +9,27 @@ import java.util.List;
 import java.util.Map;
 
 import de.freese.mediathek.utils.MediaDBUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Thomas Freese
  */
 public abstract class AbstractMediaReporter implements MediaReporter
 {
+    /**
+     *
+     */
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
+    /**
+     * @return {@link Logger}
+     */
+    protected Logger getLogger()
+    {
+        return logger;
+    }
+
     /**
      * Auslesen der bereits geschauter Filme-Liste.<br>
      * Map-Keys:
@@ -126,7 +141,7 @@ public abstract class AbstractMediaReporter implements MediaReporter
         }
         catch (Exception ex)
         {
-            System.err.println(ex);
+            getLogger().error(ex.getMessage(), ex);
         }
     }
 }

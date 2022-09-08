@@ -8,6 +8,8 @@ import java.nio.file.Paths;
 import javax.sql.DataSource;
 
 import de.freese.mediathek.utils.StopWatch;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.sqlite.SQLiteConfig;
 import org.sqlite.SQLiteDataSource;
@@ -18,6 +20,11 @@ import org.sqlite.javax.SQLiteConnectionPoolDataSource;
  */
 public final class MultimediaReporter
 {
+    /**
+     *
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(MultimediaReporter.class);
+
     /**
      *
      */
@@ -153,8 +160,7 @@ public final class MultimediaReporter
             Path path = Paths.get("/home/tommy/dokumente/linux");
             // Path path = Paths.get("/tmp");
 
-            System.out.println("Path: " + path);
-            System.out.println();
+            LOGGER.info("Path: {}", path);
 
             mediaReporter.writeReport(dataSource, path);
             //mediaReporter.updateDbFromReport(dataSource, path);
@@ -163,7 +169,7 @@ public final class MultimediaReporter
         }
         catch (Exception ex)
         {
-            System.err.println(ex.getMessage());
+            LOGGER.error(ex.getMessage(), ex);
             System.exit(-1);
         }
         finally

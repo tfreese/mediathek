@@ -261,7 +261,7 @@ public class GenreAuswahlDialog extends JDialog
         this.listLinks.setCellRenderer(new GenreListCellRenderer());
         JScrollPane scrollPane = new JScrollPane(this.listLinks);
         scrollPane.setBorder(new TitledBorder("Verfügbar"));
-        panel.add(scrollPane, new GbcBuilder(0, 0).gridheight(10).gridwidth(2).fillBoth());
+        panel.add(scrollPane, new GbcBuilder(0, 0).gridHeight(10).gridWidth(2).fillBoth());
 
         // Buttons
         JButton button = new JButton(new ToRightAction());
@@ -274,12 +274,12 @@ public class GenreAuswahlDialog extends JDialog
         this.listRechts.setCellRenderer(new GenreListCellRenderer());
         scrollPane = new JScrollPane(this.listRechts);
         scrollPane.setBorder(new TitledBorder("Auswahl"));
-        panel.add(scrollPane, new GbcBuilder(3, 0).gridheight(10).gridwidth(2).fillBoth());
+        panel.add(scrollPane, new GbcBuilder(3, 0).gridHeight(10).gridWidth(2).fillBoth());
 
         button = new JButton(new OKAction());
-        panel.add(button, new GbcBuilder(0, 11).gridwidth(2).fillHorizontal());
+        panel.add(button, new GbcBuilder(0, 11).gridWidth(2).fillHorizontal());
         button = new JButton(new CancelAction());
-        panel.add(button, new GbcBuilder(3, 11).gridwidth(2).fillHorizontal());
+        panel.add(button, new GbcBuilder(3, 11).gridWidth(2).fillHorizontal());
 
         setContentPane(panel);
         setSize(600, 600);
