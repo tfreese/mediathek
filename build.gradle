@@ -3,10 +3,10 @@
 subprojects {
     apply plugin: "java"
     apply plugin: "io.spring.dependency-management"
-    
+
     configurations.all {
         exclude group: "ch.qos.logback", module: "logback-classic"
-    }     
+    }
 
     dependencyManagement {
         imports {
@@ -14,47 +14,47 @@ subprojects {
         }
 
         dependencies {
-        	dependency "com.jgoodies:jgoodies-binding:$version_jgoodies"
+            dependency "com.jgoodies:jgoodies-binding:$version_jgoodies"
         }
     }
-    
-	dependencies {
-		testImplementation("org.junit.jupiter:junit-jupiter-engine")
-	}
+
+    dependencies {
+        testImplementation("org.junit.jupiter:junit-jupiter-engine")
+    }
 }
 
 project("core") {
     apply plugin: "java-library"
     apply plugin: "org.springframework.boot"
-    description "Basis-Projekt für Mediathek-Zugriffe"   
+    description "Basis-Projekt für Mediathek-Zugriffe"
     dependencies {
-	    api("de.freese.base:base-core:$version")
-	    implementation("de.freese.base:base-persistence:$version")
-	    
-	    api("org.springframework:spring-jdbc")
-	    api("org.xerial:sqlite-jdbc")
-	
-	    runtimeOnly("org.slf4j:jcl-over-slf4j")
-	    runtimeOnly("org.slf4j:slf4j-simple")
-	    runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
+        api("de.freese.base:base-core:$version")
+        implementation("de.freese.base:base-persistence:$version")
+
+        api("org.springframework:spring-jdbc")
+        api("org.xerial:sqlite-jdbc")
+
+        runtimeOnly("org.slf4j:jcl-over-slf4j")
+        runtimeOnly("org.slf4j:slf4j-simple")
+        runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
     }
-	// Start: gradle bootRun --args="--spring.profiles.active=dev"
-	// The archive name. If the name has not been explicitly set, the pattern for the name is:
-	// [archiveBaseName]-[archiveAppendix]-[archiveVersion]-[archiveClassifier].[archiveExtension]
-	// archiveFileName = "my-boot.jar"	
-	bootJar {
-	    mainClass = "de.freese.mediathek.musik.MusikReporter"
-	}    
+    // Start: gradle bootRun --args="--spring.profiles.active=dev"
+    // The archive name. If the name has not been explicitly set, the pattern for the name is:
+    // [archiveBaseName]-[archiveAppendix]-[archiveVersion]-[archiveClassifier].[archiveExtension]
+    // archiveFileName = "my-boot.jar"
+    bootJar {
+        mainClass = "de.freese.mediathek.musik.MusikReporter"
+    }
 }
 
 project("services") {
     apply plugin: "java-library"
     description "API für Online-Media-Datenbanken (www.themoviedb.org, www.thetvdb.com)"
     dependencies {
-    	api(project(":core"))
-	    api("com.fasterxml.jackson.dataformat:jackson-dataformat-xml")
-	    api("javax.xml.bind:jaxb-api")
-	    api("org.springframework:spring-web")
+        api(project(":core"))
+        api("com.fasterxml.jackson.dataformat:jackson-dataformat-xml")
+        api("jakarta.xml.bind:jakarta.xml.bind-api")
+        api("org.springframework:spring-web")
     }
 }
 
@@ -63,37 +63,37 @@ project("kodi:kodi-core") {
     apply plugin: "org.springframework.boot"
     description "API für KODI"
     dependencies {
-    	api(project(":core"))
-	    api("com.zaxxer:HikariCP")
+        api(project(":core"))
+        api("com.zaxxer:HikariCP")
 
-	    api("org.springframework.boot:spring-boot-starter")
-	    api("org.springframework.boot:spring-boot-starter-logging")
-	    
-		testImplementation("org.hsqldb:hsqldb")
+        api("org.springframework.boot:spring-boot-starter")
+        api("org.springframework.boot:spring-boot-starter-logging")
+
+        testImplementation("org.hsqldb:hsqldb")
     }
-	// Start: gradle bootRun --args="--spring.profiles.active=dev"
-	// The archive name. If the name has not been explicitly set, the pattern for the name is:
-	// [archiveBaseName]-[archiveAppendix]-[archiveVersion]-[archiveClassifier].[archiveExtension]
-	// archiveFileName = "my-boot.jar"	
-	bootJar {
-	    mainClass = "de.freese.mediathek.kodi.report.KodiReporter"
-	}     
+    // Start: gradle bootRun --args="--spring.profiles.active=dev"
+    // The archive name. If the name has not been explicitly set, the pattern for the name is:
+    // [archiveBaseName]-[archiveAppendix]-[archiveVersion]-[archiveClassifier].[archiveExtension]
+    // archiveFileName = "my-boot.jar"
+    bootJar {
+        mainClass = "de.freese.mediathek.kodi.report.KodiReporter"
+    }
 }
 
 project("kodi:kodi-swing") {
     apply plugin: "org.springframework.boot"
     description "Swing GUI für KODI"
     dependencies {
-    	implementation(project(":kodi:kodi-core"))
-	    implementation("com.jgoodies:jgoodies-binding")
+        implementation(project(":kodi:kodi-core"))
+        implementation("com.jgoodies:jgoodies-binding")
     }
-	// Start: gradle bootRun --args="--spring.profiles.active=dev"
-	// The archive name. If the name has not been explicitly set, the pattern for the name is:
-	// [archiveBaseName]-[archiveAppendix]-[archiveVersion]-[archiveClassifier].[archiveExtension]
-	// archiveFileName = "my-boot.jar"	
-	bootJar {
-	    mainClass = "de.freese.mediathek.kodi.swing.KODISwingClient"
-	}     
+    // Start: gradle bootRun --args="--spring.profiles.active=dev"
+    // The archive name. If the name has not been explicitly set, the pattern for the name is:
+    // [archiveBaseName]-[archiveAppendix]-[archiveVersion]-[archiveClassifier].[archiveExtension]
+    // archiveFileName = "my-boot.jar"
+    bootJar {
+        mainClass = "de.freese.mediathek.kodi.swing.KODISwingClient"
+    }
 }
 
 project("kodi:kodi-javafx") {
@@ -101,19 +101,18 @@ project("kodi:kodi-javafx") {
     apply plugin: "org.openjfx.javafxplugin"
     description "JavaFX GUI für KODI"
     dependencies {
-    	implementation(project(":kodi:kodi-core"))
-    	
+        implementation(project(":kodi:kodi-core"))
+
         javafx {
-        	version = "$version_javafxBase"
+            version = "$version_javafxBase"
             modules = ["javafx.controls", "javafx.fxml"]
         }
     }
-	// Start: gradle bootRun --args="--spring.profiles.active=dev"
-	// The archive name. If the name has not been explicitly set, the pattern for the name is:
-	// [archiveBaseName]-[archiveAppendix]-[archiveVersion]-[archiveClassifier].[archiveExtension]
-	// archiveFileName = "my-boot.jar"	
-	bootJar {
-	    mainClass = "de.freese.mediathek.kodi.javafx.KODIJavaFXClientLauncher"
-	}     
+    // Start: gradle bootRun --args="--spring.profiles.active=dev"
+    // The archive name. If the name has not been explicitly set, the pattern for the name is:
+    // [archiveBaseName]-[archiveAppendix]-[archiveVersion]-[archiveClassifier].[archiveExtension]
+    // archiveFileName = "my-boot.jar"
+    bootJar {
+        mainClass = "de.freese.mediathek.kodi.javafx.KODIJavaFXClientLauncher"
+    }
 }
-
