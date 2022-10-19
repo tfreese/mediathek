@@ -4,10 +4,10 @@ package de.freese.mediathek.services.thetvdb;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Thomas Freese
@@ -16,23 +16,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ThumbList
 {
-    /**
-     *
-     */
     @XmlElement(name = "thumb")
     private List<Thumb> thumbs = new ArrayList<>();
 
-    /**
-     * @return List<Thumb>
-     */
     public List<Thumb> getThumbs()
     {
         return this.thumbs;
     }
 
-    /**
-     * @param thumbs List<Thumb>
-     */
     public void setThumbs(final List<Thumb> thumbs)
     {
         this.thumbs = thumbs;

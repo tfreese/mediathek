@@ -20,28 +20,14 @@ import org.springframework.util.Assert;
  */
 public abstract class AbstractService implements InitializingBean
 {
-    /**
-     *
-     */
     private final String apiKey;
-    /**
-     *
-     */
+
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    /**
-     *
-     */
+
     private ResourceCache cache;
-    /**
-     *
-     */
+
     private Locale locale = Locale.GERMANY;
 
-    /**
-     * Erstellt ein neues {@link AbstractService} Object.
-     *
-     * @param apiKey String
-     */
     protected AbstractService(final String apiKey)
     {
         super();
@@ -63,59 +49,36 @@ public abstract class AbstractService implements InitializingBean
         }
     }
 
-    /**
-     * @param cache {@link ResourceCache}
-     */
     public void setCache(final ResourceCache cache)
     {
         this.cache = cache;
     }
 
-    /**
-     * @param locale {@link Locale}
-     */
     public void setLocale(final Locale locale)
     {
         this.locale = locale;
     }
 
-    /**
-     * @return String
-     */
     protected String getApiKey()
     {
         return this.apiKey;
     }
 
-    /**
-     * @return {@link ResourceCache}
-     */
     protected ResourceCache getCache()
     {
         return this.cache;
     }
 
-    /**
-     * @return {@link Locale}
-     */
     protected Locale getLocale()
     {
         return this.locale;
     }
 
-    /**
-     * @return {@link Logger}
-     */
     protected Logger getLogger()
     {
         return this.logger;
     }
 
-    /**
-     * @param value String
-     *
-     * @return String
-     */
     protected String urlEncode(final String value)
     {
         try

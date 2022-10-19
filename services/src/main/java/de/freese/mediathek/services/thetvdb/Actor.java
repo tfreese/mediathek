@@ -1,10 +1,10 @@
 // Created: 10.11.2014
 package de.freese.mediathek.services.thetvdb;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Thomas Freese
@@ -13,31 +13,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Actor implements Comparable<Actor>
 {
-    /**
-     *
-     */
+    @XmlElement(name = "SortOrder")
+    private final int sortOrder = -1;
     @XmlElement(name = "id")
     private String id;
-    /**
-     *
-     */
     @XmlElement(name = "Image")
     private String image;
-    /**
-     *
-     */
     @XmlElement(name = "Name")
     private String name;
-    /**
-     *
-     */
     @XmlElement(name = "Role")
     private String role;
-    /**
-     *
-     */
-    @XmlElement(name = "SortOrder")
-    private int sortOrder = -1;
 
     /**
      * @see java.lang.Comparable#compareTo(java.lang.Object)
@@ -55,25 +40,16 @@ public class Actor implements Comparable<Actor>
         return comp;
     }
 
-    /**
-     * @return String
-     */
     public String getImage()
     {
         return this.image;
     }
 
-    /**
-     * @return String
-     */
     public String getName()
     {
         return this.name;
     }
 
-    /**
-     * @return String
-     */
     public String getRole()
     {
         return this.role;

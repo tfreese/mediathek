@@ -1,11 +1,11 @@
 // Created: 10.11.2014
 package de.freese.mediathek.services.thetvdb;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElements;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlElements;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Thomas Freese
@@ -14,52 +14,25 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Episode implements Comparable<Episode>
 {
-    /**
-     *
-     */
+    @XmlElement(name = "EpisodeNumber")
+    private final int episode = -1;
+    @XmlElement(name = "SeasonNumber")
+    private final int season = -1;
     @XmlElement(name = "Overview")
     private String beschreibung;
-    /**
-     *
-     */
-    @XmlElement(name = "EpisodeNumber")
-    private int episode = -1;
-    /**
-     *
-     */
     @XmlElement(name = "GuestStars")
     private String guestStars;
-    /**
-     *
-     */
     @XmlElement(name = "id")
     private String id;
-    /**
-     *
-     */
     @XmlElement(name = "filename")
     private String image;
-    /**
-     *
-     */
     @XmlElements(
-    {
-            @XmlElement(name = "language"), @XmlElement(name = "Language")
-    })
+            {
+                    @XmlElement(name = "language"), @XmlElement(name = "Language")
+            })
     private String language;
-    /**
-     *
-     */
     @XmlElement(name = "FirstAired")
     private String releaseDate;
-    /**
-     *
-     */
-    @XmlElement(name = "SeasonNumber")
-    private int season = -1;
-    /**
-     *
-     */
     @XmlElement(name = "EpisodeName")
     private String title;
 
@@ -79,73 +52,46 @@ public class Episode implements Comparable<Episode>
         return comp;
     }
 
-    /**
-     * @return String
-     */
     public String getBeschreibung()
     {
         return this.beschreibung;
     }
 
-    /**
-     * @return int
-     */
     public int getEpisode()
     {
         return this.episode;
     }
 
-    /**
-     * @return String
-     */
     public String getGuestStars()
     {
         return this.guestStars;
     }
 
-    /**
-     * @return String
-     */
     public String getID()
     {
         return this.id;
     }
 
-    /**
-     * @return String
-     */
     public String getImage()
     {
         return this.image;
     }
 
-    /**
-     * @return String
-     */
     public String getLanguage()
     {
         return this.language;
     }
 
-    /**
-     * @return String
-     */
     public String getReleaseDate()
     {
         return this.releaseDate;
     }
 
-    /**
-     * @return int
-     */
     public int getSeason()
     {
         return this.season;
     }
 
-    /**
-     * @return String
-     */
     public String getTitle()
     {
         return this.title;

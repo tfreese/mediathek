@@ -29,16 +29,8 @@ import org.springframework.web.client.RestTemplate;
  */
 public class TVService extends AbstractService
 {
-    /**
-     *
-     */
     private RestTemplate restTemplate;
 
-    /**
-     * Erstellt ein neues {@link TVService} Object.
-     *
-     * @param apiKey String
-     */
     public TVService(final String apiKey)
     {
         super(apiKey);
@@ -63,13 +55,6 @@ public class TVService extends AbstractService
         }
     }
 
-    /**
-     * Liefert Details zur Serie ohne die Episoden, Actors und Images.<br>
-     *
-     * @param id String
-     *
-     * @return {@link TVShow}
-     */
     public TVShow getDetails(final String id)
     {
         // http://thetvdb.com//api/1D62F2F90030C444/series/72449/de.xml
@@ -85,13 +70,6 @@ public class TVService extends AbstractService
         return search.getSeries().get(0);
     }
 
-    /**
-     * Liefert alle Details zur Serie mit Episoden, Actors und Images.<br>
-     *
-     * @param id String
-     *
-     * @return {@link TVShow}
-     */
     public TVShow getDetailsAll(final String id)
     {
         // http://thetvdb.com//api/1D62F2F90030C444/series/72449/all/de.xml
@@ -183,15 +161,6 @@ public class TVService extends AbstractService
         return show;
     }
 
-    /**
-     * Liefert das Bild
-     *
-     * @param path String
-     *
-     * @return {@link BufferedImage}
-     *
-     * @throws Exception Falls was schiefgeht.
-     */
     public BufferedImage getImage(final String path) throws Exception
     {
         if (path == null || path.isBlank())
@@ -210,13 +179,6 @@ public class TVService extends AbstractService
         return image;
     }
 
-    /**
-     * Suche nach Name.
-     *
-     * @param name String
-     *
-     * @return {@link List}
-     */
     @SuppressWarnings(
             {
                     "unchecked", "rawtypes"
@@ -270,17 +232,11 @@ public class TVService extends AbstractService
         return result;
     }
 
-    /**
-     * @param restTemplate {@link RestTemplate}
-     */
     public void setRestTemplate(final RestTemplate restTemplate)
     {
         this.restTemplate = restTemplate;
     }
 
-    /**
-     * @return {@link RestTemplate}
-     */
     private RestTemplate getRestTemplate()
     {
         return this.restTemplate;
@@ -289,8 +245,6 @@ public class TVService extends AbstractService
     /**
      * Liefert '<a href="http://thetvdb.com/api/">thetvdb-api</a>'.<br>
      * <a href="http://thetvdb.com/api/1D62F2F90030C444/mirrors.xml">http://thetvdb.com/api/1D62F2F90030C444/mirrors.xml</a><br>
-     *
-     * @return {@link StringBuilder}
      */
     private StringBuilder url()
     {
