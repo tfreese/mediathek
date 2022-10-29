@@ -16,20 +16,13 @@
 
     <name>${project.groupId} - ${project.artifactId}</name>
     <description>Parent für Online-Media-Datenbanken (www.themoviedb.org, www.thetvdb.com)</description>
-    <url>https://github.com/tfreese/mediathek</url>
     <inceptionYear>2014</inceptionYear>
+    <url>https://github.com/tfreese/mediathek</url>
 
     <organization>
         <name>Thomas Freese</name>
         <url>https://github.com/tfreese/mediathek</url>
     </organization>
-
-    <scm>
-        <url>${project.url}</url>
-        <connection>scm:git:git://github.com/tfreese/mediathek.git</connection>
-        <developerConnection>scm:git:https://github.com/tfreese/mediathek.git</developerConnection>
-        <tag>HEAD</tag>
-    </scm>
 
     <developers>
         <developer>
@@ -43,7 +36,14 @@
             <timezone>+2</timezone>
         </developer>
     </developers>
-    
+
+    <scm>
+        <url>${project.url}</url>
+        <connection>scm:git:git://github.com/tfreese/mediathek.git</connection>
+        <developerConnection>scm:git:https://github.com/tfreese/mediathek.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
     <modules>
         <module>core</module>
         <module>services</module>
