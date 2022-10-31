@@ -28,9 +28,6 @@ import de.freese.mediathek.kodi.swing.components.list.GenreListCellRenderer;
  */
 public class GenreAuswahlDialog extends JDialog
 {
-    /**
-     *
-     */
     @Serial
     private static final long serialVersionUID = -4384289197484325624L;
 
@@ -39,15 +36,9 @@ public class GenreAuswahlDialog extends JDialog
      */
     private final class CancelAction extends AbstractAction
     {
-        /**
-         *
-         */
         @Serial
         private static final long serialVersionUID = -5694877960473295271L;
 
-        /**
-         * Erstellt ein neues {@link CancelAction} Object.
-         */
         private CancelAction()
         {
             super("Cancel");
@@ -70,15 +61,9 @@ public class GenreAuswahlDialog extends JDialog
      */
     private final class OKAction extends AbstractAction
     {
-        /**
-         *
-         */
         @Serial
         private static final long serialVersionUID = -7913222539942539301L;
 
-        /**
-         * Erstellt ein neues {@link OKAction} Object.
-         */
         private OKAction()
         {
             super("OK");
@@ -101,15 +86,9 @@ public class GenreAuswahlDialog extends JDialog
      */
     private final class ToLeftAction extends AbstractAction
     {
-        /**
-         *
-         */
         @Serial
         private static final long serialVersionUID = 3818570430470000410L;
 
-        /**
-         * Erstellt ein neues {@link ToLeftAction} Object.
-         */
         public ToLeftAction()
         {
             super("<");
@@ -144,15 +123,9 @@ public class GenreAuswahlDialog extends JDialog
      */
     private final class ToRightAction extends AbstractAction
     {
-        /**
-         *
-         */
         @Serial
         private static final long serialVersionUID = 3818570430470000410L;
 
-        /**
-         * Erstellt ein neues {@link ToRightAction} Object.
-         */
         public ToRightAction()
         {
             super(">");
@@ -182,24 +155,12 @@ public class GenreAuswahlDialog extends JDialog
         }
     }
 
-    /**
-     *
-     */
     private boolean canceled;
-    /**
-     *
-     */
+
     private JList<Genre> listLinks;
-    /**
-     *
-     */
+
     private JList<Genre> listRechts;
 
-    /**
-     * Erstellt ein neues {@link GenreAuswahlDialog} Object.
-     *
-     * @param owner {@link Window}
-     */
     public GenreAuswahlDialog(final Window owner)
     {
         super(owner);
@@ -210,20 +171,11 @@ public class GenreAuswahlDialog extends JDialog
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     }
 
-    /**
-     * Schließt den Dialog.
-     */
     public void close()
     {
         dispose();
     }
 
-    /**
-     * Liefert die gewählten Genres.
-     *
-     * @return {@link List}; null wenn canceled
-     */
-    @SuppressWarnings("unchecked")
     public List<Genre> getSelectedGenres()
     {
         if (hasBeenCanceled())
@@ -234,23 +186,11 @@ public class GenreAuswahlDialog extends JDialog
         return (List<Genre>) this.listRechts.getModel();
     }
 
-    /**
-     * Liefert TRUE/FALSE, ob der Dialog gecanceled wurde.
-     *
-     * @return boolean
-     */
     public boolean hasBeenCanceled()
     {
         return this.canceled;
     }
 
-    /**
-     * Öffnet den Dialog.
-     *
-     * @param links {@link List}
-     * @param rechts {@link List}
-     */
-    @SuppressWarnings("unchecked")
     public void open(final List<Genre> links, final List<Genre> rechts)
     {
         JPanel panel = new JPanel();

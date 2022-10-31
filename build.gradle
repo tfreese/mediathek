@@ -10,13 +10,14 @@ buildscript {
     dependencies {
         classpath "de.freese.gradle:gradle-plugins:0.0.1-SNAPSHOT"
         classpath "io.spring.gradle:dependency-management-plugin:$version_springDependencyManagement"
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:$version_springBoot"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$version_springBootGradlePlugin"
         classpath "org.openjfx:javafx-plugin:$version_javafxPlugin"
     }
 }
 
 subprojects {
     apply plugin: "java"
+    apply plugin: "maven-publish"
     apply plugin: "io.spring.dependency-management"
     apply plugin: "de.freese.gradle.plugin.conventions"
 
@@ -82,6 +83,7 @@ project("kodi:kodi-core") {
         api(project(":core"))
         api("com.zaxxer:HikariCP")
 
+        api("org.apache.commons:commons-lang3")
         api("org.springframework.boot:spring-boot-starter")
         api("org.springframework.boot:spring-boot-starter-logging")
 
