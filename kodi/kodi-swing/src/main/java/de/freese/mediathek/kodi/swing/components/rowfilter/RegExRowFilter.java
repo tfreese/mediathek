@@ -17,29 +17,13 @@ import javax.swing.RowFilter;
  */
 public class RegExRowFilter extends AbstractRowFilterIndexed
 {
-    /**
-     *
-     */
     private final Matcher matcher;
 
-    /**
-     * Erstellt ein neues {@link RegExRowFilter} Object.<br>
-     *
-     * @param matchFlags int
-     * @param regex {@link String}
-     * @param columns int[]
-     */
     public RegExRowFilter(final int matchFlags, final String regex, final int... columns)
     {
         this(Pattern.compile(Objects.requireNonNull(regex), matchFlags), columns);
     }
 
-    /**
-     * Erstellt ein neues {@link RegExRowFilter} Object.
-     *
-     * @param regexPattern {@link Pattern}
-     * @param columns int[]
-     */
     public RegExRowFilter(final Pattern regexPattern, final int... columns)
     {
         super(columns);

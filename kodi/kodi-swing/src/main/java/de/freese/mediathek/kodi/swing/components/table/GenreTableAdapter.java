@@ -13,15 +13,9 @@ import de.freese.mediathek.kodi.model.Genre;
  */
 public class GenreTableAdapter extends AbstractTableAdapter<Genre>
 {
-    /**
-     *
-     */
     @Serial
     private static final long serialVersionUID = -7235372423320630854L;
 
-    /**
-     * Erstellt ein neues {@link GenreTableAdapter} Object.
-     */
     public GenreTableAdapter()
     {
         super("Genre", "Filme", "Serien");

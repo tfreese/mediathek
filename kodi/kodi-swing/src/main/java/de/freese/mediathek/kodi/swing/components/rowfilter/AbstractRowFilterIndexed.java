@@ -11,16 +11,8 @@ import javax.swing.RowFilter;
  */
 public abstract class AbstractRowFilterIndexed extends RowFilter<Object, Object>
 {
-    /**
-     *
-     */
     private final int[] columns;
 
-    /**
-     * Erstellt ein neues {@link AbstractRowFilterIndexed} Object.
-     *
-     * @param columns int[]
-     */
     protected AbstractRowFilterIndexed(final int... columns)
     {
         super();
@@ -67,11 +59,6 @@ public abstract class AbstractRowFilterIndexed extends RowFilter<Object, Object>
         return false;
     }
 
-    /**
-     * Throws an IllegalArgumentException if any of the values in columns are < 0.
-     *
-     * @param columns int[]
-     */
     protected void checkIndices(final int[] columns)
     {
         for (int i = columns.length - 1; i >= 0; i--)
@@ -83,11 +70,5 @@ public abstract class AbstractRowFilterIndexed extends RowFilter<Object, Object>
         }
     }
 
-    /**
-     * @param value {@link javax.swing.RowFilter.Entry}
-     * @param index int
-     *
-     * @return boolean
-     */
     protected abstract boolean include(Entry<?, ?> value, int index);
 }

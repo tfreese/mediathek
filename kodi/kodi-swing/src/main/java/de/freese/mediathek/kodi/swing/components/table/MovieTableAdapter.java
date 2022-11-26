@@ -11,15 +11,9 @@ import de.freese.mediathek.kodi.model.Movie;
  */
 public class MovieTableAdapter extends AbstractTableAdapter<Movie>
 {
-    /**
-     *
-     */
     @Serial
     private static final long serialVersionUID = 5500616551765142373L;
 
-    /**
-     * Erstellt ein neues {@link MovieTableAdapter} Object.
-     */
     public MovieTableAdapter()
     {
         super("ID", "Name");

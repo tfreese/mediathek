@@ -59,7 +59,7 @@ project("core") {
     // The archive name. If the name has not been explicitly set, the pattern for the name is:
     // [archiveBaseName]-[archiveAppendix]-[archiveVersion]-[archiveClassifier].[archiveExtension]
     // archiveFileName = "my-boot.jar"
-    bootJar {
+    springBoot {
         mainClass = "de.freese.mediathek.musik.MusikReporter"
     }
 }
@@ -93,7 +93,7 @@ project("kodi:kodi-core") {
     // The archive name. If the name has not been explicitly set, the pattern for the name is:
     // [archiveBaseName]-[archiveAppendix]-[archiveVersion]-[archiveClassifier].[archiveExtension]
     // archiveFileName = "my-boot.jar"
-    bootJar {
+    springBoot {
         mainClass = "de.freese.mediathek.kodi.report.KodiReporter"
     }
 }
@@ -109,8 +109,8 @@ project("kodi:kodi-swing") {
     // The archive name. If the name has not been explicitly set, the pattern for the name is:
     // [archiveBaseName]-[archiveAppendix]-[archiveVersion]-[archiveClassifier].[archiveExtension]
     // archiveFileName = "my-boot.jar"
-    bootJar {
-        mainClass = "de.freese.mediathek.kodi.swing.KODISwingClient"
+    springBoot {
+        mainClass = "de.freese.mediathek.kodi.swing.KodiSwingClient"
     }
 }
 
@@ -130,7 +130,7 @@ project("kodi:kodi-javafx") {
     // The archive name. If the name has not been explicitly set, the pattern for the name is:
     // [archiveBaseName]-[archiveAppendix]-[archiveVersion]-[archiveClassifier].[archiveExtension]
     // archiveFileName = "my-boot.jar"
-    bootJar {
-        mainClass = "de.freese.mediathek.kodi.javafx.KODIJavaFXClientLauncher"
+    springBoot {
+        mainClass = "de.freese.mediathek.kodi.javafx.KodiJavaFXClientLauncher"
     }
 }

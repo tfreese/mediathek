@@ -17,12 +17,6 @@ import org.springframework.context.ApplicationContext;
  */
 public class MovieController extends AbstractTvShowMovieController<Movie>
 {
-    /**
-     * Erstellt ein neues {@link MovieController} Object.
-     *
-     * @param applicationContext {@link ApplicationContext}
-     * @param resourceBundle {@link ResourceBundle}
-     */
     public MovieController(final ApplicationContext applicationContext, final ResourceBundle resourceBundle)
     {
         super(applicationContext, resourceBundle);

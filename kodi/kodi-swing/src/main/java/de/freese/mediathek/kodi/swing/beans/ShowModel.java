@@ -41,35 +41,19 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class ShowModel extends PresentationModel<ShowBean>
 {
-    /**
-     *
-     */
     @Serial
     private static final long serialVersionUID = -1759604850162069149L;
-    /**
-     *
-     */
+
     private final ResourceCache resourceCache;
-    /**
-     *
-     */
+
     private final SelectionInList<Show> showSelection;
-    /**
-     *
-     */
+
     private final ValueModel valueModelBanner;
-    /**
-     *
-     */
+
     private final ValueModel valueModelFilter;
-    /**
-     *
-     */
+
     private JTable jTable;
 
-    /**
-     * Erstellt ein neues {@link ShowModel} Object.
-     */
     public ShowModel()
     {
         super();
@@ -80,26 +64,16 @@ public class ShowModel extends PresentationModel<ShowBean>
         this.resourceCache = new FileResourceCache(Paths.get(System.getProperty("java.io.tmpdir"), ".javacache"));
     }
 
-    /**
-     * @param jLabel {@link JLabel}
-     */
     public void bindBannerLabel(final JLabel jLabel)
     {
         Bindings.bind(jLabel, "icon", this.valueModelBanner);
     }
 
-    /**
-     * @param jLabel {@link JLabel}
-     */
     public void bindGenreLabel(final JLabel jLabel)
     {
         Bindings.bind(jLabel, getValueModelGenres());
     }
 
-    /**
-     * @param jTable {@link JTable}
-     * @param listSelectionListener {@link ListSelectionListener}
-     */
     public void bindShowTable(final JTable jTable, final ListSelectionListener listSelectionListener)
     {
         this.jTable = jTable; // Wird in #getSelectedShow benötigt
@@ -129,25 +103,16 @@ public class ShowModel extends PresentationModel<ShowBean>
         });
     }
 
-    /**
-     * @param jLabel {@link JLabel}
-     */
     public void bindTVDIDLabel(final JLabel jLabel)
     {
         Bindings.bind(jLabel, getModel(ShowBean.PROPERTY_TVDB_ID));
     }
 
-    /**
-     * @param textFieldFilter {@link JTextField}
-     */
     public void bindTextFieldFilter(final JTextField textFieldFilter)
     {
         Bindings.bind(textFieldFilter, this.valueModelFilter);
     }
 
-    /**
-     * @return {@link Show}
-     */
     public Show getSelectedShow()
     {
         // RowIndex wegen Filter gerade rücken.
@@ -168,11 +133,6 @@ public class ShowModel extends PresentationModel<ShowBean>
         // return this.showSelection.getSelection();
     }
 
-    /**
-     * Liefert das {@link ValueModel} der Genres.
-     *
-     * @return {@link ValueModel}
-     */
     public ValueModel getValueModelGenres()
     {
         return getModel(ShowBean.PROPERTY_GENRES);
@@ -277,9 +237,6 @@ public class ShowModel extends PresentationModel<ShowBean>
         worker.execute();
     }
 
-    /**
-     * @param shows {@link List}
-     */
     public void setList(final List<Show> shows)
     {
         this.showSelection.setList(shows);

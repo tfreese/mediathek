@@ -11,15 +11,9 @@ import de.freese.mediathek.kodi.model.Show;
  */
 public class ShowTableAdapter extends AbstractTableAdapter<Show>
 {
-    /**
-     *
-     */
     @Serial
     private static final long serialVersionUID = 5258240913718717061L;
 
-    /**
-     * Erstellt ein neues {@link ShowTableAdapter} Object.
-     */
     public ShowTableAdapter()
     {
         super("ID", "Name");

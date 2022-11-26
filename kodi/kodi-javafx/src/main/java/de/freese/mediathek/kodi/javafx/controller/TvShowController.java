@@ -17,12 +17,6 @@ import org.springframework.context.ApplicationContext;
  */
 public class TvShowController extends AbstractTvShowMovieController<Show>
 {
-    /**
-     * Erstellt ein neues {@link TvShowController} Object.
-     *
-     * @param applicationContext {@link ApplicationContext}
-     * @param resourceBundle {@link ResourceBundle}
-     */
     public TvShowController(final ApplicationContext applicationContext, final ResourceBundle resourceBundle)
     {
         super(applicationContext, resourceBundle);

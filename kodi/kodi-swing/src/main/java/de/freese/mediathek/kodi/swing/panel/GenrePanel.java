@@ -75,16 +75,8 @@ public class GenrePanel extends AbstractPanel
         }
     }
 
-    /**
-     *
-     */
     private final GenreModel genreModel;
 
-    /**
-     * Erstellt ein neues {@link GenrePanel} Object.
-     *
-     * @param applicationContext {@link ApplicationContext}
-     */
     public GenrePanel(final ApplicationContext applicationContext)
     {
         super(applicationContext);
@@ -96,9 +88,6 @@ public class GenrePanel extends AbstractPanel
         // this.detailsModel = new PresentationModel<>(this.showSelection);
     }
 
-    /**
-     * @see Panel#reload()
-     */
     @Override
     public void reload()
     {
@@ -190,9 +179,6 @@ public class GenrePanel extends AbstractPanel
         component.add(splitPane, BorderLayout.CENTER);
     }
 
-    /**
-     * @return {@link GenreModel}
-     */
     private GenreModel getGenreModel()
     {
         return this.genreModel;

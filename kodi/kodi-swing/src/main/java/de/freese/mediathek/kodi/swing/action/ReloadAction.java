@@ -16,21 +16,11 @@ import de.freese.mediathek.kodi.swing.panel.Panel;
  */
 public class ReloadAction extends AbstractAction
 {
-    /**
-     *
-     */
     @Serial
     private static final long serialVersionUID = -8049703427783670993L;
-    /**
-     *
-     */
+
     private final Panel panel;
 
-    /**
-     * Erstellt ein neues {@link ReloadAction} Object.
-     *
-     * @param panel {@link Panel}
-     */
     public ReloadAction(final Panel panel)
     {
         super("Reload");

@@ -26,28 +26,14 @@ import javafx.scene.layout.VBox;
  */
 public class GenrePane extends VBox
 {
-    /**
-     *
-     */
     private final Button buttonReload;
-    /**
-     *
-     */
+
     private final ListView<Model> listViewFilme;
-    /**
-     *
-     */
+
     private final ListView<Model> listViewSerien;
-    /**
-     *
-     */
+
     private final TableView<Genre> tableViewGenres;
 
-    /**
-     * Erstellt ein neues Object.
-     *
-     * @param resourceBundle {@link ResourceBundle}
-     */
     public GenrePane(final ResourceBundle resourceBundle)
     {
         super();
@@ -90,51 +76,31 @@ public class GenrePane extends VBox
         splitPane.getItems().add(hBox);
     }
 
-    /**
-     * @return {@link Button}
-     */
     public Button getButtonReload()
     {
         return this.buttonReload;
     }
 
-    /**
-     * @return {@link ObservableList}
-     */
     public ObservableList<Model> getFilmeItems()
     {
         return this.listViewFilme.getItems();
     }
 
-    /**
-     * @return {@link ObservableList}
-     */
     public ObservableList<Model> getSerienItems()
     {
         return this.listViewSerien.getItems();
     }
 
-    /**
-     * @return {@link ObservableList}
-     */
     public ObservableList<Genre> getTableItems()
     {
         return this.tableViewGenres.getItems();
     }
 
-    /**
-     * @return {@link TableViewSelectionModel}
-     */
     public TableViewSelectionModel<Genre> getTableSelectionModel()
     {
         return this.tableViewGenres.getSelectionModel();
     }
 
-    /**
-     * @param resourceBundle {@link ResourceBundle}
-     *
-     * @return {@link TableView}
-     */
     private TableView<Genre> createTableViewGenres(final ResourceBundle resourceBundle)
     {
         TableView<Genre> tableView = new TableView<>();

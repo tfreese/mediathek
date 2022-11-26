@@ -17,15 +17,9 @@ import de.freese.mediathek.kodi.model.Show;
  */
 public class ShowListCellRenderer extends DefaultListCellRenderer
 {
-    /**
-     *
-     */
     @Serial
     private static final long serialVersionUID = 3721555812207440061L;
 
-    // /**
-    // *
-    // */
     // private final Font BOLD_FONT = new JLabel().getFont().deriveFont(Font.BOLD, 20);
 
     /**

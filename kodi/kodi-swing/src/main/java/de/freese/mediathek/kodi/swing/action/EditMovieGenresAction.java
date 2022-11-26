@@ -25,26 +25,13 @@ import org.springframework.context.ApplicationContext;
  */
 public class EditMovieGenresAction extends AbstractAction
 {
-    /**
-     *
-     */
     @Serial
     private static final long serialVersionUID = -3961368866360343742L;
-    /**
-     *
-     */
+
     private final ApplicationContext applicationContext;
-    /**
-     *
-     */
+
     private final MovieModel model;
 
-    /**
-     * Erstellt ein neues {@link EditMovieGenresAction} Object.
-     *
-     * @param applicationContext {@link ApplicationContext}
-     * @param model {@link MovieModel}
-     */
     public EditMovieGenresAction(final ApplicationContext applicationContext, final MovieModel model)
     {
         super("Edit Genres");

@@ -25,26 +25,13 @@ import org.springframework.context.ApplicationContext;
  */
 public class EditShowGenresAction extends AbstractAction
 {
-    /**
-     *
-     */
     @Serial
     private static final long serialVersionUID = -8720949560687284814L;
-    /**
-     *
-     */
+
     private final ApplicationContext applicationContext;
-    /**
-     *
-     */
+
     private final ShowModel model;
 
-    /**
-     * Erstellt ein neues {@link EditShowGenresAction} Object.
-     *
-     * @param applicationContext {@link ApplicationContext}
-     * @param model {@link ShowModel}
-     */
     public EditShowGenresAction(final ApplicationContext applicationContext, final ShowModel model)
     {
         super("Edit Genres");

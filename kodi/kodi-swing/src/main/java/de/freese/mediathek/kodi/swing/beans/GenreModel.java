@@ -27,33 +27,17 @@ import org.springframework.context.ApplicationContext;
  */
 public class GenreModel extends PresentationModel<BeanAdapter<Genre>>
 {
-    /**
-     *
-     */
     @Serial
     private static final long serialVersionUID = 2574749005329631553L;
-    /**
-     *
-     */
+
     private final ApplicationContext applicationContext;
-    /**
-     *
-     */
+
     private final SelectionInList<Genre> genreSelection;
-    /**
-     *
-     */
+
     private final SelectionInList<Movie> movieSelection;
-    /**
-     *
-     */
+
     private final SelectionInList<Show> showSelection;
 
-    /**
-     * Erstellt ein neues {@link GenreModel} Object.
-     *
-     * @param applicationContext {@link ApplicationContext}
-     */
     public GenreModel(final ApplicationContext applicationContext)
     {
         super();
@@ -64,33 +48,21 @@ public class GenreModel extends PresentationModel<BeanAdapter<Genre>>
         this.showSelection = new SelectionInList<>();
     }
 
-    /**
-     * @return {@link SelectionInList}<Genre>
-     */
     public SelectionInList<Genre> getGenreSelection()
     {
         return this.genreSelection;
     }
 
-    /**
-     * @return {@link SelectionInList}<Movie>
-     */
     public SelectionInList<Movie> getMovieSelection()
     {
         return this.movieSelection;
     }
 
-    /**
-     * @return {@link Genre}
-     */
     public Genre getSelectedGenre()
     {
         return getGenreSelection().getSelection();
     }
 
-    /**
-     * @return {@link SelectionInList}<Show>
-     */
     public SelectionInList<Show> getShowSelection()
     {
         return this.showSelection;
@@ -189,9 +161,6 @@ public class GenreModel extends PresentationModel<BeanAdapter<Genre>>
         // worker.execute();
     }
 
-    /**
-     * @param genres {@link List}
-     */
     public void setList(final List<Genre> genres)
     {
         getGenreSelection().setList(genres);
@@ -202,11 +171,6 @@ public class GenreModel extends PresentationModel<BeanAdapter<Genre>>
         }
     }
 
-    /**
-     * @param <B> Typ für SwingWorker#doInBackground
-     * @param backgroundSupplier {@link Supplier}
-     * @param doneConsumer {@link Consumer}
-     */
     private <B> void loadGenres(final Supplier<B> backgroundSupplier, final Consumer<B> doneConsumer)
     {
         SwingWorker<B, Void> worker = new SwingWorker<>()

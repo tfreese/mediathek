@@ -36,40 +36,22 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class TvShowMoviePane<T extends Model> extends VBox
 {
-    /**
-     *
-     */
     private final Button buttonEditGenres;
-    /**
-     *
-     */
+
     private final Button buttonReload;
-    /**
-     *
-     */
+
     private final ImageView imageView;
-    /**
-     *
-     */
+
     private final Label labelGenres;
-    /**
-     *
-     */
+
     private final Label labelID;
     /**
      * Wird für die Filterung benötigt.
      */
     private final ObservableList<T> tableList = FXCollections.observableArrayList();
-    /**
-     *
-     */
+
     private final TableView<T> tableView;
 
-    /**
-     * Erstellt ein neues {@link TvShowMoviePane} Object.
-     *
-     * @param resourceBundle {@link ResourceBundle}
-     */
     public TvShowMoviePane(final ResourceBundle resourceBundle)
     {
         super();
@@ -135,69 +117,42 @@ public class TvShowMoviePane<T extends Model> extends VBox
         splitPane.getItems().add(vBox);
     }
 
-    /**
-     * @return {@link Button}
-     */
     public Button getButtonEditGenres()
     {
         return this.buttonEditGenres;
     }
 
-    /**
-     * @return {@link Button}
-     */
     public Button getButtonReload()
     {
         return this.buttonReload;
     }
 
-    /**
-     * @return {@link StringProperty}
-     */
     public StringProperty getGenresProperty()
     {
         return this.labelGenres.textProperty();
     }
 
-    /**
-     * @return {@link StringProperty}
-     */
     public StringProperty getIDProperty()
     {
         return this.labelID.textProperty();
     }
 
-    /**
-     * @return {@link ObjectProperty}
-     */
     public ObjectProperty<Image> getImageProperty()
     {
         return this.imageView.imageProperty();
     }
 
-    /**
-     * @return {@link ObservableList}
-     */
     public ObservableList<T> getTableItems()
     {
         // return this.tableView.getItems();
         return this.tableList;
     }
 
-    /**
-     * @return {@link TableViewSelectionModel}
-     */
     public TableViewSelectionModel<T> getTableSelectionModel()
     {
         return this.tableView.getSelectionModel();
     }
 
-    /**
-     * @param propertyItemFilter {@link StringProperty}
-     * @param resourceBundle {@link ResourceBundle}
-     *
-     * @return {@link TableView}
-     */
     @SuppressWarnings("unchecked")
     private TableView<T> createTableView(final StringProperty propertyItemFilter, final ResourceBundle resourceBundle)
     {

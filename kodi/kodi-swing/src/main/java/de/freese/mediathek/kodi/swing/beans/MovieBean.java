@@ -16,33 +16,17 @@ import org.slf4j.LoggerFactory;
  */
 public class MovieBean extends Model
 {
-    /**
-     *
-     */
     static final String PROPERTY_GENRES = "genres";
-    /**
-     *
-     */
+
     static final String PROPERTY_IMDB_ID = "imdbID";
-    /**
-     *
-     */
+
     @Serial
     private static final long serialVersionUID = 5961025455444774034L;
-    /**
-     *
-     */
+
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    /**
-     *
-     */
+
     private final Movie movie;
 
-    /**
-     * Erstellt ein neues {@link MovieBean} Object.
-     *
-     * @param movie {@link Movie}
-     */
     public MovieBean(final Movie movie)
     {
         super();
@@ -50,51 +34,31 @@ public class MovieBean extends Model
         this.movie = movie;
     }
 
-    /**
-     * @return String
-     */
     public String getGenres()
     {
         return this.movie.getGenres();
     }
 
-    /**
-     * @return String
-     */
     public String getImdbID()
     {
         return this.movie.getImdbID();
     }
 
-    /**
-     * @return String
-     */
     public String getName()
     {
         return this.movie.getName();
     }
 
-    /**
-     * @return String
-     */
     public String getPoster()
     {
         return this.movie.getPoster();
     }
 
-    /**
-     * @return String
-     */
     public String getPosters()
     {
         return this.movie.getPosters();
     }
 
-    /**
-     * Setzt die neuen Genres.
-     *
-     * @param genres String
-     */
     public void setGenres(final String genres)
     {
         Object oldValue = getGenres();
@@ -108,9 +72,6 @@ public class MovieBean extends Model
         firePropertyChange(PROPERTY_GENRES, oldValue, genres);
     }
 
-    /**
-     * @param poster String
-     */
     public void setPoster(final String poster)
     {
         this.movie.setPoster(poster);

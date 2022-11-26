@@ -37,14 +37,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  */
 public class KodiJavaFXClient extends Application
 {
-    /**
-     *
-     */
     public static final Logger LOGGER = LoggerFactory.getLogger("KODI-Client");
 
-    /**
-     * @return {@link Logger}
-     */
     public static Logger getLogger()
     {
         return LOGGER;
@@ -93,9 +87,6 @@ public class KodiJavaFXClient extends Application
         return version;
     }
 
-    /**
-     *
-     */
     private AnnotationConfigApplicationContext applicationContext;
 
     /**
@@ -110,7 +101,7 @@ public class KodiJavaFXClient extends Application
         String profile = null;
         // Class<?> clazz = null;
 
-        if ((parameters != null) && !parameters.isEmpty())
+        if ((parameters == null) || parameters.isEmpty())
         {
             // clazz = AppConfigMySQL.class;
             profile = "sqlite";

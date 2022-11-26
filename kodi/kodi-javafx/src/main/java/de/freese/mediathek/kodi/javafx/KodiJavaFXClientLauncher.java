@@ -8,9 +8,6 @@ import javafx.application.Application;
  */
 public class KodiJavaFXClientLauncher
 {
-    /**
-     * @param args String[]
-     */
     public static void main(final String[] args)
     {
         // Warn-Meldungen bei Bindings verhindern.

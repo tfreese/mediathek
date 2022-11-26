@@ -10,23 +10,13 @@ import javafx.scene.layout.VBox;
 
 /**
  * @author Thomas Freese
- *
- * @param <T> Entity
  */
 public class PickList<T extends Comparable<? super T>> extends HBox
 {
-    /**
-     *
-     */
     private final ListView<T> listViewLeft;
-    /**
-     *
-     */
+
     private final ListView<T> listViewRight;
 
-    /**
-     * Erstellt ein neues {@link PickList} Object.
-     */
     public PickList()
     {
         super();
@@ -49,7 +39,8 @@ public class PickList<T extends Comparable<? super T>> extends HBox
         getChildren().add(this.listViewRight);
 
         buttonLeftToRight.disableProperty().bind(this.listViewLeft.getSelectionModel().selectedItemProperty().isNull());
-        buttonLeftToRight.setOnAction(event -> {
+        buttonLeftToRight.setOnAction(event ->
+        {
             final ObservableList<T> listRight = PickList.this.listViewRight.getItems();
 
             final T item = PickList.this.listViewLeft.getSelectionModel().getSelectedItem();
@@ -63,23 +54,18 @@ public class PickList<T extends Comparable<? super T>> extends HBox
         });
 
         buttonRightToLeft.disableProperty().bind(this.listViewRight.getSelectionModel().selectedItemProperty().isNull());
-        buttonRightToLeft.setOnAction(event -> {
+        buttonRightToLeft.setOnAction(event ->
+        {
             final T item = PickList.this.listViewRight.getSelectionModel().getSelectedItem();
             PickList.this.listViewRight.getItems().remove(item);
         });
     }
 
-    /**
-     * @return {@link ListView}<T>
-     */
     public ListView<T> getListViewLeft()
     {
         return this.listViewLeft;
     }
 
-    /**
-     * @return {@link ListView}<T>
-     */
     public ListView<T> getListViewRight()
     {
         return this.listViewRight;

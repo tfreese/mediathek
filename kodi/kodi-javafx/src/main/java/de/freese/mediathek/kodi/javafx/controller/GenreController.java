@@ -26,17 +26,8 @@ import org.springframework.context.ApplicationContext;
  */
 public class GenreController extends AbstractController<Genre>
 {
-    /**
-     *
-     */
     private final GenrePane scene;
 
-    /**
-     * Erstellt ein neues Object.
-     *
-     * @param applicationContext {@link ApplicationContext}
-     * @param resourceBundle {@link ResourceBundle}
-     */
     public GenreController(final ApplicationContext applicationContext, final ResourceBundle resourceBundle)
     {
         super(applicationContext);
@@ -46,9 +37,6 @@ public class GenreController extends AbstractController<Genre>
         initialize(null, resourceBundle);
     }
 
-    /**
-     * @return {@link GenrePane}
-     */
     public GenrePane getPane()
     {
         return this.scene;

@@ -67,16 +67,8 @@ public class ShowPanel extends AbstractPanel
         }
     }
 
-    /**
-     *
-     */
     private final ShowModel showModel;
 
-    /**
-     * Erstellt ein neues {@link ShowPanel} Object.
-     *
-     * @param applicationContext {@link ApplicationContext}
-     */
     public ShowPanel(final ApplicationContext applicationContext)
     {
         super(applicationContext);
@@ -203,9 +195,6 @@ public class ShowPanel extends AbstractPanel
         component.add(splitPane, BorderLayout.CENTER);
     }
 
-    /**
-     * @return {@link ShowModel}
-     */
     private ShowModel getShowModel()
     {
         return this.showModel;

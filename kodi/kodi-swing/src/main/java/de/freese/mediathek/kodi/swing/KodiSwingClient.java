@@ -34,16 +34,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  */
 public class KodiSwingClient
 {
-    /**
-     *
-     */
     public static final Logger LOGGER = LoggerFactory.getLogger("KODI-Client");
 
-    /**
-     * WindowListener zum Beenden.
-     *
-     * @author Thomas Freese
-     */
     private static class MainFrameListener extends WindowAdapter
     {
         /**
@@ -56,16 +48,8 @@ public class KodiSwingClient
         }
     }
 
-    /**
-     *
-     */
     public static Frame FRAME;
 
-    /**
-     * @param args String[]
-     *
-     * @throws Exception Falls was schiefgeht.
-     */
     public static void main(final String[] args) throws Exception
     {
         // Um Comparator Fehler zu vermeiden.
@@ -110,13 +94,6 @@ public class KodiSwingClient
         // thread.start();
     }
 
-    /**
-     * Initialisierung der GUI.
-     *
-     * @param args String[]
-     *
-     * @throws Exception Falls was schiefgeht.
-     */
     private void init(final String[] args) throws Exception
     {
         String profile = null;
@@ -169,10 +146,7 @@ public class KodiSwingClient
         frame.setVisible(true);
         FRAME = frame;
     }
-
-    /**
-     *
-     */
+    
     private void initUIDefaults()
     {
         try

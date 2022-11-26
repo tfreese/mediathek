@@ -41,39 +41,21 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class MovieModel extends PresentationModel<MovieBean>
 {
-    /**
-     *
-     */
     @Serial
     private static final long serialVersionUID = 5768855611560857610L;
-    /**
-     *
-     */
+
     private final SelectionInList<Movie> movieSelection;
-    /**
-     *
-     */
+
     private final ResourceCache resourceCache;
-    /**
-     *
-     */
+
     private final ValueModel valueModelFilter;
-    /**
-     *
-     */
+
     private final ValueModel valueModelPoster;
-    //    /**
-    //     *
-    //     */
+
     //    private Consumer<MovieBean> imdbIdLabelConsumer;
-    /**
-     *
-     */
+
     private JTable table;
 
-    /**
-     * Erstellt ein neues {@link MovieModel} Object.
-     */
     public MovieModel()
     {
         super();
@@ -84,17 +66,11 @@ public class MovieModel extends PresentationModel<MovieBean>
         this.resourceCache = new FileResourceCache(Paths.get(System.getProperty("java.io.tmpdir"), ".javaCache"));
     }
 
-    /**
-     * @param label {@link JLabel}
-     */
     public void bindGenreLabel(final JLabel label)
     {
         Bindings.bind(label, getModel(MovieBean.PROPERTY_GENRES));
     }
 
-    /**
-     * @param label {@link JLabel}
-     */
     public void bindImdbIdLabel(final JLabel label)
     {
         Bindings.bind(label, getModel(MovieBean.PROPERTY_IMDB_ID));
@@ -103,10 +79,6 @@ public class MovieModel extends PresentationModel<MovieBean>
         //        ;
     }
 
-    /**
-     * @param table {@link JTable}
-     * @param listSelectionListener {@link ListSelectionListener}
-     */
     public void bindMovieTable(final JTable table, final ListSelectionListener listSelectionListener)
     {
         this.table = table; // Wird in #getSelectedMovie benötigt
@@ -135,25 +107,16 @@ public class MovieModel extends PresentationModel<MovieBean>
         });
     }
 
-    /**
-     * @param label {@link JLabel}
-     */
     public void bindPosterLabel(final JLabel label)
     {
         Bindings.bind(label, "icon", this.valueModelPoster);
     }
 
-    /**
-     * @param textFieldFilter {@link JTextField}
-     */
     public void bindTextFieldFilter(final JTextField textFieldFilter)
     {
         Bindings.bind(textFieldFilter, this.valueModelFilter);
     }
 
-    /**
-     * @return {@link Movie}
-     */
     public Movie getSelectedMovie()
     {
         // RowIndex wegen Filter gerade rücken.
@@ -267,9 +230,6 @@ public class MovieModel extends PresentationModel<MovieBean>
         worker.execute();
     }
 
-    /**
-     * @param movies {@link List}
-     */
     public void setList(final List<Movie> movies)
     {
         this.movieSelection.setList(movies);

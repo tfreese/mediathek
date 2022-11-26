@@ -65,16 +65,8 @@ public class MoviePanel extends AbstractPanel
         }
     }
 
-    /**
-     *
-     */
     private final MovieModel movieModel;
 
-    /**
-     * Erstellt ein neues {@link MoviePanel} Object.
-     *
-     * @param applicationContext {@link ApplicationContext}
-     */
     public MoviePanel(final ApplicationContext applicationContext)
     {
         super(applicationContext);
@@ -201,9 +193,6 @@ public class MoviePanel extends AbstractPanel
         component.add(splitPane, BorderLayout.CENTER);
     }
 
-    /**
-     * @return {@link MovieModel}
-     */
     private MovieModel getMovieModel()
     {
         return this.movieModel;

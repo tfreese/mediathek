@@ -34,17 +34,8 @@ import org.springframework.context.ApplicationContext;
  */
 public abstract class AbstractTvShowMovieController<T extends Model> extends AbstractController<T>
 {
-    /**
-     *
-     */
     private final TvShowMoviePane<T> pane;
 
-    /**
-     * Erstellt ein neues Object.
-     *
-     * @param applicationContext {@link ApplicationContext}
-     * @param resourceBundle {@link ResourceBundle}
-     */
     protected AbstractTvShowMovieController(final ApplicationContext applicationContext, final ResourceBundle resourceBundle)
     {
         super(applicationContext);
@@ -52,23 +43,6 @@ public abstract class AbstractTvShowMovieController<T extends Model> extends Abs
         this.pane = new TvShowMoviePane<>(resourceBundle);
     }
 
-    /**
-     * @param value Entity
-     *
-     * @return {@link List}
-     */
-    protected abstract List<Genre> getGenres(T value);
-
-    /**
-     * @param value Entity
-     *
-     * @return {@link URI}
-     */
-    protected abstract URI getImageUri(T value);
-
-    /**
-     * @return {@link TvShowMoviePane}
-     */
     public TvShowMoviePane<T> getPane()
     {
         return this.pane;
@@ -92,6 +66,10 @@ public abstract class AbstractTvShowMovieController<T extends Model> extends Abs
         getPane().getButtonReload().setOnAction(event -> handleReload(dataList, selectionModel));
         getPane().getButtonEditGenres().setOnAction(event -> updateGenres(selectionModel));
     }
+
+    protected abstract List<Genre> getGenres(T value);
+
+    protected abstract URI getImageUri(T value);
 
     /**
      * @see de.freese.mediathek.kodi.javafx.controller.AbstractController#updateDetails(Model)
@@ -150,17 +128,8 @@ public abstract class AbstractTvShowMovieController<T extends Model> extends Abs
         getExecutor().execute(task);
     }
 
-    /**
-     * @param value Entity
-     * @param genreIDs int[]
-     */
     protected abstract void updateGenres(T value, int[] genreIDs);
 
-    /**
-     * Update der Genres.
-     *
-     * @param selectionModel {@link TableViewSelectionModel}
-     */
     protected void updateGenres(final TableViewSelectionModel<T> selectionModel)
     {
         T model = selectionModel.getSelectedItem();

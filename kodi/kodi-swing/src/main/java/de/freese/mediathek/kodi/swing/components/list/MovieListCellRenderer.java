@@ -17,15 +17,9 @@ import de.freese.mediathek.kodi.model.Movie;
  */
 public class MovieListCellRenderer extends DefaultListCellRenderer
 {
-    /**
-     *
-     */
     @Serial
     private static final long serialVersionUID = 7709171891970499189L;
 
-    // /**
-    // *
-    // */
     // private final Font BOLD_FONT = new JLabel().getFont().deriveFont(Font.BOLD, 20);
 
     /**

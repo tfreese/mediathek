@@ -11,20 +11,12 @@ import javafx.scene.text.TextAlignment;
 import javafx.util.Callback;
 
 /**
- * @param <S> Entity Type
- * @param <T> Attribute Type
- *
  * @author Thomas Freese
  */
 public class FormattedTableCellFactory<S, T> implements Callback<TableColumn<S, T>, TableCell<S, T>>
 {
-    /**
-     *
-     */
     private TextAlignment alignment;
-    /**
-     *
-     */
+
     private Format format;
 
     /**
@@ -82,33 +74,21 @@ public class FormattedTableCellFactory<S, T> implements Callback<TableColumn<S, 
         return cell;
     }
 
-    /**
-     * @return {@link TextAlignment}
-     */
     public TextAlignment getAlignment()
     {
         return this.alignment;
     }
 
-    /**
-     * @return {@link Format}
-     */
     public Format getFormat()
     {
         return this.format;
     }
 
-    /**
-     * @param alignment {@link TextAlignment}
-     */
     public void setAlignment(final TextAlignment alignment)
     {
         this.alignment = alignment;
     }
 
-    /**
-     * @param format {@link Format}
-     */
     public void setFormat(final Format format)
     {
         this.format = format;

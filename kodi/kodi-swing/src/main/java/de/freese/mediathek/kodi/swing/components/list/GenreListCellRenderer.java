@@ -17,9 +17,6 @@ import de.freese.mediathek.kodi.model.Genre;
  */
 public class GenreListCellRenderer extends DefaultListCellRenderer
 {
-    /**
-     *
-     */
     @Serial
     private static final long serialVersionUID = 4538330809572067558L;
 
