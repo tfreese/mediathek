@@ -22,11 +22,8 @@ import org.junit.jupiter.api.TestMethodOrder;
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 @Disabled
-class TestParseCSV
+class TestParseCsv
 {
-    /**
-     * @throws IOException Falls was schiefgeht
-     */
     @Test
     void testParseClementine() throws IOException
     {
@@ -40,9 +37,6 @@ class TestParseCSV
         list.forEach(System.out::println);
     }
 
-    /**
-     *
-     */
     @Test
     void testParseCsvRow()
     {

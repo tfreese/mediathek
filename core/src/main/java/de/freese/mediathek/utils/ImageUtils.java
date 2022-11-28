@@ -18,9 +18,6 @@ import javax.swing.ImageIcon;
  */
 public final class ImageUtils
 {
-    /**
-     * @return {@link RenderingHints}
-     */
     public static RenderingHints getRenderingHintsQuality()
     {
         RenderingHints hints = new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
@@ -33,12 +30,6 @@ public final class ImageUtils
 
     /**
      * Skaliert das Bild auf eine feste Größe.
-     *
-     * @param src {@link BufferedImage}
-     * @param width int
-     * @param height int
-     *
-     * @return {@link BufferedImage}
      */
     public static BufferedImage scaleImage(final Image src, final int width, final int height)
     {
@@ -49,12 +40,6 @@ public final class ImageUtils
 
     /**
      * Skaliert das Bild auf die neuen Seitenverhältnisse.
-     *
-     * @param src {@link Image}
-     * @param ratioWidth double
-     * @param ratioHeight double
-     *
-     * @return {@link BufferedImage}
      */
     public static BufferedImage scaleImageByRatio(final Image src, final double ratioWidth, final double ratioHeight)
     {
@@ -76,12 +61,6 @@ public final class ImageUtils
 
     /**
      * Skaliert das Bild unter Beibehaltung des Seitenverhältnisses bis auf die maximale angegebene Höhe oder Breite.
-     *
-     * @param src {@link Image}
-     * @param maxWidth int
-     * @param maxHeight int
-     *
-     * @return {@link BufferedImage}
      */
     public static BufferedImage scaleImageKeepRatio(final Image src, final int maxWidth, final int maxHeight)
     {
@@ -102,10 +81,6 @@ public final class ImageUtils
 
     /**
      * Kopiert ein Icon in eine Image-Kopie.
-     *
-     * @param icon {@link Icon}
-     *
-     * @return {@link BufferedImage}
      */
     public static BufferedImage toBufferedImage(final Icon icon)
     {
@@ -128,10 +103,6 @@ public final class ImageUtils
 
     /**
      * Konvertiert ein {@link Image} in ein {@link BufferedImage}.
-     *
-     * @param image {@link Image}
-     *
-     * @return {@link BufferedImage}
      */
     public static BufferedImage toBufferedImage(final Image image)
     {
@@ -190,9 +161,6 @@ public final class ImageUtils
         return bufferedImage;
     }
 
-    /**
-     * Erstellt ein neues {@link ImageUtils} Object.
-     */
     private ImageUtils()
     {
         super();

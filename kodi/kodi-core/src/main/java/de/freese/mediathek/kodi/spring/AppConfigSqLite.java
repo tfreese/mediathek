@@ -15,25 +15,8 @@ import org.sqlite.SQLiteDataSource;
  */
 @Configuration
 @Profile("sqlite")
-public class AppConfigSQLite extends AbstractAppConfig
+public class AppConfigSqLite extends AbstractAppConfig
 {
-    /**
-     * @return {@link SQLiteConfig}
-     */
-    private SQLiteConfig createSQLiteConfig()
-    {
-        // Native Libraries deaktivieren für den Zugriff auf die Dateien.
-        System.setProperty("sqlite.purejava", "true");
-        // System.setProperty("org.sqlite.lib.path", "/home/tommy");
-        // System.setProperty("org.sqlite.lib.name", "sqlite-libsqlitejdbc.so");
-
-        SQLiteConfig config = new SQLiteConfig();
-        config.setReadOnly(true);
-        config.setReadUncommited(true);
-
-        return config;
-    }
-
     /**
      * @see de.freese.mediathek.kodi.spring.AbstractAppConfig#dataSourceAudio()
      */
@@ -64,5 +47,19 @@ public class AppConfigSQLite extends AbstractAppConfig
         dataSource.setUrl(getEnvironment().getProperty("sqlite.video.db.url"));
 
         return dataSource;
+    }
+
+    private SQLiteConfig createSQLiteConfig()
+    {
+        // Native Libraries deaktivieren für den Zugriff auf die Dateien.
+        System.setProperty("sqlite.purejava", "true");
+        // System.setProperty("org.sqlite.lib.path", "/home/tommy");
+        // System.setProperty("org.sqlite.lib.name", "sqlite-libsqlitejdbc.so");
+
+        SQLiteConfig config = new SQLiteConfig();
+        config.setReadOnly(true);
+        config.setReadUncommited(true);
+
+        return config;
     }
 }

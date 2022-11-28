@@ -20,14 +20,8 @@ import org.sqlite.javax.SQLiteConnectionPoolDataSource;
  */
 public final class MultimediaReporter
 {
-    /**
-     *
-     */
     private static final Logger LOGGER = LoggerFactory.getLogger(MultimediaReporter.class);
 
-    /**
-     *
-     */
     private static final StopWatch STOP_WATCH = new StopWatch();
 
     /**
@@ -35,49 +29,21 @@ public final class MultimediaReporter
      */
     static final class DataSources
     {
-        /**
-         * @param readonly boolean
-         *
-         * @return {@link DataSource}
-         *
-         * @throws Exception Falls was schiefgeht.
-         */
         static DataSource bansheeSqLite(final boolean readonly) throws Exception
         {
             return createSqLite(readonly, "jdbc:sqlite:/home/tommy/.config/banshee-1/banshee.db");
         }
 
-        /**
-         * @param readonly boolean
-         *
-         * @return {@link DataSource}
-         *
-         * @throws Exception Falls was schiefgeht.
-         */
         static DataSource clementineSqLite(final boolean readonly) throws Exception
         {
             return createSqLite(readonly, "jdbc:sqlite:/home/tommy/.config/Clementine/clementine.db");
         }
 
-        /**
-         * @param readonly boolean
-         *
-         * @return {@link DataSource}
-         *
-         * @throws Exception Falls was schiefgeht.
-         */
         static DataSource kodiMusikSqLite(final boolean readonly) throws Exception
         {
             return createSqLite(readonly, "jdbc:sqlite:/home/tommy/.kodi/userdata/Database/MyMusic82.db");
         }
 
-        /**
-         * @param readonly boolean
-         *
-         * @return {@link DataSource}
-         *
-         * @throws Exception Falls was schiefgeht.
-         */
         static DataSource plexSqlite(final boolean readonly) throws Exception
         {
             // jdbc:sqlite:/var/lib/plex/Plex\\ Media\\ Server/Plug-in\\ Support/Databases/com.plexapp.plugins.library.db
@@ -86,14 +52,6 @@ public final class MultimediaReporter
             return createSqLite(readonly, "jdbc:sqlite:/home/tommy/com.plexapp.plugins.library.db");
         }
 
-        /**
-         * @param readonly boolean
-         * @param url String
-         *
-         * @return {@link DataSource}
-         *
-         * @throws Exception Falls was schiefgeht.
-         */
         private static DataSource createSqLite(final boolean readonly, final String url) throws Exception
         {
             // Native Libraries deaktivieren für den Zugriff auf die Dateien.
@@ -127,20 +85,12 @@ public final class MultimediaReporter
             return dataSource;
         }
 
-        /**
-         * Erstellt ein neues {@link DataSources} Object.
-         */
         private DataSources()
         {
             super();
         }
     }
 
-    /**
-     * @param args String[]
-     *
-     * @throws Exception Falls was schiefgeht.
-     */
     public static void main(final String[] args) throws Exception
     {
         // MediaReporter mediaReporter = new BansheeAudioReporter();
@@ -196,9 +146,6 @@ public final class MultimediaReporter
         System.exit(0);
     }
 
-    /**
-     * Erstellt ein neues {@link MultimediaReporter} Object.
-     */
     private MultimediaReporter()
     {
         super();

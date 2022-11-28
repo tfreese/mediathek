@@ -13,13 +13,8 @@ import de.freese.mediathek.services.themoviedb.model.Search;
  *
  * @author Thomas Freese
  */
-public class DefaultMovieService extends AbstractMovieDBService implements MovieService
+public class DefaultMovieService extends AbstractMovieDbService implements MovieService
 {
-    /**
-     * Erstellt ein neues {@link DefaultMovieService} Object.
-     *
-     * @param apiKey String
-     */
     public DefaultMovieService(final String apiKey)
     {
         super(apiKey);

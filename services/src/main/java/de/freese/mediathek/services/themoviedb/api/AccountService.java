@@ -14,8 +14,6 @@ public interface AccountService
     /**
      * Liefert die Konfiguration des Accounts,<br>
      * Pfade, Bildergrößen etc.
-     *
-     * @return {@link Configuration}
      */
     Configuration getConfiguration();
 }

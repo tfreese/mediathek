@@ -4,7 +4,7 @@ package de.freese.mediathek.kodi.impl;
 import java.util.Iterator;
 import java.util.List;
 
-import de.freese.mediathek.kodi.api.MediaDAO;
+import de.freese.mediathek.kodi.api.MediaDao;
 import de.freese.mediathek.kodi.model.Genre;
 import de.freese.mediathek.kodi.model.Movie;
 import de.freese.mediathek.kodi.model.Show;
@@ -15,15 +15,12 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
  *
  * @author Thomas Freese
  */
-public class MediaDAOImpl extends JdbcDaoSupport implements MediaDAO
+public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao
 {
-    /**
-     *
-     */
     private String schema = "";
 
     /**
-     * @see de.freese.mediathek.kodi.api.MediaDAO#deleteMovieGenres(int)
+     * @see MediaDao#deleteMovieGenres(int)
      */
     @Override
     public void deleteMovieGenres(final int movieID)
@@ -38,7 +35,7 @@ public class MediaDAOImpl extends JdbcDaoSupport implements MediaDAO
     }
 
     /**
-     * @see de.freese.mediathek.kodi.api.MediaDAO#deleteShowGenres(int)
+     * @see MediaDao#deleteShowGenres(int)
      */
     @Override
     public void deleteShowGenres(final int showID)
@@ -53,7 +50,7 @@ public class MediaDAOImpl extends JdbcDaoSupport implements MediaDAO
     }
 
     /**
-     * @see de.freese.mediathek.kodi.api.MediaDAO#getGenreMovies(int)
+     * @see MediaDao#getGenreMovies(int)
      */
     @Override
     public List<Movie> getGenreMovies(final int genreID)
@@ -78,7 +75,30 @@ public class MediaDAOImpl extends JdbcDaoSupport implements MediaDAO
     }
 
     /**
-     * @see de.freese.mediathek.kodi.api.MediaDAO#getGenres()
+     * @see MediaDao#getGenreShows(int)
+     */
+    @Override
+    public List<Show> getGenreShows(final int genreID)
+    {
+        StringBuilder sql = new StringBuilder();
+        sql.append("select");
+        sql.append(" s.idShow as pk");
+        sql.append(", s.c00 as name");
+        sql.append(", s.c06 as banner");
+        sql.append(", s.c11 as fanart");
+        sql.append(", s.c12 as tvdb_id");
+        sql.append(", s.c08 as genres");
+        sql.append(" from ").append(prependSchema("tvshow s"));
+        sql.append(" inner join ").append(prependSchema("genre_link gl on gl.media_id = s.idshow"));
+        sql.append(" where");
+        sql.append(" gl.media_type = 'tvshow'");
+        sql.append(" and gl.genre_id = ?");
+
+        return getJdbcTemplate().query(sql.toString(), new ShowRowMapper(), genreID);
+    }
+
+    /**
+     * @see MediaDao#getGenres()
      */
     @Override
     public List<Genre> getGenres()
@@ -121,30 +141,7 @@ public class MediaDAOImpl extends JdbcDaoSupport implements MediaDAO
     }
 
     /**
-     * @see de.freese.mediathek.kodi.api.MediaDAO#getGenreShows(int)
-     */
-    @Override
-    public List<Show> getGenreShows(final int genreID)
-    {
-        StringBuilder sql = new StringBuilder();
-        sql.append("select");
-        sql.append(" s.idShow as pk");
-        sql.append(", s.c00 as name");
-        sql.append(", s.c06 as banner");
-        sql.append(", s.c11 as fanart");
-        sql.append(", s.c12 as tvdb_id");
-        sql.append(", s.c08 as genres");
-        sql.append(" from ").append(prependSchema("tvshow s"));
-        sql.append(" inner join ").append(prependSchema("genre_link gl on gl.media_id = s.idshow"));
-        sql.append(" where");
-        sql.append(" gl.media_type = 'tvshow'");
-        sql.append(" and gl.genre_id = ?");
-
-        return getJdbcTemplate().query(sql.toString(), new ShowRowMapper(), genreID);
-    }
-
-    /**
-     * @see de.freese.mediathek.kodi.api.MediaDAO#getMovieGenres(int)
+     * @see MediaDao#getMovieGenres(int)
      */
     @Override
     public List<Genre> getMovieGenres(final int movieID)
@@ -166,7 +163,7 @@ public class MediaDAOImpl extends JdbcDaoSupport implements MediaDAO
     }
 
     /**
-     * @see de.freese.mediathek.kodi.api.MediaDAO#getMovies()
+     * @see MediaDao#getMovies()
      */
     @Override
     public List<Movie> getMovies()
@@ -194,7 +191,7 @@ public class MediaDAOImpl extends JdbcDaoSupport implements MediaDAO
     }
 
     /**
-     * @see de.freese.mediathek.kodi.api.MediaDAO#getShowGenres(int)
+     * @see MediaDao#getShowGenres(int)
      */
     @Override
     public List<Genre> getShowGenres(final int showID)
@@ -215,7 +212,7 @@ public class MediaDAOImpl extends JdbcDaoSupport implements MediaDAO
     }
 
     /**
-     * @see de.freese.mediathek.kodi.api.MediaDAO#getShows()
+     * @see MediaDao#getShows()
      */
     @Override
     public List<Show> getShows()
@@ -241,7 +238,7 @@ public class MediaDAOImpl extends JdbcDaoSupport implements MediaDAO
     }
 
     /**
-     * @see de.freese.mediathek.kodi.api.MediaDAO#insertMovieGenre(int, int)
+     * @see MediaDao#insertMovieGenre(int, int)
      */
     @Override
     public void insertMovieGenre(final int movieID, final int genreID)
@@ -255,7 +252,7 @@ public class MediaDAOImpl extends JdbcDaoSupport implements MediaDAO
     }
 
     /**
-     * @see de.freese.mediathek.kodi.api.MediaDAO#insertShowGenre(int, int)
+     * @see MediaDao#insertShowGenre(int, int)
      */
     @Override
     public void insertShowGenre(final int showID, final int genreID)
@@ -268,26 +265,13 @@ public class MediaDAOImpl extends JdbcDaoSupport implements MediaDAO
         getJdbcTemplate().update(sql.toString(), genreID, showID);
     }
 
-    /**
-     * @param table String
-     *
-     * @return String; SCHEMA.TABLE
-     */
-    private String prependSchema(final String table)
-    {
-        return this.schema + table;
-    }
-
-    /**
-     * @param schema String
-     */
     public void setSchema(final String schema)
     {
         this.schema = schema;
     }
 
     /**
-     * @see de.freese.mediathek.kodi.api.MediaDAO#updateMovieGenres(int)
+     * @see MediaDao#updateMovieGenres(int)
      */
     @Override
     public String updateMovieGenres(final int movieID)
@@ -346,7 +330,7 @@ public class MediaDAOImpl extends JdbcDaoSupport implements MediaDAO
     }
 
     /**
-     * @see de.freese.mediathek.kodi.api.MediaDAO#updateShowGenres(int)
+     * @see MediaDao#updateShowGenres(int)
      */
     @Override
     public String updateShowGenres(final int showID)
@@ -400,5 +384,10 @@ public class MediaDAOImpl extends JdbcDaoSupport implements MediaDAO
         getJdbcTemplate().update(sql.toString(), genres.toString(), showID);
 
         return genres.toString();
+    }
+
+    private String prependSchema(final String table)
+    {
+        return this.schema + table;
     }
 }

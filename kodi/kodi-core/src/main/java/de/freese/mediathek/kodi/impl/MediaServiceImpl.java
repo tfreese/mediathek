@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import de.freese.mediathek.kodi.api.MediaDAO;
+import de.freese.mediathek.kodi.api.MediaDao;
 import de.freese.mediathek.kodi.api.MediaService;
 import de.freese.mediathek.kodi.model.Genre;
 import de.freese.mediathek.kodi.model.Movie;
@@ -19,17 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public class MediaServiceImpl implements MediaService
 {
-    /**
-     *
-     */
-    private final MediaDAO mediaDAO;
+    private final MediaDao mediaDAO;
 
-    /**
-     * Erstellt ein neues {@link MediaServiceImpl} Object.
-     *
-     * @param mediaDAO {@link MediaDAO}
-     */
-    public MediaServiceImpl(final MediaDAO mediaDAO)
+    public MediaServiceImpl(final MediaDao mediaDAO)
     {
         super();
 
@@ -93,7 +85,7 @@ public class MediaServiceImpl implements MediaService
     {
         List<Movie> movies = getMediaDAO().getMovies();
         Collections.sort(movies);
-        // Collections.sort(movies, new MovieSetIDYearComparator());
+        // Collections.sort(movies, new MovieSetIdYearComparator());
 
         return movies;
     }
@@ -167,10 +159,7 @@ public class MediaServiceImpl implements MediaService
         return getMediaDAO().updateShowGenres(showID);
     }
 
-    /**
-     * @return {@link MediaDAO}
-     */
-    protected MediaDAO getMediaDAO()
+    protected MediaDao getMediaDAO()
     {
         return this.mediaDAO;
     }

@@ -27,33 +27,21 @@ public class Country implements Comparable<Country>
         return this.name.compareTo(o.getName());
     }
 
-    /**
-     * @return String
-     */
     public String getIso_3166_1()
     {
         return this.iso_3166_1;
     }
 
-    /**
-     * @return String
-     */
     public String getName()
     {
         return this.name;
     }
 
-    /**
-     * @param iso_3166_1 String
-     */
     public void setIso_3166_1(final String iso_3166_1)
     {
         this.iso_3166_1 = iso_3166_1;
     }
 
-    /**
-     * @param name String
-     */
     public void setName(final String name)
     {
         this.name = name;

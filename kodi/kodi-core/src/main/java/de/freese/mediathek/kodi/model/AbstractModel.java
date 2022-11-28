@@ -8,13 +8,8 @@ import java.util.Objects;
  */
 public abstract class AbstractModel implements Model
 {
-    /**
-     *
-     */
     private String name;
-    /**
-     *
-     */
+
     private int pk = -1;
 
     /**
@@ -39,6 +34,22 @@ public abstract class AbstractModel implements Model
         return value1.compareTo(value2);
     }
 
+    @Override
+    public boolean equals(final Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+
+        if (!(o instanceof AbstractModel model))
+        {
+            return false;
+        }
+
+        return pk == model.pk && Objects.equals(getName(), model.getName());
+    }
+
     /**
      * @see Model#getName()
      */
@@ -55,6 +66,12 @@ public abstract class AbstractModel implements Model
     public int getPK()
     {
         return this.pk;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(getName(), pk);
     }
 
     /**
@@ -87,27 +104,5 @@ public abstract class AbstractModel implements Model
         builder.append(this.name).append("]");
 
         return builder.toString();
-    }
-
-    @Override
-    public boolean equals(final Object o)
-    {
-        if (this == o)
-        {
-            return true;
-        }
-        
-        if (!(o instanceof AbstractModel model))
-        {
-            return false;
-        }
-
-        return pk == model.pk && Objects.equals(getName(), model.getName());
-    }
-
-    @Override
-    public int hashCode()
-    {
-        return Objects.hash(getName(), pk);
     }
 }

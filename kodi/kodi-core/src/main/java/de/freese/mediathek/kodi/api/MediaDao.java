@@ -1,4 +1,4 @@
-// Created: 16.09.2014
+// Created: 13.09.2014
 package de.freese.mediathek.kodi.api;
 
 import java.util.List;
@@ -8,12 +8,14 @@ import de.freese.mediathek.kodi.model.Movie;
 import de.freese.mediathek.kodi.model.Show;
 
 /**
- * Interface für das DAO.
- *
  * @author Thomas Freese
  */
-public interface MediaService
+public interface MediaDao
 {
+    void deleteMovieGenres(int movieID);
+
+    void deleteShowGenres(int showID);
+
     List<Movie> getGenreMovies(int genreID);
 
     List<Show> getGenreShows(int genreID);
@@ -28,7 +30,11 @@ public interface MediaService
 
     List<Show> getShows();
 
-    String updateMovieGenres(int movieID, int... genreIDs);
+    void insertMovieGenre(int movieID, int genreID);
 
-    String updateShowGenres(int showID, int... genreIDs);
+    void insertShowGenre(int showID, int genreID);
+
+    String updateMovieGenres(int movieID);
+
+    String updateShowGenres(int showID);
 }

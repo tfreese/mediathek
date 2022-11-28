@@ -3,13 +3,12 @@ package de.freese.mediathek.kodi.spring;
 
 import javax.sql.DataSource;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
-
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 
 /**
  * @author Thomas Freese
@@ -18,26 +17,6 @@ import com.zaxxer.hikari.HikariDataSource;
 @Profile("mysql")
 public class AppConfigMySQL extends AbstractAppConfig
 {
-    /**
-     * @return {@link HikariConfig}
-     */
-    private HikariConfig createHikariConfig()
-    {
-        HikariConfig config = new HikariConfig();
-        config.setDriverClassName("org.mariadb.jdbc.Driver");
-
-        config.setUsername(getEnvironment().getProperty("mysql.db.user"));
-        config.setPassword(getEnvironment().getProperty("mysql.db.password"));
-
-        config.setMaximumPoolSize(3);
-        config.setMinimumIdle(1);
-
-        config.setAutoCommit(false);
-        config.setReadOnly(false);
-
-        return config;
-    }
-
     /**
      * @see de.freese.mediathek.kodi.spring.AbstractAppConfig#dataSourceAudio()
      */
@@ -66,5 +45,22 @@ public class AppConfigMySQL extends AbstractAppConfig
         config.setPoolName("dataSourceVideo");
 
         return new HikariDataSource(config);
+    }
+
+    private HikariConfig createHikariConfig()
+    {
+        HikariConfig config = new HikariConfig();
+        config.setDriverClassName("org.mariadb.jdbc.Driver");
+
+        config.setUsername(getEnvironment().getProperty("mysql.db.user"));
+        config.setPassword(getEnvironment().getProperty("mysql.db.password"));
+
+        config.setMaximumPoolSize(3);
+        config.setMinimumIdle(1);
+
+        config.setAutoCommit(false);
+        config.setReadOnly(false);
+
+        return config;
     }
 }

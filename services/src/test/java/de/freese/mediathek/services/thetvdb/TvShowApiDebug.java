@@ -16,25 +16,17 @@ import org.springframework.web.client.RestTemplate;
  *
  * @author Thomas Freese
  */
-public class TVShowAPIDebug
+public class TvShowApiDebug
 {
-    /**
-     *
-     */
     public static final String TEST_SHOW = Settings.TEST_SHOW;
     /**
      * imdb_id: tt0374455; SG-1
      */
     public static final String TEST_SHOW_ID = Settings.TEST_SHOW_ID;
 
-    /**
-     * @param args String[]
-     *
-     * @throws Exception Falls was schiefgeht.
-     */
     public static void main(final String[] args) throws Exception
     {
-        TVShowAPIDebug debug = new TVShowAPIDebug();
+        TvShowApiDebug debug = new TvShowApiDebug();
         // debug.testSearch();
         // debug.testDetails();
         // debug.testDetailsAll();
@@ -42,51 +34,11 @@ public class TVShowAPIDebug
         debug.testImages();
     }
 
-    /**
-     * Erstellt ein neues {@link TVShowAPIDebug} Object.
-     */
-    public TVShowAPIDebug()
+    public TvShowApiDebug()
     {
         super();
     }
 
-    /**
-     * @return String
-     */
-    private String getApiKey()
-    {
-        return Settings.getTvDbApiKey();
-    }
-
-    /**
-     * @return {@link Locale}
-     */
-    private Locale getLocale()
-    {
-        return Locale.GERMANY;
-    }
-
-    /**
-     * @param result String
-     *
-     * @throws Exception Falls was schiefgeht.
-     */
-    private void prettyPrint(final String result) throws Exception
-    {
-        // ObjectMapper mapper = new XmlMapper();
-        // mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        // System.out.println(mapper.writeValueAsString(result));
-        //
-        // XmlMapper mapper = new XmlMapper();
-        // // // Object xml = mapper.readValue(result, Object.class);
-        // // System.out.println(mapper.writeValueAsString(result));
-        // System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(result));
-        System.out.println(result);
-    }
-
-    /**
-     * @throws Exception Falls was schiefgeht.
-     */
     // @Test
     public void testActors() throws Exception
     {
@@ -98,9 +50,6 @@ public class TVShowAPIDebug
         prettyPrint(result);
     }
 
-    /**
-     * @throws Exception Falls was schiefgeht.
-     */
     // @Test
     public void testDetails() throws Exception
     {
@@ -112,9 +61,6 @@ public class TVShowAPIDebug
         prettyPrint(result);
     }
 
-    /**
-     * @throws Exception Falls was schiefgeht.
-     */
     // @Test
     public void testDetailsAll() throws Exception
     {
@@ -126,9 +72,6 @@ public class TVShowAPIDebug
         prettyPrint(result);
     }
 
-    /**
-     * @throws Exception Falls was schiefgeht.
-     */
     // @Test
     public void testHTTP() throws Exception
     {
@@ -168,9 +111,6 @@ public class TVShowAPIDebug
         connection.disconnect();
     }
 
-    /**
-     * @throws Exception Falls was schiefgeht.
-     */
     // @Test
     public void testImages() throws Exception
     {
@@ -182,9 +122,6 @@ public class TVShowAPIDebug
         prettyPrint(result);
     }
 
-    /**
-     * @throws Exception Falls was schiefgeht.
-     */
     // @Test
     public void testSearch() throws Exception
     {
@@ -194,5 +131,28 @@ public class TVShowAPIDebug
                 getLocale().getLanguage());
 
         prettyPrint(result);
+    }
+
+    private String getApiKey()
+    {
+        return Settings.getTvDbApiKey();
+    }
+
+    private Locale getLocale()
+    {
+        return Locale.GERMANY;
+    }
+
+    private void prettyPrint(final String result) throws Exception
+    {
+        // ObjectMapper mapper = new XmlMapper();
+        // mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        // System.out.println(mapper.writeValueAsString(result));
+        //
+        // XmlMapper mapper = new XmlMapper();
+        // // // Object xml = mapper.readValue(result, Object.class);
+        // // System.out.println(mapper.writeValueAsString(result));
+        // System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(result));
+        System.out.println(result);
     }
 }

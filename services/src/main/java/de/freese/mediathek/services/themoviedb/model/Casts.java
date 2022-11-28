@@ -13,34 +13,20 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Casts
 {
-    /**
-     *
-     */
     private List<Actor> cast;
-    /**
-     *
-     */
+
     private List<Crew> crew;
 
-    /**
-     * @return {@link List}<Actor>
-     */
     public List<Actor> getCast()
     {
         return this.cast;
     }
 
-    /**
-     * @return {@link List}<Crew>
-     */
     public List<Crew> getCrew()
     {
         return this.crew;
     }
 
-    /**
-     * @return {@link List}
-     */
     public List<Crew> getDirectors()
     {
         List<Crew> directors = new ArrayList<>();
@@ -56,9 +42,6 @@ public class Casts
         return directors;
     }
 
-    /**
-     * @param cast {@link List}<Actor>
-     */
     public void setCast(final List<Actor> cast)
     {
         this.cast = cast;
@@ -66,9 +49,6 @@ public class Casts
         Collections.sort(this.cast);
     }
 
-    /**
-     * @param crew {@link List}<Crew>
-     */
     public void setCrew(final List<Crew> crew)
     {
         this.crew = crew;

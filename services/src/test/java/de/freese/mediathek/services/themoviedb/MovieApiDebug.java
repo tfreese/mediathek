@@ -15,70 +15,26 @@ import org.springframework.web.client.RestTemplate;
  *
  * @author Thomas Freese
  */
-public class MovieAPIDebug
+public class MovieApiDebug
 {
-    /**
-     *
-     */
     public static final String TEST_MOVIE = Settings.TEST_MOVIE;
-    /**
-     *
-     */
+
     public static final int TEST_MOVIE_ID = Settings.TEST_MOVIE_ID;
 
-    /**
-     * @param args String[]
-     *
-     * @throws Exception Falls was schiefgeht.
-     */
     public static void main(final String[] args) throws Exception
     {
-        MovieAPIDebug debug = new MovieAPIDebug();
+        MovieApiDebug debug = new MovieApiDebug();
         debug.testSearch();
         // debug.testDetails();
         // debug.testImages();
         // debug.testActors();
     }
 
-    /**
-     * Erstellt ein neues {@link MovieAPIDebug} Object.
-     */
-    public MovieAPIDebug()
+    public MovieApiDebug()
     {
         super();
     }
 
-    /**
-     * @return String
-     */
-    private String getApiKey()
-    {
-        return Settings.getMovieDbApiKey();
-    }
-
-    /**
-     * @return {@link Locale}
-     */
-    private Locale getLocale()
-    {
-        return Locale.GERMANY;
-    }
-
-    /**
-     * @param result String
-     *
-     * @throws Exception Falls was schiefgeht.
-     */
-    private void prettyPrint(final String result) throws Exception
-    {
-        ObjectMapper mapper = new ObjectMapper();
-        Object json = mapper.readValue(result, Object.class);
-        System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json));
-    }
-
-    /**
-     * @throws Exception Falls was schiefgeht.
-     */
     // @Test
     public void testActors() throws Exception
     {
@@ -89,9 +45,6 @@ public class MovieAPIDebug
         prettyPrint(result);
     }
 
-    /**
-     * @throws Exception Falls was schiefgeht.
-     */
     // @Test
     public void testConfiguration() throws Exception
     {
@@ -105,9 +58,6 @@ public class MovieAPIDebug
         prettyPrint(result);
     }
 
-    /**
-     * @throws Exception Falls was schiefgeht.
-     */
     // @Test
     public void testDetails() throws Exception
     {
@@ -118,9 +68,6 @@ public class MovieAPIDebug
         prettyPrint(result);
     }
 
-    /**
-     * @throws Exception Falls was schiefgeht.
-     */
     // @Test
     public void testHTTP() throws Exception
     {
@@ -159,9 +106,6 @@ public class MovieAPIDebug
         connection.disconnect();
     }
 
-    /**
-     * @throws Exception Falls was schiefgeht.
-     */
     // @Test
     public void testImages() throws Exception
     {
@@ -172,9 +116,6 @@ public class MovieAPIDebug
         prettyPrint(result);
     }
 
-    /**
-     * @throws Exception Falls was schiefgeht.
-     */
     // @Test
     public void testSearch() throws Exception
     {
@@ -195,5 +136,22 @@ public class MovieAPIDebug
         // getLocale().getLanguage());
 
         prettyPrint(result);
+    }
+
+    private String getApiKey()
+    {
+        return Settings.getMovieDbApiKey();
+    }
+
+    private Locale getLocale()
+    {
+        return Locale.GERMANY;
+    }
+
+    private void prettyPrint(final String result) throws Exception
+    {
+        ObjectMapper mapper = new ObjectMapper();
+        Object json = mapper.readValue(result, Object.class);
+        System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json));
     }
 }

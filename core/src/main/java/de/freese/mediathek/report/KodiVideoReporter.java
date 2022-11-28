@@ -39,11 +39,6 @@ public class KodiVideoReporter extends AbstractMediaReporter
     /**
      * Erzeugt eine CSV-Datei bereits gesehener Filme.<br>
      * Siehe auch movieview.
-     *
-     * @param dataSource {@link DataSource}
-     * @param path {@link Path}
-     *
-     * @throws Exception Falls was schiefgeht.
      */
     protected void reportMovies(final DataSource dataSource, final Path path) throws Exception
     {
@@ -64,11 +59,6 @@ public class KodiVideoReporter extends AbstractMediaReporter
     /**
      * Erzeugt eine CSV-Datei bereits gesehener Serien/Episoden.<br>
      * Siehe auch episodeview.
-     *
-     * @param dataSource {@link DataSource}
-     * @param path {@link Path}
-     *
-     * @throws Exception Falls was schiefgeht.
      */
     protected void reportTVShows(final DataSource dataSource, final Path path) throws Exception
     {
@@ -88,11 +78,6 @@ public class KodiVideoReporter extends AbstractMediaReporter
 
     /**
      * Auslesen der CSV-Datei bereits gesehener Filme und aktualisieren der Datenbank.<br>
-     *
-     * @param dataSource {@link DataSource}
-     * @param path {@link Path}
-     *
-     * @throws Exception Falls was schiefgeht.
      */
     protected void updateMovies(final DataSource dataSource, final Path path) throws Exception
     {
@@ -165,11 +150,6 @@ public class KodiVideoReporter extends AbstractMediaReporter
 
     /**
      * Auslesen der CSV-Datei bereits gesehener Serien und aktualisieren der Datenbank.<br>
-     *
-     * @param dataSource {@link DataSource}
-     * @param path {@link Path}
-     *
-     * @throws Exception Falls was schiefgeht.
      */
     protected void updateTVShows(final DataSource dataSource, final Path path) throws Exception
     {

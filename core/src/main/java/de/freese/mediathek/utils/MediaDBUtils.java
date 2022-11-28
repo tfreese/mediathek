@@ -3,7 +3,6 @@ package de.freese.mediathek.utils;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -23,13 +22,6 @@ import java.util.function.UnaryOperator;
  */
 public final class MediaDBUtils
 {
-    /**
-     * @param path {@link Path}
-     *
-     * @return List
-     *
-     * @throws IOException Falls was schiefgeht
-     */
     public static List<String[]> parseCsv(final Path path) throws IOException
     {
         //        try (Stream<String> stream = Files.lines(path))
@@ -56,10 +48,6 @@ public final class MediaDBUtils
 
     /**
      * Benennt die bestehende Datei in *.last um.
-     *
-     * @param path {@link Path}
-     *
-     * @throws IOException Falls was schiefgeht.
      */
     public static void rename(final Path path) throws IOException
     {
@@ -88,11 +76,6 @@ public final class MediaDBUtils
     /**
      * Schreibt das ResultSet als CSV-Datei.<br>
      * Wenn das ResultSet vom Typ != ResultSet.TYPE_FORWARD_ONLY ist, wird {@link ResultSet#first()} aufgerufen und kann weiter verwendet werden.
-     *
-     * @param resultSet {@link ResultSet}
-     * @param path {@link Path}
-     *
-     * @throws Exception Falls was schiefgeht.
      */
     public static void writeCsv(final ResultSet resultSet, final Path path) throws Exception
     {
@@ -108,11 +91,6 @@ public final class MediaDBUtils
      * Schreibt das ResultSet als CSV-Datei.<br>
      * Der Stream wird nicht geschlossen.<br>
      * Wenn das ResultSet vom Typ != ResultSet.TYPE_FORWARD_ONLY ist, wird {@link ResultSet#first()} aufgerufen und kann weiter verwendet werden.
-     *
-     * @param resultSet {@link ResultSet}
-     * @param ps {@link PrintWriter}
-     *
-     * @throws SQLException Falls was schiefgeht.
      */
     public static void writeCsv(final ResultSet resultSet, final PrintStream ps) throws SQLException
     {
@@ -182,11 +160,6 @@ public final class MediaDBUtils
         }
     }
 
-    /**
-     * @param csvRow String
-     *
-     * @return String[]
-     */
     private static String[] parseCsvRow(String csvRow)
     {
         String row = csvRow;
@@ -223,9 +196,6 @@ public final class MediaDBUtils
                 ;
     }
 
-    /**
-     * Erstellt ein neues {@link MediaDBUtils} Object.
-     */
     private MediaDBUtils()
     {
         super();

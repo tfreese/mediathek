@@ -27,20 +27,12 @@ import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 /**
  * @author Thomas Freese
  */
-class TestMovieAPI
+class TestMovieApi
 {
-    /**
-     *
-     */
-    private static AccountService accountService = null;
-    /**
-     *
-     */
-    private static MovieService movieService = null;
+    private static AccountService accountService;
 
-    /**
-     * @throws Exception Falls was schiefgeht.
-     */
+    private static MovieService movieService;
+
     @BeforeAll
     static void beforeAll() throws Exception
     {
@@ -51,9 +43,6 @@ class TestMovieAPI
         ((DefaultAccountService) accountService).afterPropertiesSet();
     }
 
-    /**
-     * @throws Exception Falls was schiefgeht.
-     */
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
     void testCasts() throws Exception
@@ -71,9 +60,6 @@ class TestMovieAPI
         assertTrue(directors.size() >= 1);
     }
 
-    /**
-     * @throws Exception Falls was schiefgeht.
-     */
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
     void testConfiguration() throws Exception
@@ -94,9 +80,6 @@ class TestMovieAPI
         assertTrue(configuration.getProfileSizes().size() >= 1);
     }
 
-    /**
-     * @throws Exception Falls was schiefgeht.
-     */
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
     void testDetails() throws Exception
@@ -124,9 +107,6 @@ class TestMovieAPI
         assertTrue(details.getCountries().size() >= 1);
     }
 
-    // /**
-    // * @throws Exception Falls was schief geht.
-    // */
     // @Test
     // void testPoster() throws Exception
     // {
@@ -136,9 +116,6 @@ class TestMovieAPI
     // assertTrue(poster.size() >= 1);
     // }
 
-    /**
-     * @throws Exception Falls was schiefgeht.
-     */
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
     void testImages() throws Exception
@@ -152,9 +129,6 @@ class TestMovieAPI
         assertTrue(images.getPosters().size() >= 1);
     }
 
-    /**
-     * @throws Exception Falls was schiefgeht.
-     */
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
     void testSearch() throws Exception
@@ -178,9 +152,6 @@ class TestMovieAPI
         }
     }
 
-    /**
-     * @throws Exception Falls was schiefgeht.
-     */
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
     void testSearchYear() throws Exception

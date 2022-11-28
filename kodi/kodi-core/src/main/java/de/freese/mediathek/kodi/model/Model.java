@@ -6,23 +6,11 @@ package de.freese.mediathek.kodi.model;
  */
 public interface Model extends Comparable<Model>
 {
-    /**
-     * @return String
-     */
     String getName();
 
-    /**
-     * @return int
-     */
     int getPK();
 
-    /**
-     * @param name String
-     */
     void setName(final String name);
 
-    /**
-     * @param pk int
-     */
     void setPK(final int pk);
 }

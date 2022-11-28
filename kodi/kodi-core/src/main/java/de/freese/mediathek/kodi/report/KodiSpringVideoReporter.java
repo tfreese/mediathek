@@ -4,7 +4,7 @@ package de.freese.mediathek.kodi.report;
 import javax.sql.DataSource;
 
 import de.freese.mediathek.kodi.spring.AbstractAppConfig;
-import de.freese.mediathek.kodi.spring.AppConfigSQLite;
+import de.freese.mediathek.kodi.spring.AppConfigSqLite;
 import de.freese.mediathek.report.KodiVideoReporter;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.StandardEnvironment;
@@ -14,19 +14,12 @@ import org.springframework.core.env.StandardEnvironment;
  */
 public class KodiSpringVideoReporter extends KodiVideoReporter
 {
-    /**
-     * @param readonly boolean
-     *
-     * @return {@link DataSource}
-     *
-     * @throws Exception Falls was schiefgeht.
-     */
     public DataSource createDataSource(final boolean readonly) throws Exception
     {
         ConfigurableEnvironment environment = new StandardEnvironment();
         environment.getPropertySources().addLast(new KodiPropertySource());
 
-        AbstractAppConfig appConfig = new AppConfigSQLite();
+        AbstractAppConfig appConfig = new AppConfigSqLite();
         appConfig.setEnvironment(environment);
 
         return appConfig.dataSourceVideo();

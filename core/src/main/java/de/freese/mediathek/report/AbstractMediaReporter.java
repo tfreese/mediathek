@@ -17,14 +17,8 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractMediaReporter implements MediaReporter
 {
-    /**
-     *
-     */
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    /**
-     * @return {@link Logger}
-     */
     protected Logger getLogger()
     {
         return logger;
@@ -38,12 +32,6 @@ public abstract class AbstractMediaReporter implements MediaReporter
      * <li>PLAYCOUNT
      * <li>LASTPLAYED
      * </ul>
-     *
-     * @param path {@link Path}
-     *
-     * @return {@link List}
-     *
-     * @throws IOException Falls was schiefgeht.
      */
     protected List<Map<String, String>> readMovies(final Path path) throws IOException
     {
@@ -68,12 +56,6 @@ public abstract class AbstractMediaReporter implements MediaReporter
      * <li>SONG
      * <li>PLAYCOUNT
      * </ul>
-     *
-     * @param path {@link Path}
-     *
-     * @return {@link List}
-     *
-     * @throws IOException Falls was schiefgeht.
      */
     protected List<Map<String, String>> readMusik(final Path path) throws IOException
     {
@@ -101,12 +83,6 @@ public abstract class AbstractMediaReporter implements MediaReporter
      * <li>PLAYCOUNT
      * <li>LASTPLAYED
      * </ul>
-     *
-     * @param path {@link Path}
-     *
-     * @return {@link List}
-     *
-     * @throws IOException Falls was schiefgeht.
      */
     protected List<Map<String, String>> readTVShows(final Path path) throws IOException
     {
@@ -129,9 +105,6 @@ public abstract class AbstractMediaReporter implements MediaReporter
     /**
      * Schreibt das ResultSet als CSV-Datei.<br>
      * Wenn das ResultSet einen Typ != ResultSet.TYPE_FORWARD_ONLY besitzt, wird {@link ResultSet#first()} aufgerufen und kann weiter verwendet werden.
-     *
-     * @param resultSet {@link ResultSet}
-     * @param path {@link Path}
      */
     protected void writeResultSet(final ResultSet resultSet, final Path path)
     {

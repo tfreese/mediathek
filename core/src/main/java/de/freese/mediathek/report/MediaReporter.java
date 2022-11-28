@@ -14,21 +14,11 @@ public interface MediaReporter
 {
     /**
      * Aktualisiert die Datenbank mit den Media-Infos aus der Datei.
-     *
-     * @param dataSource {@link DataSource}
-     * @param path {@link Path}
-     *
-     * @throws Exception Falls was schiefgeht.
      */
     void updateDbFromReport(final DataSource dataSource, final Path path) throws Exception;
 
     /**
      * Schreibt die Media-Infos aus der Datenbank in die Datei.
-     *
-     * @param dataSource {@link DataSource}
-     * @param path {@link Path}
-     *
-     * @throws Exception Falls was schiefgeht.
      */
     void writeReport(final DataSource dataSource, final Path path) throws Exception;
 }

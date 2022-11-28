@@ -10,19 +10,11 @@ import org.springframework.web.client.RestTemplate;
  *
  * @author Thomas Freese
  */
-public abstract class AbstractMovieDBService extends AbstractService
+public abstract class AbstractMovieDbService extends AbstractService
 {
-    /**
-     *
-     */
     private RestTemplate restTemplate;
 
-    /**
-     * Erstellt ein neues {@link AbstractMovieDBService} Object.
-     *
-     * @param apiKey String
-     */
-    protected AbstractMovieDBService(final String apiKey)
+    protected AbstractMovieDbService(final String apiKey)
     {
         super(apiKey);
     }
@@ -41,26 +33,18 @@ public abstract class AbstractMovieDBService extends AbstractService
         }
     }
 
-    /**
-     * @return {@link RestTemplate}
-     */
+    public void setRestTemplate(final RestTemplate restTemplate)
+    {
+        this.restTemplate = restTemplate;
+    }
+
     protected RestTemplate getRestTemplate()
     {
         return this.restTemplate;
     }
 
     /**
-     * @param restTemplate {@link RestTemplate}
-     */
-    public void setRestTemplate(final RestTemplate restTemplate)
-    {
-        this.restTemplate = restTemplate;
-    }
-
-    /**
      * Liefert <a href="https://api.themoviedb.org/3/">themoviedb</a>.
-     *
-     * @return {@link StringBuilder}
      */
     protected StringBuilder url()
     {

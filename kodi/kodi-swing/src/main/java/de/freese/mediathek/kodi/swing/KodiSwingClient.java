@@ -16,7 +16,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import javax.swing.plaf.FontUIResource;
 
-import de.freese.mediathek.kodi.spring.AppConfigSQLite;
+import de.freese.mediathek.kodi.spring.AppConfigSqLite;
 import de.freese.mediathek.kodi.swing.panel.GenrePanel;
 import de.freese.mediathek.kodi.swing.panel.MoviePanel;
 import de.freese.mediathek.kodi.swing.panel.Panel;
@@ -110,8 +110,8 @@ public class KodiSwingClient
         // AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(clazz);
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
         ctx.getEnvironment().setActiveProfiles(profile);
-        // ctx.register(AppConfigMySQL.class, AppConfigHSQLDB.class, AppConfigSQLite.class);
-        ctx.register(AppConfigSQLite.class);
+        // ctx.register(AppConfigMySQL.class, AppConfigHsqlDb.class, AppConfigSqLite.class);
+        ctx.register(AppConfigSqLite.class);
         ctx.refresh();
         ctx.registerShutdownHook();
 
@@ -146,7 +146,7 @@ public class KodiSwingClient
         frame.setVisible(true);
         FRAME = frame;
     }
-    
+
     private void initUIDefaults()
     {
         try

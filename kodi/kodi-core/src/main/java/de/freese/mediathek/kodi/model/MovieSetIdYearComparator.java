@@ -15,11 +15,8 @@ import java.util.Objects;
  *
  * @author Thomas Freese
  */
-public class MovieSetIDYearComparator implements Comparator<Movie>
+public class MovieSetIdYearComparator implements Comparator<Movie>
 {
-    /**
-     *
-     */
     private static final Collator COLLATOR = Collator.getInstance(Locale.GERMANY);
 
     /**

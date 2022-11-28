@@ -7,9 +7,9 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 import javax.sql.DataSource;
 
-import de.freese.mediathek.kodi.api.MediaDAO;
+import de.freese.mediathek.kodi.api.MediaDao;
 import de.freese.mediathek.kodi.api.MediaService;
-import de.freese.mediathek.kodi.impl.MediaDAOImpl;
+import de.freese.mediathek.kodi.impl.MediaDaoImpl;
 import de.freese.mediathek.kodi.impl.MediaServiceImpl;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -32,24 +32,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public abstract class AbstractAppConfig implements EnvironmentAware
 {
-    /**
-     *
-     */
     private Environment environment;
 
-    /**
-     * @return {@link DataSource}
-     */
     public abstract DataSource dataSourceAudio();
 
-    /**
-     * @return {@link DataSource}
-     */
     public abstract DataSource dataSourceVideo();
 
-    // /**
-    // * @return {@link Executor}
-    // */
     // @Bean(destroyMethod = "shutdownNow")
     // public Executor executor()
     // {
@@ -58,9 +46,6 @@ public abstract class AbstractAppConfig implements EnvironmentAware
     // return executor;
     // }
 
-    /**
-     * @return {@link ThreadPoolExecutorFactoryBean}
-     */
     @Bean
     @ConditionalOnMissingBean(
             {
@@ -88,28 +73,17 @@ public abstract class AbstractAppConfig implements EnvironmentAware
         return bean;
     }
 
-    /**
-     * @param dataSourceVideo {@link DataSource}
-     * @param dataSourceAudio {@link DataSource}
-     *
-     * @return {@link MediaDAO}
-     */
     @Bean
-    public MediaDAO mediaDAO(@Qualifier("dataSourceVideo") final DataSource dataSourceVideo, @Qualifier("dataSourceAudio") final DataSource dataSourceAudio)
+    public MediaDao mediaDAO(@Qualifier("dataSourceVideo") final DataSource dataSourceVideo, @Qualifier("dataSourceAudio") final DataSource dataSourceAudio)
     {
-        MediaDAOImpl dao = new MediaDAOImpl();
+        MediaDaoImpl dao = new MediaDaoImpl();
         dao.setDataSource(dataSourceVideo);
 
         return dao;
     }
 
-    /**
-     * @param mediaDAO {@link MediaDAO}
-     *
-     * @return {@link MediaService}
-     */
     @Bean
-    public MediaService mediaService(final MediaDAO mediaDAO)
+    public MediaService mediaService(final MediaDao mediaDAO)
     {
         return new MediaServiceImpl(mediaDAO);
     }
@@ -123,11 +97,6 @@ public abstract class AbstractAppConfig implements EnvironmentAware
         this.environment = environment;
     }
 
-    /**
-     * @param dataSource {@link DataSource}
-     *
-     * @return {@link PlatformTransactionManager}
-     */
     @Bean
     @Qualifier("txManagerAudio")
     public PlatformTransactionManager txManagerMusik(@Qualifier("dataSourceAudio") final DataSource dataSource)
@@ -135,11 +104,6 @@ public abstract class AbstractAppConfig implements EnvironmentAware
         return new DataSourceTransactionManager(dataSource);
     }
 
-    /**
-     * @param dataSource {@link DataSource}
-     *
-     * @return {@link PlatformTransactionManager}
-     */
     @Bean
     @Qualifier("txManagerVideo")
     @Primary
@@ -148,9 +112,6 @@ public abstract class AbstractAppConfig implements EnvironmentAware
         return new DataSourceTransactionManager(dataSource);
     }
 
-    /**
-     * @return {@link Environment}
-     */
     protected Environment getEnvironment()
     {
         return this.environment;

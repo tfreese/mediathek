@@ -6,9 +6,9 @@ import java.util.ResourceBundle;
 import de.freese.mediathek.kodi.javafx.controller.GenreController;
 import de.freese.mediathek.kodi.javafx.controller.MovieController;
 import de.freese.mediathek.kodi.javafx.controller.TvShowController;
-import de.freese.mediathek.kodi.spring.AppConfigHSQLDB;
+import de.freese.mediathek.kodi.spring.AppConfigHsqlDb;
 import de.freese.mediathek.kodi.spring.AppConfigMySQL;
-import de.freese.mediathek.kodi.spring.AppConfigSQLite;
+import de.freese.mediathek.kodi.spring.AppConfigSqLite;
 import javafx.application.Application;
 import javafx.application.ConditionalFeature;
 import javafx.application.Platform;
@@ -115,7 +115,7 @@ public class KodiJavaFXClient extends Application
         // this.applicationContext = new AnnotationConfigApplicationContext(clazz);
         this.applicationContext = new AnnotationConfigApplicationContext();
         this.applicationContext.getEnvironment().setActiveProfiles(profile);
-        this.applicationContext.register(AppConfigMySQL.class, AppConfigHSQLDB.class, AppConfigSQLite.class);
+        this.applicationContext.register(AppConfigMySQL.class, AppConfigHsqlDb.class, AppConfigSqLite.class);
         this.applicationContext.refresh();
         this.applicationContext.registerShutdownHook();
     }

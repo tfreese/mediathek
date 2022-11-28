@@ -36,67 +36,43 @@ public class Image implements Comparable<Image>
         return Float.compare(o.getVoteAverage(), this.voteAverage);
     }
 
-    /**
-     * @return int
-     */
     public int getHeight()
     {
         return this.height;
     }
 
-    /**
-     * @return String
-     */
     public String getPath()
     {
         return this.path;
     }
 
-    /**
-     * @return float
-     */
     public float getVoteAverage()
     {
         return this.voteAverage;
     }
 
-    /**
-     * @return int
-     */
     public int getWidth()
     {
         return this.width;
     }
 
-    /**
-     * @param height int
-     */
     public void setHeight(final int height)
     {
         this.height = height;
     }
 
-    /**
-     * @param path String
-     */
     @JsonSetter("file_path")
     public void setPath(final String path)
     {
         this.path = path;
     }
 
-    /**
-     * @param voteAverage float
-     */
     @JsonSetter("vote_average")
     public void setVoteAverage(final float voteAverage)
     {
         this.voteAverage = voteAverage;
     }
 
-    /**
-     * @param width int
-     */
     public void setWidth(final int width)
     {
         this.width = width;

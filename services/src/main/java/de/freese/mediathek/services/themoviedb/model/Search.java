@@ -40,9 +40,6 @@ public class Search implements Iterable<Movie>
         return Collections.emptyIterator();
     }
 
-    /**
-     * @param results {@link List}<Movie>
-     */
     public void setResults(final List<Movie> results)
     {
         this.results = results;

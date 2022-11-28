@@ -15,16 +15,10 @@ import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 /**
  * @author Thomas Freese
  */
-class TestTVShowAPI
+class TestTvShowApi
 {
-    /**
-     *
-     */
-    private static TVService service = null;
+    private static TVService service;
 
-    /**
-     * @throws Exception Falls was schiefgeht.
-     */
     @BeforeAll
     public static void beforeClass() throws Exception
     {
@@ -32,14 +26,11 @@ class TestTVShowAPI
         service.afterPropertiesSet();
     }
 
-    /**
-     * @throws Exception Falls was schiefgeht.
-     */
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_TV_DB_API_KEY, matches = ".*")
     void testDetails() throws Exception
     {
-        TVShow show = service.getDetails(TVShowAPIDebug.TEST_SHOW_ID);
+        TVShow show = service.getDetails(TvShowApiDebug.TEST_SHOW_ID);
 
         assertNotNull(show);
 
@@ -62,14 +53,11 @@ class TestTVShowAPI
         assertEquals("Stargate SG-1", show.getTitle());
     }
 
-    /**
-     * @throws Exception Falls was schiefgeht.
-     */
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_TV_DB_API_KEY, matches = ".*")
     void testDetailsAll() throws Exception
     {
-        TVShow show = service.getDetailsAll(TVShowAPIDebug.TEST_SHOW_ID);
+        TVShow show = service.getDetailsAll(TvShowApiDebug.TEST_SHOW_ID);
 
         assertNotNull(show);
 
@@ -110,14 +98,11 @@ class TestTVShowAPI
         assertTrue(show.getSeasonList().size() > 1);
     }
 
-    /**
-     * @throws Exception Falls was schiefgeht.
-     */
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_TV_DB_API_KEY, matches = ".*")
     void testSearch() throws Exception
     {
-        List<TVShow> result = service.search(TVShowAPIDebug.TEST_SHOW);
+        List<TVShow> result = service.search(TvShowApiDebug.TEST_SHOW);
 
         assertNotNull(result);
         assertTrue(result.size() > 1);

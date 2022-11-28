@@ -36,66 +36,42 @@ public class Actor implements Comparable<Actor>
         return this.order - o.getOrder();
     }
 
-    /**
-     * @return String
-     */
     public String getName()
     {
         return this.name;
     }
 
-    /**
-     * @return int
-     */
     public int getOrder()
     {
         return this.order;
     }
 
-    /**
-     * @return String
-     */
     public String getProfile()
     {
         return this.profile;
     }
 
-    /**
-     * @return String
-     */
     public String getRole()
     {
         return this.role;
     }
 
-    /**
-     * @param name String
-     */
     public void setName(final String name)
     {
         this.name = name;
     }
 
-    /**
-     * @param order int
-     */
     public void setOrder(final int order)
     {
         this.order = order;
     }
 
-    /**
-     * @param profile String
-     */
     @JsonSetter("profile_path")
     public void setProfile(final String profile)
     {
         this.profile = profile;
     }
 
-    /**
-     * @param role String
-     */
     @JsonSetter("character")
     public void setRole(final String role)
     {

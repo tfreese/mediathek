@@ -24,22 +24,12 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractResourceCache implements ResourceCache
 {
-    /**
-     *
-     */
     private final HexFormat hexFormat;
-    /**
-     *
-     */
+
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    /**
-     *
-     */
+
     private final MessageDigest messageDigest;
 
-    /**
-     * Erstellt ein neues {@link AbstractResourceCache} Object.
-     */
     protected AbstractResourceCache()
     {
         super();
@@ -48,9 +38,6 @@ public abstract class AbstractResourceCache implements ResourceCache
         this.hexFormat = HexFormat.of().withUpperCase();
     }
 
-    /**
-     * @return HexFormat
-     */
     public HexFormat getHexFormat()
     {
         return this.hexFormat;
@@ -59,8 +46,6 @@ public abstract class AbstractResourceCache implements ResourceCache
     /**
      * Erzeugt den MessageDigest für die Generierung des Keys.<br>
      * Beim Auftreten einer {@link NoSuchAlgorithmException} wird diese in eine {@link RuntimeException} konvertiert.
-     *
-     * @return {@link MessageDigest}
      */
     protected MessageDigest createMessageDigest()
     {
@@ -92,10 +77,6 @@ public abstract class AbstractResourceCache implements ResourceCache
     /**
      * Erzeugt den Key auf dem Resource-Pfad.<br>
      * Die Bytes des MessageDigest werden dafür in einen Hex-String umgewandelt.
-     *
-     * @param uri {@link URI}
-     *
-     * @return String
      */
     protected String generateKey(final URI uri)
     {
@@ -106,13 +87,6 @@ public abstract class AbstractResourceCache implements ResourceCache
         return getHexFormat().formatHex(digest);
     }
 
-    /**
-     * @param uri {@link URI}
-     *
-     * @return long
-     *
-     * @throws IOException Falls was schiefgeht.
-     */
     protected long getContentLength(final URI uri) throws IOException
     {
         String protocol = uri.getScheme();
@@ -138,29 +112,16 @@ public abstract class AbstractResourceCache implements ResourceCache
         throw new IOException("unsupported protocol");
     }
 
-    /**
-     * @return {@link Logger}
-     */
     protected Logger getLogger()
     {
         return logger;
     }
 
-    /**
-     * @return {@link MessageDigest}
-     */
     protected MessageDigest getMessageDigest()
     {
         return this.messageDigest;
     }
 
-    /**
-     * @param uri {@link URI}
-     *
-     * @return {@link InputStream}
-     *
-     * @throws Exception Falls was schiefgeht.
-     */
     protected InputStream toInputStream(final URI uri) throws Exception
     {
         URLConnection connection = uri.toURL().openConnection();

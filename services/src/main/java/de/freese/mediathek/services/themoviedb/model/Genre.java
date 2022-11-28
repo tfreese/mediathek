@@ -27,33 +27,21 @@ public class Genre implements Comparable<Genre>
         return this.name.compareTo(o.getName());
     }
 
-    /**
-     * @return int
-     */
     public int getId()
     {
         return this.id;
     }
 
-    /**
-     * @return String
-     */
     public String getName()
     {
         return this.name;
     }
 
-    /**
-     * @param id int
-     */
     public void setId(final int id)
     {
         this.id = id;
     }
 
-    /**
-     * @param name String
-     */
     public void setName(final String name)
     {
         this.name = name;

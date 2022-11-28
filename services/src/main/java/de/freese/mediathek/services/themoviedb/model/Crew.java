@@ -23,49 +23,31 @@ public class Crew
      */
     private String profile;
 
-    /**
-     * @return String
-     */
     public String getJob()
     {
         return this.job;
     }
 
-    /**
-     * @return String
-     */
     public String getName()
     {
         return this.name;
     }
 
-    /**
-     * @return String
-     */
     public String getProfile()
     {
         return this.profile;
     }
 
-    /**
-     * @param job String
-     */
     public void setJob(final String job)
     {
         this.job = job;
     }
 
-    /**
-     * @param name String
-     */
     public void setName(final String name)
     {
         this.name = name;
     }
 
-    /**
-     * @param profile String
-     */
     @JsonSetter("profile_path")
     public void setProfile(final String profile)
     {

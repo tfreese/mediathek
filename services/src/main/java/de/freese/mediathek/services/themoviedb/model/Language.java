@@ -27,33 +27,21 @@ public class Language implements Comparable<Language>
         return this.name.compareTo(o.getName());
     }
 
-    /**
-     * @return String
-     */
     public String getIso_639_1()
     {
         return this.iso_639_1;
     }
 
-    /**
-     * @return String
-     */
     public String getName()
     {
         return this.name;
     }
 
-    /**
-     * @param iso_639_1 String
-     */
     public void setIso_639_1(final String iso_639_1)
     {
         this.iso_639_1 = iso_639_1;
     }
 
-    /**
-     * @param name String
-     */
     public void setName(final String name)
     {
         this.name = name;

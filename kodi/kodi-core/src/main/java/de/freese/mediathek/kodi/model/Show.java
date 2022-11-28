@@ -6,82 +6,49 @@ package de.freese.mediathek.kodi.model;
  */
 public class Show extends AbstractModel
 {
-    /**
-     *
-     */
     private String banner;
-    /**
-     *
-     */
+
     private String fanart;
-    /**
-     *
-     */
+
     private String genres;
-    /**
-     *
-     */
+
     private String tvdbID;
 
-    /**
-     * @return String
-     */
     public String getBanner()
     {
         return this.banner;
     }
 
-    /**
-     * @return String
-     */
     public String getFanart()
     {
         return this.fanart;
     }
 
-    /**
-     * @return String
-     */
     public String getGenres()
     {
         return this.genres;
     }
 
-    /**
-     * @return String
-     */
     public String getTvdbID()
     {
         return this.tvdbID;
     }
 
-    /**
-     * @param banner String
-     */
     public void setBanner(final String banner)
     {
         this.banner = banner;
     }
 
-    /**
-     * @param fanart String
-     */
     public void setFanart(final String fanart)
     {
         this.fanart = fanart;
     }
 
-    /**
-     * @param genres String
-     */
     public void setGenres(final String genres)
     {
         this.genres = genres;
     }
 
-    /**
-     * @param tvdbID String
-     */
     public void setTvdbID(final String tvdbID)
     {
         this.tvdbID = tvdbID;

@@ -12,11 +12,6 @@ import org.springframework.core.env.PropertySource;
  */
 class KodiPropertySource extends PropertySource<Properties>
 {
-    /**
-     * Erstellt ein neues {@link KodiPropertySource} Object.
-     *
-     * @throws IOException Falls was schiefgeht.
-     */
     public KodiPropertySource() throws IOException
     {
         super("reportProperties", new Properties());

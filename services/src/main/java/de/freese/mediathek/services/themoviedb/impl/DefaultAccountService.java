@@ -10,13 +10,8 @@ import de.freese.mediathek.services.themoviedb.model.Configuration;
  *
  * @author Thomas Freese
  */
-public class DefaultAccountService extends AbstractMovieDBService implements AccountService
+public class DefaultAccountService extends AbstractMovieDbService implements AccountService
 {
-    /**
-     * Erstellt ein neues {@link DefaultAccountService} Object.
-     *
-     * @param apiKey String
-     */
     public DefaultAccountService(final String apiKey)
     {
         super(apiKey);

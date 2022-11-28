@@ -17,9 +17,7 @@ public class Configuration
      * backdrop_sizes
      */
     private List<String> backdropSizes;
-    // /**
-    // *
-    // */
+
     // private List<String> changeKeys = null;
     /**
      * secure_base_url
@@ -46,50 +44,31 @@ public class Configuration
         return this.backdropSizes;
     }
 
-    // /**
-    // * @return {@link List}<String>
-    // */
     // public List<String> getChangeKeys()
     // {
     // return this.changeKeys;
     // }
 
-    /**
-     * @return String
-     */
     public String getImageBaseURL()
     {
         return this.imageBaseURL;
     }
 
-    /**
-     * @return {@link List}<String>
-     */
     public List<String> getLogoSizes()
     {
         return this.logoSizes;
     }
 
-    /**
-     * @return {@link List}<String>
-     */
     public List<String> getPosterSizes()
     {
         return this.posterSizes;
     }
 
-    /**
-     * @return {@link List}<String>
-     */
     public List<String> getProfileSizes()
     {
         return this.profileSizes;
     }
 
-    /**
-     * @param propertyName String
-     * @param propertyValue String
-     */
     @SuppressWarnings("unchecked")
     @JsonAnySetter
     public void parseUnknownProperties(final String propertyName, final Object propertyValue)
@@ -107,9 +86,6 @@ public class Configuration
         }
     }
 
-    // /**
-    // * @param changeKeys {@link List}<String>
-    // */
     // @JsonSetter("change_keys")
     // public void setChangeKeys(final List<String> changeKeys)
     // {

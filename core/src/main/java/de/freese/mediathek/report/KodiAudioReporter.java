@@ -99,12 +99,6 @@ public class KodiAudioReporter extends AbstractMediaReporter
         // writeMusicPlaylistXSP(dataSource, path.resolve("Musik.xsp"));
     }
 
-    /**
-     * @param dataSource {@link DataSource}
-     * @param path {@link Path}
-     *
-     * @throws Exception Falls was schiefgeht.
-     */
     protected void writeMusic(final DataSource dataSource, final Path path) throws Exception
     {
         StringBuilder sql = new StringBuilder();
@@ -123,11 +117,6 @@ public class KodiAudioReporter extends AbstractMediaReporter
 
     /**
      * Erzeugt eine allgemeine M3U-Playlist.<br>
-     *
-     * @param dataSource {@link DataSource}
-     * @param path {@link Path}
-     *
-     * @throws Exception Falls was schiefgeht.
      */
     protected void writeMusicPlaylistM3U(final DataSource dataSource, final Path path) throws Exception
     {
@@ -161,11 +150,6 @@ public class KodiAudioReporter extends AbstractMediaReporter
 
     /**
      * Erzeugt eine Smart-Playlist.<br>
-     *
-     * @param dataSource {@link DataSource}
-     * @param path {@link Path}
-     *
-     * @throws Exception Falls was schiefgeht.
      */
     protected void writeMusicPlaylistXSP(final DataSource dataSource, final Path path) throws Exception
     {

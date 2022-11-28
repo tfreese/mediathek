@@ -13,9 +13,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MovieDetails extends Movie
 {
-    /**
-     *
-     */
     private List<Actor> actors;
     /**
      * belongs_to_collection
@@ -25,9 +22,7 @@ public class MovieDetails extends Movie
      * production_countries
      */
     private List<Country> countries;
-    /**
-     *
-     */
+
     private List<Crew> directors;
     /**
      * genres
@@ -62,105 +57,66 @@ public class MovieDetails extends Movie
      */
     private int voteCount;
 
-    /**
-     * @return {@link List}<Actor>
-     */
     public List<Actor> getActors()
     {
         return this.actors;
     }
 
-    /**
-     * @return String
-     */
     public String getCollection()
     {
         return this.collection;
     }
 
-    /**
-     * @return {@link List}<Country>
-     */
     public List<Country> getCountries()
     {
         return this.countries;
     }
 
-    /**
-     * @return List<Crew>
-     */
     public List<Crew> getDirectors()
     {
         return this.directors;
     }
 
-    /**
-     * @return {@link List}<Genre>
-     */
     public List<Genre> getGenres()
     {
         return this.genres;
     }
 
-    /**
-     * @return String
-     */
     public String getImdbID()
     {
         return this.imdbID;
     }
 
-    /**
-     * @return {@link List}<Language>
-     */
     public List<Language> getLanguages()
     {
         return this.languages;
     }
 
-    /**
-     * @return int
-     */
     public int getRuntime()
     {
         return this.runtime;
     }
 
-    /**
-     * @return {@link List}<Studio>
-     */
     public List<Studio> getStudios()
     {
         return this.studios;
     }
 
-    /**
-     * @return String
-     */
     public String getTagline()
     {
         return this.tagline;
     }
 
-    /**
-     * @return float
-     */
     public float getVoteAverage()
     {
         return this.voteAverage;
     }
 
-    /**
-     * @return int
-     */
     public int getVoteCount()
     {
         return this.voteCount;
     }
 
-    /**
-     * @param actors {@link List}<Actor>
-     */
     public void setActors(final List<Actor> actors)
     {
         this.actors = actors;
@@ -168,9 +124,6 @@ public class MovieDetails extends Movie
         Collections.sort(this.actors);
     }
 
-    /**
-     * @param collection String
-     */
     @JsonSetter("belongs_to_collection")
     public void setCollection(final String collection)
     {
@@ -182,9 +135,6 @@ public class MovieDetails extends Movie
         this.collection = collection;
     }
 
-    /**
-     * @param countries {@link List}<Country>
-     */
     @JsonSetter("production_countries")
     public void setCountries(final List<Country> countries)
     {
@@ -193,17 +143,11 @@ public class MovieDetails extends Movie
         Collections.sort(this.countries);
     }
 
-    /**
-     * @param directors List<Crew>
-     */
     public void setDirectors(final List<Crew> directors)
     {
         this.directors = directors;
     }
 
-    /**
-     * @param genres {@link List}<Genre>
-     */
     public void setGenres(final List<Genre> genres)
     {
         this.genres = genres;
@@ -211,18 +155,12 @@ public class MovieDetails extends Movie
         Collections.sort(this.genres);
     }
 
-    /**
-     * @param imdbID String
-     */
     @JsonSetter("imdb_id")
     public void setImdbID(final String imdbID)
     {
         this.imdbID = imdbID;
     }
 
-    /**
-     * @param languages {@link List}<Language>
-     */
     @JsonSetter("spoken_languages")
     public void setLanguages(final List<Language> languages)
     {
@@ -231,17 +169,11 @@ public class MovieDetails extends Movie
         // Collections.sort(this.languages);
     }
 
-    /**
-     * @param runtime int
-     */
     public void setRuntime(final int runtime)
     {
         this.runtime = runtime;
     }
 
-    /**
-     * @param studios {@link List}<Studio>
-     */
     @JsonSetter("production_companies")
     public void setStudios(final List<Studio> studios)
     {
@@ -250,26 +182,17 @@ public class MovieDetails extends Movie
         // Collections.sort(this.studios);
     }
 
-    /**
-     * @param tagline String
-     */
     public void setTagline(final String tagline)
     {
         this.tagline = tagline;
     }
 
-    /**
-     * @param voteAverage float
-     */
     @JsonSetter("vote_average")
     public void setVoteAverage(final float voteAverage)
     {
         this.voteAverage = voteAverage;
     }
 
-    /**
-     * @param voteCount int
-     */
     @JsonSetter("vote_count")
     public void setVoteCount(final int voteCount)
     {

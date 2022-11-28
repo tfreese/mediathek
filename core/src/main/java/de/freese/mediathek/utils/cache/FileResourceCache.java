@@ -22,24 +22,13 @@ import java.util.Optional;
  */
 public class FileResourceCache extends AbstractResourceCache
 {
-    /**
-     *
-     */
     private final Path cacheDirectory;
 
-    /**
-     * Erstellt ein neues {@link FileResourceCache} Object im Ordner "java.io.tmpdir/.javaCache".
-     */
     public FileResourceCache()
     {
         this(Paths.get(System.getProperty("java.io.tmpdir"), ".javaCache"));
     }
 
-    /**
-     * Erstellt ein neues {@link FileResourceCache} Object.
-     *
-     * @param cacheDirectory {@link Path}
-     */
     public FileResourceCache(final Path cacheDirectory)
     {
         super();

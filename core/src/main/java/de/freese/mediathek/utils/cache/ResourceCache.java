@@ -25,27 +25,10 @@ public interface ResourceCache extends Function<URL, Optional<InputStream>>
         return getResource(url);
     }
 
-    /**
-     * Leert den Cache.
-     */
     void clear();
 
-    /**
-     * Laden der Resource, wenn nicht vorhanden.
-     *
-     * @param uri {@link URI}; file://...; http://...
-     *
-     * @return {@link Optional}
-     */
     Optional<InputStream> getResource(final URI uri);
 
-    /**
-     * Laden der Resource, wenn nicht vorhanden.
-     *
-     * @param url {@link URL}; file://...; http://...
-     *
-     * @return {@link Optional}
-     */
     default Optional<InputStream> getResource(final URL url)
     {
         try
