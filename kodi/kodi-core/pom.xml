@@ -19,7 +19,7 @@
         <!-- compile scope -->
         <dependency>
             <groupId>de.freese.mediathek</groupId>
-            <artifactId>mediathek-core</artifactId>
+            <artifactId>core</artifactId>
             <version>${project.version}</version>
         </dependency>
 
