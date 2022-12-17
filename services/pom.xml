@@ -23,7 +23,7 @@
         <!-- compile scope -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>mediathek-core</artifactId>
+            <artifactId>core</artifactId>
             <version>${project.version}</version>
         </dependency>
 
