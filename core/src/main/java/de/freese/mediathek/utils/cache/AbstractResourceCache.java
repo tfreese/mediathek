@@ -18,8 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Basis-Implementierung eines {@link ResourceCache}.
- *
  * @author Thomas Freese
  */
 public abstract class AbstractResourceCache implements ResourceCache
@@ -38,15 +36,6 @@ public abstract class AbstractResourceCache implements ResourceCache
         this.hexFormat = HexFormat.of().withUpperCase();
     }
 
-    public HexFormat getHexFormat()
-    {
-        return this.hexFormat;
-    }
-
-    /**
-     * Erzeugt den MessageDigest für die Generierung des Keys.<br>
-     * Beim Auftreten einer {@link NoSuchAlgorithmException} wird diese in eine {@link RuntimeException} konvertiert.
-     */
     protected MessageDigest createMessageDigest()
     {
         // String algorithm ="SHA"; // 40 Zeichen
@@ -74,10 +63,6 @@ public abstract class AbstractResourceCache implements ResourceCache
         }
     }
 
-    /**
-     * Erzeugt den Key auf dem Resource-Pfad.<br>
-     * Die Bytes des MessageDigest werden dafür in einen Hex-String umgewandelt.
-     */
     protected String generateKey(final URI uri)
     {
         String uriString = uri.toString();
@@ -112,6 +97,11 @@ public abstract class AbstractResourceCache implements ResourceCache
         throw new IOException("unsupported protocol");
     }
 
+    protected HexFormat getHexFormat()
+    {
+        return this.hexFormat;
+    }
+
     protected Logger getLogger()
     {
         return logger;
@@ -130,7 +120,7 @@ public abstract class AbstractResourceCache implements ResourceCache
         {
             if (connection instanceof HttpURLConnection httpURLConnection)
             {
-                // Verhindert HTTP 301 Moved Permanently. -> funktioniert aber nicht !
+                // To avoid 'HTTP 301 Moved Permanently' -> but does not work !
                 // httpURLConnection.setInstanceFollowRedirects(true);
 
                 int status = httpURLConnection.getResponseCode();

@@ -1,6 +1,5 @@
 package de.freese.mediathek.kodi.javafx.controller;
 
-import java.net.URI;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -45,10 +44,10 @@ public class MovieController extends AbstractTvShowMovieController<Movie>
     }
 
     /**
-     * @see de.freese.mediathek.kodi.javafx.controller.AbstractTvShowMovieController#getImageUri(Model)
+     * @see de.freese.mediathek.kodi.javafx.controller.AbstractTvShowMovieController#getImageUrl(Model)
      */
     @Override
-    protected URI getImageUri(final Movie value)
+    protected String getImageUrl(final Movie value)
     {
         String url = StringUtils.substringBetween(value.getPosters(), "preview=\"", "\">");
         url = StringUtils.replace(url, "t/p/w500", "t/p/w342"); // w92, w154, w185, w342, w500
@@ -58,7 +57,7 @@ public class MovieController extends AbstractTvShowMovieController<Movie>
             return null;
         }
 
-        return URI.create(url);
+        return url;
     }
 
     /**

@@ -5,9 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.io.Serial;
 import java.net.URI;
-import java.nio.file.Paths;
 import java.util.List;
-import java.util.Optional;
 import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
@@ -27,12 +25,12 @@ import com.jgoodies.binding.list.SelectionInList;
 import com.jgoodies.binding.value.ValueHolder;
 import com.jgoodies.binding.value.ValueModel;
 import de.freese.mediathek.kodi.model.Show;
-import de.freese.mediathek.kodi.swing.KodiSwingClient;
 import de.freese.mediathek.kodi.swing.components.rowfilter.RegExRowFilter;
 import de.freese.mediathek.utils.ImageUtils;
-import de.freese.mediathek.utils.cache.FileResourceCache;
 import de.freese.mediathek.utils.cache.ResourceCache;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * {@link PresentationModel} der {@link ShowBean}.
@@ -41,9 +39,9 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class ShowModel extends PresentationModel<ShowBean>
 {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ShowModel.class);
     @Serial
     private static final long serialVersionUID = -1759604850162069149L;
-
     private final ResourceCache resourceCache;
 
     private final SelectionInList<Show> showSelection;
@@ -54,14 +52,14 @@ public class ShowModel extends PresentationModel<ShowBean>
 
     private JTable jTable;
 
-    public ShowModel()
+    public ShowModel(ResourceCache resourceCache)
     {
         super();
 
         this.showSelection = new SelectionInList<>();
         this.valueModelBanner = new ValueHolder();
         this.valueModelFilter = new ValueHolder();
-        this.resourceCache = new FileResourceCache(Paths.get(System.getProperty("java.io.tmpdir"), ".javacache"));
+        this.resourceCache = resourceCache;
     }
 
     public void bindBannerLabel(final JLabel jLabel)
@@ -162,26 +160,13 @@ public class ShowModel extends PresentationModel<ShowBean>
             @Override
             protected ImageIcon doInBackground() throws Exception
             {
-                // if (StringUtils.contains(getBean().getBanner(), "</thumb>"))
-                // {
-                // TVShow show = ShowModel.this.tvService.getDetails(getBean().getTvdbID());
-                //
-                // getBean().setBanner(show.getBanner());
-                // }
-                //
-                // if (StringUtils.isNotBlank(getBean().getBanner()))
-                // {
-                // BufferedImage image = ShowModel.this.tvService.getImage(getBean().getBanner());
-                //
-                // if (image == null)
-                // {
-                // return null;
-                // }
-                //
-                // return new ImageIcon(image);
-                // }
-
                 String url = StringUtils.substringBetween(getBean().getBanner(), "preview=\"", "\">");
+
+                if (url.contains("\""))
+                {
+                    url = url.substring(0, url.indexOf('"'));
+                }
+
                 // url = StringUtils.replace(url, "t/p/w500", "t/p/w92");
 
                 if (url == null || url.isBlank())
@@ -191,28 +176,27 @@ public class ShowModel extends PresentationModel<ShowBean>
 
                 if (url != null && !url.isBlank())
                 {
-                    Optional<InputStream> optional = ShowModel.this.resourceCache.getResource(URI.create(url));
-
-                    if (optional.isPresent())
+                    try (InputStream inputStream = ShowModel.this.resourceCache.getResource(URI.create(url)))
                     {
-                        try (InputStream inputStream = optional.get())
+                        BufferedImage image = ImageIO.read(inputStream);
+
+                        if (image == null)
                         {
-                            BufferedImage image = ImageIO.read(inputStream);
-
-                            if (image == null)
-                            {
-                                return null;
-                            }
-
-                            image = ImageUtils.scaleImageKeepRatio(image, 1024, 768);
-
-                            return new ImageIcon(image);
+                            return null;
                         }
+
+                        image = ImageUtils.scaleImageKeepRatio(image, 1024, 768);
+
+                        return new ImageIcon(image);
+                    }
+                    catch (Exception ex)
+                    {
+                        LOGGER.error(ex.getMessage());
                     }
                 }
                 else
                 {
-                    KodiSwingClient.LOGGER.error("{}: No valid url: {}", getBean().getName(), getBean().getBanner());
+                    LOGGER.error("{}: No valid url: {}", getBean().getName(), getBean().getBanner());
                 }
 
                 return null;
@@ -230,7 +214,7 @@ public class ShowModel extends PresentationModel<ShowBean>
                 }
                 catch (Exception ex)
                 {
-                    KodiSwingClient.LOGGER.error(ex.getMessage(), ex);
+                    LOGGER.error(ex.getMessage(), ex);
                 }
             }
         };

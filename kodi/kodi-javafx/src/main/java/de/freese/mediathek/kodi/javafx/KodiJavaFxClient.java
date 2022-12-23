@@ -24,7 +24,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 /**
  * bidirectional bind: "<a href="https://community.oracle.com/thread/2462489">community.oracle.com</a>"<br>
  * <br>
- * Mit KodiJavaFXClientLauncher ausführen oder KodiJavaFXClient direkt mit folgenden Restriktionen:<br>
+ * Mit KodiJavaFxClientLauncher ausführen oder KodiJavaFxClient direkt mit folgenden Restriktionen:<br>
  * <br>
  * In Eclipse:<br>
  * <ol>
@@ -35,7 +35,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  *
  * @author Thomas Freese
  */
-public class KodiJavaFXClient extends Application
+public class KodiJavaFxClient extends Application
 {
     public static final Logger LOGGER = LoggerFactory.getLogger("KODI-Client");
 

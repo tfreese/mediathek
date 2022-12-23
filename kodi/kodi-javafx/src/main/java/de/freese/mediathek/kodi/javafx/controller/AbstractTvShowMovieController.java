@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import de.freese.mediathek.kodi.javafx.KodiJavaFXClient;
+import de.freese.mediathek.kodi.javafx.KodiJavaFxClient;
 import de.freese.mediathek.kodi.javafx.components.ModelListCellFactory;
 import de.freese.mediathek.kodi.javafx.components.PickList;
 import de.freese.mediathek.kodi.javafx.pane.TvShowMoviePane;
@@ -17,8 +17,6 @@ import de.freese.mediathek.kodi.model.Model;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.TableView.TableViewSelectionModel;
@@ -69,7 +67,7 @@ public abstract class AbstractTvShowMovieController<T extends Model> extends Abs
 
     protected abstract List<Genre> getGenres(T value);
 
-    protected abstract URI getImageUri(T value);
+    protected abstract String getImageUrl(T value);
 
     /**
      * @see de.freese.mediathek.kodi.javafx.controller.AbstractController#updateDetails(Model)
@@ -92,18 +90,20 @@ public abstract class AbstractTvShowMovieController<T extends Model> extends Abs
             @Override
             protected Image call() throws Exception
             {
-                URI uri = getImageUri(value);
+                String url = getImageUrl(value);
 
-                if (uri != null)
+                if (url != null)
                 {
-                    Optional<InputStream> optional = getCache().getResource(uri);
-
-                    if (optional.isPresent())
+                    if (url.contains("\""))
                     {
-                        try (InputStream inputStream = optional.get())
-                        {
-                            return new Image(inputStream, 1024, 768, true, true);
-                        }
+                        url = url.substring(0, url.indexOf('"'));
+                    }
+
+                    URI uri = URI.create(url);
+
+                    try (InputStream inputStream = getResourceCache().getResource(uri))
+                    {
+                        return new Image(inputStream, 1024, 768, true, true);
                     }
                 }
 
@@ -118,10 +118,10 @@ public abstract class AbstractTvShowMovieController<T extends Model> extends Abs
         });
         task.setOnFailed(event ->
         {
-            KodiJavaFXClient.LOGGER.info("failed");
+            KodiJavaFxClient.LOGGER.error(task.getException().getMessage());
 
-            Alert alert = new Alert(AlertType.ERROR, task.getException().getMessage());
-            alert.showAndWait();
+            //            Alert alert = new Alert(AlertType.ERROR, task.getException().getMessage());
+            //            alert.showAndWait();
         });
 
         // task.run();

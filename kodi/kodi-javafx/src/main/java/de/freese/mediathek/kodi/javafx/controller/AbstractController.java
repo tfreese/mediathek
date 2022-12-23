@@ -1,13 +1,11 @@
 // Created: 12.04.2015
 package de.freese.mediathek.kodi.javafx.controller;
 
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.Executor;
 
 import de.freese.mediathek.kodi.api.MediaService;
 import de.freese.mediathek.kodi.model.Model;
-import de.freese.mediathek.utils.cache.FileResourceCache;
 import de.freese.mediathek.utils.cache.ResourceCache;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -39,7 +37,7 @@ public abstract class AbstractController<T extends Model> implements Initializab
         this.applicationContext = applicationContext;
         this.executor = applicationContext.getBean(Executor.class);
         this.mediaService = applicationContext.getBean(MediaService.class);
-        this.resourceCache = new FileResourceCache(Paths.get(System.getProperty("java.io.tmpdir"), ".javaCache"));
+        this.resourceCache = applicationContext.getBean(ResourceCache.class);
     }
 
     /**
@@ -53,14 +51,14 @@ public abstract class AbstractController<T extends Model> implements Initializab
         updateDetails(newValue);
     }
 
+    public ResourceCache getResourceCache()
+    {
+        return this.resourceCache;
+    }
+
     protected <B> B getBean(final Class<B> clazz)
     {
         return this.applicationContext.getBean(clazz);
-    }
-
-    protected ResourceCache getCache()
-    {
-        return this.resourceCache;
     }
 
     protected Executor getExecutor()

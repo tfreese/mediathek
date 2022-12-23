@@ -5,9 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.io.Serial;
 import java.net.URI;
-import java.nio.file.Paths;
 import java.util.List;
-import java.util.Optional;
 import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
@@ -27,12 +25,12 @@ import com.jgoodies.binding.list.SelectionInList;
 import com.jgoodies.binding.value.ValueHolder;
 import com.jgoodies.binding.value.ValueModel;
 import de.freese.mediathek.kodi.model.Movie;
-import de.freese.mediathek.kodi.swing.KodiSwingClient;
 import de.freese.mediathek.kodi.swing.components.rowfilter.RegExRowFilter;
 import de.freese.mediathek.utils.ImageUtils;
-import de.freese.mediathek.utils.cache.FileResourceCache;
 import de.freese.mediathek.utils.cache.ResourceCache;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * {@link PresentationModel} der {@link ShowBean}.
@@ -41,6 +39,8 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class MovieModel extends PresentationModel<MovieBean>
 {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MovieModel.class);
+
     @Serial
     private static final long serialVersionUID = 5768855611560857610L;
 
@@ -56,14 +56,14 @@ public class MovieModel extends PresentationModel<MovieBean>
 
     private JTable table;
 
-    public MovieModel()
+    public MovieModel(ResourceCache resourceCache)
     {
         super();
 
         this.movieSelection = new SelectionInList<>();
         this.valueModelPoster = new ValueHolder();
         this.valueModelFilter = new ValueHolder();
-        this.resourceCache = new FileResourceCache(Paths.get(System.getProperty("java.io.tmpdir"), ".javaCache"));
+        this.resourceCache = resourceCache;
     }
 
     public void bindGenreLabel(final JLabel label)
@@ -158,21 +158,6 @@ public class MovieModel extends PresentationModel<MovieBean>
             @Override
             protected ImageIcon doInBackground() throws Exception
             {
-                // if (StringUtils.isBlank(getBean().getPoster()))
-                // {
-                // List<Image> poster = MovieModel.this.movieService.getPoster(getBean().getImdbID());
-                // getBean().setPoster(poster.get(0).getPath());
-                // }
-                //
-                // BufferedImage image = MovieModel.this.movieService.getImage(getBean().getPoster(), Size.w342);
-                //
-                // if (image == null)
-                // {
-                // return null;
-                // }
-                //
-                // return new ImageIcon(image);
-
                 String url = StringUtils.substringBetween(getBean().getPosters(), "preview=\"", "\">");
 
                 if (url.isBlank())
@@ -184,28 +169,27 @@ public class MovieModel extends PresentationModel<MovieBean>
 
                 if (!url.isBlank())
                 {
-                    Optional<InputStream> optional = MovieModel.this.resourceCache.getResource(URI.create(url));
-
-                    if (optional.isPresent())
+                    try (InputStream inputStream = MovieModel.this.resourceCache.getResource(URI.create(url)))
                     {
-                        try (InputStream inputStream = optional.get())
+                        BufferedImage image = ImageIO.read(inputStream);
+
+                        if (image == null)
                         {
-                            BufferedImage image = ImageIO.read(inputStream);
-
-                            if (image == null)
-                            {
-                                return null;
-                            }
-
-                            image = ImageUtils.scaleImageKeepRatio(image, 1024, 768);
-
-                            return new ImageIcon(image);
+                            return null;
                         }
+
+                        image = ImageUtils.scaleImageKeepRatio(image, 1024, 768);
+
+                        return new ImageIcon(image);
+                    }
+                    catch (Exception ex)
+                    {
+                        LOGGER.error(ex.getMessage());
                     }
                 }
                 else
                 {
-                    KodiSwingClient.LOGGER.error("{}: No valid url: {}", getBean().getName(), getBean().getPosters());
+                    LOGGER.error("{}: No valid url: {}", getBean().getName(), getBean().getPosters());
                 }
 
                 return null;
@@ -223,7 +207,7 @@ public class MovieModel extends PresentationModel<MovieBean>
                 }
                 catch (Exception ex)
                 {
-                    KodiSwingClient.LOGGER.error(ex.getMessage(), ex);
+                    LOGGER.error(ex.getMessage(), ex);
                 }
             }
         };

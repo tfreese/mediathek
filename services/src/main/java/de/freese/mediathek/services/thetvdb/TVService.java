@@ -171,7 +171,7 @@ public class TVService extends AbstractService
         String url = String.format("http://thetvdb.com/banners/%s", path);
         BufferedImage image = null;
 
-        try (InputStream inputStream = getCache().getResource(URI.create(url)).get())
+        try (InputStream inputStream = getCache().getResource(URI.create(url)))
         {
             image = ImageIO.read(inputStream);
         }

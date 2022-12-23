@@ -1,6 +1,7 @@
 // Created: 16.09.2014
 package de.freese.mediathek.kodi.spring;
 
+import java.nio.file.Paths;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -11,6 +12,8 @@ import de.freese.mediathek.kodi.api.MediaDao;
 import de.freese.mediathek.kodi.api.MediaService;
 import de.freese.mediathek.kodi.impl.MediaDaoImpl;
 import de.freese.mediathek.kodi.impl.MediaServiceImpl;
+import de.freese.mediathek.utils.cache.FileResourceCache;
+import de.freese.mediathek.utils.cache.ResourceCache;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.EnvironmentAware;
@@ -86,6 +89,12 @@ public abstract class AbstractAppConfig implements EnvironmentAware
     public MediaService mediaService(final MediaDao mediaDAO)
     {
         return new MediaServiceImpl(mediaDAO);
+    }
+
+    @Bean(destroyMethod = "clear")
+    public ResourceCache resourceCache()
+    {
+        return new FileResourceCache(Paths.get(System.getProperty("java.io.tmpdir"), ".javaCache"));
     }
 
     /**

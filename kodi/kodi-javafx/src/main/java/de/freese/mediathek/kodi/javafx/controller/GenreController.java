@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import de.freese.mediathek.kodi.javafx.KodiJavaFXClient;
+import de.freese.mediathek.kodi.javafx.KodiJavaFxClient;
 import de.freese.mediathek.kodi.javafx.pane.GenrePane;
 import de.freese.mediathek.kodi.model.Genre;
 import de.freese.mediathek.kodi.model.Model;
@@ -102,7 +102,7 @@ public class GenreController extends AbstractController<Genre>
         });
         task.setOnFailed(event ->
         {
-            KodiJavaFXClient.LOGGER.info("failed");
+            KodiJavaFxClient.LOGGER.info("failed");
 
             Alert alert = new Alert(AlertType.ERROR, task.getException().getMessage());
             alert.showAndWait();

@@ -27,6 +27,7 @@ import de.freese.mediathek.kodi.swing.action.EditShowGenresAction;
 import de.freese.mediathek.kodi.swing.beans.ShowBean;
 import de.freese.mediathek.kodi.swing.beans.ShowModel;
 import de.freese.mediathek.kodi.swing.components.table.ShowTableAdapter;
+import de.freese.mediathek.utils.cache.ResourceCache;
 import org.springframework.context.ApplicationContext;
 
 /**
@@ -73,7 +74,7 @@ public class ShowPanel extends AbstractPanel
     {
         super(applicationContext);
 
-        this.showModel = new ShowModel();
+        this.showModel = new ShowModel(applicationContext.getBean(ResourceCache.class));
 
         // Die ShowSelection als Bean funktioniert nur, wenn die Objekte darin vom Typ Model sind.
         // Dann würde auch kein expliziter ListSelectionListener benötigt werden.
