@@ -1,6 +1,7 @@
 // Created: 10.06.2016
 package de.freese.mediathek.kodi.swing.components.rowfilter;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -8,10 +9,9 @@ import java.util.regex.Pattern;
 import javax.swing.RowFilter;
 
 /**
- * {@link RowFilter} mit definierbaren Spalten für REGEX-Ausdrücke.<br>
- * Geklaut von org.jdesktop.swingx.sort.RowFilters.<br>
+ * {@link RowFilter} for specific columns with regular expressions.<br>
  * <br>
- * Beispiel: new RegExRowFilter(Pattern.CASE_INSENSITIVE, "^a", 2);
+ * Example: new RegExRowFilter("^a", Pattern.CASE_INSENSITIVE, List.of(2));
  *
  * @author Thomas Freese
  */
@@ -19,12 +19,12 @@ public class RegExRowFilter extends AbstractRowFilterIndexed
 {
     private final Matcher matcher;
 
-    public RegExRowFilter(final int matchFlags, final String regex, final int... columns)
+    public RegExRowFilter(final String regex, final int matchFlags, final List<Integer> columns)
     {
         this(Pattern.compile(Objects.requireNonNull(regex), matchFlags), columns);
     }
 
-    public RegExRowFilter(final Pattern regexPattern, final int... columns)
+    public RegExRowFilter(final Pattern regexPattern, final List<Integer> columns)
     {
         super(columns);
 

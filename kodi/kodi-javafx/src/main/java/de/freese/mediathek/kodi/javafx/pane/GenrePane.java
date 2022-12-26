@@ -112,7 +112,7 @@ public class GenrePane extends VBox
         columnID.setResizable(false);
         columnID.prefWidthProperty().bind(tableView.widthProperty().multiply(0.1D)); // 10 % Breite
         columnID.setCellValueFactory(new PropertyValueFactory<>("PK"));
-        // columnID.setCellValueFactory(cell -> cell.getValue().getPK());
+        // columnID.setCellValueFactory(cell -> cell.getValue().getPk());
         columnID.setStyle("-fx-alignment: CENTER-RIGHT;");
 
         // Sortierung auf Genre Spalte

@@ -23,11 +23,6 @@
             <version>${project.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.jgoodies</groupId>
-            <artifactId>jgoodies-binding</artifactId>
-        </dependency>
-
         <!-- runtime scope -->
         <!-- provided scope -->
         <!-- test scope -->

@@ -83,7 +83,7 @@ package de.freese.mediathek.kodi.javafx.controller;
 //    @Override
 //    protected List<Genre> getGenres(final Movie value)
 //    {
-//        return getXbmcService().getMovieGenres(value.getPK());
+//        return getXbmcService().getMovieGenres(value.getPk());
 //    }
 //
 //    /**
@@ -181,7 +181,7 @@ package de.freese.mediathek.kodi.javafx.controller;
 //    @Override
 //    protected void updateGenres(final Movie value, final int[] genreIDs)
 //    {
-//        String newGenres = getXbmcService().updateMovieGenres(value.getPK(), genreIDs);
+//        String newGenres = getXbmcService().updateMovieGenres(value.getPk(), genreIDs);
 //        this.genreText.setText(newGenres);
 //        value.setGenres(newGenres);
 //    }

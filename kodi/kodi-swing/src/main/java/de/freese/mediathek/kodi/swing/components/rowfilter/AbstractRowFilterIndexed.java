@@ -1,19 +1,20 @@
 // Created: 10.06.2016
 package de.freese.mediathek.kodi.swing.components.rowfilter;
 
+import java.util.List;
+
 import javax.swing.RowFilter;
 
 /**
- * Basis-{@link RowFilter} mit definierbaren Spalten.<br>
- * Geklaut von org.jdesktop.swingx.sort.RowFilters.
+ * {@link RowFilter} for specific columns.<br>
  *
  * @author Thomas Freese
  */
 public abstract class AbstractRowFilterIndexed extends RowFilter<Object, Object>
 {
-    private final int[] columns;
+    private final List<Integer> columns;
 
-    protected AbstractRowFilterIndexed(final int... columns)
+    protected AbstractRowFilterIndexed(final List<Integer> columns)
     {
         super();
 
@@ -29,11 +30,11 @@ public abstract class AbstractRowFilterIndexed extends RowFilter<Object, Object>
     {
         int count = value.getValueCount();
 
-        if (this.columns.length > 0)
+        if (this.columns.size() > 0)
         {
-            for (int i = this.columns.length - 1; i >= 0; i--)
+            for (int i = this.columns.size() - 1; i >= 0; i--)
             {
-                int index = this.columns[i];
+                int index = this.columns.get(i);
 
                 if (index < count)
                 {
@@ -59,14 +60,11 @@ public abstract class AbstractRowFilterIndexed extends RowFilter<Object, Object>
         return false;
     }
 
-    protected void checkIndices(final int[] columns)
+    protected void checkIndices(final List<Integer> columns)
     {
-        for (int i = columns.length - 1; i >= 0; i--)
+        if (columns.stream().anyMatch(c -> c < 0))
         {
-            if (columns[i] < 0)
-            {
-                throw new IllegalArgumentException("Index must be >= 0");
-            }
+            throw new IllegalArgumentException("Index must be >= 0");
         }
     }
 

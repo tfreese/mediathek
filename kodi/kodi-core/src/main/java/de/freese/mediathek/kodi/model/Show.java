@@ -8,20 +8,20 @@ public class Show extends AbstractModel
 {
     private String banner;
 
-    private String fanart;
+    private String fanArt;
 
     private String genres;
 
-    private String tvdbID;
+    private String tvDbId;
 
     public String getBanner()
     {
         return this.banner;
     }
 
-    public String getFanart()
+    public String getFanArt()
     {
-        return this.fanart;
+        return this.fanArt;
     }
 
     public String getGenres()
@@ -29,9 +29,9 @@ public class Show extends AbstractModel
         return this.genres;
     }
 
-    public String getTvdbID()
+    public String getTvDbId()
     {
-        return this.tvdbID;
+        return this.tvDbId;
     }
 
     public void setBanner(final String banner)
@@ -39,9 +39,9 @@ public class Show extends AbstractModel
         this.banner = banner;
     }
 
-    public void setFanart(final String fanart)
+    public void setFanArt(final String fanArt)
     {
-        this.fanart = fanart;
+        this.fanArt = fanArt;
     }
 
     public void setGenres(final String genres)
@@ -49,8 +49,8 @@ public class Show extends AbstractModel
         this.genres = genres;
     }
 
-    public void setTvdbID(final String tvdbID)
+    public void setTvDbId(final String tvDbId)
     {
-        this.tvdbID = tvdbID;
+        this.tvDbId = tvDbId;
     }
 }

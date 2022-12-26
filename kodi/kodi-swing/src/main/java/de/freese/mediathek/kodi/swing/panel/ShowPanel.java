@@ -3,7 +3,6 @@ package de.freese.mediathek.kodi.swing.panel;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
-import java.util.Collections;
 import java.util.List;
 
 import javax.swing.Box;
@@ -17,68 +16,27 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import de.freese.mediathek.kodi.api.MediaService;
 import de.freese.mediathek.kodi.model.Show;
 import de.freese.mediathek.kodi.swing.GbcBuilder;
 import de.freese.mediathek.kodi.swing.action.EditShowGenresAction;
-import de.freese.mediathek.kodi.swing.beans.ShowBean;
-import de.freese.mediathek.kodi.swing.beans.ShowModel;
-import de.freese.mediathek.kodi.swing.components.table.ShowTableAdapter;
+import de.freese.mediathek.kodi.swing.controller.ShowController;
 import de.freese.mediathek.utils.cache.ResourceCache;
 import org.springframework.context.ApplicationContext;
 
 /**
- * {@link Panel} der Serien.
- *
  * @author Thomas Freese
  */
 public class ShowPanel extends AbstractPanel
 {
-    /**
-     * @author Thomas Freese
-     */
-    private class ShowSelectionListener implements ListSelectionListener
-    {
-        /**
-         * @see javax.swing.event.ListSelectionListener#valueChanged(javax.swing.event.ListSelectionEvent)
-         */
-        @Override
-        public void valueChanged(final ListSelectionEvent e)
-        {
-            getShowModel().setBean(null);
-
-            if (e.getValueIsAdjusting())
-            {
-                return;
-            }
-
-            Show selectedShow = getShowModel().getSelectedShow();
-
-            if (selectedShow == null)
-            {
-                return;
-            }
-
-            getShowModel().setBean(new ShowBean(selectedShow));
-
-            getLogger().debug(selectedShow.toString());
-        }
-    }
-
-    private final ShowModel showModel;
+    private final ShowController controller;
 
     public ShowPanel(final ApplicationContext applicationContext)
     {
         super(applicationContext);
 
-        this.showModel = new ShowModel(applicationContext.getBean(ResourceCache.class));
-
-        // Die ShowSelection als Bean funktioniert nur, wenn die Objekte darin vom Typ Model sind.
-        // Dann würde auch kein expliziter ListSelectionListener benötigt werden.
-        // this.detailsModel = new PresentationModel<>(this.showSelection);
+        this.controller = new ShowController(applicationContext.getBean(ResourceCache.class));
     }
 
     /**
@@ -87,8 +45,7 @@ public class ShowPanel extends AbstractPanel
     @Override
     public void reload()
     {
-        List<Show> emptyList = Collections.emptyList();
-        getShowModel().setList(emptyList);
+        getController().clearShows();
 
         SwingWorker<List<Show>, Void> worker = new SwingWorker<>()
         {
@@ -111,7 +68,7 @@ public class ShowPanel extends AbstractPanel
             {
                 try
                 {
-                    getShowModel().setList(get());
+                    getController().setShows(get());
                 }
                 catch (Exception ex)
                 {
@@ -141,14 +98,14 @@ public class ShowPanel extends AbstractPanel
         leftPanel.add(label, new GbcBuilder(0, 0));
 
         JTextField textFieldFilter = new JTextField();
-        getShowModel().bindTextFieldFilter(textFieldFilter);
+        getController().bindTextFieldFilter(textFieldFilter);
         leftPanel.add(textFieldFilter, new GbcBuilder(1, 0).fillHorizontal());
 
-        JTable jTable = new JTable(new ShowTableAdapter());
-        getShowModel().bindShowTable(jTable, new ShowSelectionListener());
-        JScrollPane scrollPane = new JScrollPane(jTable);
-        jTable.getColumnModel().getColumn(0).setMinWidth(50);
-        jTable.getColumnModel().getColumn(0).setMaxWidth(50);
+        JTable table = new JTable();
+        getController().bindShowTable(table);
+        JScrollPane scrollPane = new JScrollPane(table);
+        table.getColumnModel().getColumn(0).setMinWidth(50);
+        table.getColumnModel().getColumn(0).setMaxWidth(50);
 
         leftPanel.add(scrollPane, new GbcBuilder(0, 1).gridWidth(2).fillBoth());
         splitPane.setLeftComponent(leftPanel);
@@ -162,42 +119,39 @@ public class ShowPanel extends AbstractPanel
         detailPanel.setLayout(new GridBagLayout());
         detailPanel.setBorder(new TitledBorder("Details"));
 
-        // Details Banner
-        label = new JLabel();
-        getShowModel().bindBannerLabel(label);
-        detailPanel.add(label, new GbcBuilder(0, 0).gridWidth(2).weightX(1.0D).fillHorizontal().anchorCenter());
-
         // Details Genres
         label = new JLabel("Genres:");
+        detailPanel.add(label, new GbcBuilder(0, 0));
+        label = new JLabel();
+        getController().bindGenreLabel(label);
+        detailPanel.add(label, new GbcBuilder(1, 0));
+
+        // Details TvDb ID
+        label = new JLabel("TvDb Id:");
         detailPanel.add(label, new GbcBuilder(0, 1));
         label = new JLabel();
-        getShowModel().bindGenreLabel(label);
+        getController().bindTvDbIdLabel(label);
         detailPanel.add(label, new GbcBuilder(1, 1));
 
-        // Details TVDB_ID
-        label = new JLabel("TVDB_ID:");
-        detailPanel.add(label, new GbcBuilder(0, 2));
+        // Details Banner
         label = new JLabel();
-        getShowModel().bindTVDIDLabel(label);
-        detailPanel.add(label, new GbcBuilder(1, 2));
+        getController().bindBannerLabel(label);
+        detailPanel.add(label, new GbcBuilder(0, 2).gridWidth(2).weightX(1.0D).fillHorizontal().anchorCenter());
 
         rightPanel.add(detailPanel, new GbcBuilder(0, 0).weightX(1.0D).fillHorizontal());
 
         // Genres
-        JButton button = new JButton(new EditShowGenresAction(getApplicationContext(), getShowModel()));
+        JButton button = new JButton(new EditShowGenresAction(getApplicationContext(), getController()));
         rightPanel.add(button, new GbcBuilder(0, 1));
-        // JPanel genrePanel = new JPanel();
-        // genrePanel.setBorder(new TitledBorder("Genres"));
-        // panel.add(genrePanel, new GbcBuilder(0, 1).weightX(1.0D).fillBoth());
 
-        // Alles nach oben drücken.
+        // Push all up.
         rightPanel.add(Box.createGlue(), new GbcBuilder(0, 2).fillBoth());
 
         component.add(splitPane, BorderLayout.CENTER);
     }
 
-    private ShowModel getShowModel()
+    private ShowController getController()
     {
-        return this.showModel;
+        return this.controller;
     }
 }

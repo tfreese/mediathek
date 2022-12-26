@@ -31,7 +31,7 @@ subprojects {
         }
 
         dependencies {
-            dependency "com.jgoodies:jgoodies-binding:$version_jgoodies"
+
         }
     }
 
@@ -103,7 +103,6 @@ project("kodi:kodi-swing") {
     description "Swing GUI für KODI"
     dependencies {
         implementation(project(":kodi:kodi-core"))
-        implementation("com.jgoodies:jgoodies-binding")
     }
     // Start: gradle bootRun --args="--spring.profiles.active=dev"
     // The archive name. If the name has not been explicitly set, the pattern for the name is:

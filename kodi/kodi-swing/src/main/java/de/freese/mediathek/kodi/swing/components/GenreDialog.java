@@ -16,17 +16,15 @@ import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
 
-import com.jgoodies.common.collect.ArrayListModel;
 import de.freese.mediathek.kodi.model.Genre;
 import de.freese.mediathek.kodi.swing.GbcBuilder;
+import de.freese.mediathek.kodi.swing.components.list.DefaultListListModel;
 import de.freese.mediathek.kodi.swing.components.list.GenreListCellRenderer;
 
 /**
- * Dialog zur Auswahl der Genres.
- *
  * @author Thomas Freese
  */
-public class GenreAuswahlDialog extends JDialog
+public class GenreDialog extends JDialog
 {
     @Serial
     private static final long serialVersionUID = -4384289197484325624L;
@@ -50,8 +48,7 @@ public class GenreAuswahlDialog extends JDialog
         @Override
         public void actionPerformed(final ActionEvent event)
         {
-            // AlbumEditorDialog.this.albumPresentationModel.triggerFlush();
-            GenreAuswahlDialog.this.canceled = true;
+            GenreDialog.this.canceled = true;
             close();
         }
     }
@@ -75,8 +72,7 @@ public class GenreAuswahlDialog extends JDialog
         @Override
         public void actionPerformed(final ActionEvent event)
         {
-            // AlbumEditorDialog.this.albumPresentationModel.triggerCommit();
-            GenreAuswahlDialog.this.canceled = false;
+            GenreDialog.this.canceled = false;
             close();
         }
     }
@@ -100,16 +96,16 @@ public class GenreAuswahlDialog extends JDialog
         @Override
         public void actionPerformed(final ActionEvent event)
         {
-            Genre genre = GenreAuswahlDialog.this.listRechts.getSelectedValue();
+            Genre genre = GenreDialog.this.listRechts.getSelectedValue();
 
             if ((genre == null))
             {
                 return;
             }
 
-            ArrayListModel<Genre> listModel = (ArrayListModel<Genre>) GenreAuswahlDialog.this.listRechts.getModel();
+            DefaultListListModel<Genre> listModel = (DefaultListListModel<Genre>) GenreDialog.this.listRechts.getModel();
 
-            if (listModel.size() == 1)
+            if (listModel.getSize() == 1)
             {
                 return;
             }
@@ -137,14 +133,14 @@ public class GenreAuswahlDialog extends JDialog
         @Override
         public void actionPerformed(final ActionEvent event)
         {
-            Genre genre = GenreAuswahlDialog.this.listLinks.getSelectedValue();
+            Genre genre = GenreDialog.this.listLinks.getSelectedValue();
 
             if (genre == null)
             {
                 return;
             }
 
-            ArrayListModel<Genre> listModel = (ArrayListModel<Genre>) GenreAuswahlDialog.this.listRechts.getModel();
+            DefaultListListModel<Genre> listModel = (DefaultListListModel<Genre>) GenreDialog.this.listRechts.getModel();
 
             if (listModel.contains(genre))
             {
@@ -161,7 +157,7 @@ public class GenreAuswahlDialog extends JDialog
 
     private JList<Genre> listRechts;
 
-    public GenreAuswahlDialog(final Window owner)
+    public GenreDialog(final Window owner)
     {
         super(owner);
 
@@ -183,7 +179,9 @@ public class GenreAuswahlDialog extends JDialog
             return null;
         }
 
-        return (List<Genre>) this.listRechts.getModel();
+        DefaultListListModel<Genre> defaultListListModel = (DefaultListListModel<Genre>) this.listRechts.getModel();
+
+        return defaultListListModel.getStream().toList();
     }
 
     public boolean hasBeenCanceled()
@@ -197,7 +195,7 @@ public class GenreAuswahlDialog extends JDialog
         panel.setLayout(new GridBagLayout());
 
         // Links
-        this.listLinks = new JList<>(new ArrayListModel<>(links));
+        this.listLinks = new JList<>(new DefaultListListModel<>(links));
         this.listLinks.setCellRenderer(new GenreListCellRenderer());
         JScrollPane scrollPane = new JScrollPane(this.listLinks);
         scrollPane.setBorder(new TitledBorder("Verfügbar"));
@@ -210,7 +208,7 @@ public class GenreAuswahlDialog extends JDialog
         panel.add(button, new GbcBuilder(2, 7).fillVertical().anchorCenter());
 
         // Rechts
-        this.listRechts = new JList<>(new ArrayListModel<>(rechts));
+        this.listRechts = new JList<>(new DefaultListListModel<>(rechts));
         this.listRechts.setCellRenderer(new GenreListCellRenderer());
         scrollPane = new JScrollPane(this.listRechts);
         scrollPane.setBorder(new TitledBorder("Auswahl"));

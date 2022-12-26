@@ -8,9 +8,9 @@ public interface Model extends Comparable<Model>
 {
     String getName();
 
-    int getPK();
+    int getPk();
 
     void setName(final String name);
 
-    void setPK(final int pk);
+    void setPk(final int pk);
 }

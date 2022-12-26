@@ -22,7 +22,6 @@ public class ClementineAudioReporter extends AbstractMediaReporter
     @Override
     public void updateDbFromReport(final DataSource dataSource, final Path path) throws Exception
     {
-        // TODO
         // TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
         // TransactionStatus transactionStatus = transactionManager.getTransaction(transactionDefinition);
 

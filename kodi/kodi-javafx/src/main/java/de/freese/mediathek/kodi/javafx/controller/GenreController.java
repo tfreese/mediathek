@@ -84,8 +84,8 @@ public class GenreController extends AbstractController<Genre>
             @Override
             protected List<Model>[] call() throws Exception
             {
-                final List<Movie> movies = getMediaService().getGenreMovies(value.getPK());
-                final List<Show> shows = getMediaService().getGenreShows(value.getPK());
+                final List<Movie> movies = getMediaService().getGenreMovies(value.getPk());
+                final List<Show> shows = getMediaService().getGenreShows(value.getPk());
 
                 return (List<Model>[]) new List<?>[]
                         {

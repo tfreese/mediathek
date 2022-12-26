@@ -1,35 +1,32 @@
-// Created:n 10.06.2016
+// Created: 26.12.22
 package de.freese.mediathek.kodi.swing.components.table;
 
 import java.io.Serial;
+import java.util.List;
 
-import com.jgoodies.binding.adapter.AbstractTableAdapter;
 import de.freese.mediathek.kodi.model.Show;
 
 /**
  * @author Thomas Freese
  */
-public class ShowTableAdapter extends AbstractTableAdapter<Show>
+public class ShowTableModel extends AbstractListTableModel<Show>
 {
     @Serial
-    private static final long serialVersionUID = 5258240913718717061L;
+    private static final long serialVersionUID = -876434629539382491L;
 
-    public ShowTableAdapter()
+    public ShowTableModel()
     {
-        super("ID", "Name");
+        super(List.of("ID", "Name"));
     }
 
-    /**
-     * @see javax.swing.table.TableModel#getValueAt(int, int)
-     */
     @Override
     public Object getValueAt(final int rowIndex, final int columnIndex)
     {
-        Show show = getRow(rowIndex);
+        Show show = getObjectAt(rowIndex);
 
         return switch (columnIndex)
                 {
-                    case 0 -> show.getPK();
+                    case 0 -> show.getPk();
                     case 1 -> show.getName();
                     default -> null;
                 };

@@ -34,7 +34,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  */
 public class KodiSwingClient
 {
-    public static final Logger LOGGER = LoggerFactory.getLogger("KODI-Client");
+    private static final Logger LOGGER = LoggerFactory.getLogger("KODI-Client");
 
     private static class MainFrameListener extends WindowAdapter
     {

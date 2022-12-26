@@ -6,11 +6,11 @@ package de.freese.mediathek.kodi.model;
  */
 public class Movie extends AbstractModel
 {
-    private String fanarts;
+    private String fanArts;
 
     private String genres;
 
-    private String imdbID;
+    private String imDbId;
 
     private String poster;
 
@@ -20,9 +20,9 @@ public class Movie extends AbstractModel
 
     private int year;
 
-    public String getFanarts()
+    public String getFanArts()
     {
-        return this.fanarts;
+        return this.fanArts;
     }
 
     public String getGenres()
@@ -30,9 +30,9 @@ public class Movie extends AbstractModel
         return this.genres;
     }
 
-    public String getImdbID()
+    public String getImDbId()
     {
-        return this.imdbID;
+        return this.imDbId;
     }
 
     public String getPoster()
@@ -55,9 +55,9 @@ public class Movie extends AbstractModel
         return this.year;
     }
 
-    public void setFanarts(final String fanarts)
+    public void setFanArts(final String fanArts)
     {
-        this.fanarts = fanarts;
+        this.fanArts = fanArts;
     }
 
     public void setGenres(final String genres)
@@ -65,9 +65,9 @@ public class Movie extends AbstractModel
         this.genres = genres;
     }
 
-    public void setImdbID(final String imdbID)
+    public void setImDbId(final String imDbId)
     {
-        this.imdbID = imdbID;
+        this.imDbId = imDbId;
     }
 
     public void setPoster(final String poster)

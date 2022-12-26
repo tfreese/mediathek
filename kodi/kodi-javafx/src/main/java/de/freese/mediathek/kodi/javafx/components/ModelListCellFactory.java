@@ -29,7 +29,7 @@ public class ModelListCellFactory implements Callback<ListView<Model>, ListCell<
 
                 if (model != null)
                 {
-                    setText(String.format("%s (%d)", model.getName(), model.getPK()));
+                    setText(String.format("%s (%d)", model.getName(), model.getPk()));
                 }
                 else
                 {

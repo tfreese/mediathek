@@ -3,7 +3,6 @@ package de.freese.mediathek.kodi.swing.panel;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
-import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JComponent;
@@ -15,84 +14,37 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingWorker;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
-import com.jgoodies.binding.adapter.Bindings;
-import com.jgoodies.binding.beans.BeanAdapter;
 import de.freese.mediathek.kodi.api.MediaService;
 import de.freese.mediathek.kodi.model.Genre;
 import de.freese.mediathek.kodi.model.Movie;
 import de.freese.mediathek.kodi.model.Show;
 import de.freese.mediathek.kodi.swing.GbcBuilder;
-import de.freese.mediathek.kodi.swing.beans.GenreModel;
+import de.freese.mediathek.kodi.swing.components.list.DefaultListListModel;
 import de.freese.mediathek.kodi.swing.components.list.MovieListCellRenderer;
 import de.freese.mediathek.kodi.swing.components.list.ShowListCellRenderer;
-import de.freese.mediathek.kodi.swing.components.table.GenreTableAdapter;
+import de.freese.mediathek.kodi.swing.controller.GenreController;
 import org.springframework.context.ApplicationContext;
 
 /**
- * {@link Panel} der Genres.<br>
- * com.jgoodies.jsdl.component.JGComponentFactory
- *
  * @author Thomas Freese
  */
 public class GenrePanel extends AbstractPanel
 {
-    /**
-     * @author Thomas Freese
-     */
-    private class GenreSelectionListener implements ListSelectionListener
-    {
-        /**
-         * @see javax.swing.event.ListSelectionListener#valueChanged(javax.swing.event.ListSelectionEvent)
-         */
-        @Override
-        public void valueChanged(final ListSelectionEvent e)
-        {
-            getGenreModel().setBean(null);
-
-            if (e.getValueIsAdjusting())
-            {
-                return;
-            }
-
-            // JTable table = (JTable) e.getSource();
-            // int row = table.convertRowIndexToModel(e.getFirstIndex());
-            Genre selectedGenre = getGenreModel().getSelectedGenre();
-
-            if (selectedGenre == null)
-            {
-                return;
-            }
-
-            getGenreModel().setBean(new BeanAdapter<>(selectedGenre));
-
-            if (getLogger().isDebugEnabled())
-            {
-                getLogger().debug(selectedGenre.toString());
-            }
-        }
-    }
-
-    private final GenreModel genreModel;
+    private final GenreController controller;
 
     public GenrePanel(final ApplicationContext applicationContext)
     {
         super(applicationContext);
 
-        this.genreModel = new GenreModel(applicationContext);
+        this.controller = new GenreController(applicationContext);
 
-        // Die ShowSelection als Bean funktioniert nur, wenn die Objekte darin vom Typ Model sind.
-        // Dann würde auch kein expliziter ListSelectionListener benötigt werden.
-        // this.detailsModel = new PresentationModel<>(this.showSelection);
     }
 
     @Override
     public void reload()
     {
-        List<Genre> emptyList = Collections.emptyList();
-        getGenreModel().setList(emptyList);
+        getController().clearGenres();
 
         SwingWorker<List<Genre>, Void> worker = new SwingWorker<>()
         {
@@ -115,7 +67,7 @@ public class GenrePanel extends AbstractPanel
             {
                 try
                 {
-                    getGenreModel().setList(get());
+                    getController().setGenres(get());
                 }
                 catch (Exception ex)
                 {
@@ -137,12 +89,8 @@ public class GenrePanel extends AbstractPanel
         splitPane.setContinuousLayout(true);
         splitPane.setDividerLocation(260);
 
-        // Tabelle
-        // JTable table = BasicComponentFactory.createTable(getGenreModel().getGenreSelection(), new GenreTableAdapter());
-        JTable table = new JTable(new GenreTableAdapter());
-        Bindings.bind(table, getGenreModel().getGenreSelection());
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        table.getSelectionModel().addListSelectionListener(new GenreSelectionListener());
+        JTable table = new JTable();
+        getController().bindGenreTable(table);
         table.getColumnModel().getColumn(1).setMinWidth(50);
         table.getColumnModel().getColumn(1).setMaxWidth(50);
         table.getColumnModel().getColumn(2).setMinWidth(50);
@@ -154,33 +102,28 @@ public class GenrePanel extends AbstractPanel
         panel.setLayout(new GridBagLayout());
         splitPane.setRightComponent(panel);
 
-        // Filme
-        // JList<Movie> jListMovies = BasicComponentFactory.createList(getGenreModel().getMovieSelection());
-        JList<Movie> jListMovies = new JList<>();
-        Bindings.bind(jListMovies, getGenreModel().getMovieSelection());
+        JList<Movie> jListMovies = new JList<>(new DefaultListListModel<>());
+        getController().bindMovieSelection(jListMovies);
         jListMovies.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jListMovies.setCellRenderer(new MovieListCellRenderer());
         scrollPane = new JScrollPane(jListMovies);
         scrollPane.setBorder(new TitledBorder("Filme"));
         panel.add(scrollPane, new GbcBuilder(0, 0).fillBoth());
 
-        // Serien
-        // JList<Show> jListShows = BasicComponentFactory.createList(getGenreModel().getShowSelection());
-        JList<Show> jListShows = new JList<>();
-        Bindings.bind(jListShows, getGenreModel().getShowSelection());
+        JList<Show> jListShows = new JList<>(new DefaultListListModel<>());
+        getController().bindShowSelection(jListShows);
         jListShows.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jListShows.setCellRenderer(new ShowListCellRenderer());
         scrollPane = new JScrollPane(jListShows);
         scrollPane.setBorder(new TitledBorder("Serien"));
         panel.add(scrollPane, new GbcBuilder(1, 0).fillBoth());
 
-        // Alles nach oben drücken.
-        // panel.add(Box.createGlue(), new GbcBuilder(0, 2).fillBoth());
+        // Push all up.
         component.add(splitPane, BorderLayout.CENTER);
     }
 
-    private GenreModel getGenreModel()
+    private GenreController getController()
     {
-        return this.genreModel;
+        return this.controller;
     }
 }

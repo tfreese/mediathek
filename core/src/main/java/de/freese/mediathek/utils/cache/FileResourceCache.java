@@ -41,6 +41,11 @@ public class FileResourceCache extends AbstractResourceCache
     {
         try
         {
+            if (!Files.exists(this.cacheDirectory))
+            {
+                return;
+            }
+            
             Files.walkFileTree(this.cacheDirectory, new SimpleFileVisitor<>()
             {
                 /**

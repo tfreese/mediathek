@@ -40,7 +40,7 @@ public class TvShowController extends AbstractTvShowMovieController<Show>
     @Override
     protected List<Genre> getGenres(final Show value)
     {
-        return getMediaService().getShowGenres(value.getPK());
+        return getMediaService().getShowGenres(value.getPk());
     }
 
     /**
@@ -90,7 +90,7 @@ public class TvShowController extends AbstractTvShowMovieController<Show>
     @Override
     protected void updateGenres(final Show value, final int[] genreIDs)
     {
-        String newGenres = getMediaService().updateShowGenres(value.getPK(), genreIDs);
+        String newGenres = getMediaService().updateShowGenres(value.getPk(), genreIDs);
         getPane().getGenresProperty().set(newGenres);
         value.setGenres(newGenres);
     }

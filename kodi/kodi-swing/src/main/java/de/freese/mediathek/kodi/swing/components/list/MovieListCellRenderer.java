@@ -6,21 +6,16 @@ import java.io.Serial;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
-import javax.swing.ListCellRenderer;
 
 import de.freese.mediathek.kodi.model.Movie;
 
 /**
- * {@link ListCellRenderer} für {@link Movie}.
- *
  * @author Thomas Freese
  */
 public class MovieListCellRenderer extends DefaultListCellRenderer
 {
     @Serial
     private static final long serialVersionUID = 7709171891970499189L;
-
-    // private final Font BOLD_FONT = new JLabel().getFont().deriveFont(Font.BOLD, 20);
 
     /**
      * @see javax.swing.ListCellRenderer#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)
@@ -32,7 +27,7 @@ public class MovieListCellRenderer extends DefaultListCellRenderer
         super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
         Movie movie = (Movie) value;
-        setText(String.format("%s (%d)", movie.getName(), movie.getPK()));
+        setText(String.format("%s (%d)", movie.getName(), movie.getPk()));
 
         return this;
     }

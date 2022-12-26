@@ -1,7 +1,6 @@
 // Created: 28.09.2014
 package de.freese.mediathek.kodi.swing.action;
 
-import java.awt.Desktop.Action;
 import java.awt.event.ActionEvent;
 import java.io.Serial;
 import java.util.ArrayList;
@@ -14,30 +13,32 @@ import de.freese.mediathek.kodi.api.MediaService;
 import de.freese.mediathek.kodi.model.Genre;
 import de.freese.mediathek.kodi.model.Show;
 import de.freese.mediathek.kodi.swing.KodiSwingClient;
-import de.freese.mediathek.kodi.swing.beans.ShowModel;
-import de.freese.mediathek.kodi.swing.components.GenreAuswahlDialog;
+import de.freese.mediathek.kodi.swing.components.GenreDialog;
+import de.freese.mediathek.kodi.swing.controller.ShowController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 
 /**
- * {@link Action} zum Editieren der Genres.
- *
  * @author Thomas Freese
  */
 public class EditShowGenresAction extends AbstractAction
 {
+    private static final Logger LOGGER = LoggerFactory.getLogger(EditShowGenresAction.class);
+
     @Serial
     private static final long serialVersionUID = -8720949560687284814L;
 
     private final ApplicationContext applicationContext;
 
-    private final ShowModel model;
+    private final ShowController controller;
 
-    public EditShowGenresAction(final ApplicationContext applicationContext, final ShowModel model)
+    public EditShowGenresAction(final ApplicationContext applicationContext, final ShowController controller)
     {
         super("Edit Genres");
 
         this.applicationContext = applicationContext;
-        this.model = model;
+        this.controller = controller;
     }
 
     /**
@@ -46,7 +47,8 @@ public class EditShowGenresAction extends AbstractAction
     @Override
     public void actionPerformed(final ActionEvent e)
     {
-        final Show show = this.model.getSelectedShow();
+        final Show show = this.controller.getSelectedShow();
+        final MediaService mediaService = applicationContext.getBean(MediaService.class);
 
         SwingWorker<List<List<Genre>>, Void> worker = new SwingWorker<>()
         {
@@ -56,9 +58,8 @@ public class EditShowGenresAction extends AbstractAction
             @Override
             protected List<List<Genre>> doInBackground() throws Exception
             {
-                MediaService service = EditShowGenresAction.this.applicationContext.getBean(MediaService.class);
-                List<Genre> allGenres = service.getGenres();
-                List<Genre> showGenres = service.getShowGenres(show.getPK());
+                List<Genre> allGenres = mediaService.getGenres();
+                List<Genre> showGenres = mediaService.getShowGenres(show.getPk());
 
                 List<List<Genre>> result = new ArrayList<>();
                 result.add(allGenres);
@@ -77,7 +78,7 @@ public class EditShowGenresAction extends AbstractAction
                 {
                     List<List<Genre>> result = get();
 
-                    GenreAuswahlDialog dialog = new GenreAuswahlDialog(KodiSwingClient.FRAME);
+                    GenreDialog dialog = new GenreDialog(KodiSwingClient.FRAME);
                     dialog.open(result.get(0), result.get(1));
 
                     if (dialog.hasBeenCanceled())
@@ -90,17 +91,15 @@ public class EditShowGenresAction extends AbstractAction
 
                     for (int i = 0; i < genreIDs.length; i++)
                     {
-                        genreIDs[i] = selected.get(i).getPK();
+                        genreIDs[i] = selected.get(i).getPk();
                     }
 
-                    MediaService service = EditShowGenresAction.this.applicationContext.getBean(MediaService.class);
-
-                    String newGenres = service.updateShowGenres(show.getPK(), genreIDs);
-                    EditShowGenresAction.this.model.getBean().setGenres(newGenres);
+                    String newGenres = mediaService.updateShowGenres(show.getPk(), genreIDs);
+                    show.setGenres(newGenres);
                 }
                 catch (Exception ex)
                 {
-                    KodiSwingClient.LOGGER.error(ex.getMessage(), ex);
+                    LOGGER.error(ex.getMessage(), ex);
                 }
             }
         };

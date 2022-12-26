@@ -3,7 +3,6 @@ package de.freese.mediathek.kodi.swing.panel;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
-import java.util.Collections;
 import java.util.List;
 
 import javax.swing.Box;
@@ -17,66 +16,27 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import de.freese.mediathek.kodi.api.MediaService;
 import de.freese.mediathek.kodi.model.Movie;
 import de.freese.mediathek.kodi.swing.GbcBuilder;
 import de.freese.mediathek.kodi.swing.action.EditMovieGenresAction;
-import de.freese.mediathek.kodi.swing.beans.MovieBean;
-import de.freese.mediathek.kodi.swing.beans.MovieModel;
-import de.freese.mediathek.kodi.swing.components.table.MovieTableAdapter;
+import de.freese.mediathek.kodi.swing.controller.MovieController;
 import de.freese.mediathek.utils.cache.ResourceCache;
 import org.springframework.context.ApplicationContext;
 
 /**
- * {@link Panel} der Filme.
- *
  * @author Thomas Freese
  */
 public class MoviePanel extends AbstractPanel
 {
-    /**
-     * @author Thomas Freese
-     */
-    private class MovieSelectionListener implements ListSelectionListener
-    {
-        /**
-         * @see javax.swing.event.ListSelectionListener#valueChanged(javax.swing.event.ListSelectionEvent)
-         */
-        @Override
-        public void valueChanged(final ListSelectionEvent e)
-        {
-            getMovieModel().setBean(null);
-
-            if (e.getValueIsAdjusting())
-            {
-                return;
-            }
-
-            Movie selectedMovie = getMovieModel().getSelectedMovie();
-
-            if (selectedMovie == null)
-            {
-                return;
-            }
-
-            getMovieModel().setBean(new MovieBean(selectedMovie));
-        }
-    }
-
-    private final MovieModel movieModel;
+    private final MovieController controller;
 
     public MoviePanel(final ApplicationContext applicationContext)
     {
         super(applicationContext);
 
-        this.movieModel = new MovieModel(applicationContext.getBean(ResourceCache.class));
-
-        // Die ShowSelection als Bean funktioniert nur, wenn die Objekte darin vom Typ Model sind.
-        // Dann würde auch kein expliziter ListSelectionListener benötigt werden.
-        // this.detailsModel = new PresentationModel<>(this.showSelection);
+        this.controller = new MovieController(applicationContext.getBean(ResourceCache.class));
     }
 
     /**
@@ -85,13 +45,12 @@ public class MoviePanel extends AbstractPanel
     @Override
     public void reload()
     {
-        List<Movie> emptyList = Collections.emptyList();
-        getMovieModel().setList(emptyList);
+        getController().clearMovies();
 
         SwingWorker<List<Movie>, Void> worker = new SwingWorker<>()
         {
             /**
-             * @see javax.swing.SwingWorker#doInBackground()
+             * @see SwingWorker#doInBackground()
              */
             @Override
             protected List<Movie> doInBackground() throws Exception
@@ -102,14 +61,14 @@ public class MoviePanel extends AbstractPanel
             }
 
             /**
-             * @see javax.swing.SwingWorker#done()
+             * @see SwingWorker#done()
              */
             @Override
             protected void done()
             {
                 try
                 {
-                    getMovieModel().setList(get());
+                    getController().setMovies(get());
                 }
                 catch (Exception ex)
                 {
@@ -121,7 +80,7 @@ public class MoviePanel extends AbstractPanel
     }
 
     /**
-     * @see de.freese.mediathek.kodi.swing.panel.AbstractPanel#buildPanel(javax.swing.JComponent)
+     * @see AbstractPanel#buildPanel(JComponent)
      */
     @Override
     protected void buildPanel(final JComponent component)
@@ -139,15 +98,15 @@ public class MoviePanel extends AbstractPanel
         leftPanel.add(label, new GbcBuilder(0, 0));
 
         JTextField textFieldFilter = new JTextField();
-        getMovieModel().bindTextFieldFilter(textFieldFilter);
+        getController().bindTextFieldFilter(textFieldFilter);
         leftPanel.add(textFieldFilter, new GbcBuilder(1, 0).fillHorizontal());
 
-        JTable jTable = new JTable(new MovieTableAdapter());
-        getMovieModel().bindMovieTable(jTable, new MovieSelectionListener());
-        jTable.getColumnModel().getColumn(0).setMinWidth(50);
-        jTable.getColumnModel().getColumn(0).setMaxWidth(50);
+        JTable table = new JTable();
+        getController().bindMovieTable(table);
+        JScrollPane scrollPane = new JScrollPane(table);
+        table.getColumnModel().getColumn(0).setMinWidth(50);
+        table.getColumnModel().getColumn(0).setMaxWidth(50);
 
-        JScrollPane scrollPane = new JScrollPane(jTable);
         leftPanel.add(scrollPane, new GbcBuilder(0, 1).gridWidth(2).fillBoth());
         splitPane.setLeftComponent(leftPanel);
 
@@ -160,42 +119,39 @@ public class MoviePanel extends AbstractPanel
         detailPanel.setLayout(new GridBagLayout());
         detailPanel.setBorder(new TitledBorder("Details"));
 
-        // Details Poster
-        label = new JLabel();
-        getMovieModel().bindPosterLabel(label);
-        detailPanel.add(label, new GbcBuilder(0, 0).gridHeight(5).weightY(1.0D).fillVertical());
-
         // Details Genres
         label = new JLabel("Genres:");
+        detailPanel.add(label, new GbcBuilder(0, 0));
+        label = new JLabel();
+        getController().bindGenreLabel(label);
         detailPanel.add(label, new GbcBuilder(1, 0));
-        label = new JLabel();
-        getMovieModel().bindGenreLabel(label);
-        detailPanel.add(label, new GbcBuilder(2, 0).fillHorizontal());
 
-        // Details IMDB_ID
-        label = new JLabel("IMDB_ID:");
-        detailPanel.add(label, new GbcBuilder(1, 1));
+        // Details TvDb ID
+        label = new JLabel("ImDb Id:");
+        detailPanel.add(label, new GbcBuilder(0, 1));
         label = new JLabel();
-        getMovieModel().bindImdbIdLabel(label);
-        detailPanel.add(label, new GbcBuilder(2, 1));
+        getController().bindImDbIdLabel(label);
+        detailPanel.add(label, new GbcBuilder(1, 1));
+
+        // Details Poster
+        label = new JLabel();
+        getController().bindPosterLabel(label);
+        detailPanel.add(label, new GbcBuilder(0, 2).gridWidth(2).weightX(1.0D).fillHorizontal().anchorCenter());
 
         rightPanel.add(detailPanel, new GbcBuilder(0, 0).weightX(1.0D).fillHorizontal());
 
         // Genres
-        JButton button = new JButton(new EditMovieGenresAction(getApplicationContext(), getMovieModel()));
+        JButton button = new JButton(new EditMovieGenresAction(getApplicationContext(), getController()));
         rightPanel.add(button, new GbcBuilder(0, 1));
-        // JPanel genrePanel = new JPanel();
-        // genrePanel.setBorder(new TitledBorder("Genres"));
-        // panel.add(genrePanel, new GbcBuilder(0, 1).weightX(1.0D).fillBoth());
 
-        // Alles nach oben drücken.
+        // Push all up.
         rightPanel.add(Box.createGlue(), new GbcBuilder(0, 2).fillBoth());
 
         component.add(splitPane, BorderLayout.CENTER);
     }
 
-    private MovieModel getMovieModel()
+    private MovieController getController()
     {
-        return this.movieModel;
+        return this.controller;
     }
 }

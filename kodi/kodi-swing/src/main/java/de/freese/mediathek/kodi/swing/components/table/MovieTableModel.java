@@ -1,35 +1,32 @@
-// Created: 10.06.2016
+// Created: 26.12.22
 package de.freese.mediathek.kodi.swing.components.table;
 
 import java.io.Serial;
+import java.util.List;
 
-import com.jgoodies.binding.adapter.AbstractTableAdapter;
 import de.freese.mediathek.kodi.model.Movie;
 
 /**
  * @author Thomas Freese
  */
-public class MovieTableAdapter extends AbstractTableAdapter<Movie>
+public class MovieTableModel extends AbstractListTableModel<Movie>
 {
     @Serial
-    private static final long serialVersionUID = 5500616551765142373L;
+    private static final long serialVersionUID = 6190752753086781062L;
 
-    public MovieTableAdapter()
+    public MovieTableModel()
     {
-        super("ID", "Name");
+        super(List.of("ID", "Name"));
     }
 
-    /**
-     * @see javax.swing.table.TableModel#getValueAt(int, int)
-     */
     @Override
     public Object getValueAt(final int rowIndex, final int columnIndex)
     {
-        Movie movie = getRow(rowIndex);
+        Movie movie = getObjectAt(rowIndex);
 
         return switch (columnIndex)
                 {
-                    case 0 -> movie.getPK();
+                    case 0 -> movie.getPk();
                     case 1 -> movie.getName();
                     default -> null;
                 };

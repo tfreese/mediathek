@@ -25,7 +25,7 @@ public class MovieSetIdYearComparator implements Comparator<Movie>
     @Override
     public int compare(final Movie o1, final Movie o2)
     {
-        // if (o1.getPK() == o2.getPK())
+        // if (o1.getPk() == o2.getPk())
         // {
         // return 0;
         // }

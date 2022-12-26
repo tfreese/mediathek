@@ -60,10 +60,10 @@ public abstract class AbstractModel implements Model
     }
 
     /**
-     * @see Model#getPK()
+     * @see Model#getPk()
      */
     @Override
-    public int getPK()
+    public int getPk()
     {
         return this.pk;
     }
@@ -84,10 +84,10 @@ public abstract class AbstractModel implements Model
     }
 
     /**
-     * @see Model#setPK(int)
+     * @see Model#setPk(int)
      */
     @Override
-    public void setPK(final int pk)
+    public void setPk(final int pk)
     {
         this.pk = pk;
     }

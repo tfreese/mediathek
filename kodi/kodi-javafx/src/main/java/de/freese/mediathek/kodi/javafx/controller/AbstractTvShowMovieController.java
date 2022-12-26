@@ -166,7 +166,7 @@ public abstract class AbstractTvShowMovieController<T extends Model> extends Abs
 
             for (int i = 0; i < genreIDs.length; i++)
             {
-                genreIDs[i] = genres.get(i).getPK();
+                genreIDs[i] = genres.get(i).getPk();
             }
 
             updateGenres(model, genreIDs);
