@@ -38,7 +38,6 @@ public class GenrePanel extends AbstractPanel
         super(applicationContext);
 
         this.controller = new GenreController(applicationContext);
-
     }
 
     @Override

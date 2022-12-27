@@ -28,7 +28,6 @@ public class EditMovieGenresAction extends AbstractAction
     @Serial
     private static final long serialVersionUID = -3961368866360343742L;
     private final ApplicationContext applicationContext;
-
     private final MovieController controller;
 
     public EditMovieGenresAction(final ApplicationContext applicationContext, final MovieController controller)
@@ -43,7 +42,7 @@ public class EditMovieGenresAction extends AbstractAction
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     @Override
-    public void actionPerformed(final ActionEvent e)
+    public void actionPerformed(final ActionEvent event)
     {
         final Movie movie = this.controller.getSelectedMovie();
         final MediaService mediaService = applicationContext.getBean(MediaService.class);

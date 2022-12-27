@@ -25,12 +25,9 @@ import org.springframework.context.ApplicationContext;
 public class EditShowGenresAction extends AbstractAction
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(EditShowGenresAction.class);
-
     @Serial
     private static final long serialVersionUID = -8720949560687284814L;
-
     private final ApplicationContext applicationContext;
-
     private final ShowController controller;
 
     public EditShowGenresAction(final ApplicationContext applicationContext, final ShowController controller)
@@ -45,7 +42,7 @@ public class EditShowGenresAction extends AbstractAction
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     @Override
-    public void actionPerformed(final ActionEvent e)
+    public void actionPerformed(final ActionEvent event)
     {
         final Show show = this.controller.getSelectedShow();
         final MediaService mediaService = applicationContext.getBean(MediaService.class);

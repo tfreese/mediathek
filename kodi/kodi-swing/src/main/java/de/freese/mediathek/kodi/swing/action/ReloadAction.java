@@ -15,7 +15,6 @@ public class ReloadAction extends AbstractAction
 {
     @Serial
     private static final long serialVersionUID = -8049703427783670993L;
-
     private final Panel panel;
 
     public ReloadAction(final Panel panel)

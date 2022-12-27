@@ -8,8 +8,6 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 
 /**
- * Interface für ein Panel.
- *
  * @author Thomas Freese
  */
 public interface Panel
