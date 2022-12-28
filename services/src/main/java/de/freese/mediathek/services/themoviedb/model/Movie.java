@@ -19,10 +19,6 @@ public class Movie implements Comparable<Movie>
      */
     private int id = -1;
 
-    // private ImageIcon imageIconBackdrop;
-
-    // private ImageIcon imageIconPoster;
-
     private ImageIcon imageIcon;
 
     @JsonProperty("original_title")
@@ -44,8 +40,6 @@ public class Movie implements Comparable<Movie>
     @Override
     public int compareTo(final Movie o)
     {
-        // String s1 = StringUtils.defaultString(getReleaseDate());
-        // String s2 = StringUtils.defaultString(o.getReleaseDate());
         String s1 = getJahr();
         String s2 = o.getJahr();
 
@@ -66,16 +60,6 @@ public class Movie implements Comparable<Movie>
     {
         return this.imageIcon;
     }
-
-    // public ImageIcon getImageIconBackdrop()
-    // {
-    // return this.imageIconBackdrop;
-    // }
-    //
-    // public ImageIcon getImageIconPoster()
-    // {
-    // return this.imageIconPoster;
-    // }
 
     public String getJahr()
     {
@@ -107,16 +91,6 @@ public class Movie implements Comparable<Movie>
     {
         this.backdrop = backdrop;
     }
-
-    // public void setImageIconBackdrop(final ImageIcon imageIconBackdrop)
-    // {
-    // this.imageIconBackdrop = imageIconBackdrop;
-    // }
-    //
-    // public void setImageIconPoster(final ImageIcon imageIconPoster)
-    // {
-    // this.imageIconPoster = imageIconPoster;
-    // }
 
     public void setId(final int id)
     {

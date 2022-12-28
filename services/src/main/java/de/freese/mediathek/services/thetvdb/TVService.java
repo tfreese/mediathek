@@ -120,34 +120,6 @@ public class TVService extends AbstractService
         List<Image> series = images.getBackdrops();
         List<Image> season = new ArrayList<>();
 
-        // // Alles ausser de und en entfernen.
-        // for (Iterator<Image> iterator = banners.iterator(); iterator.hasNext();)
-        // {
-        // Image image = iterator.next();
-        //
-        // if (!"de".equals(image.getLanguage()) && !"en".equals(image.getLanguage()))
-        // {
-        // iterator.remove();
-        // }
-        //
-        // if ("poster".equals(image.getType()))
-        // {
-        // poster.add(image);
-        // }
-        // else if ("fanart".equals(image.getType()))
-        // {
-        // fanart.add(image);
-        // }
-        // else if ("series".equals(image.getType()))
-        // {
-        // series.add(image);
-        // }
-        // else if ("season".equals(image.getType()))
-        // {
-        // season.add(image);
-        // }
-        // }
-
         Collections.sort(poster);
         Collections.sort(fanArt);
         Collections.sort(series);

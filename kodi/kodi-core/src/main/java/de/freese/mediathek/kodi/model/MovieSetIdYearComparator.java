@@ -25,10 +25,10 @@ public class MovieSetIdYearComparator implements Comparator<Movie>
     @Override
     public int compare(final Movie o1, final Movie o2)
     {
-        // if (o1.getPk() == o2.getPk())
-        // {
-        // return 0;
-        // }
+        if (o1.getPk() == o2.getPk())
+        {
+            return 0;
+        }
 
         int comp = 0;
 
@@ -46,7 +46,6 @@ public class MovieSetIdYearComparator implements Comparator<Movie>
             // comp = name1.compareTo(name2);
         }
 
-        // System.out.println(comp);
         return comp;
     }
 }

@@ -127,11 +127,6 @@ public class MovieDetails extends Movie
     @JsonSetter("belongs_to_collection")
     public void setCollection(final String collection)
     {
-        // if (StringUtils.isBlank(collection) || StringUtils.equals(collection, "null"))
-        // {
-        // return;
-        // }
-
         this.collection = collection;
     }
 

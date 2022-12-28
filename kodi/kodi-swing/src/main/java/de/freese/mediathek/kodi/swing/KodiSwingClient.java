@@ -3,6 +3,7 @@ package de.freese.mediathek.kodi.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
@@ -17,10 +18,14 @@ import javax.swing.WindowConstants;
 import javax.swing.plaf.FontUIResource;
 
 import de.freese.mediathek.kodi.spring.AppConfigSqLite;
-import de.freese.mediathek.kodi.swing.panel.GenrePanel;
-import de.freese.mediathek.kodi.swing.panel.MoviePanel;
-import de.freese.mediathek.kodi.swing.panel.Panel;
-import de.freese.mediathek.kodi.swing.panel.ShowPanel;
+import de.freese.mediathek.kodi.swing.controller.AbstractController;
+import de.freese.mediathek.kodi.swing.controller.GenreController;
+import de.freese.mediathek.kodi.swing.controller.MovieController;
+import de.freese.mediathek.kodi.swing.controller.ShowController;
+import de.freese.mediathek.kodi.swing.view.AbstractView;
+import de.freese.mediathek.kodi.swing.view.GenreView;
+import de.freese.mediathek.kodi.swing.view.MovieView;
+import de.freese.mediathek.kodi.swing.view.ShowView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -39,7 +44,7 @@ public class KodiSwingClient
     private static class MainFrameListener extends WindowAdapter
     {
         /**
-         * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
+         * @see WindowAdapter#windowClosing(WindowEvent)
          */
         @Override
         public void windowClosing(final WindowEvent e)
@@ -125,14 +130,23 @@ public class KodiSwingClient
 
         JTabbedPane tabbedPane = new JTabbedPane();
 
-        Panel panel = new ShowPanel(ctx);
-        tabbedPane.addTab("Serien", panel.buildPanel());
+        AbstractView view = new ShowView();
+        Component component = view.init();
+        AbstractController controller = new ShowController(ctx);
+        controller.init(view);
+        tabbedPane.addTab("Serien", component);
 
-        panel = new MoviePanel(ctx);
-        tabbedPane.addTab("Filme", panel.buildPanel());
+        view = new MovieView();
+        component = view.init();
+        controller = new MovieController(ctx);
+        controller.init(view);
+        tabbedPane.addTab("Filme", component);
 
-        panel = new GenrePanel(ctx);
-        tabbedPane.addTab("Genres", panel.buildPanel());
+        view = new GenreView();
+        component = view.init();
+        controller = new GenreController(ctx);
+        controller.init(view);
+        tabbedPane.addTab("Genres", component);
 
         frame.add(tabbedPane, BorderLayout.CENTER);
 

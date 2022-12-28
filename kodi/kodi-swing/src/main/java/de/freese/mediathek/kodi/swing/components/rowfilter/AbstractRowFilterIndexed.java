@@ -38,7 +38,7 @@ public abstract class AbstractRowFilterIndexed extends RowFilter<Object, Object>
 
                 if (index < count)
                 {
-                    if (include(value, index))
+                    if (isInclude(value, index))
                     {
                         return true;
                     }
@@ -50,7 +50,7 @@ public abstract class AbstractRowFilterIndexed extends RowFilter<Object, Object>
             // Alle Spalten.
             while (--count >= 0)
             {
-                if (include(value, count))
+                if (isInclude(value, count))
                 {
                     return true;
                 }
@@ -68,5 +68,5 @@ public abstract class AbstractRowFilterIndexed extends RowFilter<Object, Object>
         }
     }
 
-    protected abstract boolean include(Entry<?, ?> value, int index);
+    protected abstract boolean isInclude(Entry<?, ?> value, int index);
 }

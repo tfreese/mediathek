@@ -131,7 +131,7 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView<T>
         this.table = new JTable();
         this.table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         initTable(this.table, textFieldFilter);
-        this.table.getColumnModel().getColumn(0).setMinWidth(50);
+        this.table.getColumnModel().getColumn(0).setMinWidth(30);
         this.table.getColumnModel().getColumn(0).setMaxWidth(50);
 
         JScrollPane scrollPane = new JScrollPane(this.table);
@@ -168,6 +168,7 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView<T>
 
         // Genres
         this.genreButton = new JButton("Edit Genres");
+        this.genreButton.setEnabled(false);
         rightPanel.add(this.genreButton, new GbcBuilder(0, 1));
 
         // Push all up.
@@ -192,9 +193,11 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView<T>
             if (viewRow == -1)
             {
                 getConsumerOnSelection().accept(null);
+                genreButton.setEnabled(false);
                 return;
             }
 
+            genreButton.setEnabled(true);
             int modelRow = table.convertRowIndexToModel(viewRow);
 
             T entity = tableModel.getObjectAt(modelRow);

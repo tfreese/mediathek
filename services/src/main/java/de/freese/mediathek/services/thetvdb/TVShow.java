@@ -31,8 +31,8 @@ public class TVShow implements Comparable<TVShow>
 
     private List<Episode> episodes;
 
-    @XmlElement(required = false)
-    private String fanart;
+    @XmlElement(name = "fanart", required = false)
+    private String fanArt;
 
     private List<Image> fanartList;
 
@@ -107,9 +107,9 @@ public class TVShow implements Comparable<TVShow>
         return this.episodes;
     }
 
-    public String getFanart()
+    public String getFanArt()
     {
-        return this.fanart;
+        return this.fanArt;
     }
 
     public List<Image> getFanartList()

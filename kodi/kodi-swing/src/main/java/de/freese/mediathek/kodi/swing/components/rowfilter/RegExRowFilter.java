@@ -32,10 +32,10 @@ public class RegExRowFilter extends AbstractRowFilterIndexed
     }
 
     /**
-     * @see de.freese.mediathek.kodi.swing.components.rowfilter.AbstractRowFilterIndexed#include(javax.swing.RowFilter.Entry, int)
+     * @see de.freese.mediathek.kodi.swing.components.rowfilter.AbstractRowFilterIndexed#isInclude(javax.swing.RowFilter.Entry, int)
      */
     @Override
-    protected boolean include(final RowFilter.Entry<?, ?> value, final int index)
+    protected boolean isInclude(final RowFilter.Entry<?, ?> value, final int index)
     {
         this.matcher.reset(value.getStringValue(index));
 

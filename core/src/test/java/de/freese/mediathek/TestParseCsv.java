@@ -47,7 +47,7 @@ class TestParseCsv
 
         while (!row.isBlank())
         {
-            // Leerer Wert
+            // Empty Value
             if (row.startsWith(","))
             {
                 token.add("");
@@ -59,7 +59,7 @@ class TestParseCsv
 
             if (endIndex < 0)
             {
-                // Letzter Wert -> Ende
+                // Last Value -> End
                 token.add(row);
                 break;
             }
@@ -72,8 +72,8 @@ class TestParseCsv
         assertEquals(7, token.size());
 
         token = token.stream()
-                .map(t -> t.replaceAll("^\"|\"$", "")) // Erstes und letztes '"' entfernen
-                .map(l -> l.replace("\"\"", "\"")) // Escapte Anführungszeichen ersetzen: "" -> "
+                .map(t -> t.replaceAll("^\"|\"$", "")) // Remove first and last '"'
+                .map(l -> l.replace("\"\"", "\"")) // Replace escaped quotes: "" -> "
                 .map(String::strip)
                 .toList()
         ;

@@ -39,7 +39,7 @@ class TestTvShowApi
         assertNotNull(show.getBanner());
         assertNotNull(show.getBeschreibung());
         assertTrue(show.getBeschreibung().startsWith("Die Fortsetzung des Films \"Stargate\" von 1994,"));
-        assertNotNull(show.getFanart());
+        assertNotNull(show.getFanArt());
         assertNotNull(show.getGenres());
         assertEquals("|Action|Adventure|Fantasy|Science-Fiction|", show.getGenres());
         assertNotNull(show.getID());
@@ -66,7 +66,7 @@ class TestTvShowApi
         assertNotNull(show.getBanner());
         assertNotNull(show.getBeschreibung());
         assertTrue(show.getBeschreibung().startsWith("Die Fortsetzung des Films \"Stargate\" von 1994,"));
-        assertNotNull(show.getFanart());
+        assertNotNull(show.getFanArt());
         assertNotNull(show.getGenres());
         assertEquals("|Action|Adventure|Fantasy|Science-Fiction|", show.getGenres());
         assertNotNull(show.getID());
