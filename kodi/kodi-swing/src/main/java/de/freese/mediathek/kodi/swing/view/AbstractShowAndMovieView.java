@@ -1,14 +1,14 @@
-// Created: 27.12.22
+// Created: 28.12.22
 package de.freese.mediathek.kodi.swing.view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GridBagLayout;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 import javax.swing.Box;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,11 +26,12 @@ import javax.swing.table.TableRowSorter;
 import de.freese.mediathek.kodi.swing.GbcBuilder;
 import de.freese.mediathek.kodi.swing.components.rowfilter.RegExRowFilter;
 import de.freese.mediathek.kodi.swing.components.table.AbstractListTableModel;
+import de.freese.mediathek.kodi.swing.controller.AbstractShowAndMovieController;
 
 /**
  * @author Thomas Freese
  */
-public abstract class AbstractShowAndMovieView<T> extends AbstractView<T>
+public abstract class AbstractShowAndMovieView<T> extends AbstractView
 {
     private JButton genreButton;
     private JLabel genreLabel;
@@ -38,34 +39,47 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView<T>
     private JLabel imageLabel;
     private JTable table;
 
-    protected AbstractShowAndMovieView()
+    protected AbstractShowAndMovieView(ResourceBundle resourceBundle)
     {
-        super();
+        super(resourceBundle);
     }
 
-    @Override
     public void clear()
     {
         getTableModel().clear();
     }
 
-    public void doOnGenres(Consumer<JButton> consumer)
-    {
-        consumer.accept(this.genreButton);
-    }
-
-    @Override
     public void fill(final List<T> data)
     {
         getTableModel().addAll(data);
 
         if (data != null && !data.isEmpty())
         {
-            getTable().setRowSelectionInterval(0, 0);
+            table.setRowSelectionInterval(0, 0);
         }
     }
 
     @Override
+    public AbstractShowAndMovieController<T> getController()
+    {
+        return (AbstractShowAndMovieController<T>) super.getController();
+    }
+
+    public JLabel getGenreLabel()
+    {
+        return genreLabel;
+    }
+
+    public JLabel getIdLabel()
+    {
+        return idLabel;
+    }
+
+    public JLabel getImageLabel()
+    {
+        return imageLabel;
+    }
+
     public T getSelected()
     {
         int viewRow = this.table.getSelectedRow();
@@ -80,39 +94,16 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView<T>
         return getTableModel().getObjectAt(modelRow);
     }
 
-    public void setImage(ImageIcon imageIcon)
-    {
-        getImageLabel().setIcon(imageIcon);
-    }
-
-    protected JLabel getGenreLabel()
-    {
-        return genreLabel;
-    }
-
-    protected JLabel getIdLabel()
-    {
-        return idLabel;
-    }
-
-    protected JLabel getImageLabel()
-    {
-        return imageLabel;
-    }
-
-    protected JTable getTable()
-    {
-        return table;
-    }
-
-    protected AbstractListTableModel<T> getTableModel()
-    {
-        return (AbstractListTableModel<T>) table.getModel();
-    }
-
     @Override
-    protected void init(final JPanel parentPanel)
+    public Component init()
     {
+        JPanel parentPanel = new JPanel();
+        parentPanel.setLayout(new BorderLayout());
+
+        JButton reloadButton = new JButton(getTranslation("reload"));
+        reloadButton.addActionListener(event -> getController().reload());
+        parentPanel.add(reloadButton, BorderLayout.NORTH);
+
         JSplitPane splitPane = new JSplitPane();
         splitPane.setOneTouchExpandable(true);
         splitPane.setContinuousLayout(true);
@@ -122,7 +113,7 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView<T>
         JPanel leftPanel = new JPanel();
         leftPanel.setLayout(new GridBagLayout());
 
-        JLabel label = new JLabel("Filter:");
+        JLabel label = new JLabel(getTranslation("filter") + ":");
         leftPanel.add(label, new GbcBuilder(0, 0));
 
         JTextField textFieldFilter = new JTextField();
@@ -146,17 +137,15 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView<T>
         // Details
         JPanel detailPanel = new JPanel();
         detailPanel.setLayout(new GridBagLayout());
-        detailPanel.setBorder(new TitledBorder("Details"));
+        detailPanel.setBorder(new TitledBorder(getTranslation("details")));
 
         // Details Genres
-        detailPanel.add(new JLabel("Genres:"), new GbcBuilder(0, 0));
+        detailPanel.add(new JLabel(getTranslation("genres") + ":"), new GbcBuilder(0, 0));
         this.genreLabel = new JLabel();
         detailPanel.add(this.genreLabel, new GbcBuilder(1, 0));
 
         // Details TvDb Id, ImDb Id
-        label = new JLabel();
-        translateIdLabel(label);
-        detailPanel.add(label, new GbcBuilder(0, 1));
+        detailPanel.add(new JLabel(getTranslation(getKeyForIdLabel()) + ":"), new GbcBuilder(0, 1));
         this.idLabel = new JLabel();
         detailPanel.add(this.idLabel, new GbcBuilder(1, 1));
 
@@ -167,7 +156,8 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView<T>
         rightPanel.add(detailPanel, new GbcBuilder(0, 0).weightX(1.0D).fillHorizontal());
 
         // Genres
-        this.genreButton = new JButton("Edit Genres");
+        this.genreButton = new JButton(getTranslation("genres.edit"));
+        this.genreButton.addActionListener(event -> getController().openGenreDialog());
         this.genreButton.setEnabled(false);
         rightPanel.add(this.genreButton, new GbcBuilder(0, 1));
 
@@ -175,6 +165,15 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView<T>
         rightPanel.add(Box.createGlue(), new GbcBuilder(0, 2).fillBoth());
 
         parentPanel.add(splitPane, BorderLayout.CENTER);
+
+        return parentPanel;
+    }
+
+    protected abstract String getKeyForIdLabel();
+
+    protected AbstractListTableModel<T> getTableModel()
+    {
+        return (AbstractListTableModel<T>) table.getModel();
     }
 
     protected void initTable(JTable table, JTextField textFieldFilter)
@@ -188,11 +187,12 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView<T>
                 return;
             }
 
+            getController().clear();
+
             int viewRow = table.getSelectedRow();
 
             if (viewRow == -1)
             {
-                getConsumerOnSelection().accept(null);
                 genreButton.setEnabled(false);
                 return;
             }
@@ -202,7 +202,7 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView<T>
 
             T entity = tableModel.getObjectAt(modelRow);
 
-            getConsumerOnSelection().accept(entity);
+            getController().setSelected(entity);
 
             getLogger().debug("{}", entity);
         });
@@ -254,10 +254,4 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView<T>
             }
         });
     }
-
-    /**
-     * Shows: TvDb Id<br/>
-     * Movies: ImDb Id
-     */
-    protected abstract void translateIdLabel(JLabel label);
 }

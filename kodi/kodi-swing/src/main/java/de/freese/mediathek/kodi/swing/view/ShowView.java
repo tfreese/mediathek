@@ -1,37 +1,27 @@
-// Created: 27.12.22
+// Created: 28.12.22
 package de.freese.mediathek.kodi.swing.view;
 
-import javax.swing.JLabel;
+import java.util.ResourceBundle;
+
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import de.freese.mediathek.kodi.model.Show;
 import de.freese.mediathek.kodi.swing.components.table.ShowTableModel;
 
 /**
  * @author Thomas Freese
  */
-public class ShowView extends AbstractShowAndMovieView<Show>
+public class ShowView extends AbstractShowAndMovieView
 {
-    public ShowView()
+    public ShowView(final ResourceBundle resourceBundle)
     {
-        super();
+        super(resourceBundle);
     }
 
     @Override
-    public void updateWithSelection(final Show show)
+    protected String getKeyForIdLabel()
     {
-        getImageLabel().setIcon(null);
-        getGenreLabel().setText(null);
-        getIdLabel().setText(null);
-
-        if (show == null)
-        {
-            return;
-        }
-
-        getGenreLabel().setText(show.getGenres());
-        getIdLabel().setText(show.getTvDbId());
+        return "id.label.show";
     }
 
     @Override
@@ -40,11 +30,5 @@ public class ShowView extends AbstractShowAndMovieView<Show>
         table.setModel(new ShowTableModel());
 
         super.initTable(table, textFieldFilter);
-    }
-
-    @Override
-    protected void translateIdLabel(final JLabel label)
-    {
-        label.setText("TvDb Id");
     }
 }

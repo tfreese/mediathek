@@ -3,11 +3,12 @@ package de.freese.mediathek.kodi.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
@@ -18,23 +19,21 @@ import javax.swing.WindowConstants;
 import javax.swing.plaf.FontUIResource;
 
 import de.freese.mediathek.kodi.spring.AppConfigSqLite;
-import de.freese.mediathek.kodi.swing.controller.AbstractController;
 import de.freese.mediathek.kodi.swing.controller.GenreController;
 import de.freese.mediathek.kodi.swing.controller.MovieController;
 import de.freese.mediathek.kodi.swing.controller.ShowController;
-import de.freese.mediathek.kodi.swing.view.AbstractView;
+import de.freese.mediathek.kodi.swing.service.GenreService;
+import de.freese.mediathek.kodi.swing.service.MovieService;
+import de.freese.mediathek.kodi.swing.service.ShowService;
 import de.freese.mediathek.kodi.swing.view.GenreView;
 import de.freese.mediathek.kodi.swing.view.MovieView;
 import de.freese.mediathek.kodi.swing.view.ShowView;
+import de.freese.mediathek.kodi.swing.view.View;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
- * Um Comparator Fehler zu vermeiden.<br>
- * -Djava.util.Arrays.useLegacyMergeSort=true<br>
- * System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
- *
  * @author Thomas Freese
  */
 public class KodiSwingClient
@@ -47,7 +46,7 @@ public class KodiSwingClient
          * @see WindowAdapter#windowClosing(WindowEvent)
          */
         @Override
-        public void windowClosing(final WindowEvent e)
+        public void windowClosing(final WindowEvent event)
         {
             System.exit(0);
         }
@@ -57,8 +56,8 @@ public class KodiSwingClient
 
     public static void main(final String[] args) throws Exception
     {
-        // Um Comparator Fehler zu vermeiden.
-        System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
+        // To avoid Comparator Errors.
+        //        System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
 
         SwingUtilities.invokeLater(() ->
         {
@@ -122,31 +121,27 @@ public class KodiSwingClient
 
         initUIDefaults();
 
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("de.freese.mediathek.kodi.swing.bundles.MyResources", Locale.getDefault());
+
         JFrame frame = new JFrame();
-        frame.setTitle("KODI-Client");
+        frame.setTitle(resourceBundle.getString("frame.title"));
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.addWindowListener(new MainFrameListener());
         frame.setLayout(new BorderLayout());
 
         JTabbedPane tabbedPane = new JTabbedPane();
 
-        AbstractView view = new ShowView();
-        Component component = view.init();
-        AbstractController controller = new ShowController(ctx);
-        controller.init(view);
-        tabbedPane.addTab("Serien", component);
+        View view = new ShowView(resourceBundle);
+        new ShowController().link(new ShowService(ctx), view);
+        tabbedPane.addTab(resourceBundle.getString("shows"), view.init());
 
-        view = new MovieView();
-        component = view.init();
-        controller = new MovieController(ctx);
-        controller.init(view);
-        tabbedPane.addTab("Filme", component);
+        view = new MovieView(resourceBundle);
+        new MovieController().link(new MovieService(ctx), view);
+        tabbedPane.addTab(resourceBundle.getString("movies"), view.init());
 
-        view = new GenreView();
-        component = view.init();
-        controller = new GenreController(ctx);
-        controller.init(view);
-        tabbedPane.addTab("Genres", component);
+        view = new GenreView(resourceBundle);
+        new GenreController().link(new GenreService(ctx), view);
+        tabbedPane.addTab(resourceBundle.getString("genres"), view.init());
 
         frame.add(tabbedPane, BorderLayout.CENTER);
 

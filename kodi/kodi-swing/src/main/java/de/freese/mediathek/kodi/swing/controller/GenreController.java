@@ -6,47 +6,46 @@ import java.util.List;
 
 import javax.swing.SwingWorker;
 
-import de.freese.mediathek.kodi.api.MediaService;
 import de.freese.mediathek.kodi.model.Genre;
 import de.freese.mediathek.kodi.model.Model;
 import de.freese.mediathek.kodi.model.Movie;
 import de.freese.mediathek.kodi.model.Show;
+import de.freese.mediathek.kodi.swing.service.GenreService;
 import de.freese.mediathek.kodi.swing.view.GenreView;
-import org.springframework.context.ApplicationContext;
 
 /**
  * @author Thomas Freese
  */
-public class GenreController extends AbstractController<Genre, GenreView>
+public class GenreController extends AbstractController
 {
-    public GenreController(final ApplicationContext applicationContext)
+    public void clear()
     {
-        super(applicationContext);
+        getView().clear();
     }
 
     @Override
-    public void init(final GenreView view)
+    public GenreService getService()
     {
-        super.init(view);
-
-        view.doOnSelection(this::onSelection);
+        return (GenreService) super.getService();
     }
 
     @Override
-    protected List<Genre> loadEntities()
+    public GenreView getView()
     {
-        return getMediaService().getGenres();
+        return (GenreView) super.getView();
     }
 
-    @Override
-    protected void onSelection(final Genre entity)
+    public void reload()
     {
-        getView().updateWithSelection(entity);
+        getView().clear();
 
-        if (entity == null)
-        {
-            return;
-        }
+        List<Genre> data = getService().load();
+        getView().fill(data);
+    }
+
+    public void setSelected(Genre genre)
+    {
+        getView().clear();
 
         SwingWorker<List<List<? extends Model>>, Void> worker = new SwingWorker<>()
         {
@@ -56,10 +55,8 @@ public class GenreController extends AbstractController<Genre, GenreView>
             @Override
             protected List<List<? extends Model>> doInBackground() throws Exception
             {
-                MediaService mediaService = getMediaService();
-
-                List<Show> shows = mediaService.getGenreShows(entity.getPk());
-                List<Movie> movies = mediaService.getGenreMovies(entity.getPk());
+                List<Show> shows = getService().getGenreShows(genre);
+                List<Movie> movies = getService().getGenreMovies(genre);
 
                 List<List<? extends Model>> results = new ArrayList<>();
                 results.add(shows);

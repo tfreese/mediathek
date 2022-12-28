@@ -1,73 +1,46 @@
-// Created: 27.12.22
+// Created: 28.12.22
 package de.freese.mediathek.kodi.swing.view;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.util.List;
-import java.util.function.Consumer;
+import java.util.ResourceBundle;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
+import de.freese.mediathek.kodi.swing.controller.Controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * @author Thomas Freese
  */
-public abstract class AbstractView<T>
+public abstract class AbstractView implements View
 {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private Consumer<T> consumerOnSelection = entity ->
-    {
-    };
-    private JButton reloadButton;
+    private final ResourceBundle resourceBundle;
+    private Controller controller;
 
-    protected AbstractView()
+    protected AbstractView(ResourceBundle resourceBundle)
     {
         super();
+
+        this.resourceBundle = resourceBundle;
     }
 
-    public abstract void clear();
-
-    public void doOnReload(Consumer<JButton> consumer)
+    public Controller getController()
     {
-        consumer.accept(this.reloadButton);
+        return controller;
     }
 
-    public void doOnSelection(Consumer<T> consumer)
+    public String getTranslation(String key)
     {
-        this.consumerOnSelection = consumer;
+        return resourceBundle.getString(key);
     }
 
-    public abstract void fill(List<T> data);
-
-    public abstract T getSelected();
-
-    public Component init()
+    @Override
+    public void link(final Controller controller)
     {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-
-        this.reloadButton = new JButton("Reload");
-        panel.add(this.reloadButton, BorderLayout.NORTH);
-
-        init(panel);
-
-        return panel;
-    }
-
-    public abstract void updateWithSelection(T entity);
-
-    protected Consumer<T> getConsumerOnSelection()
-    {
-        return consumerOnSelection;
+        this.controller = controller;
     }
 
     protected Logger getLogger()
     {
         return logger;
     }
-
-    protected abstract void init(JPanel parentPanel);
 }
