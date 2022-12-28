@@ -6,5 +6,3 @@ include "services"
 include "kodi:kodi-core"
 include "kodi:kodi-swing"
 include "kodi:kodi-javafx"
-
-//project(":kodi-core").projectDir = new File("kodi/kodi-core")

@@ -13,7 +13,7 @@
     <packaging>jar</packaging>
 
     <name>${project.groupId} - ${project.artifactId}</name>
-    <description>API für Online-Media-Datenbanken (www.themoviedb.org, www.thetvdb.com)</description>
+    <description>API for Online-Media-Databases (www.themoviedb.org, www.thetvdb.com)</description>
 
     <properties>
         <maven.test.skip>true</maven.test.skip>

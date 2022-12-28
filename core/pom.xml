@@ -13,7 +13,7 @@
     <packaging>jar</packaging>
 
     <name>${project.groupId} - ${project.artifactId}</name>
-    <description>Basis-Projekt für Mediathek-Zugriffe</description>
+    <description>Base-Projekt for Media-Access</description>
 
     <build>
         <plugins>

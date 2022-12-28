@@ -13,7 +13,7 @@
     <packaging>jar</packaging>
 
     <name>${project.groupId} - ${project.artifactId}</name>
-    <description>Swing GUI für KODI</description>
+    <description>Swing GUI for KODI</description>
 
     <dependencies>
         <!-- compile scope -->
