@@ -8,8 +8,6 @@ import de.freese.mediathek.kodi.model.Movie;
 import de.freese.mediathek.kodi.model.Show;
 
 /**
- * Interface für das DAO.
- *
  * @author Thomas Freese
  */
 public interface MediaService

@@ -57,7 +57,7 @@ public class AppConfigSqLite extends AbstractAppConfig
         // System.setProperty("org.sqlite.lib.name", "sqlite-libsqlitejdbc.so");
 
         SQLiteConfig config = new SQLiteConfig();
-        config.setReadOnly(false);
+        config.setReadOnly(true);
         config.setReadUncommited(true);
 
         return config;

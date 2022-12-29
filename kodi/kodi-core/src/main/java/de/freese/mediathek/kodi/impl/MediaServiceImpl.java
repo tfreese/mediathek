@@ -13,8 +13,6 @@ import de.freese.mediathek.kodi.model.Show;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Implementierung für den Service.
- *
  * @author Thomas Freese
  */
 public class MediaServiceImpl implements MediaService

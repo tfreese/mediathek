@@ -5,7 +5,7 @@ import java.util.List;
 
 import de.freese.mediathek.kodi.model.Genre;
 import de.freese.mediathek.kodi.model.Movie;
-import org.apache.commons.lang3.StringUtils;
+import de.freese.mediathek.utils.MediaDbUtils;
 import org.springframework.context.ApplicationContext;
 
 /**
@@ -40,7 +40,7 @@ public class MovieService extends AbstractShowAndMovieService<Movie>
     @Override
     protected String getImageUrl(final Movie entity)
     {
-        String url = StringUtils.substringBetween(entity.getPosters(), "preview=\"", "\">");
+        String url = MediaDbUtils.subStringBetween("preview=\"", "\">", entity.getPosters());
 
         if (url.contains("\""))
         {
@@ -51,7 +51,7 @@ public class MovieService extends AbstractShowAndMovieService<Movie>
 
         if (url.isBlank())
         {
-            url = StringUtils.substringBetween(entity.getPosters(), ">", "<");
+            url = MediaDbUtils.subStringBetween(">", "<", entity.getPosters());
         }
 
         url = url.replace("t/p/w500", "t/p/w342"); // w92, w154, w185, w342, w500

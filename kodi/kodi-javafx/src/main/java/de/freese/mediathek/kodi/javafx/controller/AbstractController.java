@@ -16,8 +16,6 @@ import javafx.scene.control.TableView.TableViewSelectionModel;
 import org.springframework.context.ApplicationContext;
 
 /**
- * @param <T> Entity
- *
  * @author Thomas Freese
  */
 public abstract class AbstractController<T extends Model> implements Initializable, ChangeListener<T>

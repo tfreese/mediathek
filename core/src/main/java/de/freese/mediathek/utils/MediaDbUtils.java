@@ -20,7 +20,7 @@ import java.util.function.UnaryOperator;
  *
  * @author Thomas Freese
  */
-public final class MediaDBUtils
+public final class MediaDbUtils
 {
     public static List<String[]> parseCsv(final Path path) throws IOException
     {
@@ -28,7 +28,7 @@ public final class MediaDBUtils
         //        {
         //            // @formatter:off
 //            return stream
-//                    .map(MediaDBUtils::splitCsvRow)
+//                    .map(MediaDbUtils::splitCsvRow)
 //                    .filter(Objects::nonNull)
 //                    .filter(line -> !line.strip().isEmpty())
 //                    .toList()
@@ -40,7 +40,7 @@ public final class MediaDBUtils
         return Files.readAllLines(path).stream()
                 .filter(Objects::nonNull)
                 .filter(line -> !line.strip().isBlank())
-                .map(MediaDBUtils::parseCsvRow)
+                .map(MediaDbUtils::parseCsvRow)
                 .toList()
                 ;
         // @formatter:on
@@ -73,18 +73,21 @@ public final class MediaDBUtils
         }
     }
 
-    /**
-     * Schreibt das ResultSet als CSV-Datei.<br>
-     * Wenn das ResultSet vom Typ != ResultSet.TYPE_FORWARD_ONLY ist, wird {@link ResultSet#first()} aufgerufen und kann weiter verwendet werden.
-     */
-    public static void writeCsv(final ResultSet resultSet, final Path path) throws Exception
+    public static String subStringBetween(String open, String close, String str)
     {
-        rename(path);
+        int start = str.indexOf(open);
 
-        try (PrintStream ps = new PrintStream(Files.newOutputStream(path), true, StandardCharsets.UTF_8))
+        if (start != -1)
         {
-            writeCsv(resultSet, ps);
+            int end = str.indexOf(close, start + open.length());
+
+            if (end != -1)
+            {
+                return str.substring(start + open.length(), end);
+            }
         }
+
+        return null;
     }
 
     /**
@@ -160,6 +163,20 @@ public final class MediaDBUtils
         }
     }
 
+    /**
+     * Schreibt das ResultSet als CSV-Datei.<br>
+     * Wenn das ResultSet vom Typ != ResultSet.TYPE_FORWARD_ONLY ist, wird {@link ResultSet#first()} aufgerufen und kann weiter verwendet werden.
+     */
+    public static void writeCsv(final ResultSet resultSet, final Path path) throws Exception
+    {
+        rename(path);
+
+        try (PrintStream ps = new PrintStream(Files.newOutputStream(path), true, StandardCharsets.UTF_8))
+        {
+            writeCsv(resultSet, ps);
+        }
+    }
+
     private static String[] parseCsvRow(String csvRow)
     {
         String row = csvRow;
@@ -196,7 +213,7 @@ public final class MediaDBUtils
                 ;
     }
 
-    private MediaDBUtils()
+    private MediaDbUtils()
     {
         super();
     }

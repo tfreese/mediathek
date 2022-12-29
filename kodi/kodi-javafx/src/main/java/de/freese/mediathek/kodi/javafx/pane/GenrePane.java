@@ -111,7 +111,7 @@ public class GenrePane extends VBox
         TableColumn<Genre, Integer> columnID = new TableColumn<>(resourceBundle.getString("id"));
         columnID.setResizable(false);
         columnID.prefWidthProperty().bind(tableView.widthProperty().multiply(0.1D)); // 10 % Breite
-        columnID.setCellValueFactory(new PropertyValueFactory<>("PK"));
+        columnID.setCellValueFactory(new PropertyValueFactory<>("pk"));
         // columnID.setCellValueFactory(cell -> cell.getValue().getPk());
         columnID.setStyle("-fx-alignment: CENTER-RIGHT;");
 

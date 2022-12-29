@@ -11,8 +11,6 @@ import de.freese.mediathek.kodi.model.Show;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 /**
- * Implementierung für das DAO.
- *
  * @author Thomas Freese
  */
 public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao

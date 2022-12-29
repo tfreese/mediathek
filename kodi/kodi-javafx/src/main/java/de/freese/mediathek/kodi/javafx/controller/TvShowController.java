@@ -7,8 +7,8 @@ import java.util.ResourceBundle;
 import de.freese.mediathek.kodi.model.Genre;
 import de.freese.mediathek.kodi.model.Model;
 import de.freese.mediathek.kodi.model.Show;
+import de.freese.mediathek.utils.MediaDbUtils;
 import javafx.beans.binding.Bindings;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationContext;
 
 /**
@@ -31,7 +31,7 @@ public class TvShowController extends AbstractTvShowMovieController<Show>
     {
         super.initialize(url, rb);
 
-        getPane().getIDProperty().bind(Bindings.selectString(getPane().getTableSelectionModel().selectedItemProperty(), "tvdbID"));
+        getPane().getIdProperty().bind(Bindings.selectString(getPane().getTableSelectionModel().selectedItemProperty(), "tvDbId"));
     }
 
     /**
@@ -49,7 +49,7 @@ public class TvShowController extends AbstractTvShowMovieController<Show>
     @Override
     protected String getImageUrl(final Show value)
     {
-        String url = StringUtils.substringBetween(value.getBanner(), "preview=\"", "\">");
+        String url = MediaDbUtils.subStringBetween("preview=\"", "\">", value.getBanner());
 
         if ((url == null) || url.isBlank())
         {

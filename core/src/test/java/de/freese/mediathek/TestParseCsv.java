@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import de.freese.mediathek.utils.MediaDBUtils;
+import de.freese.mediathek.utils.MediaDbUtils;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -29,7 +29,7 @@ class TestParseCsv
     {
         Path path = Paths.get("/home/tommy/dokumente/linux/musik-report-clementine.csv");
 
-        List<String> list = MediaDBUtils.parseCsv(path).stream().limit(3).map(Arrays::toString).toList();
+        List<String> list = MediaDbUtils.parseCsv(path).stream().limit(3).map(Arrays::toString).toList();
 
         assertFalse(list.isEmpty());
         assertEquals(3, list.size());

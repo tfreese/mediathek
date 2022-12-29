@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import de.freese.mediathek.utils.MediaDBUtils;
+import de.freese.mediathek.utils.MediaDbUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +35,7 @@ public abstract class AbstractMediaReporter implements MediaReporter
      */
     protected List<Map<String, String>> readMovies(final Path path) throws IOException
     {
-        return MediaDBUtils.parseCsv(path).stream()
+        return MediaDbUtils.parseCsv(path).stream()
                 .skip(1)// Header überspringen
                 .map(row ->
                 {
@@ -59,7 +59,7 @@ public abstract class AbstractMediaReporter implements MediaReporter
      */
     protected List<Map<String, String>> readMusik(final Path path) throws IOException
     {
-        return MediaDBUtils.parseCsv(path).stream()
+        return MediaDbUtils.parseCsv(path).stream()
                 .skip(1)// Header überspringen
                 .map(row ->
                 {
@@ -86,7 +86,7 @@ public abstract class AbstractMediaReporter implements MediaReporter
      */
     protected List<Map<String, String>> readTVShows(final Path path) throws IOException
     {
-        return MediaDBUtils.parseCsv(path).stream()
+        return MediaDbUtils.parseCsv(path).stream()
                 .skip(1)// Header überspringen
                 .map(row ->
                 {
@@ -110,7 +110,7 @@ public abstract class AbstractMediaReporter implements MediaReporter
     {
         try
         {
-            MediaDBUtils.writeCsv(resultSet, path);
+            MediaDbUtils.writeCsv(resultSet, path);
         }
         catch (Exception ex)
         {

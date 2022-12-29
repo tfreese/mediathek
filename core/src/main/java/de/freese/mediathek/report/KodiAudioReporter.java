@@ -14,7 +14,7 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import de.freese.mediathek.utils.MediaDBUtils;
+import de.freese.mediathek.utils.MediaDbUtils;
 
 /**
  * @author Thomas Freese
@@ -120,7 +120,7 @@ public class KodiAudioReporter extends AbstractMediaReporter
      */
     protected void writeMusicPlaylistM3U(final DataSource dataSource, final Path path) throws Exception
     {
-        MediaDBUtils.rename(path);
+        MediaDbUtils.rename(path);
 
         StringBuilder sql = new StringBuilder();
         sql.append(
@@ -153,7 +153,7 @@ public class KodiAudioReporter extends AbstractMediaReporter
      */
     protected void writeMusicPlaylistXSP(final DataSource dataSource, final Path path) throws Exception
     {
-        MediaDBUtils.rename(path);
+        MediaDbUtils.rename(path);
 
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT artist, operator");

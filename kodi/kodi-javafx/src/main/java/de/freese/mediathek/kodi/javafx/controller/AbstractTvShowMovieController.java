@@ -24,10 +24,6 @@ import javafx.scene.image.Image;
 import org.springframework.context.ApplicationContext;
 
 /**
- * Basis-Controller für die Serien und Filme.
- *
- * @param <T> Entity
- *
  * @author Thomas Freese
  */
 public abstract class AbstractTvShowMovieController<T extends Model> extends AbstractController<T>

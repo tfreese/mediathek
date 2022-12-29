@@ -27,11 +27,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import org.apache.commons.lang3.StringUtils;
 
 /**
- * @param <T> Konkreter Typ
- *
  * @author Thomas Freese
  */
 public class TvShowMoviePane<T extends Model> extends VBox
@@ -44,7 +41,7 @@ public class TvShowMoviePane<T extends Model> extends VBox
 
     private final Label labelGenres;
 
-    private final Label labelID;
+    private final Label labelId;
     /**
      * Wird für die Filterung benötigt.
      */
@@ -99,8 +96,8 @@ public class TvShowMoviePane<T extends Model> extends VBox
 
         // IMDB-IDs
         gridPane.add(new Label(resourceBundle.getString("id") + ":"), 0, 2);
-        this.labelID = new Label();
-        gridPane.add(this.labelID, 1, 2);
+        this.labelId = new Label();
+        gridPane.add(this.labelId, 1, 2);
 
         TitledPane titledPane = new TitledPane(resourceBundle.getString("details"), gridPane);
         // titledPane.setPrefHeight(10000D);
@@ -132,9 +129,9 @@ public class TvShowMoviePane<T extends Model> extends VBox
         return this.labelGenres.textProperty();
     }
 
-    public StringProperty getIDProperty()
+    public StringProperty getIdProperty()
     {
-        return this.labelID.textProperty();
+        return this.labelId.textProperty();
     }
 
     public ObjectProperty<Image> getImageProperty()
@@ -164,7 +161,7 @@ public class TvShowMoviePane<T extends Model> extends VBox
         TableColumn<T, Integer> columnID = new TableColumn<>(resourceBundle.getString("id"));
         columnID.setResizable(false);
         columnID.prefWidthProperty().bind(tableView.widthProperty().multiply(0.1D)); // 10 % Breite
-        columnID.setCellValueFactory(new PropertyValueFactory<>("PK"));
+        columnID.setCellValueFactory(new PropertyValueFactory<>("pk"));
         columnID.setStyle("-fx-alignment: CENTER-RIGHT;");
 
         // Sortierung auf Name-Spalte
@@ -184,14 +181,14 @@ public class TvShowMoviePane<T extends Model> extends VBox
         // Filter-Textfeld mit FilteredList verbinden.
         propertyItemFilter.addListener((observable, oldValue, newValue) -> filteredData.setPredicate(value ->
         {
-            if (StringUtils.isBlank(newValue))
+            if (newValue == null || newValue.isBlank())
             {
                 return true;
             }
 
             String text = value.getName();
 
-            return StringUtils.containsIgnoreCase(text, newValue);
+            return text.toLowerCase().contains(newValue.toLowerCase());
         }));
 
         // Da die ObservableList der TableItems neu gesetzt wird, muss auch die Sortierung neu gemacht werden.

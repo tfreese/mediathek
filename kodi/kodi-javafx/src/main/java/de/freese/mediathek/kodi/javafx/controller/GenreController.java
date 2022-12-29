@@ -20,8 +20,6 @@ import javafx.scene.control.TableView.TableViewSelectionModel;
 import org.springframework.context.ApplicationContext;
 
 /**
- * Controller für die Genre-Übersicht.
- *
  * @author Thomas Freese
  */
 public class GenreController extends AbstractController<Genre>
