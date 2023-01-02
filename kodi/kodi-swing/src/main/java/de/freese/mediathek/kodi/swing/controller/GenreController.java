@@ -16,16 +16,22 @@ import de.freese.mediathek.kodi.swing.view.GenreView;
 /**
  * @author Thomas Freese
  */
-public class GenreController extends AbstractController<GenreService>
+public class GenreController extends AbstractController
 {
-    public GenreController(final GenreService service)
+    public GenreController(final GenreService service, GenreView view)
     {
-        super(service);
+        super(service, view);
     }
 
     public void clear()
     {
         getView().clear();
+    }
+
+    @Override
+    public GenreService getService()
+    {
+        return (GenreService) super.getService();
     }
 
     @Override

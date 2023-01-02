@@ -3,6 +3,7 @@ package de.freese.mediathek.kodi.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
@@ -28,7 +29,6 @@ import de.freese.mediathek.kodi.swing.service.ShowService;
 import de.freese.mediathek.kodi.swing.view.GenreView;
 import de.freese.mediathek.kodi.swing.view.MovieView;
 import de.freese.mediathek.kodi.swing.view.ShowView;
-import de.freese.mediathek.kodi.swing.view.View;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -131,17 +131,20 @@ public class KodiSwingClient
 
         JTabbedPane tabbedPane = new JTabbedPane();
 
-        View view = new ShowView(resourceBundle);
-        new ShowController(new ShowService(ctx)).link(view);
-        tabbedPane.addTab(resourceBundle.getString("shows"), view.init());
+        ShowView showView = new ShowView(resourceBundle);
+        Component component = showView.init();
+        new ShowController(new ShowService(ctx), showView);
+        tabbedPane.addTab(resourceBundle.getString("shows"), component);
 
-        view = new MovieView(resourceBundle);
-        new MovieController(new MovieService(ctx)).link(view);
-        tabbedPane.addTab(resourceBundle.getString("movies"), view.init());
+        MovieView movieView = new MovieView(resourceBundle);
+        component = movieView.init();
+        new MovieController(new MovieService(ctx), movieView);
+        tabbedPane.addTab(resourceBundle.getString("movies"), component);
 
-        view = new GenreView(resourceBundle);
-        new GenreController(new GenreService(ctx)).link(view);
-        tabbedPane.addTab(resourceBundle.getString("genres"), view.init());
+        GenreView genreView = new GenreView(resourceBundle);
+        component = genreView.init();
+        new GenreController(new GenreService(ctx), genreView);
+        tabbedPane.addTab(resourceBundle.getString("genres"), component);
 
         frame.add(tabbedPane, BorderLayout.CENTER);
 

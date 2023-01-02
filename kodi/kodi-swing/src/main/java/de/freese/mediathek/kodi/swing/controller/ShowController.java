@@ -3,15 +3,16 @@ package de.freese.mediathek.kodi.swing.controller;
 
 import de.freese.mediathek.kodi.model.Show;
 import de.freese.mediathek.kodi.swing.service.ShowService;
+import de.freese.mediathek.kodi.swing.view.ShowView;
 
 /**
  * @author Thomas Freese
  */
-public class ShowController extends AbstractShowAndMovieController<Show, ShowService>
+public class ShowController extends AbstractShowAndMovieController<Show>
 {
-    public ShowController(final ShowService service)
+    public ShowController(final ShowService service, ShowView view)
     {
-        super(service);
+        super(service, view);
     }
 
     @Override

@@ -16,11 +16,11 @@ import de.freese.mediathek.kodi.swing.view.AbstractShowAndMovieView;
 /**
  * @author Thomas Freese
  */
-public abstract class AbstractShowAndMovieController<T, S extends AbstractShowAndMovieService> extends AbstractController<S>
+public abstract class AbstractShowAndMovieController<T> extends AbstractController
 {
-    protected AbstractShowAndMovieController(final S service)
+    protected AbstractShowAndMovieController(AbstractShowAndMovieService service, AbstractShowAndMovieView<T> view)
     {
-        super(service);
+        super(service, view);
     }
 
     public void clear()
@@ -28,6 +28,12 @@ public abstract class AbstractShowAndMovieController<T, S extends AbstractShowAn
         getView().getImageLabel().setIcon(null);
         getView().getGenreLabel().setText(null);
         getView().getIdLabel().setText(null);
+    }
+
+    @Override
+    public AbstractShowAndMovieService<T> getService()
+    {
+        return (AbstractShowAndMovieService<T>) super.getService();
     }
 
     @Override
