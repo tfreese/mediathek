@@ -132,15 +132,15 @@ public class KodiSwingClient
         JTabbedPane tabbedPane = new JTabbedPane();
 
         View view = new ShowView(resourceBundle);
-        new ShowController().link(new ShowService(ctx), view);
+        new ShowController(new ShowService(ctx)).link(view);
         tabbedPane.addTab(resourceBundle.getString("shows"), view.init());
 
         view = new MovieView(resourceBundle);
-        new MovieController().link(new MovieService(ctx), view);
+        new MovieController(new MovieService(ctx)).link(view);
         tabbedPane.addTab(resourceBundle.getString("movies"), view.init());
 
         view = new GenreView(resourceBundle);
-        new GenreController().link(new GenreService(ctx), view);
+        new GenreController(new GenreService(ctx)).link(view);
         tabbedPane.addTab(resourceBundle.getString("genres"), view.init());
 
         frame.add(tabbedPane, BorderLayout.CENTER);

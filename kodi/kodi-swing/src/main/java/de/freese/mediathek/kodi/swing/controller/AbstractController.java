@@ -9,13 +9,21 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Thomas Freese
  */
-public abstract class AbstractController implements Controller
+public abstract class AbstractController<S extends Service> implements Controller
 {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private Service service;
+
+    private final S service;
     private View view;
 
-    public Service getService()
+    protected AbstractController(final S service)
+    {
+        super();
+
+        this.service = service;
+    }
+
+    public S getService()
     {
         return service;
     }
@@ -26,12 +34,10 @@ public abstract class AbstractController implements Controller
     }
 
     @Override
-    public void link(final Service service, final View view)
+    public void link(final View view)
     {
-        this.service = service;
         this.view = view;
 
-        this.service.link(this);
         this.view.link(this);
     }
 

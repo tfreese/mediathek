@@ -27,6 +27,7 @@ import de.freese.mediathek.kodi.swing.GbcBuilder;
 import de.freese.mediathek.kodi.swing.components.rowfilter.RegExRowFilter;
 import de.freese.mediathek.kodi.swing.components.table.AbstractListTableModel;
 import de.freese.mediathek.kodi.swing.controller.AbstractShowAndMovieController;
+import de.freese.mediathek.kodi.swing.service.AbstractShowAndMovieService;
 
 /**
  * @author Thomas Freese
@@ -60,9 +61,9 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView
     }
 
     @Override
-    public AbstractShowAndMovieController<T> getController()
+    public AbstractShowAndMovieController<T, AbstractShowAndMovieService> getController()
     {
-        return (AbstractShowAndMovieController<T>) super.getController();
+        return (AbstractShowAndMovieController<T, AbstractShowAndMovieService>) super.getController();
     }
 
     public JLabel getGenreLabel()

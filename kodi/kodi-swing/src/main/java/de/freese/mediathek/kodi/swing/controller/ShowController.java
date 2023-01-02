@@ -2,12 +2,18 @@
 package de.freese.mediathek.kodi.swing.controller;
 
 import de.freese.mediathek.kodi.model.Show;
+import de.freese.mediathek.kodi.swing.service.ShowService;
 
 /**
  * @author Thomas Freese
  */
-public class ShowController extends AbstractShowAndMovieController<Show>
+public class ShowController extends AbstractShowAndMovieController<Show, ShowService>
 {
+    public ShowController(final ShowService service)
+    {
+        super(service);
+    }
+
     @Override
     public void setSelected(final Show entity)
     {
