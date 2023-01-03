@@ -30,18 +30,6 @@ public abstract class AbstractShowAndMovieController<T> extends AbstractControll
         getView().getIdLabel().setText(null);
     }
 
-    @Override
-    public AbstractShowAndMovieService<T> getService()
-    {
-        return (AbstractShowAndMovieService<T>) super.getService();
-    }
-
-    @Override
-    public AbstractShowAndMovieView<T> getView()
-    {
-        return (AbstractShowAndMovieView<T>) super.getView();
-    }
-
     public void openGenreDialog()
     {
         T entity = getView().getSelected();
@@ -111,6 +99,18 @@ public abstract class AbstractShowAndMovieController<T> extends AbstractControll
     }
 
     public abstract void setSelected(T entity);
+
+    @Override
+    protected AbstractShowAndMovieService<T> getService()
+    {
+        return (AbstractShowAndMovieService<T>) super.getService();
+    }
+
+    @Override
+    protected AbstractShowAndMovieView<T> getView()
+    {
+        return (AbstractShowAndMovieView<T>) super.getView();
+    }
 
     protected void setImageIcon(T entity)
     {

@@ -6,14 +6,11 @@ import java.util.Map;
 /**
  * @author Thomas Freese
  */
-public class MyResources_de extends MyResources
+public class MyResources_de extends AbstractMapResourceBundle
 {
     @Override
-    protected void initMap(final Map<String, Object> map)
+    protected Map<String, Object> getContents()
     {
-        super.initMap(map);
-
-        map.put("shows", "Serien");
-        map.put("movies", "Filme");
+        return Map.of("shows", "Serien", "movies", "Filme");
     }
 }

@@ -25,6 +25,7 @@ import de.freese.mediathek.kodi.swing.components.list.DefaultListListModel;
 import de.freese.mediathek.kodi.swing.components.list.MovieListCellRenderer;
 import de.freese.mediathek.kodi.swing.components.list.ShowListCellRenderer;
 import de.freese.mediathek.kodi.swing.components.table.GenreTableModel;
+import de.freese.mediathek.kodi.swing.controller.Controller;
 import de.freese.mediathek.kodi.swing.controller.GenreController;
 
 /**
@@ -35,11 +36,6 @@ public class GenreView extends AbstractView
     private JList<Movie> listMovies;
     private JList<Show> listShows;
     private JTable table;
-
-    public GenreView(ResourceBundle resourceBundle)
-    {
-        super(resourceBundle);
-    }
 
     public void clear()
     {
@@ -58,14 +54,10 @@ public class GenreView extends AbstractView
     }
 
     @Override
-    public GenreController getController()
+    public Component init(final Controller controller, final ResourceBundle resourceBundle)
     {
-        return (GenreController) super.getController();
-    }
+        super.init(controller, resourceBundle);
 
-    @Override
-    public Component init()
-    {
         JPanel parentPanel = new JPanel();
         parentPanel.setLayout(new BorderLayout());
 
@@ -141,6 +133,12 @@ public class GenreView extends AbstractView
 
         ((DefaultListListModel) this.listShows.getModel()).addAll(shows);
         ((DefaultListListModel) this.listMovies.getModel()).addAll(movies);
+    }
+
+    @Override
+    protected GenreController getController()
+    {
+        return (GenreController) super.getController();
     }
 
     private GenreTableModel getTableModel()

@@ -27,6 +27,7 @@ import de.freese.mediathek.kodi.swing.GbcBuilder;
 import de.freese.mediathek.kodi.swing.components.rowfilter.RegExRowFilter;
 import de.freese.mediathek.kodi.swing.components.table.AbstractListTableModel;
 import de.freese.mediathek.kodi.swing.controller.AbstractShowAndMovieController;
+import de.freese.mediathek.kodi.swing.controller.Controller;
 
 /**
  * @author Thomas Freese
@@ -38,11 +39,6 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView
     private JLabel idLabel;
     private JLabel imageLabel;
     private JTable table;
-
-    protected AbstractShowAndMovieView(ResourceBundle resourceBundle)
-    {
-        super(resourceBundle);
-    }
 
     public void clear()
     {
@@ -57,12 +53,6 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView
         {
             table.setRowSelectionInterval(0, 0);
         }
-    }
-
-    @Override
-    public AbstractShowAndMovieController getController()
-    {
-        return (AbstractShowAndMovieController) super.getController();
     }
 
     public JLabel getGenreLabel()
@@ -95,8 +85,10 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView
     }
 
     @Override
-    public Component init()
+    public Component init(final Controller controller, final ResourceBundle resourceBundle)
     {
+        super.init(controller, resourceBundle);
+
         JPanel parentPanel = new JPanel();
         parentPanel.setLayout(new BorderLayout());
 
@@ -167,6 +159,12 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView
         parentPanel.add(splitPane, BorderLayout.CENTER);
 
         return parentPanel;
+    }
+
+    @Override
+    protected AbstractShowAndMovieController getController()
+    {
+        return (AbstractShowAndMovieController) super.getController();
     }
 
     protected abstract String getKeyForIdLabel();

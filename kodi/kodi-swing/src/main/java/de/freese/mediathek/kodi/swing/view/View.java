@@ -2,6 +2,7 @@
 package de.freese.mediathek.kodi.swing.view;
 
 import java.awt.Component;
+import java.util.ResourceBundle;
 
 import de.freese.mediathek.kodi.swing.controller.Controller;
 
@@ -10,7 +11,5 @@ import de.freese.mediathek.kodi.swing.controller.Controller;
  */
 public interface View
 {
-    Component init();
-
-    void link(Controller controller);
+    Component init(Controller controller, ResourceBundle resourceBundle);
 }

@@ -28,18 +28,6 @@ public class GenreController extends AbstractController
         getView().clear();
     }
 
-    @Override
-    public GenreService getService()
-    {
-        return (GenreService) super.getService();
-    }
-
-    @Override
-    public GenreView getView()
-    {
-        return (GenreView) super.getView();
-    }
-
     public void reload()
     {
         getView().clear();
@@ -89,5 +77,17 @@ public class GenreController extends AbstractController
             }
         };
         worker.execute();
+    }
+
+    @Override
+    protected GenreService getService()
+    {
+        return (GenreService) super.getService();
+    }
+
+    @Override
+    protected GenreView getView()
+    {
+        return (GenreView) super.getView();
     }
 }

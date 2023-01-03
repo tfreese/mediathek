@@ -1,6 +1,9 @@
 // Created: 28.12.22
 package de.freese.mediathek.kodi.swing.controller;
 
+import java.awt.Component;
+import java.util.ResourceBundle;
+
 import de.freese.mediathek.kodi.swing.service.Service;
 import de.freese.mediathek.kodi.swing.view.View;
 import org.slf4j.Logger;
@@ -22,24 +25,26 @@ public abstract class AbstractController implements Controller
 
         this.service = service;
         this.view = view;
-
-        this.view.link(this);
     }
 
     @Override
-    public Service getService()
+    public Component init(final ResourceBundle resourceBundle)
     {
-        return service;
-    }
-
-    @Override
-    public View getView()
-    {
-        return view;
+        return getView().init(this, resourceBundle);
     }
 
     protected Logger getLogger()
     {
         return logger;
+    }
+
+    protected Service getService()
+    {
+        return service;
+    }
+
+    protected View getView()
+    {
+        return view;
     }
 }

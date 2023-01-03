@@ -3,7 +3,6 @@ package de.freese.mediathek.kodi.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
@@ -20,6 +19,7 @@ import javax.swing.WindowConstants;
 import javax.swing.plaf.FontUIResource;
 
 import de.freese.mediathek.kodi.spring.AppConfigSqLite;
+import de.freese.mediathek.kodi.swing.controller.Controller;
 import de.freese.mediathek.kodi.swing.controller.GenreController;
 import de.freese.mediathek.kodi.swing.controller.MovieController;
 import de.freese.mediathek.kodi.swing.controller.ShowController;
@@ -131,20 +131,14 @@ public class KodiSwingClient
 
         JTabbedPane tabbedPane = new JTabbedPane();
 
-        ShowView showView = new ShowView(resourceBundle);
-        Component component = showView.init();
-        new ShowController(new ShowService(ctx), showView);
-        tabbedPane.addTab(resourceBundle.getString("shows"), component);
+        Controller controller = new ShowController(new ShowService(ctx), new ShowView());
+        tabbedPane.addTab(resourceBundle.getString("shows"), controller.init(resourceBundle));
 
-        MovieView movieView = new MovieView(resourceBundle);
-        component = movieView.init();
-        new MovieController(new MovieService(ctx), movieView);
-        tabbedPane.addTab(resourceBundle.getString("movies"), component);
+        controller = new MovieController(new MovieService(ctx), new MovieView());
+        tabbedPane.addTab(resourceBundle.getString("movies"), controller.init(resourceBundle));
 
-        GenreView genreView = new GenreView(resourceBundle);
-        component = genreView.init();
-        new GenreController(new GenreService(ctx), genreView);
-        tabbedPane.addTab(resourceBundle.getString("genres"), component);
+        controller = new GenreController(new GenreService(ctx), new GenreView());
+        tabbedPane.addTab(resourceBundle.getString("genres"), controller.init(resourceBundle));
 
         frame.add(tabbedPane, BorderLayout.CENTER);
 
