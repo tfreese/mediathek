@@ -85,7 +85,7 @@ public class GenreDialog extends JDialog
         @Serial
         private static final long serialVersionUID = 3818570430470000410L;
 
-        public ToLeftAction()
+        ToLeftAction()
         {
             super("<");
         }
@@ -122,7 +122,7 @@ public class GenreDialog extends JDialog
         @Serial
         private static final long serialVersionUID = 3818570430470000410L;
 
-        public ToRightAction()
+        ToRightAction()
         {
             super(">");
         }

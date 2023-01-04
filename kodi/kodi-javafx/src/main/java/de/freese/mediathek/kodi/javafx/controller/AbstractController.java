@@ -97,5 +97,5 @@ public abstract class AbstractController<T extends Model> implements Initializab
 
     protected abstract List<T> load();
 
-    protected abstract void updateDetails(final T value);
+    protected abstract void updateDetails(T value);
 }

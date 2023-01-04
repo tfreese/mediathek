@@ -12,9 +12,9 @@ public interface ResourceCache
 {
     void clear();
 
-    InputStream getResource(final URI uri) throws Exception;
+    InputStream getResource(URI uri) throws Exception;
 
-    default InputStream getResource(final URL url) throws Exception
+    default InputStream getResource(URL url) throws Exception
     {
         return getResource(url.toURI());
     }

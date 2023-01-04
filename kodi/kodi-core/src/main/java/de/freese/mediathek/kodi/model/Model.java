@@ -10,7 +10,7 @@ public interface Model extends Comparable<Model>
 
     int getPk();
 
-    void setName(final String name);
+    void setName(String name);
 
-    void setPk(final int pk);
+    void setPk(int pk);
 }

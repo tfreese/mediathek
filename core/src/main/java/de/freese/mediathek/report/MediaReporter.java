@@ -15,10 +15,10 @@ public interface MediaReporter
     /**
      * Aktualisiert die Datenbank mit den Media-Infos aus der Datei.
      */
-    void updateDbFromReport(final DataSource dataSource, final Path path) throws Exception;
+    void updateDbFromReport(DataSource dataSource, Path path) throws Exception;
 
     /**
      * Schreibt die Media-Infos aus der Datenbank in die Datei.
      */
-    void writeReport(final DataSource dataSource, final Path path) throws Exception;
+    void writeReport(DataSource dataSource, Path path) throws Exception;
 }

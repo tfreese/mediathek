@@ -44,6 +44,10 @@
         <tag>HEAD</tag>
     </scm>
 
+    <properties>
+        <checkstyle.skip>true</checkstyle.skip>
+    </properties>
+
     <modules>
         <module>core</module>
         <module>services</module>

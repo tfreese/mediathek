@@ -12,7 +12,7 @@ import org.springframework.core.env.PropertySource;
  */
 class KodiPropertySource extends PropertySource<Properties>
 {
-    public KodiPropertySource() throws IOException
+    KodiPropertySource() throws IOException
     {
         super("reportProperties", new Properties());
 
