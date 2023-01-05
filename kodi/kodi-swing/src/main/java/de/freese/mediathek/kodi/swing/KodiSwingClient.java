@@ -52,7 +52,7 @@ public class KodiSwingClient
         }
     }
 
-    public static Frame FRAME;
+    public static Frame frame;
 
     public static void main(final String[] args) throws Exception
     {
@@ -150,7 +150,7 @@ public class KodiSwingClient
         // frame.setExtendedState(Frame.MAXIMIZED_BOTH);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        FRAME = frame;
+        KodiSwingClient.frame = frame;
     }
 
     private void initUIDefaults()

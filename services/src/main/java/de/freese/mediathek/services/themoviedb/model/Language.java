@@ -2,6 +2,7 @@
 package de.freese.mediathek.services.themoviedb.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 /**
  * @author Thomas Freese
@@ -12,7 +13,7 @@ public class Language implements Comparable<Language>
     /**
      * iso_639_1
      */
-    private String iso_639_1;
+    private String iso6391;
     /**
      * name
      */
@@ -27,9 +28,9 @@ public class Language implements Comparable<Language>
         return this.name.compareTo(o.getName());
     }
 
-    public String getIso_639_1()
+    public String getIso6391()
     {
-        return this.iso_639_1;
+        return this.iso6391;
     }
 
     public String getName()
@@ -37,9 +38,10 @@ public class Language implements Comparable<Language>
         return this.name;
     }
 
-    public void setIso_639_1(final String iso_639_1)
+    @JsonSetter("iso_639_1")
+    public void setIso6391(final String iso6391)
     {
-        this.iso_639_1 = iso_639_1;
+        this.iso6391 = iso6391;
     }
 
     public void setName(final String name)
@@ -55,7 +57,7 @@ public class Language implements Comparable<Language>
     {
         StringBuilder builder = new StringBuilder();
         builder.append("Language [iso_639_1=");
-        builder.append(this.iso_639_1);
+        builder.append(this.iso6391);
         builder.append(", name=");
         builder.append(this.name);
         builder.append("]");

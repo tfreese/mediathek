@@ -45,6 +45,7 @@
     </scm>
 
     <properties>
+        <!-- de.freese.mediathek.kodi.swing.bundles.MyResources_de -->
         <checkstyle.skip>true</checkstyle.skip>
     </properties>
 
