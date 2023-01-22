@@ -162,7 +162,7 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView
     }
 
     @Override
-    protected AbstractShowAndMovieController getController()
+    protected AbstractShowAndMovieController<T> getController()
     {
         return (AbstractShowAndMovieController) super.getController();
     }

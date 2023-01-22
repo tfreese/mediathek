@@ -18,7 +18,7 @@ import de.freese.mediathek.kodi.swing.view.AbstractShowAndMovieView;
  */
 public abstract class AbstractShowAndMovieController<T> extends AbstractController
 {
-    protected AbstractShowAndMovieController(AbstractShowAndMovieService service, AbstractShowAndMovieView<T> view)
+    protected AbstractShowAndMovieController(AbstractShowAndMovieService<T> service, AbstractShowAndMovieView<T> view)
     {
         super(service, view);
     }
