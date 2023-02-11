@@ -13,22 +13,18 @@ import java.util.Set;
  * @author Thomas Freese
  * @see ListResourceBundle
  */
-public abstract class AbstractMapResourceBundle extends ResourceBundle
-{
+public abstract class AbstractMapResourceBundle extends ResourceBundle {
     private volatile Map<String, Object> lookup;
 
     @Override
-    public Enumeration<String> getKeys()
-    {
-        if (lookup == null)
-        {
+    public Enumeration<String> getKeys() {
+        if (lookup == null) {
             loadLookup();
         }
 
         Set<String> keys = new HashSet<>(lookup.keySet());
 
-        if (this.parent != null)
-        {
+        if (this.parent != null) {
             this.parent.getKeys().asIterator().forEachRemaining(keys::add);
         }
 
@@ -38,20 +34,16 @@ public abstract class AbstractMapResourceBundle extends ResourceBundle
     protected abstract Map<String, Object> getContents();
 
     @Override
-    protected Object handleGetObject(final String key)
-    {
-        if (lookup == null)
-        {
+    protected Object handleGetObject(final String key) {
+        if (lookup == null) {
             loadLookup();
         }
 
-        if (key == null)
-        {
+        if (key == null) {
             throw new NullPointerException();
         }
 
-        if (this.parent != null)
-        {
+        if (this.parent != null) {
             return lookup.get(key);
         }
 
@@ -59,20 +51,16 @@ public abstract class AbstractMapResourceBundle extends ResourceBundle
     }
 
     @Override
-    protected Set<String> handleKeySet()
-    {
-        if (lookup == null)
-        {
+    protected Set<String> handleKeySet() {
+        if (lookup == null) {
             loadLookup();
         }
 
         return lookup.keySet();
     }
 
-    private synchronized void loadLookup()
-    {
-        if (lookup != null)
-        {
+    private synchronized void loadLookup() {
+        if (lookup != null) {
             return;
         }
 

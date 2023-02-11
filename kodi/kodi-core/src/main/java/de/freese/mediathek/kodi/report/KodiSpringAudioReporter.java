@@ -3,19 +3,18 @@ package de.freese.mediathek.kodi.report;
 
 import javax.sql.DataSource;
 
+import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.env.StandardEnvironment;
+
 import de.freese.mediathek.kodi.spring.AbstractAppConfig;
 import de.freese.mediathek.kodi.spring.AppConfigSqLite;
 import de.freese.mediathek.report.KodiAudioReporter;
-import org.springframework.core.env.ConfigurableEnvironment;
-import org.springframework.core.env.StandardEnvironment;
 
 /**
  * @author Thomas Freese
  */
-public class KodiSpringAudioReporter extends KodiAudioReporter
-{
-    public DataSource createDataSource(final boolean readonly) throws Exception
-    {
+public class KodiSpringAudioReporter extends KodiAudioReporter {
+    public DataSource createDataSource(final boolean readonly) throws Exception {
         ConfigurableEnvironment environment = new StandardEnvironment();
         environment.getPropertySources().addLast(new KodiPropertySource());
 

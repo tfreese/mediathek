@@ -11,8 +11,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "Actor")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Actor implements Comparable<Actor>
-{
+public class Actor implements Comparable<Actor> {
     @XmlElement(name = "SortOrder")
     private final int sortOrder = -1;
     @XmlElement(name = "id")
@@ -28,30 +27,25 @@ public class Actor implements Comparable<Actor>
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override
-    public int compareTo(final Actor o)
-    {
+    public int compareTo(final Actor o) {
         int comp = this.sortOrder - o.sortOrder;
 
-        if (comp == 0)
-        {
+        if (comp == 0) {
             comp = getName().compareTo(o.getName());
         }
 
         return comp;
     }
 
-    public String getImage()
-    {
+    public String getImage() {
         return this.image;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return this.name;
     }
 
-    public String getRole()
-    {
+    public String getRole() {
         return this.role;
     }
 
@@ -59,8 +53,7 @@ public class Actor implements Comparable<Actor>
      * @see java.lang.Object#toString()
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Actor [");
         builder.append("id=").append(this.id);

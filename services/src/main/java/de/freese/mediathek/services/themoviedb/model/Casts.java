@@ -11,30 +11,24 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * @author Thomas Freese
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Casts
-{
+public class Casts {
     private List<Actor> cast;
 
     private List<Crew> crew;
 
-    public List<Actor> getCast()
-    {
+    public List<Actor> getCast() {
         return this.cast;
     }
 
-    public List<Crew> getCrew()
-    {
+    public List<Crew> getCrew() {
         return this.crew;
     }
 
-    public List<Crew> getDirectors()
-    {
+    public List<Crew> getDirectors() {
         List<Crew> directors = new ArrayList<>();
 
-        for (Crew crew : getCrew())
-        {
-            if ("Director".equals(crew.getJob()))
-            {
+        for (Crew crew : getCrew()) {
+            if ("Director".equals(crew.getJob())) {
                 directors.add(crew);
             }
         }
@@ -42,15 +36,13 @@ public class Casts
         return directors;
     }
 
-    public void setCast(final List<Actor> cast)
-    {
+    public void setCast(final List<Actor> cast) {
         this.cast = cast;
 
         Collections.sort(this.cast);
     }
 
-    public void setCrew(final List<Crew> crew)
-    {
+    public void setCrew(final List<Crew> crew) {
         this.crew = crew;
     }
 }

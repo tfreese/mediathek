@@ -8,8 +8,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
  * @author Thomas Freese
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Crew
-{
+public class Crew {
     /**
      * job
      */
@@ -23,34 +22,28 @@ public class Crew
      */
     private String profile;
 
-    public String getJob()
-    {
+    public String getJob() {
         return this.job;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return this.name;
     }
 
-    public String getProfile()
-    {
+    public String getProfile() {
         return this.profile;
     }
 
-    public void setJob(final String job)
-    {
+    public void setJob(final String job) {
         this.job = job;
     }
 
-    public void setName(final String name)
-    {
+    public void setName(final String name) {
         this.name = name;
     }
 
     @JsonSetter("profile_path")
-    public void setProfile(final String profile)
-    {
+    public void setProfile(final String profile) {
         this.profile = profile;
     }
 
@@ -58,8 +51,7 @@ public class Crew
      * @see java.lang.Object#toString()
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Crew [name=");
         builder.append(this.name);

@@ -4,20 +4,19 @@ package de.freese.mediathek.kodi.impl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import de.freese.mediathek.kodi.model.Show;
 import org.springframework.jdbc.core.RowMapper;
+
+import de.freese.mediathek.kodi.model.Show;
 
 /**
  * @author Thomas Freese
  */
-public class ShowRowMapper implements RowMapper<Show>
-{
+public class ShowRowMapper implements RowMapper<Show> {
     /**
      * @see org.springframework.jdbc.core.RowMapper#mapRow(java.sql.ResultSet, int)
      */
     @Override
-    public Show mapRow(final ResultSet rs, final int rowNum) throws SQLException
-    {
+    public Show mapRow(final ResultSet rs, final int rowNum) throws SQLException {
         Show show = new Show();
         show.setPk(rs.getInt("pk"));
         show.setName(rs.getString("name"));

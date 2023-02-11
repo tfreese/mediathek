@@ -15,15 +15,13 @@ import org.sqlite.SQLiteDataSource;
  */
 @Configuration
 @Profile("sqlite")
-public class AppConfigSqLite extends AbstractAppConfig
-{
+public class AppConfigSqLite extends AbstractAppConfig {
     /**
      * @see de.freese.mediathek.kodi.spring.AbstractAppConfig#dataSourceAudio()
      */
     @Override
     @Bean
-    public DataSource dataSourceAudio()
-    {
+    public DataSource dataSourceAudio() {
         // @Value("${sqlite.audio.db.url}") final String url
         SQLiteConfig config = createSQLiteConfig();
 
@@ -39,8 +37,7 @@ public class AppConfigSqLite extends AbstractAppConfig
     @Override
     @Bean
     @Primary
-    public DataSource dataSourceVideo()
-    {
+    public DataSource dataSourceVideo() {
         SQLiteConfig config = createSQLiteConfig();
 
         SQLiteDataSource dataSource = new SQLiteDataSource(config);
@@ -49,8 +46,7 @@ public class AppConfigSqLite extends AbstractAppConfig
         return dataSource;
     }
 
-    private SQLiteConfig createSQLiteConfig()
-    {
+    private SQLiteConfig createSQLiteConfig() {
         // Native Libraries deaktivieren für den Zugriff auf die Dateien.
         System.setProperty("sqlite.purejava", "true");
         // System.setProperty("org.sqlite.lib.path", "/home/tommy");

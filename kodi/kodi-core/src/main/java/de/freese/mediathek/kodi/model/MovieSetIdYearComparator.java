@@ -15,30 +15,25 @@ import java.util.Objects;
  *
  * @author Thomas Freese
  */
-public class MovieSetIdYearComparator implements Comparator<Movie>
-{
+public class MovieSetIdYearComparator implements Comparator<Movie> {
     private static final Collator COLLATOR = Collator.getInstance(Locale.GERMANY);
 
     /**
      * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
      */
     @Override
-    public int compare(final Movie o1, final Movie o2)
-    {
-        if (o1.getPk() == o2.getPk())
-        {
+    public int compare(final Movie o1, final Movie o2) {
+        if (o1.getPk() == o2.getPk()) {
             return 0;
         }
 
         int comp = 0;
 
-        if ((o1.getSetID() > 0) && (o1.getSetID() == o2.getSetID()))
-        {
+        if ((o1.getSetID() > 0) && (o1.getSetID() == o2.getSetID())) {
             comp = Integer.compare(o1.getYear(), o2.getYear());
         }
 
-        if (comp == 0)
-        {
+        if (comp == 0) {
             String name1 = Objects.toString(o1.getName()).strip();
             String name2 = Objects.toString(o2.getName()).strip();
 

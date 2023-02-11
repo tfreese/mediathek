@@ -16,32 +16,26 @@ import de.freese.mediathek.kodi.swing.view.AbstractShowAndMovieView;
 /**
  * @author Thomas Freese
  */
-public abstract class AbstractShowAndMovieController<T> extends AbstractController
-{
-    protected AbstractShowAndMovieController(AbstractShowAndMovieService<T> service, AbstractShowAndMovieView<T> view)
-    {
+public abstract class AbstractShowAndMovieController<T> extends AbstractController {
+    protected AbstractShowAndMovieController(AbstractShowAndMovieService<T> service, AbstractShowAndMovieView<T> view) {
         super(service, view);
     }
 
-    public void clear()
-    {
+    public void clear() {
         getView().getImageLabel().setIcon(null);
         getView().getGenreLabel().setText(null);
         getView().getIdLabel().setText(null);
     }
 
-    public void openGenreDialog()
-    {
+    public void openGenreDialog() {
         T entity = getView().getSelected();
 
-        SwingWorker<List<List<Genre>>, Void> worker = new SwingWorker<>()
-        {
+        SwingWorker<List<List<Genre>>, Void> worker = new SwingWorker<>() {
             /**
              * @see javax.swing.SwingWorker#doInBackground()
              */
             @Override
-            protected List<List<Genre>> doInBackground() throws Exception
-            {
+            protected List<List<Genre>> doInBackground() throws Exception {
                 List<Genre> allGenres = getService().getAllGenres();
                 List<Genre> entityGenres = getService().getEntityGenres(entity);
 
@@ -56,33 +50,28 @@ public abstract class AbstractShowAndMovieController<T> extends AbstractControll
              * @see javax.swing.SwingWorker#done()
              */
             @Override
-            protected void done()
-            {
-                try
-                {
+            protected void done() {
+                try {
                     List<List<Genre>> result = get();
 
                     GenreDialog dialog = new GenreDialog(KodiSwingClient.frame);
                     dialog.open(result.get(0), result.get(1));
 
-                    if (dialog.hasBeenCanceled())
-                    {
+                    if (dialog.hasBeenCanceled()) {
                         return;
                     }
 
                     List<Genre> selected = dialog.getSelectedGenres();
                     int[] newGenreIDs = new int[selected.size()];
 
-                    for (int i = 0; i < newGenreIDs.length; i++)
-                    {
+                    for (int i = 0; i < newGenreIDs.length; i++) {
                         newGenreIDs[i] = selected.get(i).getPk();
                     }
 
                     getService().updateEntityGenres(entity, newGenreIDs);
                     setSelected(entity);
                 }
-                catch (Exception ex)
-                {
+                catch (Exception ex) {
                     getLogger().error(ex.getMessage(), ex);
                 }
             }
@@ -90,8 +79,7 @@ public abstract class AbstractShowAndMovieController<T> extends AbstractControll
         worker.execute();
     }
 
-    public void reload()
-    {
+    public void reload() {
         getView().clear();
 
         List<T> data = getService().load();
@@ -101,27 +89,22 @@ public abstract class AbstractShowAndMovieController<T> extends AbstractControll
     public abstract void setSelected(T entity);
 
     @Override
-    protected AbstractShowAndMovieService<T> getService()
-    {
+    protected AbstractShowAndMovieService<T> getService() {
         return (AbstractShowAndMovieService<T>) super.getService();
     }
 
     @Override
-    protected AbstractShowAndMovieView<T> getView()
-    {
+    protected AbstractShowAndMovieView<T> getView() {
         return (AbstractShowAndMovieView<T>) super.getView();
     }
 
-    protected void setImageIcon(T entity)
-    {
-        SwingWorker<ImageIcon, Void> worker = new SwingWorker<>()
-        {
+    protected void setImageIcon(T entity) {
+        SwingWorker<ImageIcon, Void> worker = new SwingWorker<>() {
             /**
              * @see javax.swing.SwingWorker#doInBackground()
              */
             @Override
-            protected ImageIcon doInBackground() throws Exception
-            {
+            protected ImageIcon doInBackground() throws Exception {
                 return getService().loadImageIcon(entity);
             }
 
@@ -129,14 +112,11 @@ public abstract class AbstractShowAndMovieController<T> extends AbstractControll
              * @see javax.swing.SwingWorker#done()
              */
             @Override
-            protected void done()
-            {
-                try
-                {
+            protected void done() {
+                try {
                     getView().getImageLabel().setIcon(get());
                 }
-                catch (Exception ex)
-                {
+                catch (Exception ex) {
                     getLogger().error("No valid url: {}", ex.getMessage());
                 }
             }

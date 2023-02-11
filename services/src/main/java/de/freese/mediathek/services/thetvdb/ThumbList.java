@@ -14,18 +14,15 @@ import jakarta.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "fanart")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ThumbList
-{
+public class ThumbList {
     @XmlElement(name = "thumb")
     private List<Thumb> thumbs = new ArrayList<>();
 
-    public List<Thumb> getThumbs()
-    {
+    public List<Thumb> getThumbs() {
         return this.thumbs;
     }
 
-    public void setThumbs(final List<Thumb> thumbs)
-    {
+    public void setThumbs(final List<Thumb> thumbs) {
         this.thumbs = thumbs;
     }
 }

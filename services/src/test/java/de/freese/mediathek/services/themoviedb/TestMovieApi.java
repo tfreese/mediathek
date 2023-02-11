@@ -8,6 +8,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+
 import de.freese.mediathek.services.Settings;
 import de.freese.mediathek.services.themoviedb.api.AccountService;
 import de.freese.mediathek.services.themoviedb.api.MovieService;
@@ -20,22 +24,17 @@ import de.freese.mediathek.services.themoviedb.model.Images;
 import de.freese.mediathek.services.themoviedb.model.Movie;
 import de.freese.mediathek.services.themoviedb.model.MovieDetails;
 import de.freese.mediathek.services.themoviedb.model.Search;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
 /**
  * @author Thomas Freese
  */
-class TestMovieApi
-{
+class TestMovieApi {
     private static AccountService accountService;
 
     private static MovieService movieService;
 
     @BeforeAll
-    static void beforeAll() throws Exception
-    {
+    static void beforeAll() throws Exception {
         movieService = new DefaultMovieService(Settings.getMovieDbApiKey());
         ((DefaultMovieService) movieService).afterPropertiesSet();
 
@@ -45,8 +44,7 @@ class TestMovieApi
 
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
-    void testCasts() throws Exception
-    {
+    void testCasts() throws Exception {
         Casts casts = movieService.casts(Settings.TEST_MOVIE_ID);
 
         assertNotNull(casts);
@@ -62,8 +60,7 @@ class TestMovieApi
 
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
-    void testConfiguration() throws Exception
-    {
+    void testConfiguration() throws Exception {
         Configuration configuration = accountService.getConfiguration();
 
         assertNotNull(configuration);
@@ -82,8 +79,7 @@ class TestMovieApi
 
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
-    void testDetails() throws Exception
-    {
+    void testDetails() throws Exception {
         MovieDetails details = movieService.details(Settings.TEST_MOVIE_ID);
 
         assertNotNull(details);
@@ -118,8 +114,7 @@ class TestMovieApi
 
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
-    void testImages() throws Exception
-    {
+    void testImages() throws Exception {
         Images images = movieService.images(Settings.TEST_MOVIE_ID);
 
         assertNotNull(images);
@@ -131,15 +126,13 @@ class TestMovieApi
 
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
-    void testSearch() throws Exception
-    {
+    void testSearch() throws Exception {
         Search result = movieService.search(Settings.TEST_MOVIE);
 
         assertNotNull(result.getResults());
         assertTrue(result.getResults().size() >= 1);
 
-        for (Movie mov : result.getResults())
-        {
+        for (Movie mov : result.getResults()) {
             assertNotNull(mov);
             assertNotEquals(0, mov.getId());
             assertNotNull(mov.getTitle());
@@ -154,15 +147,13 @@ class TestMovieApi
 
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
-    void testSearchYear() throws Exception
-    {
+    void testSearchYear() throws Exception {
         Search result = movieService.search(Settings.TEST_MOVIE, Settings.TEST_MOVIE_YEAR);
 
         assertNotNull(result.getResults());
         assertEquals(2, result.getResults().size());
 
-        for (Movie mov : result.getResults())
-        {
+        for (Movie mov : result.getResults()) {
             assertNotNull(mov);
             assertNotEquals(0, mov.getId());
             assertNotNull(mov.getTitle());

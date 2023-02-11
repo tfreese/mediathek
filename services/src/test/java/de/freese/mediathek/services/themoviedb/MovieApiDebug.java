@@ -7,22 +7,21 @@ import java.net.URL;
 import java.util.Locale;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.freese.mediathek.services.Settings;
 import org.springframework.web.client.RestTemplate;
+
+import de.freese.mediathek.services.Settings;
 
 /**
  * API-Debug für <a href="http://www.thetvdb.com">thetvdb</a>.
  *
  * @author Thomas Freese
  */
-public class MovieApiDebug
-{
+public class MovieApiDebug {
     public static final String TEST_MOVIE = Settings.TEST_MOVIE;
 
     public static final int TEST_MOVIE_ID = Settings.TEST_MOVIE_ID;
 
-    public static void main(final String[] args) throws Exception
-    {
+    public static void main(final String[] args) throws Exception {
         MovieApiDebug debug = new MovieApiDebug();
         debug.testSearch();
         // debug.testDetails();
@@ -30,24 +29,20 @@ public class MovieApiDebug
         // debug.testActors();
     }
 
-    public MovieApiDebug()
-    {
+    public MovieApiDebug() {
         super();
     }
 
     // @Test
-    public void testActors() throws Exception
-    {
+    public void testActors() throws Exception {
         RestTemplate template = new RestTemplate();
-        String result = template.getForObject("https://api.themoviedb.org/3/movie/{movieID}/credits?api_key={api_key}&language=de", String.class, TEST_MOVIE_ID,
-                getApiKey());
+        String result = template.getForObject("https://api.themoviedb.org/3/movie/{movieID}/credits?api_key={api_key}&language=de", String.class, TEST_MOVIE_ID, getApiKey());
 
         prettyPrint(result);
     }
 
     // @Test
-    public void testConfiguration() throws Exception
-    {
+    public void testConfiguration() throws Exception {
         RestTemplate template = new RestTemplate();
         String result = template.getForObject("https://api.themoviedb.org/3/configuration?api_key={api_key}", String.class, getApiKey());
 
@@ -59,25 +54,21 @@ public class MovieApiDebug
     }
 
     // @Test
-    public void testDetails() throws Exception
-    {
+    public void testDetails() throws Exception {
         RestTemplate template = new RestTemplate();
-        String result =
-                template.getForObject("https://api.themoviedb.org/3/movie/{movieID}?api_key={api_key}&language=de", String.class, TEST_MOVIE_ID, getApiKey());
+        String result = template.getForObject("https://api.themoviedb.org/3/movie/{movieID}?api_key={api_key}&language=de", String.class, TEST_MOVIE_ID, getApiKey());
 
         prettyPrint(result);
     }
 
     // @Test
-    public void testHTTP() throws Exception
-    {
+    public void testHTTP() throws Exception {
         URL url = new URL(String.format("https://api.themoviedb.org/3/search/movie?api_key=%s&language=de&query=%s", getApiKey(), TEST_MOVIE));
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Accept", "application/json");
 
-        if (connection.getResponseCode() != HttpURLConnection.HTTP_OK)
-        {
+        if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
             throw new RuntimeException("Operation failed: " + connection.getResponseCode());
         }
 
@@ -86,8 +77,7 @@ public class MovieApiDebug
 
         ObjectMapper mapper = new ObjectMapper();
 
-        try (InputStream inputStream = connection.getInputStream())
-        {
+        try (InputStream inputStream = connection.getInputStream()) {
             Object json = mapper.readValue(inputStream, Object.class);
             System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json));
         }
@@ -107,21 +97,17 @@ public class MovieApiDebug
     }
 
     // @Test
-    public void testImages() throws Exception
-    {
+    public void testImages() throws Exception {
         RestTemplate template = new RestTemplate();
-        String result =
-                template.getForObject("https://api.themoviedb.org/3/movie/{movieID}/images?api_key={api_key}", String.class, TEST_MOVIE_ID, getApiKey());
+        String result = template.getForObject("https://api.themoviedb.org/3/movie/{movieID}/images?api_key={api_key}", String.class, TEST_MOVIE_ID, getApiKey());
 
         prettyPrint(result);
     }
 
     // @Test
-    public void testSearch() throws Exception
-    {
+    public void testSearch() throws Exception {
         RestTemplate template = new RestTemplate();
-        String result = template.getForObject("https://api.themoviedb.org/3/search/movie?api_key={api_key}&language={lang}&query={query}", String.class,
-                getApiKey(), getLocale().getLanguage(), TEST_MOVIE);
+        String result = template.getForObject("https://api.themoviedb.org/3/search/movie?api_key={api_key}&language={lang}&query={query}", String.class, getApiKey(), getLocale().getLanguage(), TEST_MOVIE);
         // String result =
         // template.getForObject("https://api.themoviedb.org/3/search/tv?api_key={api_key}&language={lang}&query={query}", String.class, getApiKey(),
         // getLocale().getLanguage(), "stargate"); // 4629
@@ -138,18 +124,15 @@ public class MovieApiDebug
         prettyPrint(result);
     }
 
-    private String getApiKey()
-    {
+    private String getApiKey() {
         return Settings.getMovieDbApiKey();
     }
 
-    private Locale getLocale()
-    {
+    private Locale getLocale() {
         return Locale.GERMANY;
     }
 
-    private void prettyPrint(final String result) throws Exception
-    {
+    private void prettyPrint(final String result) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         Object json = mapper.readValue(result, Object.class);
         System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json));

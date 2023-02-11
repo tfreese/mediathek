@@ -8,24 +8,20 @@ import org.springframework.context.ApplicationContext;
 /**
  * @author Thomas Freese
  */
-public abstract class AbstractService implements Service
-{
+public abstract class AbstractService implements Service {
     private final ApplicationContext applicationContext;
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    protected AbstractService(final ApplicationContext applicationContext)
-    {
+    protected AbstractService(final ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 
     @Override
-    public ApplicationContext getApplicationContext()
-    {
+    public ApplicationContext getApplicationContext() {
         return applicationContext;
     }
 
-    protected Logger getLogger()
-    {
+    protected Logger getLogger() {
         return logger;
     }
 }

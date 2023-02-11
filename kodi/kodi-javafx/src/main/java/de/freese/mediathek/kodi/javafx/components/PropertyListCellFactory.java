@@ -11,12 +11,10 @@ import org.springframework.util.ReflectionUtils;
 /**
  * @author Thomas Freese
  */
-public class PropertyListCellFactory<T> implements Callback<ListView<T>, ListCell<T>>
-{
+public class PropertyListCellFactory<T> implements Callback<ListView<T>, ListCell<T>> {
     private final Method method;
 
-    public PropertyListCellFactory(final Class<T> clazz, final String methodName)
-    {
+    public PropertyListCellFactory(final Class<T> clazz, final String methodName) {
         super();
 
         // Class<T> clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
@@ -28,24 +26,19 @@ public class PropertyListCellFactory<T> implements Callback<ListView<T>, ListCel
      * @see javafx.util.Callback#call(java.lang.Object)
      */
     @Override
-    public ListCell<T> call(final ListView<T> param)
-    {
-        return new ListCell<>()
-        {
+    public ListCell<T> call(final ListView<T> param) {
+        return new ListCell<>() {
             /**
              * @see javafx.scene.control.Cell#updateItem(java.lang.Object, boolean)
              */
             @Override
-            protected void updateItem(final T entity, final boolean empty)
-            {
+            protected void updateItem(final T entity, final boolean empty) {
                 super.updateItem(entity, empty);
 
-                if (entity != null)
-                {
+                if (entity != null) {
                     setText(ReflectionUtils.invokeMethod(PropertyListCellFactory.this.method, entity).toString());
                 }
-                else
-                {
+                else {
                     setText(null);
                 }
             }

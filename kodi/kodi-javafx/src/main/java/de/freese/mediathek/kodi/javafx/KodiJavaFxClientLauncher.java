@@ -6,10 +6,8 @@ import javafx.application.Application;
 /**
  * @author Thomas Freese
  */
-public class KodiJavaFxClientLauncher
-{
-    public static void main(final String[] args)
-    {
+public class KodiJavaFxClientLauncher {
+    public static void main(final String[] args) {
         // Warn-Meldungen bei Bindings verhindern.
         // Logging.getLogger().setLevel(Level.SEVERE);
         System.setProperty("org.slf4j.simpleLogger.log.de.freese.mediathek.kodi.javafx", "DEBUG");

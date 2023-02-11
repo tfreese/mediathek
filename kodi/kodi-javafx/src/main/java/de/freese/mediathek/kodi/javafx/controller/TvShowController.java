@@ -4,20 +4,19 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.beans.binding.Bindings;
+import org.springframework.context.ApplicationContext;
+
 import de.freese.mediathek.kodi.model.Genre;
 import de.freese.mediathek.kodi.model.Model;
 import de.freese.mediathek.kodi.model.Show;
 import de.freese.mediathek.utils.MediaDbUtils;
-import javafx.beans.binding.Bindings;
-import org.springframework.context.ApplicationContext;
 
 /**
  * @author Thomas Freese
  */
-public class TvShowController extends AbstractTvShowMovieController<Show>
-{
-    public TvShowController(final ApplicationContext applicationContext, final ResourceBundle resourceBundle)
-    {
+public class TvShowController extends AbstractTvShowMovieController<Show> {
+    public TvShowController(final ApplicationContext applicationContext, final ResourceBundle resourceBundle) {
         super(applicationContext, resourceBundle);
 
         initialize(null, resourceBundle);
@@ -27,8 +26,7 @@ public class TvShowController extends AbstractTvShowMovieController<Show>
      * @see de.freese.mediathek.kodi.javafx.controller.AbstractTvShowMovieController#initialize(java.net.URL, java.util.ResourceBundle)
      */
     @Override
-    public void initialize(final URL url, final ResourceBundle rb)
-    {
+    public void initialize(final URL url, final ResourceBundle rb) {
         super.initialize(url, rb);
 
         getPane().getIdProperty().bind(Bindings.selectString(getPane().getTableSelectionModel().selectedItemProperty(), "tvDbId"));
@@ -38,8 +36,7 @@ public class TvShowController extends AbstractTvShowMovieController<Show>
      * @see de.freese.mediathek.kodi.javafx.controller.AbstractTvShowMovieController#getGenres(Model)
      */
     @Override
-    protected List<Genre> getGenres(final Show value)
-    {
+    protected List<Genre> getGenres(final Show value) {
         return getMediaService().getShowGenres(value.getPk());
     }
 
@@ -47,12 +44,10 @@ public class TvShowController extends AbstractTvShowMovieController<Show>
      * @see de.freese.mediathek.kodi.javafx.controller.AbstractTvShowMovieController#getImageUrl(Model)
      */
     @Override
-    protected String getImageUrl(final Show value)
-    {
+    protected String getImageUrl(final Show value) {
         String url = MediaDbUtils.subStringBetween("preview=\"", "\">", value.getBanner());
 
-        if ((url == null) || url.isBlank())
-        {
+        if ((url == null) || url.isBlank()) {
             return null;
         }
 
@@ -63,8 +58,7 @@ public class TvShowController extends AbstractTvShowMovieController<Show>
      * @see de.freese.mediathek.kodi.javafx.controller.AbstractTvShowMovieController#load()
      */
     @Override
-    protected List<Show> load()
-    {
+    protected List<Show> load() {
         return getMediaService().getShows();
     }
 
@@ -72,14 +66,12 @@ public class TvShowController extends AbstractTvShowMovieController<Show>
      * @see de.freese.mediathek.kodi.javafx.controller.AbstractTvShowMovieController#updateDetails(Model)
      */
     @Override
-    protected void updateDetails(final Show value)
-    {
+    protected void updateDetails(final Show value) {
         super.updateDetails(value);
 
         getPane().getGenresProperty().set(null);
 
-        if (value != null)
-        {
+        if (value != null) {
             getPane().getGenresProperty().set(value.getGenres());
         }
     }
@@ -88,8 +80,7 @@ public class TvShowController extends AbstractTvShowMovieController<Show>
      * @see de.freese.mediathek.kodi.javafx.controller.AbstractTvShowMovieController#updateGenres(Model, int[])
      */
     @Override
-    protected void updateGenres(final Show value, final int[] genreIDs)
-    {
+    protected void updateGenres(final Show value, final int[] genreIDs) {
         String newGenres = getMediaService().updateShowGenres(value.getPk(), genreIDs);
         getPane().getGenresProperty().set(newGenres);
         value.setGenres(newGenres);

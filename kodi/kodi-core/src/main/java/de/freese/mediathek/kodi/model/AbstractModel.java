@@ -6,8 +6,7 @@ import java.util.Objects;
 /**
  * @author Thomas Freese
  */
-public abstract class AbstractModel implements Model
-{
+public abstract class AbstractModel implements Model {
     private String name;
 
     private int pk = -1;
@@ -16,15 +15,12 @@ public abstract class AbstractModel implements Model
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override
-    public int compareTo(final Model o)
-    {
-        if (o == null)
-        {
+    public int compareTo(final Model o) {
+        if (o == null) {
             return -1;
         }
 
-        if (this == o)
-        {
+        if (this == o) {
             return 0;
         }
 
@@ -35,15 +31,12 @@ public abstract class AbstractModel implements Model
     }
 
     @Override
-    public boolean equals(final Object o)
-    {
-        if (this == o)
-        {
+    public boolean equals(final Object o) {
+        if (this == o) {
             return true;
         }
 
-        if (!(o instanceof AbstractModel model))
-        {
+        if (!(o instanceof AbstractModel model)) {
             return false;
         }
 
@@ -54,8 +47,7 @@ public abstract class AbstractModel implements Model
      * @see Model#getName()
      */
     @Override
-    public String getName()
-    {
+    public String getName() {
         return this.name;
     }
 
@@ -63,14 +55,12 @@ public abstract class AbstractModel implements Model
      * @see Model#getPk()
      */
     @Override
-    public int getPk()
-    {
+    public int getPk() {
         return this.pk;
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return Objects.hash(getName(), pk);
     }
 
@@ -78,8 +68,7 @@ public abstract class AbstractModel implements Model
      * @see Model#setName(java.lang.String)
      */
     @Override
-    public void setName(final String name)
-    {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -87,8 +76,7 @@ public abstract class AbstractModel implements Model
      * @see Model#setPk(int)
      */
     @Override
-    public void setPk(final int pk)
-    {
+    public void setPk(final int pk) {
         this.pk = pk;
     }
 
@@ -96,8 +84,7 @@ public abstract class AbstractModel implements Model
      * @see java.lang.Object#toString()
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append(getClass().getSimpleName()).append(" [pk=");
         builder.append(this.pk).append(", name=");

@@ -31,31 +31,26 @@ import de.freese.mediathek.kodi.swing.controller.GenreController;
 /**
  * @author Thomas Freese
  */
-public class GenreView extends AbstractView
-{
+public class GenreView extends AbstractView {
     private JList<Movie> listMovies;
     private JList<Show> listShows;
     private JTable table;
 
-    public void clear()
-    {
+    public void clear() {
         ((DefaultListListModel<?>) this.listShows.getModel()).clear();
         ((DefaultListListModel<?>) this.listMovies.getModel()).clear();
     }
 
-    public void fill(final List<Genre> data)
-    {
+    public void fill(final List<Genre> data) {
         getTableModel().addAll(data);
 
-        if (data != null && !data.isEmpty())
-        {
+        if (data != null && !data.isEmpty()) {
             table.setRowSelectionInterval(0, 0);
         }
     }
 
     @Override
-    public Component init(final Controller controller, final ResourceBundle resourceBundle)
-    {
+    public Component init(final Controller controller, final ResourceBundle resourceBundle) {
         super.init(controller, resourceBundle);
 
         JPanel parentPanel = new JPanel();
@@ -74,10 +69,8 @@ public class GenreView extends AbstractView
         this.table.getColumnModel().getColumn(0).setMinWidth(160);
         this.table.getColumnModel().getColumn(1).setMinWidth(60);
         this.table.getColumnModel().getColumn(2).setMinWidth(60);
-        this.table.getSelectionModel().addListSelectionListener(event ->
-        {
-            if (event.getValueIsAdjusting())
-            {
+        this.table.getSelectionModel().addListSelectionListener(event -> {
+            if (event.getValueIsAdjusting()) {
                 return;
             }
 
@@ -85,8 +78,7 @@ public class GenreView extends AbstractView
 
             int viewRow = this.table.getSelectedRow();
 
-            if (viewRow == -1)
-            {
+            if (viewRow == -1) {
                 return;
             }
 
@@ -111,14 +103,14 @@ public class GenreView extends AbstractView
         this.listMovies.setCellRenderer(new MovieListCellRenderer());
         scrollPane = new JScrollPane(this.listMovies);
         scrollPane.setBorder(new TitledBorder(getTranslation("movies")));
-        panel.add(scrollPane, new GbcBuilder(0, 0).fillBoth());
+        panel.add(scrollPane, GbcBuilder.of(0, 0).fillBoth());
 
         this.listShows = new JList<>(new DefaultListListModel<>());
         this.listShows.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.listShows.setCellRenderer(new ShowListCellRenderer());
         scrollPane = new JScrollPane(this.listShows);
         scrollPane.setBorder(new TitledBorder(getTranslation("shows")));
-        panel.add(scrollPane, new GbcBuilder(1, 0).fillBoth());
+        panel.add(scrollPane, GbcBuilder.of(1, 0).fillBoth());
 
         // Push all up.
         parentPanel.add(splitPane, BorderLayout.CENTER);
@@ -126,8 +118,7 @@ public class GenreView extends AbstractView
         return parentPanel;
     }
 
-    public void setShowsAndMovies(List<? extends Model> shows, List<? extends Model> movies)
-    {
+    public void setShowsAndMovies(List<? extends Model> shows, List<? extends Model> movies) {
         ((DefaultListListModel<?>) this.listShows.getModel()).clear();
         ((DefaultListListModel<?>) this.listMovies.getModel()).clear();
 
@@ -136,13 +127,11 @@ public class GenreView extends AbstractView
     }
 
     @Override
-    protected GenreController getController()
-    {
+    protected GenreController getController() {
         return (GenreController) super.getController();
     }
 
-    private GenreTableModel getTableModel()
-    {
+    private GenreTableModel getTableModel() {
         return (GenreTableModel) this.table.getModel();
     }
 }

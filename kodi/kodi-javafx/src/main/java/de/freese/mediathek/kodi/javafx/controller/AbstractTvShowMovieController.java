@@ -8,12 +8,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import de.freese.mediathek.kodi.javafx.KodiJavaFxClient;
-import de.freese.mediathek.kodi.javafx.components.ModelListCellFactory;
-import de.freese.mediathek.kodi.javafx.components.PickList;
-import de.freese.mediathek.kodi.javafx.pane.TvShowMoviePane;
-import de.freese.mediathek.kodi.model.Genre;
-import de.freese.mediathek.kodi.model.Model;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -23,22 +17,26 @@ import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.image.Image;
 import org.springframework.context.ApplicationContext;
 
+import de.freese.mediathek.kodi.javafx.KodiJavaFxClient;
+import de.freese.mediathek.kodi.javafx.components.ModelListCellFactory;
+import de.freese.mediathek.kodi.javafx.components.PickList;
+import de.freese.mediathek.kodi.javafx.pane.TvShowMoviePane;
+import de.freese.mediathek.kodi.model.Genre;
+import de.freese.mediathek.kodi.model.Model;
+
 /**
  * @author Thomas Freese
  */
-public abstract class AbstractTvShowMovieController<T extends Model> extends AbstractController<T>
-{
+public abstract class AbstractTvShowMovieController<T extends Model> extends AbstractController<T> {
     private final TvShowMoviePane<T> pane;
 
-    protected AbstractTvShowMovieController(final ApplicationContext applicationContext, final ResourceBundle resourceBundle)
-    {
+    protected AbstractTvShowMovieController(final ApplicationContext applicationContext, final ResourceBundle resourceBundle) {
         super(applicationContext);
 
         this.pane = new TvShowMoviePane<>(resourceBundle);
     }
 
-    public TvShowMoviePane<T> getPane()
-    {
+    public TvShowMoviePane<T> getPane() {
         return this.pane;
     }
 
@@ -46,8 +44,7 @@ public abstract class AbstractTvShowMovieController<T extends Model> extends Abs
      * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
      */
     @Override
-    public void initialize(final URL url, final ResourceBundle rb)
-    {
+    public void initialize(final URL url, final ResourceBundle rb) {
         ObservableList<T> dataList = getPane().getTableItems();
         TableViewSelectionModel<T> selectionModel = getPane().getTableSelectionModel();
 
@@ -69,36 +66,29 @@ public abstract class AbstractTvShowMovieController<T extends Model> extends Abs
      * @see de.freese.mediathek.kodi.javafx.controller.AbstractController#updateDetails(Model)
      */
     @Override
-    protected void updateDetails(final T value)
-    {
+    protected void updateDetails(final T value) {
         getPane().getImageProperty().set(null);
 
-        if (value == null)
-        {
+        if (value == null) {
             return;
         }
 
-        final Task<Image> task = new Task<>()
-        {
+        final Task<Image> task = new Task<>() {
             /**
              * @see javafx.concurrent.Task#call()
              */
             @Override
-            protected Image call() throws Exception
-            {
+            protected Image call() throws Exception {
                 String url = getImageUrl(value);
 
-                if (url != null)
-                {
-                    if (url.contains("\""))
-                    {
+                if (url != null) {
+                    if (url.contains("\"")) {
                         url = url.substring(0, url.indexOf('"'));
                     }
 
                     URI uri = URI.create(url);
 
-                    try (InputStream inputStream = getResourceCache().getResource(uri))
-                    {
+                    try (InputStream inputStream = getResourceCache().getResource(uri)) {
                         return new Image(inputStream, 1024, 768, true, true);
                     }
                 }
@@ -106,14 +96,12 @@ public abstract class AbstractTvShowMovieController<T extends Model> extends Abs
                 return null;
             }
         };
-        task.setOnSucceeded(event ->
-        {
+        task.setOnSucceeded(event -> {
             Image image = task.getValue();
             getPane().getImageProperty().set(image);
 
         });
-        task.setOnFailed(event ->
-        {
+        task.setOnFailed(event -> {
             KodiJavaFxClient.LOGGER.error(task.getException().getMessage());
 
             //            Alert alert = new Alert(AlertType.ERROR, task.getException().getMessage());
@@ -126,8 +114,7 @@ public abstract class AbstractTvShowMovieController<T extends Model> extends Abs
 
     protected abstract void updateGenres(T value, int[] genreIDs);
 
-    protected void updateGenres(final TableViewSelectionModel<T> selectionModel)
-    {
+    protected void updateGenres(final TableViewSelectionModel<T> selectionModel) {
         T model = selectionModel.getSelectedItem();
 
         final PickList<Model> pickList = new PickList<>();
@@ -143,10 +130,8 @@ public abstract class AbstractTvShowMovieController<T extends Model> extends Abs
         dialog.setHeaderText(model.getName());
         dialog.setGraphic(null);
         dialog.getDialogPane().setContent(pickList);
-        dialog.setResultConverter(type ->
-        {
-            if (ButtonType.OK.equals(type))
-            {
+        dialog.setResultConverter(type -> {
+            if (ButtonType.OK.equals(type)) {
                 return pickList.getListViewRight().getItems();
             }
 
@@ -155,13 +140,11 @@ public abstract class AbstractTvShowMovieController<T extends Model> extends Abs
 
         Optional<List<Model>> result = dialog.showAndWait();
 
-        if (result.isPresent())
-        {
+        if (result.isPresent()) {
             List<Model> genres = result.get();
             int[] genreIDs = new int[genres.size()];
 
-            for (int i = 0; i < genreIDs.length; i++)
-            {
+            for (int i = 0; i < genreIDs.length; i++) {
                 genreIDs[i] = genres.get(i).getPk();
             }
 

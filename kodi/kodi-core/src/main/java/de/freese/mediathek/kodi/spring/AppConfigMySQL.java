@@ -15,15 +15,13 @@ import org.springframework.context.annotation.Profile;
  */
 @Configuration
 @Profile("mysql")
-public class AppConfigMySQL extends AbstractAppConfig
-{
+public class AppConfigMySQL extends AbstractAppConfig {
     /**
      * @see de.freese.mediathek.kodi.spring.AbstractAppConfig#dataSourceAudio()
      */
     @Override
     @Bean(destroyMethod = "close")
-    public DataSource dataSourceAudio()
-    {
+    public DataSource dataSourceAudio() {
         // @Value("${mysql.audio.db.url}") final String url
         HikariConfig config = createHikariConfig();
         config.setJdbcUrl(getEnvironment().getProperty("mysql.audio.db.url"));
@@ -38,8 +36,7 @@ public class AppConfigMySQL extends AbstractAppConfig
     @Override
     @Bean(destroyMethod = "close")
     @Primary
-    public DataSource dataSourceVideo()
-    {
+    public DataSource dataSourceVideo() {
         HikariConfig config = createHikariConfig();
         config.setJdbcUrl(getEnvironment().getProperty("mysql.video.db.url"));
         config.setPoolName("dataSourceVideo");
@@ -47,8 +44,7 @@ public class AppConfigMySQL extends AbstractAppConfig
         return new HikariDataSource(config);
     }
 
-    private HikariConfig createHikariConfig()
-    {
+    private HikariConfig createHikariConfig() {
         HikariConfig config = new HikariConfig();
         config.setDriverClassName("org.mariadb.jdbc.Driver");
 

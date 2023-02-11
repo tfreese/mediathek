@@ -9,7 +9,6 @@ import de.freese.mediathek.kodi.swing.controller.Controller;
 /**
  * @author Thomas Freese
  */
-public interface View
-{
+public interface View {
     Component init(Controller controller, ResourceBundle resourceBundle);
 }

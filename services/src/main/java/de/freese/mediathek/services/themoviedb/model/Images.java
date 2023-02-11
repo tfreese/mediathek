@@ -10,8 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * @author Thomas Freese
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Images
-{
+public class Images {
     /**
      * backdrops
      */
@@ -21,25 +20,21 @@ public class Images
      */
     private List<Image> posters;
 
-    public List<Image> getBackdrops()
-    {
+    public List<Image> getBackdrops() {
         return this.backdrops;
     }
 
-    public List<Image> getPosters()
-    {
+    public List<Image> getPosters() {
         return this.posters;
     }
 
-    public void setBackdrops(final List<Image> backdrops)
-    {
+    public void setBackdrops(final List<Image> backdrops) {
         this.backdrops = backdrops;
 
         Collections.sort(this.backdrops);
     }
 
-    public void setPosters(final List<Image> posters)
-    {
+    public void setPosters(final List<Image> posters) {
         this.posters = posters;
 
         Collections.sort(this.posters);

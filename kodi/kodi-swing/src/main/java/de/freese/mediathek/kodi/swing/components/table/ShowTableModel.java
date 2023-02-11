@@ -9,26 +9,22 @@ import de.freese.mediathek.kodi.model.Show;
 /**
  * @author Thomas Freese
  */
-public class ShowTableModel extends AbstractListTableModel<Show>
-{
+public class ShowTableModel extends AbstractListTableModel<Show> {
     @Serial
     private static final long serialVersionUID = -876434629539382491L;
 
-    public ShowTableModel()
-    {
+    public ShowTableModel() {
         super(List.of("ID", "Name"));
     }
 
     @Override
-    public Object getValueAt(final int rowIndex, final int columnIndex)
-    {
+    public Object getValueAt(final int rowIndex, final int columnIndex) {
         Show show = getObjectAt(rowIndex);
 
-        return switch (columnIndex)
-                {
-                    case 0 -> show.getPk();
-                    case 1 -> show.getName();
-                    default -> null;
-                };
+        return switch (columnIndex) {
+            case 0 -> show.getPk();
+            case 1 -> show.getName();
+            default -> null;
+        };
     }
 }

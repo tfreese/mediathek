@@ -16,15 +16,13 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
  */
 @Configuration
 @Profile("hsqldb")
-public class AppConfigHsqlDb extends AbstractAppConfig
-{
+public class AppConfigHsqlDb extends AbstractAppConfig {
     /**
      * @see de.freese.mediathek.kodi.spring.AbstractAppConfig#dataSourceAudio()
      */
     @Override
     @Bean
-    public DataSource dataSourceAudio()
-    {
+    public DataSource dataSourceAudio() {
         SingleConnectionDataSource dataSource = createSingleConnectionDataSource();
         dataSource.setUrl(getEnvironment().getProperty("hsqldb.audio.db.url"));
 
@@ -37,8 +35,7 @@ public class AppConfigHsqlDb extends AbstractAppConfig
     @Override
     @Bean
     @Primary
-    public DataSource dataSourceVideo()
-    {
+    public DataSource dataSourceVideo() {
         SingleConnectionDataSource dataSource = createSingleConnectionDataSource();
         dataSource.setUrl("jdbc:hsqldb:mem:kodi_video");
 
@@ -50,8 +47,7 @@ public class AppConfigHsqlDb extends AbstractAppConfig
         return dataSource;
     }
 
-    private SingleConnectionDataSource createSingleConnectionDataSource()
-    {
+    private SingleConnectionDataSource createSingleConnectionDataSource() {
         SingleConnectionDataSource dataSource = new SingleConnectionDataSource();
         dataSource.setDriverClassName("org.hsqldb.jdbc.JDBCDriver");
         dataSource.setUsername("sa");

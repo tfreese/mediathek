@@ -11,18 +11,15 @@ import jakarta.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "thumb")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Thumb
-{
+public class Thumb {
     @XmlAttribute
     private String preview;
 
-    public String getPreview()
-    {
+    public String getPreview() {
         return this.preview;
     }
 
-    public void setPreview(final String preview)
-    {
+    public void setPreview(final String preview) {
         this.preview = preview;
     }
 }

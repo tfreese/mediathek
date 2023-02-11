@@ -1,38 +1,33 @@
 // Created: 12.04.2015
 package de.freese.mediathek.kodi.javafx.components;
 
-import de.freese.mediathek.kodi.model.Model;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.util.Callback;
 
+import de.freese.mediathek.kodi.model.Model;
+
 /**
  * @author Thomas Freese
  */
-public class ModelListCellFactory implements Callback<ListView<Model>, ListCell<Model>>
-{
+public class ModelListCellFactory implements Callback<ListView<Model>, ListCell<Model>> {
     /**
      * @see javafx.util.Callback#call(java.lang.Object)
      */
     @Override
-    public ListCell<Model> call(final ListView<Model> param)
-    {
-        ListCell<Model> cell = new ListCell<>()
-        {
+    public ListCell<Model> call(final ListView<Model> param) {
+        ListCell<Model> cell = new ListCell<>() {
             /**
              * @see javafx.scene.control.Cell#updateItem(java.lang.Object, boolean)
              */
             @Override
-            protected void updateItem(final Model model, final boolean empty)
-            {
+            protected void updateItem(final Model model, final boolean empty) {
                 super.updateItem(model, empty);
 
-                if (model != null)
-                {
+                if (model != null) {
                     setText(String.format("%s (%d)", model.getName(), model.getPk()));
                 }
-                else
-                {
+                else {
                     setText(null);
                 }
             }

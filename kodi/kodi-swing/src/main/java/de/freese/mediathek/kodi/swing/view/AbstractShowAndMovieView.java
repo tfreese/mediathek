@@ -32,50 +32,41 @@ import de.freese.mediathek.kodi.swing.controller.Controller;
 /**
  * @author Thomas Freese
  */
-public abstract class AbstractShowAndMovieView<T> extends AbstractView
-{
+public abstract class AbstractShowAndMovieView<T> extends AbstractView {
     private JButton genreButton;
     private JLabel genreLabel;
     private JLabel idLabel;
     private JLabel imageLabel;
     private JTable table;
 
-    public void clear()
-    {
+    public void clear() {
         getTableModel().clear();
     }
 
-    public void fill(final List<T> data)
-    {
+    public void fill(final List<T> data) {
         getTableModel().addAll(data);
 
-        if (data != null && !data.isEmpty())
-        {
+        if (data != null && !data.isEmpty()) {
             table.setRowSelectionInterval(0, 0);
         }
     }
 
-    public JLabel getGenreLabel()
-    {
+    public JLabel getGenreLabel() {
         return genreLabel;
     }
 
-    public JLabel getIdLabel()
-    {
+    public JLabel getIdLabel() {
         return idLabel;
     }
 
-    public JLabel getImageLabel()
-    {
+    public JLabel getImageLabel() {
         return imageLabel;
     }
 
-    public T getSelected()
-    {
+    public T getSelected() {
         int viewRow = this.table.getSelectedRow();
 
-        if (viewRow < 0)
-        {
+        if (viewRow < 0) {
             return null;
         }
 
@@ -85,8 +76,7 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView
     }
 
     @Override
-    public Component init(final Controller controller, final ResourceBundle resourceBundle)
-    {
+    public Component init(final Controller controller, final ResourceBundle resourceBundle) {
         super.init(controller, resourceBundle);
 
         JPanel parentPanel = new JPanel();
@@ -106,10 +96,10 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView
         leftPanel.setLayout(new GridBagLayout());
 
         JLabel label = new JLabel(getTranslation("filter") + ":");
-        leftPanel.add(label, new GbcBuilder(0, 0));
+        leftPanel.add(label, GbcBuilder.of(0, 0));
 
         JTextField textFieldFilter = new JTextField();
-        leftPanel.add(textFieldFilter, new GbcBuilder(1, 0).fillHorizontal());
+        leftPanel.add(textFieldFilter, GbcBuilder.of(1, 0).fillHorizontal());
 
         this.table = new JTable();
         this.table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -119,7 +109,7 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView
 
         JScrollPane scrollPane = new JScrollPane(this.table);
 
-        leftPanel.add(scrollPane, new GbcBuilder(0, 1).gridWidth(2).fillBoth());
+        leftPanel.add(scrollPane, GbcBuilder.of(0, 1).gridWidth(2).fillBoth());
         splitPane.setLeftComponent(leftPanel);
 
         JPanel rightPanel = new JPanel();
@@ -132,29 +122,29 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView
         detailPanel.setBorder(new TitledBorder(getTranslation("details")));
 
         // Details Genres
-        detailPanel.add(new JLabel(getTranslation("genres") + ":"), new GbcBuilder(0, 0));
+        detailPanel.add(new JLabel(getTranslation("genres") + ":"), GbcBuilder.of(0, 0));
         this.genreLabel = new JLabel();
-        detailPanel.add(this.genreLabel, new GbcBuilder(1, 0));
+        detailPanel.add(this.genreLabel, GbcBuilder.of(1, 0));
 
         // Details TvDb Id, ImDb Id
-        detailPanel.add(new JLabel(getTranslation(getKeyForIdLabel()) + ":"), new GbcBuilder(0, 1));
+        detailPanel.add(new JLabel(getTranslation(getKeyForIdLabel()) + ":"), GbcBuilder.of(0, 1));
         this.idLabel = new JLabel();
-        detailPanel.add(this.idLabel, new GbcBuilder(1, 1));
+        detailPanel.add(this.idLabel, GbcBuilder.of(1, 1));
 
         // Details Image
         this.imageLabel = new JLabel();
-        detailPanel.add(this.imageLabel, new GbcBuilder(0, 2).gridWidth(2).weightX(1.0D).fillHorizontal().anchorCenter());
+        detailPanel.add(this.imageLabel, GbcBuilder.of(0, 2).gridWidth(2).weightX(1.0D).fillHorizontal().anchorCenter());
 
-        rightPanel.add(detailPanel, new GbcBuilder(0, 0).weightX(1.0D).fillHorizontal());
+        rightPanel.add(detailPanel, GbcBuilder.of(0, 0).weightX(1.0D).fillHorizontal());
 
         // Genres
         this.genreButton = new JButton(getTranslation("genres.edit"));
         this.genreButton.addActionListener(event -> getController().openGenreDialog());
         this.genreButton.setEnabled(false);
-        rightPanel.add(this.genreButton, new GbcBuilder(0, 1));
+        rightPanel.add(this.genreButton, GbcBuilder.of(0, 1));
 
         // Push all up.
-        rightPanel.add(Box.createGlue(), new GbcBuilder(0, 2).fillBoth());
+        rightPanel.add(Box.createGlue(), GbcBuilder.of(0, 2).fillBoth());
 
         parentPanel.add(splitPane, BorderLayout.CENTER);
 
@@ -162,26 +152,21 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView
     }
 
     @Override
-    protected AbstractShowAndMovieController<T> getController()
-    {
+    protected AbstractShowAndMovieController<T> getController() {
         return (AbstractShowAndMovieController) super.getController();
     }
 
     protected abstract String getKeyForIdLabel();
 
-    protected AbstractListTableModel<T> getTableModel()
-    {
+    protected AbstractListTableModel<T> getTableModel() {
         return (AbstractListTableModel<T>) table.getModel();
     }
 
-    protected void initTable(JTable table, JTextField textFieldFilter)
-    {
+    protected void initTable(JTable table, JTextField textFieldFilter) {
         AbstractListTableModel<T> tableModel = getTableModel();
 
-        table.getSelectionModel().addListSelectionListener(event ->
-        {
-            if (event.getValueIsAdjusting())
-            {
+        table.getSelectionModel().addListSelectionListener(event -> {
+            if (event.getValueIsAdjusting()) {
                 return;
             }
 
@@ -189,8 +174,7 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView
 
             int viewRow = table.getSelectedRow();
 
-            if (viewRow == -1)
-            {
+            if (viewRow == -1) {
                 genreButton.setEnabled(false);
                 return;
             }
@@ -206,46 +190,37 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView
         });
 
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tableModel);
-        rowSorter.addRowSorterListener(event ->
-        {
-            if (rowSorter.getViewRowCount() > 0 && table.getSelectedRowCount() == 0)
-            {
+        rowSorter.addRowSorterListener(event -> {
+            if (rowSorter.getViewRowCount() > 0 && table.getSelectedRowCount() == 0) {
                 table.setRowSelectionInterval(0, 0);
             }
         });
 
         table.setRowSorter(rowSorter);
 
-        textFieldFilter.getDocument().addDocumentListener(new DocumentListener()
-        {
+        textFieldFilter.getDocument().addDocumentListener(new DocumentListener() {
             @Override
-            public void changedUpdate(final DocumentEvent event)
-            {
+            public void changedUpdate(final DocumentEvent event) {
                 updateFilter();
             }
 
             @Override
-            public void insertUpdate(final DocumentEvent event)
-            {
+            public void insertUpdate(final DocumentEvent event) {
                 updateFilter();
             }
 
             @Override
-            public void removeUpdate(final DocumentEvent event)
-            {
+            public void removeUpdate(final DocumentEvent event) {
                 updateFilter();
             }
 
-            private void updateFilter()
-            {
+            private void updateFilter() {
                 String text = textFieldFilter.getText();
 
-                if (text == null || text.isBlank())
-                {
+                if (text == null || text.isBlank()) {
                     rowSorter.setRowFilter(null);
                 }
-                else
-                {
+                else {
                     // rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" +text)); // ignore case
                     rowSorter.setRowFilter(new RegExRowFilter(text, Pattern.CASE_INSENSITIVE, List.of(1)));
                 }

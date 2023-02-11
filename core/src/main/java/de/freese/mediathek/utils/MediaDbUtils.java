@@ -20,10 +20,8 @@ import java.util.function.UnaryOperator;
  *
  * @author Thomas Freese
  */
-public final class MediaDbUtils
-{
-    public static List<String[]> parseCsv(final Path path) throws IOException
-    {
+public final class MediaDbUtils {
+    public static List<String[]> parseCsv(final Path path) throws IOException {
         //        try (Stream<String> stream = Files.lines(path))
         //        {
         //            // @formatter:off
@@ -49,40 +47,33 @@ public final class MediaDbUtils
     /**
      * Benennt die bestehende Datei in *.last um.
      */
-    public static void rename(final Path path) throws IOException
-    {
+    public static void rename(final Path path) throws IOException {
         Objects.requireNonNull(path, "path required");
 
         Path parent = path.getParent();
         String fileName = path.getFileName().toString();
         Path last = parent.resolve(fileName + ".last");
 
-        if (!Files.exists(parent))
-        {
+        if (!Files.exists(parent)) {
             Files.createDirectories(parent);
         }
 
-        if (Files.exists(last))
-        {
+        if (Files.exists(last)) {
             Files.delete(last);
         }
 
-        if (Files.exists(path))
-        {
+        if (Files.exists(path)) {
             Files.move(path, last); // StandardCopyOption
         }
     }
 
-    public static String subStringBetween(String open, String close, String str)
-    {
+    public static String subStringBetween(String open, String close, String str) {
         int start = str.indexOf(open);
 
-        if (start != -1)
-        {
+        if (start != -1) {
             int end = str.indexOf(close, start + open.length());
 
-            if (end != -1)
-            {
+            if (end != -1) {
                 return str.substring(start + open.length(), end);
             }
         }
@@ -95,20 +86,16 @@ public final class MediaDbUtils
      * Der Stream wird nicht geschlossen.<br>
      * Wenn das ResultSet vom Typ != ResultSet.TYPE_FORWARD_ONLY ist, wird {@link ResultSet#first()} aufgerufen und kann weiter verwendet werden.
      */
-    public static void writeCsv(final ResultSet resultSet, final PrintStream ps) throws SQLException
-    {
-        UnaryOperator<String> valueFunction = value ->
-        {
-            if (value == null || value.strip().isBlank())
-            {
+    public static void writeCsv(final ResultSet resultSet, final PrintStream ps) throws SQLException {
+        UnaryOperator<String> valueFunction = value -> {
+            if (value == null || value.strip().isBlank()) {
                 return "";
             }
 
             String v = value;
 
             // Enthaltene Anführungszeichen escapen.
-            if (v.contains("\""))
-            {
+            if (v.contains("\"")) {
                 v = v.replace("\"", "\"\"");
             }
 
@@ -122,29 +109,24 @@ public final class MediaDbUtils
         StringJoiner stringJoiner = new StringJoiner(",");
 
         // Header
-        for (int column = 1; column <= columnCount; column++)
-        {
+        for (int column = 1; column <= columnCount; column++) {
             stringJoiner.add(valueFunction.apply(metaData.getColumnLabel(column).toUpperCase()));
         }
 
         ps.println(stringJoiner);
 
         // Daten
-        while (resultSet.next())
-        {
+        while (resultSet.next()) {
             stringJoiner = new StringJoiner(",");
 
-            for (int column = 1; column <= columnCount; column++)
-            {
+            for (int column = 1; column <= columnCount; column++) {
                 Object obj = resultSet.getObject(column);
                 String value;
 
-                if (obj instanceof byte[] bytes)
-                {
+                if (obj instanceof byte[] bytes) {
                     value = new String(bytes, StandardCharsets.UTF_8);
                 }
-                else
-                {
+                else {
                     value = Objects.toString(obj, "");
                 }
 
@@ -157,8 +139,7 @@ public final class MediaDbUtils
         ps.flush();
 
         // ResultSet wieder zurück auf Anfang.
-        if (resultSet.getType() != ResultSet.TYPE_FORWARD_ONLY)
-        {
+        if (resultSet.getType() != ResultSet.TYPE_FORWARD_ONLY) {
             resultSet.first();
         }
     }
@@ -167,25 +148,20 @@ public final class MediaDbUtils
      * Schreibt das ResultSet als CSV-Datei.<br>
      * Wenn das ResultSet vom Typ != ResultSet.TYPE_FORWARD_ONLY ist, wird {@link ResultSet#first()} aufgerufen und kann weiter verwendet werden.
      */
-    public static void writeCsv(final ResultSet resultSet, final Path path) throws Exception
-    {
+    public static void writeCsv(final ResultSet resultSet, final Path path) throws Exception {
         rename(path);
 
-        try (PrintStream ps = new PrintStream(Files.newOutputStream(path), true, StandardCharsets.UTF_8))
-        {
+        try (PrintStream ps = new PrintStream(Files.newOutputStream(path), true, StandardCharsets.UTF_8)) {
             writeCsv(resultSet, ps);
         }
     }
 
-    private static String[] parseCsvRow(String csvRow)
-    {
+    private static String[] parseCsvRow(String csvRow) {
         String row = csvRow;
         List<String> token = new ArrayList<>();
 
-        while (!row.isBlank())
-        {
-            if (row.startsWith(","))
-            {
+        while (!row.isBlank()) {
+            if (row.startsWith(",")) {
                 // Leerer Wert
                 token.add("");
                 row = row.substring(1);
@@ -194,8 +170,7 @@ public final class MediaDbUtils
 
             int endIndex = row.indexOf("\",");
 
-            if (endIndex < 0)
-            {
+            if (endIndex < 0) {
                 // Letzter Wert -> Ende
                 token.add(row);
                 break;
@@ -205,16 +180,12 @@ public final class MediaDbUtils
             row = row.substring(endIndex + 2);
         }
 
-        return token.stream()
-                .map(t -> t.replaceAll("^\"|\"$", "")) // Erstes und letztes '"' entfernen
+        return token.stream().map(t -> t.replaceAll("^\"|\"$", "")) // Erstes und letztes '"' entfernen
                 .map(l -> l.replace("\"\"", "\"")) // Escapte Anführungszeichen ersetzen: "" -> "
-                .map(String::strip)
-                .toArray(String[]::new)
-                ;
+                .map(String::strip).toArray(String[]::new);
     }
 
-    private MediaDbUtils()
-    {
+    private MediaDbUtils() {
         super();
     }
 }

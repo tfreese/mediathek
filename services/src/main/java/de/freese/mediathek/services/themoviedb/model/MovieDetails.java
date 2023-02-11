@@ -11,8 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
  * @author Thomas Freese
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MovieDetails extends Movie
-{
+public class MovieDetails extends Movie {
     private List<Actor> actors;
     /**
      * belongs_to_collection
@@ -57,140 +56,116 @@ public class MovieDetails extends Movie
      */
     private int voteCount;
 
-    public List<Actor> getActors()
-    {
+    public List<Actor> getActors() {
         return this.actors;
     }
 
-    public String getCollection()
-    {
+    public String getCollection() {
         return this.collection;
     }
 
-    public List<Country> getCountries()
-    {
+    public List<Country> getCountries() {
         return this.countries;
     }
 
-    public List<Crew> getDirectors()
-    {
+    public List<Crew> getDirectors() {
         return this.directors;
     }
 
-    public List<Genre> getGenres()
-    {
+    public List<Genre> getGenres() {
         return this.genres;
     }
 
-    public String getImdbID()
-    {
+    public String getImdbID() {
         return this.imdbID;
     }
 
-    public List<Language> getLanguages()
-    {
+    public List<Language> getLanguages() {
         return this.languages;
     }
 
-    public int getRuntime()
-    {
+    public int getRuntime() {
         return this.runtime;
     }
 
-    public List<Studio> getStudios()
-    {
+    public List<Studio> getStudios() {
         return this.studios;
     }
 
-    public String getTagline()
-    {
+    public String getTagline() {
         return this.tagline;
     }
 
-    public float getVoteAverage()
-    {
+    public float getVoteAverage() {
         return this.voteAverage;
     }
 
-    public int getVoteCount()
-    {
+    public int getVoteCount() {
         return this.voteCount;
     }
 
-    public void setActors(final List<Actor> actors)
-    {
+    public void setActors(final List<Actor> actors) {
         this.actors = actors;
 
         Collections.sort(this.actors);
     }
 
     @JsonSetter("belongs_to_collection")
-    public void setCollection(final String collection)
-    {
+    public void setCollection(final String collection) {
         this.collection = collection;
     }
 
     @JsonSetter("production_countries")
-    public void setCountries(final List<Country> countries)
-    {
+    public void setCountries(final List<Country> countries) {
         this.countries = countries;
 
         Collections.sort(this.countries);
     }
 
-    public void setDirectors(final List<Crew> directors)
-    {
+    public void setDirectors(final List<Crew> directors) {
         this.directors = directors;
     }
 
-    public void setGenres(final List<Genre> genres)
-    {
+    public void setGenres(final List<Genre> genres) {
         this.genres = genres;
 
         Collections.sort(this.genres);
     }
 
     @JsonSetter("imdb_id")
-    public void setImdbID(final String imdbID)
-    {
+    public void setImdbID(final String imdbID) {
         this.imdbID = imdbID;
     }
 
     @JsonSetter("spoken_languages")
-    public void setLanguages(final List<Language> languages)
-    {
+    public void setLanguages(final List<Language> languages) {
         this.languages = languages;
 
         // Collections.sort(this.languages);
     }
 
-    public void setRuntime(final int runtime)
-    {
+    public void setRuntime(final int runtime) {
         this.runtime = runtime;
     }
 
     @JsonSetter("production_companies")
-    public void setStudios(final List<Studio> studios)
-    {
+    public void setStudios(final List<Studio> studios) {
         this.studios = studios;
 
         // Collections.sort(this.studios);
     }
 
-    public void setTagline(final String tagline)
-    {
+    public void setTagline(final String tagline) {
         this.tagline = tagline;
     }
 
     @JsonSetter("vote_average")
-    public void setVoteAverage(final float voteAverage)
-    {
+    public void setVoteAverage(final float voteAverage) {
         this.voteAverage = voteAverage;
     }
 
     @JsonSetter("vote_count")
-    public void setVoteCount(final int voteCount)
-    {
+    public void setVoteCount(final int voteCount) {
         this.voteCount = voteCount;
     }
 }

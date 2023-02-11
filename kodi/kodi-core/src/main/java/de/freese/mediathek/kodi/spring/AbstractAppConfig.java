@@ -8,12 +8,6 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 import javax.sql.DataSource;
 
-import de.freese.mediathek.kodi.api.MediaDao;
-import de.freese.mediathek.kodi.api.MediaService;
-import de.freese.mediathek.kodi.impl.MediaDaoImpl;
-import de.freese.mediathek.kodi.impl.MediaServiceImpl;
-import de.freese.mediathek.utils.cache.FileResourceCache;
-import de.freese.mediathek.utils.cache.ResourceCache;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.EnvironmentAware;
@@ -27,14 +21,20 @@ import org.springframework.scheduling.concurrent.ThreadPoolExecutorFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import de.freese.mediathek.kodi.api.MediaDao;
+import de.freese.mediathek.kodi.api.MediaService;
+import de.freese.mediathek.kodi.impl.MediaDaoImpl;
+import de.freese.mediathek.kodi.impl.MediaServiceImpl;
+import de.freese.mediathek.utils.cache.FileResourceCache;
+import de.freese.mediathek.utils.cache.ResourceCache;
+
 /**
  * @author Thomas Freese
  */
 @Configuration
 @PropertySource("classpath:kodi.properties")
 @EnableTransactionManagement
-public abstract class AbstractAppConfig implements EnvironmentAware
-{
+public abstract class AbstractAppConfig implements EnvironmentAware {
     private Environment environment;
 
     public abstract DataSource dataSourceAudio();
@@ -50,13 +50,9 @@ public abstract class AbstractAppConfig implements EnvironmentAware
     // }
 
     @Bean
-    @ConditionalOnMissingBean(
-            {
-                    Executor.class, ExecutorService.class
-            })
+    @ConditionalOnMissingBean({Executor.class, ExecutorService.class})
     @Primary
-    public ThreadPoolExecutorFactoryBean executorService()
-    {
+    public ThreadPoolExecutorFactoryBean executorService() {
         int coreSize = Math.max(8, Runtime.getRuntime().availableProcessors());
         int maxSize = coreSize * 2;
         int queueSize = maxSize * 2;
@@ -77,8 +73,7 @@ public abstract class AbstractAppConfig implements EnvironmentAware
     }
 
     @Bean
-    public MediaDao mediaDAO(@Qualifier("dataSourceVideo") final DataSource dataSourceVideo, @Qualifier("dataSourceAudio") final DataSource dataSourceAudio)
-    {
+    public MediaDao mediaDAO(@Qualifier("dataSourceVideo") final DataSource dataSourceVideo, @Qualifier("dataSourceAudio") final DataSource dataSourceAudio) {
         MediaDaoImpl dao = new MediaDaoImpl();
         dao.setDataSource(dataSourceVideo);
 
@@ -86,14 +81,12 @@ public abstract class AbstractAppConfig implements EnvironmentAware
     }
 
     @Bean
-    public MediaService mediaService(final MediaDao mediaDAO)
-    {
+    public MediaService mediaService(final MediaDao mediaDAO) {
         return new MediaServiceImpl(mediaDAO);
     }
 
     @Bean(destroyMethod = "clear")
-    public ResourceCache resourceCache()
-    {
+    public ResourceCache resourceCache() {
         return new FileResourceCache(Paths.get(System.getProperty("java.io.tmpdir"), ".javaCache"));
     }
 
@@ -101,28 +94,24 @@ public abstract class AbstractAppConfig implements EnvironmentAware
      * @see org.springframework.context.EnvironmentAware#setEnvironment(org.springframework.core.env.Environment)
      */
     @Override
-    public void setEnvironment(final Environment environment)
-    {
+    public void setEnvironment(final Environment environment) {
         this.environment = environment;
     }
 
     @Bean
     @Qualifier("txManagerAudio")
-    public PlatformTransactionManager txManagerMusik(@Qualifier("dataSourceAudio") final DataSource dataSource)
-    {
+    public PlatformTransactionManager txManagerMusik(@Qualifier("dataSourceAudio") final DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 
     @Bean
     @Qualifier("txManagerVideo")
     @Primary
-    public PlatformTransactionManager txManagerVideo(@Qualifier("dataSourceVideo") final DataSource dataSource)
-    {
+    public PlatformTransactionManager txManagerVideo(@Qualifier("dataSourceVideo") final DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 
-    protected Environment getEnvironment()
-    {
+    protected Environment getEnvironment() {
         return this.environment;
     }
 }

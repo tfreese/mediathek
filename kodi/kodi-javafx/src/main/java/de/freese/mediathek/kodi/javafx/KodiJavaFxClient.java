@@ -3,12 +3,6 @@ package de.freese.mediathek.kodi.javafx;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import de.freese.mediathek.kodi.javafx.controller.GenreController;
-import de.freese.mediathek.kodi.javafx.controller.MovieController;
-import de.freese.mediathek.kodi.javafx.controller.TvShowController;
-import de.freese.mediathek.kodi.spring.AppConfigHsqlDb;
-import de.freese.mediathek.kodi.spring.AppConfigMySQL;
-import de.freese.mediathek.kodi.spring.AppConfigSqLite;
 import javafx.application.Application;
 import javafx.application.ConditionalFeature;
 import javafx.application.Platform;
@@ -20,6 +14,13 @@ import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import de.freese.mediathek.kodi.javafx.controller.GenreController;
+import de.freese.mediathek.kodi.javafx.controller.MovieController;
+import de.freese.mediathek.kodi.javafx.controller.TvShowController;
+import de.freese.mediathek.kodi.spring.AppConfigHsqlDb;
+import de.freese.mediathek.kodi.spring.AppConfigMySQL;
+import de.freese.mediathek.kodi.spring.AppConfigSqLite;
 
 /**
  * bidirectional bind: "<a href="https://community.oracle.com/thread/2462489">community.oracle.com</a>"<br>
@@ -35,20 +36,17 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  *
  * @author Thomas Freese
  */
-public class KodiJavaFxClient extends Application
-{
+public class KodiJavaFxClient extends Application {
     public static final Logger LOGGER = LoggerFactory.getLogger("KODI-Client");
 
-    public static Logger getLogger()
-    {
+    public static Logger getLogger() {
         return LOGGER;
     }
 
     /**
      * @return int; Beispiel: 14.0.1 = 014.000.001 = 14000001
      */
-    private static int getJavaVersion()
-    {
+    private static int getJavaVersion() {
         // String javaVersion = SystemUtils.JAVA_VERSION;
         String javaVersion = System.getProperty("java.version");
         // String javaVersionDate = System.getProperty("java.version.date");
@@ -61,21 +59,17 @@ public class KodiJavaFxClient extends Application
         // Minor
         versionString += "." + String.format("%03d", Integer.parseInt(splits[1]));
 
-        if (splits.length > 2)
-        {
+        if (splits.length > 2) {
             // Micro
             versionString += "." + String.format("%03d", Integer.parseInt(splits[2]));
         }
 
-        if ((splits.length > 3) && !splits[3].startsWith("ea"))
-        {
+        if ((splits.length > 3) && !splits[3].startsWith("ea")) {
             // Update
-            try
-            {
+            try {
                 versionString += "." + String.format("%03d", Integer.parseInt(splits[3]));
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 getLogger().error(ex.getMessage(), ex);
             }
         }
@@ -93,21 +87,18 @@ public class KodiJavaFxClient extends Application
      * @see javafx.application.Application#init()
      */
     @Override
-    public void init() throws Exception
-    {
+    public void init() throws Exception {
         getLogger().info("init");
 
         List<String> parameters = getParameters().getRaw();
         String profile = null;
         // Class<?> clazz = null;
 
-        if ((parameters == null) || parameters.isEmpty())
-        {
+        if ((parameters == null) || parameters.isEmpty()) {
             // clazz = AppConfigMySQL.class;
             profile = "sqlite";
         }
-        else
-        {
+        else {
             // clazz = Class.forName(parameters.get(0));
             profile = parameters.get(0);
         }
@@ -124,8 +115,7 @@ public class KodiJavaFxClient extends Application
      * @see javafx.application.Application#start(javafx.stage.Stage)
      */
     @Override
-    public void start(final Stage stage) throws Exception
-    {
+    public void start(final Stage stage) throws Exception {
         getLogger().info("start");
 
         ResourceBundle resourceBundle = ResourceBundle.getBundle("bundles/messages");
@@ -165,13 +155,11 @@ public class KodiJavaFxClient extends Application
         // Momentan kein Antialiasing wegen JavaFX-Bug.
         int javaVersion = getJavaVersion();
 
-        if (Platform.isSupported(ConditionalFeature.SCENE3D) && (javaVersion >= 1_800_072))
-        {
+        if (Platform.isSupported(ConditionalFeature.SCENE3D) && (javaVersion >= 1_800_072)) {
 
             scene = new Scene(tabPane, 1920, 1080, true, SceneAntialiasing.BALANCED);
         }
-        else
-        {
+        else {
             scene = new Scene(tabPane, 1920, 1080);
         }
 
@@ -188,8 +176,7 @@ public class KodiJavaFxClient extends Application
      * @see javafx.application.Application#stop()
      */
     @Override
-    public void stop() throws Exception
-    {
+    public void stop() throws Exception {
         getLogger().info("stop");
 
         this.applicationContext.close();

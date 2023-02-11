@@ -4,8 +4,7 @@ package de.freese.mediathek.services;
 /**
  * @author Thomas Freese
  */
-public final class Settings
-{
+public final class Settings {
     public static final String PROPERTY_MOVIE_DB_API_KEY = "MOVIE_DB_API_KEY";
 
     public static final String PROPERTY_TV_DB_API_KEY = "TV_DB_API_KEY";
@@ -30,8 +29,7 @@ public final class Settings
      */
     public static final String TEST_SHOW_ID = "72449";
 
-    public static String getMovieDbApiKey()
-    {
+    public static String getMovieDbApiKey() {
         String apiKey = "generateMe";
 
         // System.setProperty(PROPERTY_MOVIE_DB_API_KEY, apiKey);
@@ -39,8 +37,7 @@ public final class Settings
         return apiKey;
     }
 
-    public static String getTvDbApiKey()
-    {
+    public static String getTvDbApiKey() {
         String apiKey = "generateMe";
 
         // System.setProperty(PROPERTY_TV_DB_API_KEY, apiKey);
@@ -48,8 +45,7 @@ public final class Settings
         return apiKey;
     }
 
-    private Settings()
-    {
+    private Settings() {
         super();
     }
 }

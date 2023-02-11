@@ -12,14 +12,12 @@ import javax.sql.DataSource;
 /**
  * @author Thomas Freese
  */
-public class PlexAudioReporter extends AbstractMediaReporter
-{
+public class PlexAudioReporter extends AbstractMediaReporter {
     /**
      * @see de.freese.mediathek.report.MediaReporter#updateDbFromReport(javax.sql.DataSource, java.nio.file.Path)
      */
     @Override
-    public void updateDbFromReport(final DataSource dataSource, final Path path) throws Exception
-    {
+    public void updateDbFromReport(final DataSource dataSource, final Path path) throws Exception {
         // ZoneId zoneId = ZoneId.of("Europe/Berlin");
         // ZoneOffset zoneOffset = ZoneOffset.ofHours(+1);
 
@@ -30,15 +28,11 @@ public class PlexAudioReporter extends AbstractMediaReporter
 
         List<Map<String, String>> hearedMusic = readMusik(path.resolve("musik-report-plex.csv"));
 
-        try (Connection con = dataSource.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql.toString()))
-        {
+        try (Connection con = dataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql.toString())) {
             con.setAutoCommit(false);
 
-            try
-            {
-                for (Map<String, String> map : hearedMusic)
-                {
+            try {
+                for (Map<String, String> map : hearedMusic) {
                     String artist = map.get("ARTIST");
                     String song = map.get("SONG");
                     int playCount = Integer.parseInt(map.get("PLAYCOUNT"));
@@ -57,8 +51,7 @@ public class PlexAudioReporter extends AbstractMediaReporter
 
                 con.commit();
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 con.rollback();
 
                 getLogger().error(ex.getMessage(), ex);
@@ -70,8 +63,7 @@ public class PlexAudioReporter extends AbstractMediaReporter
      * @see de.freese.mediathek.report.MediaReporter#writeReport(javax.sql.DataSource, java.nio.file.Path)
      */
     @Override
-    public void writeReport(final DataSource dataSource, final Path path) throws Exception
-    {
+    public void writeReport(final DataSource dataSource, final Path path) throws Exception {
         // path.resolve("musik-report-plex.csv")
         throw new UnsupportedOperationException("writeReport not implemented");
     }

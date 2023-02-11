@@ -11,8 +11,7 @@ import de.freese.mediathek.services.themoviedb.model.Search;
  *
  * @author Thomas Freese
  */
-public interface MovieService
-{
+public interface MovieService {
     /**
      * Liefert den Cast des Films, Schauspieler und Crew.
      */

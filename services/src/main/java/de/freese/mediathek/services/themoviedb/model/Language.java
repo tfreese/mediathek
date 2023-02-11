@@ -8,8 +8,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
  * @author Thomas Freese
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Language implements Comparable<Language>
-{
+public class Language implements Comparable<Language> {
     /**
      * iso_639_1
      */
@@ -23,29 +22,24 @@ public class Language implements Comparable<Language>
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override
-    public int compareTo(final Language o)
-    {
+    public int compareTo(final Language o) {
         return this.name.compareTo(o.getName());
     }
 
-    public String getIso6391()
-    {
+    public String getIso6391() {
         return this.iso6391;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return this.name;
     }
 
     @JsonSetter("iso_639_1")
-    public void setIso6391(final String iso6391)
-    {
+    public void setIso6391(final String iso6391) {
         this.iso6391 = iso6391;
     }
 
-    public void setName(final String name)
-    {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -53,8 +47,7 @@ public class Language implements Comparable<Language>
      * @see java.lang.Object#toString()
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Language [iso_639_1=");
         builder.append(this.iso6391);

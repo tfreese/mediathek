@@ -18,6 +18,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import javax.swing.plaf.FontUIResource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 import de.freese.mediathek.kodi.spring.AppConfigSqLite;
 import de.freese.mediathek.kodi.swing.controller.Controller;
 import de.freese.mediathek.kodi.swing.controller.GenreController;
@@ -29,46 +33,36 @@ import de.freese.mediathek.kodi.swing.service.ShowService;
 import de.freese.mediathek.kodi.swing.view.GenreView;
 import de.freese.mediathek.kodi.swing.view.MovieView;
 import de.freese.mediathek.kodi.swing.view.ShowView;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
  * @author Thomas Freese
  */
-public class KodiSwingClient
-{
+public class KodiSwingClient {
     private static final Logger LOGGER = LoggerFactory.getLogger("KODI-Client");
 
-    private static class MainFrameListener extends WindowAdapter
-    {
+    private static class MainFrameListener extends WindowAdapter {
         /**
          * @see WindowAdapter#windowClosing(WindowEvent)
          */
         @Override
-        public void windowClosing(final WindowEvent event)
-        {
+        public void windowClosing(final WindowEvent event) {
             System.exit(0);
         }
     }
 
     public static Frame frame;
 
-    public static void main(final String[] args) throws Exception
-    {
+    public static void main(final String[] args) throws Exception {
         // To avoid Comparator Errors.
         //        System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
 
-        SwingUtilities.invokeLater(() ->
-        {
+        SwingUtilities.invokeLater(() -> {
             KodiSwingClient application = new KodiSwingClient();
 
-            try
-            {
+            try {
                 application.init(args);
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
         });
@@ -98,16 +92,13 @@ public class KodiSwingClient
         // thread.start();
     }
 
-    private void init(final String[] args) throws Exception
-    {
+    private void init(final String[] args) throws Exception {
         String profile = null;
 
-        if (args == null || args.length == 0)
-        {
+        if (args == null || args.length == 0) {
             profile = "sqlite";
         }
-        else
-        {
+        else {
             profile = args[0];
         }
 
@@ -153,15 +144,12 @@ public class KodiSwingClient
         KodiSwingClient.frame = frame;
     }
 
-    private void initUIDefaults()
-    {
-        try
-        {
+    private void initUIDefaults() {
+        try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             // UIManager.setLookAndFeel("com.jgoodies.looks.plastic.PlasticXPLookAndFeel");
         }
-        catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex)
-        {
+        catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             LOGGER.error(ex.getMessage(), ex);
         }
 
@@ -178,10 +166,8 @@ public class KodiSwingClient
         // Fonts: Dialog, Monospaced, Arial, DejaVu Sans
         Font font = new Font("DejaVu Sans", Font.PLAIN, 16);
 
-        UIManager.getLookAndFeelDefaults().forEach((key, value) ->
-        {
-            if (value instanceof FontUIResource)
-            {
+        UIManager.getLookAndFeelDefaults().forEach((key, value) -> {
+            if (value instanceof FontUIResource) {
                 UIManager.put(key, new FontUIResource(font));
             }
 

@@ -7,8 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * @author Thomas Freese
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Genre implements Comparable<Genre>
-{
+public class Genre implements Comparable<Genre> {
     /**
      * id
      */
@@ -22,28 +21,23 @@ public class Genre implements Comparable<Genre>
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override
-    public int compareTo(final Genre o)
-    {
+    public int compareTo(final Genre o) {
         return this.name.compareTo(o.getName());
     }
 
-    public int getId()
-    {
+    public int getId() {
         return this.id;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return this.name;
     }
 
-    public void setId(final int id)
-    {
+    public void setId(final int id) {
         this.id = id;
     }
 
-    public void setName(final String name)
-    {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -51,8 +45,7 @@ public class Genre implements Comparable<Genre>
      * @see java.lang.Object#toString()
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Genre [name=");
         builder.append(this.name);

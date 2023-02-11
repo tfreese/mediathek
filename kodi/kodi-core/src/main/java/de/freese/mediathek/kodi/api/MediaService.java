@@ -10,8 +10,7 @@ import de.freese.mediathek.kodi.model.Show;
 /**
  * @author Thomas Freese
  */
-public interface MediaService
-{
+public interface MediaService {
     List<Movie> getGenreMovies(int genreID);
 
     List<Show> getGenreShows(int genreID);

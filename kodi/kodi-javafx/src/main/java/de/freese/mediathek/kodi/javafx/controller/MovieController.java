@@ -4,20 +4,19 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.beans.binding.Bindings;
+import org.springframework.context.ApplicationContext;
+
 import de.freese.mediathek.kodi.model.Genre;
 import de.freese.mediathek.kodi.model.Model;
 import de.freese.mediathek.kodi.model.Movie;
 import de.freese.mediathek.utils.MediaDbUtils;
-import javafx.beans.binding.Bindings;
-import org.springframework.context.ApplicationContext;
 
 /**
  * @author Thomas Freese
  */
-public class MovieController extends AbstractTvShowMovieController<Movie>
-{
-    public MovieController(final ApplicationContext applicationContext, final ResourceBundle resourceBundle)
-    {
+public class MovieController extends AbstractTvShowMovieController<Movie> {
+    public MovieController(final ApplicationContext applicationContext, final ResourceBundle resourceBundle) {
         super(applicationContext, resourceBundle);
 
         initialize(null, resourceBundle);
@@ -27,8 +26,7 @@ public class MovieController extends AbstractTvShowMovieController<Movie>
      * @see de.freese.mediathek.kodi.javafx.controller.AbstractTvShowMovieController#initialize(java.net.URL, java.util.ResourceBundle)
      */
     @Override
-    public void initialize(final URL url, final ResourceBundle rb)
-    {
+    public void initialize(final URL url, final ResourceBundle rb) {
         super.initialize(url, rb);
 
         getPane().getIdProperty().bind(Bindings.selectString(getPane().getTableSelectionModel().selectedItemProperty(), "imDbId"));
@@ -38,8 +36,7 @@ public class MovieController extends AbstractTvShowMovieController<Movie>
      * @see de.freese.mediathek.kodi.javafx.controller.AbstractTvShowMovieController#getGenres(Model)
      */
     @Override
-    protected List<Genre> getGenres(final Movie value)
-    {
+    protected List<Genre> getGenres(final Movie value) {
         return getMediaService().getMovieGenres(value.getPk());
     }
 
@@ -47,13 +44,11 @@ public class MovieController extends AbstractTvShowMovieController<Movie>
      * @see de.freese.mediathek.kodi.javafx.controller.AbstractTvShowMovieController#getImageUrl(Model)
      */
     @Override
-    protected String getImageUrl(final Movie value)
-    {
+    protected String getImageUrl(final Movie value) {
         String url = MediaDbUtils.subStringBetween("preview=\"", "\">", value.getPosters());
         url = url.replace("t/p/w500", "t/p/w342"); // w92, w154, w185, w342, w500
 
-        if ((url == null) || url.isBlank())
-        {
+        if ((url == null) || url.isBlank()) {
             return null;
         }
 
@@ -64,8 +59,7 @@ public class MovieController extends AbstractTvShowMovieController<Movie>
      * @see de.freese.mediathek.kodi.javafx.controller.AbstractTvShowMovieController#load()
      */
     @Override
-    protected List<Movie> load()
-    {
+    protected List<Movie> load() {
         return getMediaService().getMovies();
     }
 
@@ -73,14 +67,12 @@ public class MovieController extends AbstractTvShowMovieController<Movie>
      * @see de.freese.mediathek.kodi.javafx.controller.AbstractTvShowMovieController#updateDetails(Model)
      */
     @Override
-    protected void updateDetails(final Movie value)
-    {
+    protected void updateDetails(final Movie value) {
         super.updateDetails(value);
 
         getPane().getGenresProperty().set(null);
 
-        if (value != null)
-        {
+        if (value != null) {
             getPane().getGenresProperty().set(value.getGenres());
         }
     }
@@ -89,8 +81,7 @@ public class MovieController extends AbstractTvShowMovieController<Movie>
      * @see de.freese.mediathek.kodi.javafx.controller.AbstractTvShowMovieController#updateGenres(Model, int[])
      */
     @Override
-    protected void updateGenres(final Movie value, final int[] genreIDs)
-    {
+    protected void updateGenres(final Movie value, final int[] genreIDs) {
         String newGenres = getMediaService().updateMovieGenres(value.getPk(), genreIDs);
         getPane().getGenresProperty().set(newGenres);
         value.setGenres(newGenres);

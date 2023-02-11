@@ -7,11 +7,9 @@ import java.util.Map;
 /**
  * @author Thomas Freese
  */
-public class MyResources extends AbstractMapResourceBundle
-{
+public class MyResources extends AbstractMapResourceBundle {
     @Override
-    protected Map<String, Object> getContents()
-    {
+    protected Map<String, Object> getContents() {
         Map<String, Object> map = new HashMap<>();
 
         map.put("reload", "Reload");

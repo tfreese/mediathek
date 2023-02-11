@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 /**
  * @author Thomas Freese
  */
-public interface Controller
-{
+public interface Controller {
     Component init(ResourceBundle resourceBundle);
 }

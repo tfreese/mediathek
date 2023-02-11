@@ -10,8 +10,7 @@ import javax.sql.DataSource;
  *
  * @author Thomas Freese
  */
-public interface MediaReporter
-{
+public interface MediaReporter {
     /**
      * Aktualisiert die Datenbank mit den Media-Infos aus der Datei.
      */

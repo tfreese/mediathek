@@ -13,13 +13,11 @@ import jakarta.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "Actors")
 @XmlAccessorType(XmlAccessType.FIELD)
-class Actors
-{
+class Actors {
     @XmlElement(name = "Actor")
     private List<Actor> actors;
 
-    List<Actor> getActors()
-    {
+    List<Actor> getActors() {
         return this.actors;
     }
 }

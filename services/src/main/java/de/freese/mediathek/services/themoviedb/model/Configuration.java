@@ -11,8 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * @author Thomas Freese
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Configuration
-{
+public class Configuration {
     /**
      * backdrop_sizes
      */
@@ -39,8 +38,7 @@ public class Configuration
     /**
      * @return {@link List}<String>
      */
-    public List<String> getBackdropSizes()
-    {
+    public List<String> getBackdropSizes() {
         return this.backdropSizes;
     }
 
@@ -49,32 +47,26 @@ public class Configuration
     // return this.changeKeys;
     // }
 
-    public String getImageBaseURL()
-    {
+    public String getImageBaseURL() {
         return this.imageBaseURL;
     }
 
-    public List<String> getLogoSizes()
-    {
+    public List<String> getLogoSizes() {
         return this.logoSizes;
     }
 
-    public List<String> getPosterSizes()
-    {
+    public List<String> getPosterSizes() {
         return this.posterSizes;
     }
 
-    public List<String> getProfileSizes()
-    {
+    public List<String> getProfileSizes() {
         return this.profileSizes;
     }
 
     @SuppressWarnings("unchecked")
     @JsonAnySetter
-    public void parseUnknownProperties(final String propertyName, final Object propertyValue)
-    {
-        if ("images".equals(propertyName))
-        {
+    public void parseUnknownProperties(final String propertyName, final Object propertyValue) {
+        if ("images".equals(propertyName)) {
             Map<String, Object> map = (Map<String, Object>) propertyValue;
 
             this.imageBaseURL = (String) map.get("secure_base_url");
@@ -96,8 +88,7 @@ public class Configuration
      * @see java.lang.Object#toString()
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Configuration [imageBaseURL=");
         builder.append(this.imageBaseURL);

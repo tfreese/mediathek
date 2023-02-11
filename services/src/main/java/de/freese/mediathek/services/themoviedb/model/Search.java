@@ -11,8 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * @author Thomas Freese
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Search implements Iterable<Movie>
-{
+public class Search implements Iterable<Movie> {
     /**
      * results
      */
@@ -21,8 +20,7 @@ public class Search implements Iterable<Movie>
     /**
      * @return {@link List}<Movie>
      */
-    public List<Movie> getResults()
-    {
+    public List<Movie> getResults() {
         return this.results;
     }
 
@@ -30,18 +28,15 @@ public class Search implements Iterable<Movie>
      * @see java.lang.Iterable#iterator()
      */
     @Override
-    public Iterator<Movie> iterator()
-    {
-        if (getResults() != null)
-        {
+    public Iterator<Movie> iterator() {
+        if (getResults() != null) {
             return getResults().iterator();
         }
 
         return Collections.emptyIterator();
     }
 
-    public void setResults(final List<Movie> results)
-    {
+    public void setResults(final List<Movie> results) {
         this.results = results;
     }
 }

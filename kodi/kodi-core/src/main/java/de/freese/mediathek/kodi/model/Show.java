@@ -4,8 +4,7 @@ package de.freese.mediathek.kodi.model;
 /**
  * @author Thomas Freese
  */
-public class Show extends AbstractModel
-{
+public class Show extends AbstractModel {
     private String banner;
 
     private String fanArt;
@@ -14,43 +13,35 @@ public class Show extends AbstractModel
 
     private String tvDbId;
 
-    public String getBanner()
-    {
+    public String getBanner() {
         return this.banner;
     }
 
-    public String getFanArt()
-    {
+    public String getFanArt() {
         return this.fanArt;
     }
 
-    public String getGenres()
-    {
+    public String getGenres() {
         return this.genres;
     }
 
-    public String getTvDbId()
-    {
+    public String getTvDbId() {
         return this.tvDbId;
     }
 
-    public void setBanner(final String banner)
-    {
+    public void setBanner(final String banner) {
         this.banner = banner;
     }
 
-    public void setFanArt(final String fanArt)
-    {
+    public void setFanArt(final String fanArt) {
         this.fanArt = fanArt;
     }
 
-    public void setGenres(final String genres)
-    {
+    public void setGenres(final String genres) {
         this.genres = genres;
     }
 
-    public void setTvDbId(final String tvDbId)
-    {
+    public void setTvDbId(final String tvDbId) {
         this.tvDbId = tvDbId;
     }
 }

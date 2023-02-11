@@ -4,20 +4,19 @@ package de.freese.mediathek.kodi.impl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import de.freese.mediathek.kodi.model.Genre;
 import org.springframework.jdbc.core.RowMapper;
+
+import de.freese.mediathek.kodi.model.Genre;
 
 /**
  * @author Thomas Freese
  */
-public class GenreRowMapper implements RowMapper<Genre>
-{
+public class GenreRowMapper implements RowMapper<Genre> {
     /**
      * @see org.springframework.jdbc.core.RowMapper#mapRow(java.sql.ResultSet, int)
      */
     @Override
-    public Genre mapRow(final ResultSet rs, final int rowNum) throws SQLException
-    {
+    public Genre mapRow(final ResultSet rs, final int rowNum) throws SQLException {
         Genre genre = new Genre();
         genre.setPk(rs.getInt("pk"));
         genre.setName(rs.getString("name"));

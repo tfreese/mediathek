@@ -12,8 +12,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "Episode")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Episode implements Comparable<Episode>
-{
+public class Episode implements Comparable<Episode> {
     @XmlElement(name = "EpisodeNumber")
     private final int episode = -1;
     @XmlElement(name = "SeasonNumber")
@@ -26,10 +25,7 @@ public class Episode implements Comparable<Episode>
     private String id;
     @XmlElement(name = "filename")
     private String image;
-    @XmlElements(
-            {
-                    @XmlElement(name = "language"), @XmlElement(name = "Language")
-            })
+    @XmlElements({@XmlElement(name = "language"), @XmlElement(name = "Language")})
     private String language;
     @XmlElement(name = "FirstAired")
     private String releaseDate;
@@ -40,60 +36,49 @@ public class Episode implements Comparable<Episode>
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override
-    public int compareTo(final Episode o)
-    {
+    public int compareTo(final Episode o) {
         int comp = getSeason() - o.getSeason();
 
-        if (comp == 0)
-        {
+        if (comp == 0) {
             comp = getEpisode() - o.getEpisode();
         }
 
         return comp;
     }
 
-    public String getBeschreibung()
-    {
+    public String getBeschreibung() {
         return this.beschreibung;
     }
 
-    public int getEpisode()
-    {
+    public int getEpisode() {
         return this.episode;
     }
 
-    public String getGuestStars()
-    {
+    public String getGuestStars() {
         return this.guestStars;
     }
 
-    public String getID()
-    {
+    public String getID() {
         return this.id;
     }
 
-    public String getImage()
-    {
+    public String getImage() {
         return this.image;
     }
 
-    public String getLanguage()
-    {
+    public String getLanguage() {
         return this.language;
     }
 
-    public String getReleaseDate()
-    {
+    public String getReleaseDate() {
         return this.releaseDate;
     }
 
-    public int getSeason()
-    {
+    public int getSeason() {
         return this.season;
     }
 
-    public String getTitle()
-    {
+    public String getTitle() {
         return this.title;
     }
 
@@ -101,8 +86,7 @@ public class Episode implements Comparable<Episode>
      * @see java.lang.Object#toString()
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Episode [");
         builder.append("id=").append(this.id);

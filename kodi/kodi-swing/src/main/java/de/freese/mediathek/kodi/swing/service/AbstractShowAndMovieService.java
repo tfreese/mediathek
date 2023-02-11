@@ -9,23 +9,21 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
+import org.springframework.context.ApplicationContext;
+
 import de.freese.mediathek.kodi.model.Genre;
 import de.freese.mediathek.utils.ImageUtils;
 import de.freese.mediathek.utils.cache.ResourceCache;
-import org.springframework.context.ApplicationContext;
 
 /**
  * @author Thomas Freese
  */
-public abstract class AbstractShowAndMovieService<T> extends AbstractService
-{
-    protected AbstractShowAndMovieService(final ApplicationContext applicationContext)
-    {
+public abstract class AbstractShowAndMovieService<T> extends AbstractService {
+    protected AbstractShowAndMovieService(final ApplicationContext applicationContext) {
         super(applicationContext);
     }
 
-    public List<Genre> getAllGenres()
-    {
+    public List<Genre> getAllGenres() {
         return getMediaService().getGenres();
     }
 
@@ -33,16 +31,13 @@ public abstract class AbstractShowAndMovieService<T> extends AbstractService
 
     public abstract List<T> load();
 
-    public ImageIcon loadImageIcon(T entity) throws Exception
-    {
+    public ImageIcon loadImageIcon(T entity) throws Exception {
         String url = getImageUrl(entity);
 
-        try (InputStream inputStream = getResourceCache().getResource(URI.create(url)))
-        {
+        try (InputStream inputStream = getResourceCache().getResource(URI.create(url))) {
             BufferedImage image = ImageIO.read(inputStream);
 
-            if (image == null)
-            {
+            if (image == null) {
                 return null;
             }
 
@@ -56,8 +51,7 @@ public abstract class AbstractShowAndMovieService<T> extends AbstractService
 
     protected abstract String getImageUrl(T entity);
 
-    protected ResourceCache getResourceCache()
-    {
+    protected ResourceCache getResourceCache() {
         return getApplicationContext().getBean(ResourceCache.class);
     }
 }

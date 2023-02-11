@@ -15,17 +15,14 @@ import javax.swing.RowFilter;
  *
  * @author Thomas Freese
  */
-public class RegExRowFilter extends AbstractRowFilterIndexed
-{
+public class RegExRowFilter extends AbstractRowFilterIndexed {
     private final Matcher matcher;
 
-    public RegExRowFilter(final String regex, final int matchFlags, final List<Integer> columns)
-    {
+    public RegExRowFilter(final String regex, final int matchFlags, final List<Integer> columns) {
         this(Pattern.compile(Objects.requireNonNull(regex), matchFlags), columns);
     }
 
-    public RegExRowFilter(final Pattern regexPattern, final List<Integer> columns)
-    {
+    public RegExRowFilter(final Pattern regexPattern, final List<Integer> columns) {
         super(columns);
 
         this.matcher = Objects.requireNonNull(regexPattern).matcher("");
@@ -35,8 +32,7 @@ public class RegExRowFilter extends AbstractRowFilterIndexed
      * @see de.freese.mediathek.kodi.swing.components.rowfilter.AbstractRowFilterIndexed#isInclude(javax.swing.RowFilter.Entry, int)
      */
     @Override
-    protected boolean isInclude(final RowFilter.Entry<?, ?> value, final int index)
-    {
+    protected boolean isInclude(final RowFilter.Entry<?, ?> value, final int index) {
         this.matcher.reset(value.getStringValue(index));
 
         return this.matcher.find();

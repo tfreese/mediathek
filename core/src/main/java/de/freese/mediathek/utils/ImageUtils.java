@@ -16,10 +16,8 @@ import javax.swing.ImageIcon;
  *
  * @author Thomas Freese
  */
-public final class ImageUtils
-{
-    public static RenderingHints getRenderingHintsQuality()
-    {
+public final class ImageUtils {
+    public static RenderingHints getRenderingHintsQuality() {
         RenderingHints hints = new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         // hints.put(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
         hints.put(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
@@ -31,8 +29,7 @@ public final class ImageUtils
     /**
      * Skaliert das Bild auf eine feste Größe.
      */
-    public static BufferedImage scaleImage(final Image src, final int width, final int height)
-    {
+    public static BufferedImage scaleImage(final Image src, final int width, final int height) {
         Image scaled = src.getScaledInstance(width, height, Image.SCALE_SMOOTH);
 
         return toBufferedImage(scaled);
@@ -41,8 +38,7 @@ public final class ImageUtils
     /**
      * Skaliert das Bild auf die neuen Seitenverhältnisse.
      */
-    public static BufferedImage scaleImageByRatio(final Image src, final double ratioWidth, final double ratioHeight)
-    {
+    public static BufferedImage scaleImageByRatio(final Image src, final double ratioWidth, final double ratioHeight) {
         BufferedImage bufferedImage = toBufferedImage(src);
 
         AffineTransform tx = new AffineTransform();
@@ -62,8 +58,7 @@ public final class ImageUtils
     /**
      * Skaliert das Bild unter Beibehaltung des Seitenverhältnisses bis auf die maximale angegebene Höhe oder Breite.
      */
-    public static BufferedImage scaleImageKeepRatio(final Image src, final int maxWidth, final int maxHeight)
-    {
+    public static BufferedImage scaleImageKeepRatio(final Image src, final int maxWidth, final int maxHeight) {
         BufferedImage bufferedImage = toBufferedImage(src);
 
         double widthRatio = (double) maxWidth / bufferedImage.getWidth();
@@ -82,12 +77,9 @@ public final class ImageUtils
     /**
      * Kopiert ein Icon in eine Image-Kopie.
      */
-    public static BufferedImage toBufferedImage(final Icon icon)
-    {
-        if (icon instanceof ImageIcon imageIcon)
-        {
-            if (imageIcon.getImage() instanceof BufferedImage bi)
-            {
+    public static BufferedImage toBufferedImage(final Icon icon) {
+        if (icon instanceof ImageIcon imageIcon) {
+            if (imageIcon.getImage() instanceof BufferedImage bi) {
                 return bi;
             }
         }
@@ -104,10 +96,8 @@ public final class ImageUtils
     /**
      * Konvertiert ein {@link Image} in ein {@link BufferedImage}.
      */
-    public static BufferedImage toBufferedImage(final Image image)
-    {
-        if (image instanceof BufferedImage bi)
-        {
+    public static BufferedImage toBufferedImage(final Image image) {
+        if (image instanceof BufferedImage bi) {
             return bi;
         }
 
@@ -161,8 +151,7 @@ public final class ImageUtils
         return bufferedImage;
     }
 
-    private ImageUtils()
-    {
+    private ImageUtils() {
         super();
     }
 }

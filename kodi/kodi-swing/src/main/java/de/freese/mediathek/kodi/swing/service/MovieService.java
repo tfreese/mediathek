@@ -3,54 +3,47 @@ package de.freese.mediathek.kodi.swing.service;
 
 import java.util.List;
 
+import org.springframework.context.ApplicationContext;
+
 import de.freese.mediathek.kodi.model.Genre;
 import de.freese.mediathek.kodi.model.Movie;
 import de.freese.mediathek.utils.MediaDbUtils;
-import org.springframework.context.ApplicationContext;
 
 /**
  * @author Thomas Freese
  */
-public class MovieService extends AbstractShowAndMovieService<Movie>
-{
-    public MovieService(final ApplicationContext applicationContext)
-    {
+public class MovieService extends AbstractShowAndMovieService<Movie> {
+    public MovieService(final ApplicationContext applicationContext) {
         super(applicationContext);
     }
 
     @Override
-    public List<Genre> getEntityGenres(final Movie entity)
-    {
+    public List<Genre> getEntityGenres(final Movie entity) {
         return getMediaService().getMovieGenres(entity.getPk());
     }
 
     @Override
-    public List<Movie> load()
-    {
+    public List<Movie> load() {
         return getMediaService().getMovies();
     }
 
     @Override
-    public void updateEntityGenres(final Movie entity, final int[] newGenreIDs)
-    {
+    public void updateEntityGenres(final Movie entity, final int[] newGenreIDs) {
         String newGenres = getMediaService().updateMovieGenres(entity.getPk(), newGenreIDs);
         entity.setGenres(newGenres);
     }
 
     @Override
-    protected String getImageUrl(final Movie entity)
-    {
+    protected String getImageUrl(final Movie entity) {
         String url = MediaDbUtils.subStringBetween("preview=\"", "\">", entity.getPosters());
 
-        if (url.contains("\""))
-        {
+        if (url.contains("\"")) {
             url = url.substring(0, url.indexOf('"'));
         }
 
         // url = StringUtils.replace(url, "t/p/w500", "t/p/w92");
 
-        if (url.isBlank())
-        {
+        if (url.isBlank()) {
             url = MediaDbUtils.subStringBetween(">", "<", entity.getPosters());
         }
 

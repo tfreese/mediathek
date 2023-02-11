@@ -13,21 +13,18 @@ import jakarta.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "Data")
 @XmlAccessorType(XmlAccessType.FIELD)
-class Search
-{
+class Search {
     @XmlElement(name = "Episode", required = false)
     private List<Episode> episodes;
 
     @XmlElement(name = "Series")
     private List<TVShow> series;
 
-    List<Episode> getEpisodes()
-    {
+    List<Episode> getEpisodes() {
         return this.episodes;
     }
 
-    List<TVShow> getSeries()
-    {
+    List<TVShow> getSeries() {
         return this.series;
     }
 }

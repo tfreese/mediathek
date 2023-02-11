@@ -10,14 +10,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 /**
  * @author Thomas Freese
  */
-public class BansheeAudioReporter extends AbstractMediaReporter
-{
+public class BansheeAudioReporter extends AbstractMediaReporter {
     /**
      * @see de.freese.mediathek.report.MediaReporter#updateDbFromReport(javax.sql.DataSource, java.nio.file.Path)
      */
     @Override
-    public void updateDbFromReport(final DataSource dataSource, final Path path) throws Exception
-    {
+    public void updateDbFromReport(final DataSource dataSource, final Path path) throws Exception {
         throw new UnsupportedOperationException("updateDbFromReport not implemented");
     }
 
@@ -25,8 +23,7 @@ public class BansheeAudioReporter extends AbstractMediaReporter
      * @see de.freese.mediathek.report.MediaReporter#writeReport(javax.sql.DataSource, java.nio.file.Path)
      */
     @Override
-    public void writeReport(final DataSource dataSource, final Path path) throws Exception
-    {
+    public void writeReport(final DataSource dataSource, final Path path) throws Exception {
         StringBuilder sql = new StringBuilder();
         sql.append("select car.name as artist, ct.title as song, ct.playcount");
         sql.append(" from coretracks ct");

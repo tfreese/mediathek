@@ -11,22 +11,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import de.freese.mediathek.utils.MediaDbUtils;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+
+import de.freese.mediathek.utils.MediaDbUtils;
 
 /**
  * @author Thomas Freese
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 @Disabled
-class TestParseCsv
-{
+class TestParseCsv {
     @Test
-    void testParseClementine() throws IOException
-    {
+    void testParseClementine() throws IOException {
         Path path = Paths.get("/home/tommy/dokumente/linux/musik-report-clementine.csv");
 
         List<String> list = MediaDbUtils.parseCsv(path).stream().limit(3).map(Arrays::toString).toList();
@@ -38,18 +37,15 @@ class TestParseCsv
     }
 
     @Test
-    void testParseCsvRow()
-    {
+    void testParseCsvRow() {
         String line = "\"\"\"A\"\" b\",\"c\",\"d\",,\"e\",\"\",\"f\"";
 
         String row = line;
         List<String> token = new ArrayList<>();
 
-        while (!row.isBlank())
-        {
+        while (!row.isBlank()) {
             // Empty Value
-            if (row.startsWith(","))
-            {
+            if (row.startsWith(",")) {
                 token.add("");
                 row = row.substring(1);
                 continue;
@@ -57,8 +53,7 @@ class TestParseCsv
 
             int endIndex = row.indexOf("\",");
 
-            if (endIndex < 0)
-            {
+            if (endIndex < 0) {
                 // Last Value -> End
                 token.add(row);
                 break;
@@ -71,12 +66,9 @@ class TestParseCsv
         assertFalse(token.isEmpty());
         assertEquals(7, token.size());
 
-        token = token.stream()
-                .map(t -> t.replaceAll("^\"|\"$", "")) // Remove first and last '"'
+        token = token.stream().map(t -> t.replaceAll("^\"|\"$", "")) // Remove first and last '"'
                 .map(l -> l.replace("\"\"", "\"")) // Replace escaped quotes: "" -> "
-                .map(String::strip)
-                .toList()
-        ;
+                .map(String::strip).toList();
         System.out.println(token);
     }
 }

@@ -16,8 +16,7 @@ import de.freese.mediathek.services.themoviedb.model.Image;
  */
 @XmlRootElement(name = "Series")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class TVShow implements Comparable<TVShow>
-{
+public class TVShow implements Comparable<TVShow> {
     @XmlElement(name = "Actors", required = false)
     private String actors;
 
@@ -45,10 +44,7 @@ public class TVShow implements Comparable<TVShow>
     @XmlElement(name = "IMDB_ID")
     private String imdbID;
 
-    @XmlElements(
-            {
-                    @XmlElement(name = "language"), @XmlElement(name = "Language")
-            })
+    @XmlElements({@XmlElement(name = "language"), @XmlElement(name = "Language")})
     private String language;
 
     @XmlElement(required = false)
@@ -70,105 +66,85 @@ public class TVShow implements Comparable<TVShow>
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override
-    public int compareTo(final TVShow o)
-    {
+    public int compareTo(final TVShow o) {
         int comp = getJahr().compareTo(o.getJahr());
 
-        if (comp == 0)
-        {
+        if (comp == 0) {
             comp = getTitle().compareTo(o.getTitle());
         }
 
         return comp;
     }
 
-    public String getActors()
-    {
+    public String getActors() {
         return this.actors;
     }
 
-    public List<Actor> getActorsList()
-    {
+    public List<Actor> getActorsList() {
         return this.actorsList;
     }
 
-    public String getBanner()
-    {
+    public String getBanner() {
         return this.banner;
     }
 
-    public String getBeschreibung()
-    {
+    public String getBeschreibung() {
         return this.beschreibung;
     }
 
-    public List<Episode> getEpisodes()
-    {
+    public List<Episode> getEpisodes() {
         return this.episodes;
     }
 
-    public String getFanArt()
-    {
+    public String getFanArt() {
         return this.fanArt;
     }
 
-    public List<Image> getFanartList()
-    {
+    public List<Image> getFanartList() {
         return this.fanartList;
     }
 
-    public String getGenres()
-    {
+    public String getGenres() {
         return this.genres;
     }
 
-    public String getID()
-    {
+    public String getID() {
         return this.id;
     }
 
-    public String getImdbID()
-    {
+    public String getImdbID() {
         return this.imdbID;
     }
 
-    public String getJahr()
-    {
+    public String getJahr() {
         return getReleaseDate().substring(0, 4);
     }
 
-    public String getLanguage()
-    {
+    public String getLanguage() {
         return this.language;
     }
 
-    public String getPoster()
-    {
+    public String getPoster() {
         return this.poster;
     }
 
-    public List<Image> getPosterList()
-    {
+    public List<Image> getPosterList() {
         return this.posterList;
     }
 
-    public String getReleaseDate()
-    {
+    public String getReleaseDate() {
         return this.releaseDate;
     }
 
-    public List<Image> getSeasonList()
-    {
+    public List<Image> getSeasonList() {
         return this.seasonList;
     }
 
-    public List<Image> getSeriesList()
-    {
+    public List<Image> getSeriesList() {
         return this.seriesList;
     }
 
-    public String getTitle()
-    {
+    public String getTitle() {
         return this.title;
     }
 
@@ -176,8 +152,7 @@ public class TVShow implements Comparable<TVShow>
      * @see java.lang.Object#toString()
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Serie [");
         builder.append("id=").append(this.id);
@@ -189,38 +164,31 @@ public class TVShow implements Comparable<TVShow>
         return builder.toString();
     }
 
-    void setActors(final String actors)
-    {
+    void setActors(final String actors) {
         this.actors = actors;
     }
 
-    void setActorsList(final List<Actor> actorsList)
-    {
+    void setActorsList(final List<Actor> actorsList) {
         this.actorsList = actorsList;
     }
 
-    void setEpisodes(final List<Episode> episodes)
-    {
+    void setEpisodes(final List<Episode> episodes) {
         this.episodes = episodes;
     }
 
-    void setFanartList(final List<Image> fanartList)
-    {
+    void setFanartList(final List<Image> fanartList) {
         this.fanartList = fanartList;
     }
 
-    void setPosterList(final List<Image> posterList)
-    {
+    void setPosterList(final List<Image> posterList) {
         this.posterList = posterList;
     }
 
-    void setSeasonList(final List<Image> seasonList)
-    {
+    void setSeasonList(final List<Image> seasonList) {
         this.seasonList = seasonList;
     }
 
-    void setSeriesList(final List<Image> seriesList)
-    {
+    void setSeriesList(final List<Image> seriesList) {
         this.seriesList = seriesList;
     }
 }

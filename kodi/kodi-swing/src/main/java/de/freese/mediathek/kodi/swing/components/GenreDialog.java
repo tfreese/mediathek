@@ -24,21 +24,18 @@ import de.freese.mediathek.kodi.swing.components.list.GenreListCellRenderer;
 /**
  * @author Thomas Freese
  */
-public class GenreDialog extends JDialog
-{
+public class GenreDialog extends JDialog {
     @Serial
     private static final long serialVersionUID = -4384289197484325624L;
 
     /**
      * @author Thomas Freese
      */
-    private final class CancelAction extends AbstractAction
-    {
+    private final class CancelAction extends AbstractAction {
         @Serial
         private static final long serialVersionUID = -5694877960473295271L;
 
-        private CancelAction()
-        {
+        private CancelAction() {
             super("Cancel");
         }
 
@@ -46,8 +43,7 @@ public class GenreDialog extends JDialog
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
-        public void actionPerformed(final ActionEvent event)
-        {
+        public void actionPerformed(final ActionEvent event) {
             GenreDialog.this.canceled = true;
             close();
         }
@@ -56,13 +52,11 @@ public class GenreDialog extends JDialog
     /**
      * @author Thomas Freese
      */
-    private final class OKAction extends AbstractAction
-    {
+    private final class OKAction extends AbstractAction {
         @Serial
         private static final long serialVersionUID = -7913222539942539301L;
 
-        private OKAction()
-        {
+        private OKAction() {
             super("OK");
         }
 
@@ -70,8 +64,7 @@ public class GenreDialog extends JDialog
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
-        public void actionPerformed(final ActionEvent event)
-        {
+        public void actionPerformed(final ActionEvent event) {
             GenreDialog.this.canceled = false;
             close();
         }
@@ -80,13 +73,11 @@ public class GenreDialog extends JDialog
     /**
      * @author Thomas Freese
      */
-    private final class ToLeftAction extends AbstractAction
-    {
+    private final class ToLeftAction extends AbstractAction {
         @Serial
         private static final long serialVersionUID = 3818570430470000410L;
 
-        ToLeftAction()
-        {
+        ToLeftAction() {
             super("<");
         }
 
@@ -94,19 +85,16 @@ public class GenreDialog extends JDialog
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
-        public void actionPerformed(final ActionEvent event)
-        {
+        public void actionPerformed(final ActionEvent event) {
             Genre genre = GenreDialog.this.listRechts.getSelectedValue();
 
-            if ((genre == null))
-            {
+            if ((genre == null)) {
                 return;
             }
 
             DefaultListListModel<Genre> listModel = (DefaultListListModel<Genre>) GenreDialog.this.listRechts.getModel();
 
-            if (listModel.getSize() == 1)
-            {
+            if (listModel.getSize() == 1) {
                 return;
             }
 
@@ -117,13 +105,11 @@ public class GenreDialog extends JDialog
     /**
      * @author Thomas Freese
      */
-    private final class ToRightAction extends AbstractAction
-    {
+    private final class ToRightAction extends AbstractAction {
         @Serial
         private static final long serialVersionUID = 3818570430470000410L;
 
-        ToRightAction()
-        {
+        ToRightAction() {
             super(">");
         }
 
@@ -131,19 +117,16 @@ public class GenreDialog extends JDialog
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
-        public void actionPerformed(final ActionEvent event)
-        {
+        public void actionPerformed(final ActionEvent event) {
             Genre genre = GenreDialog.this.listLinks.getSelectedValue();
 
-            if (genre == null)
-            {
+            if (genre == null) {
                 return;
             }
 
             DefaultListListModel<Genre> listModel = (DefaultListListModel<Genre>) GenreDialog.this.listRechts.getModel();
 
-            if (listModel.contains(genre))
-            {
+            if (listModel.contains(genre)) {
                 return;
             }
 
@@ -157,8 +140,7 @@ public class GenreDialog extends JDialog
 
     private JList<Genre> listRechts;
 
-    public GenreDialog(final Window owner)
-    {
+    public GenreDialog(final Window owner) {
         super(owner);
 
         setTitle("Genre Auswahl");
@@ -167,15 +149,12 @@ public class GenreDialog extends JDialog
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     }
 
-    public void close()
-    {
+    public void close() {
         dispose();
     }
 
-    public List<Genre> getSelectedGenres()
-    {
-        if (hasBeenCanceled())
-        {
+    public List<Genre> getSelectedGenres() {
+        if (hasBeenCanceled()) {
             return null;
         }
 
@@ -184,13 +163,11 @@ public class GenreDialog extends JDialog
         return defaultListListModel.getStream().toList();
     }
 
-    public boolean hasBeenCanceled()
-    {
+    public boolean hasBeenCanceled() {
         return this.canceled;
     }
 
-    public void open(final List<Genre> links, final List<Genre> rechts)
-    {
+    public void open(final List<Genre> links, final List<Genre> rechts) {
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
 
@@ -199,25 +176,25 @@ public class GenreDialog extends JDialog
         this.listLinks.setCellRenderer(new GenreListCellRenderer());
         JScrollPane scrollPane = new JScrollPane(this.listLinks);
         scrollPane.setBorder(new TitledBorder("Verfügbar"));
-        panel.add(scrollPane, new GbcBuilder(0, 0).gridHeight(10).gridWidth(2).fillBoth());
+        panel.add(scrollPane, GbcBuilder.of(0, 0).gridHeight(10).gridWidth(2).fillBoth());
 
         // Buttons
         JButton button = new JButton(new ToRightAction());
-        panel.add(button, new GbcBuilder(2, 3).fillVertical().anchorCenter());
+        panel.add(button, GbcBuilder.of(2, 3).fillVertical().anchorCenter());
         button = new JButton(new ToLeftAction());
-        panel.add(button, new GbcBuilder(2, 7).fillVertical().anchorCenter());
+        panel.add(button, GbcBuilder.of(2, 7).fillVertical().anchorCenter());
 
         // Rechts
         this.listRechts = new JList<>(new DefaultListListModel<>(rechts));
         this.listRechts.setCellRenderer(new GenreListCellRenderer());
         scrollPane = new JScrollPane(this.listRechts);
         scrollPane.setBorder(new TitledBorder("Auswahl"));
-        panel.add(scrollPane, new GbcBuilder(3, 0).gridHeight(10).gridWidth(2).fillBoth());
+        panel.add(scrollPane, GbcBuilder.of(3, 0).gridHeight(10).gridWidth(2).fillBoth());
 
         button = new JButton(new OKAction());
-        panel.add(button, new GbcBuilder(0, 11).gridWidth(2).fillHorizontal());
+        panel.add(button, GbcBuilder.of(0, 11).gridWidth(2).fillHorizontal());
         button = new JButton(new CancelAction());
-        panel.add(button, new GbcBuilder(3, 11).gridWidth(2).fillHorizontal());
+        panel.add(button, GbcBuilder.of(3, 11).gridWidth(2).fillHorizontal());
 
         setContentPane(panel);
         setSize(600, 600);

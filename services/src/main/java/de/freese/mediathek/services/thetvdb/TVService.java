@@ -13,13 +13,14 @@ import java.util.Map.Entry;
 
 import javax.imageio.ImageIO;
 
-import de.freese.mediathek.services.AbstractService;
-import de.freese.mediathek.services.themoviedb.model.Image;
-import de.freese.mediathek.services.themoviedb.model.Images;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
+
+import de.freese.mediathek.services.AbstractService;
+import de.freese.mediathek.services.themoviedb.model.Image;
+import de.freese.mediathek.services.themoviedb.model.Images;
 
 /***
  * Implementierung für den Zugriff auf http:// www.thetvdb.com.<br>
@@ -27,12 +28,10 @@ import org.springframework.web.client.RestTemplate;
  **
  * @author Thomas Freese
  */
-public class TVService extends AbstractService
-{
+public class TVService extends AbstractService {
     private RestTemplate restTemplate;
 
-    public TVService(final String apiKey)
-    {
+    public TVService(final String apiKey) {
         super(apiKey);
     }
 
@@ -40,12 +39,10 @@ public class TVService extends AbstractService
      * @see de.freese.mediathek.services.AbstractService#afterPropertiesSet()
      */
     @Override
-    public void afterPropertiesSet() throws Exception
-    {
+    public void afterPropertiesSet() throws Exception {
         super.afterPropertiesSet();
 
-        if (this.restTemplate == null)
-        {
+        if (this.restTemplate == null) {
             List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
             messageConverters.add(new Jaxb2RootElementHttpMessageConverter());
 
@@ -55,23 +52,20 @@ public class TVService extends AbstractService
         }
     }
 
-    public TVShow getDetails(final String id)
-    {
+    public TVShow getDetails(final String id) {
         // http://thetvdb.com//api/1D62F2F90030C444/series/72449/de.xml
         StringBuilder url = url().append("{apikey}/series/{id}/{lang}.xml");
 
         Search search = getRestTemplate().getForObject(url.toString(), Search.class, getApiKey(), id, getLocale().getLanguage());
 
-        if (CollectionUtils.isEmpty(search.getSeries()))
-        {
+        if (CollectionUtils.isEmpty(search.getSeries())) {
             return null;
         }
 
         return search.getSeries().get(0);
     }
 
-    public TVShow getDetailsAll(final String id)
-    {
+    public TVShow getDetailsAll(final String id) {
         // http://thetvdb.com//api/1D62F2F90030C444/series/72449/all/de.xml
         // http://thetvdb.com/api/1D62F2F90030C444/series/72449/actors.xml
         // http://thetvdb.com/api/1D62F2F90030C444/series/72449/banners.xml
@@ -82,8 +76,7 @@ public class TVService extends AbstractService
 
         Search search = getRestTemplate().getForObject(url.toString(), Search.class, getApiKey(), id, getLocale().getLanguage());
 
-        if (CollectionUtils.isEmpty(search.getSeries()))
-        {
+        if (CollectionUtils.isEmpty(search.getSeries())) {
             return null;
         }
 
@@ -102,8 +95,7 @@ public class TVService extends AbstractService
 
         StringBuilder sb = new StringBuilder("|");
 
-        for (Actor actor : actorsList)
-        {
+        for (Actor actor : actorsList) {
             sb.append(actor.getName()).append("|");
         }
 
@@ -133,37 +125,29 @@ public class TVService extends AbstractService
         return show;
     }
 
-    public BufferedImage getImage(final String path) throws Exception
-    {
-        if (path == null || path.isBlank())
-        {
+    public BufferedImage getImage(final String path) throws Exception {
+        if (path == null || path.isBlank()) {
             return null;
         }
 
         String url = String.format("http://thetvdb.com/banners/%s", path);
         BufferedImage image = null;
 
-        try (InputStream inputStream = getCache().getResource(URI.create(url)))
-        {
+        try (InputStream inputStream = getCache().getResource(URI.create(url))) {
             image = ImageIO.read(inputStream);
         }
 
         return image;
     }
 
-    @SuppressWarnings(
-            {
-                    "unchecked", "rawtypes"
-            })
-    public List<TVShow> search(final String name)
-    {
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public List<TVShow> search(final String name) {
         // http://thetvdb.com/api/GetSeries.php?seriesname=stargate&language=de
         StringBuilder url = url().append("GetSeries.php?seriesname={name}&language={lang}");
 
         Search search = getRestTemplate().getForObject(url.toString(), Search.class, urlEncode(name), getLocale().getLanguage());
 
-        if (CollectionUtils.isEmpty(search.getSeries()))
-        {
+        if (CollectionUtils.isEmpty(search.getSeries())) {
             return null;
         }
 
@@ -171,22 +155,17 @@ public class TVService extends AbstractService
         Map<String, TVShow> map = new HashMap<>();
         Map<String, TVShow> map2 = new HashMap<>();
 
-        for (TVShow show : search.getSeries())
-        {
-            if (show.getLanguage().equals(getLocale().getLanguage()))
-            {
+        for (TVShow show : search.getSeries()) {
+            if (show.getLanguage().equals(getLocale().getLanguage())) {
                 map.put(show.getID(), show);
             }
-            else
-            {
+            else {
                 map2.put(show.getID(), show);
             }
         }
 
-        for (Entry<String, TVShow> entry : map2.entrySet())
-        {
-            if (map.containsKey(entry.getKey()))
-            {
+        for (Entry<String, TVShow> entry : map2.entrySet()) {
+            if (map.containsKey(entry.getKey())) {
                 continue;
             }
 
@@ -204,13 +183,11 @@ public class TVService extends AbstractService
         return result;
     }
 
-    public void setRestTemplate(final RestTemplate restTemplate)
-    {
+    public void setRestTemplate(final RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
-    private RestTemplate getRestTemplate()
-    {
+    private RestTemplate getRestTemplate() {
         return this.restTemplate;
     }
 
@@ -218,8 +195,7 @@ public class TVService extends AbstractService
      * Liefert '<a href="http://thetvdb.com/api/">thetvdb-api</a>'.<br>
      * <a href="http://thetvdb.com/api/1D62F2F90030C444/mirrors.xml">http://thetvdb.com/api/1D62F2F90030C444/mirrors.xml</a><br>
      */
-    private StringBuilder url()
-    {
+    private StringBuilder url() {
         StringBuilder sb = new StringBuilder();
         sb.append("http://thetvdb.com/api/");
 

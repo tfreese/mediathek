@@ -10,14 +10,11 @@ import org.springframework.core.env.PropertySource;
 /**
  * @author Thomas Freese
  */
-class KodiPropertySource extends PropertySource<Properties>
-{
-    KodiPropertySource() throws IOException
-    {
+class KodiPropertySource extends PropertySource<Properties> {
+    KodiPropertySource() throws IOException {
         super("reportProperties", new Properties());
 
-        try (InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("kodi.properties"))
-        {
+        try (InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("kodi.properties")) {
             getSource().load(inputStream);
         }
     }
@@ -26,8 +23,7 @@ class KodiPropertySource extends PropertySource<Properties>
      * @see org.springframework.core.env.PropertySource#getProperty(java.lang.String)
      */
     @Override
-    public Object getProperty(final String name)
-    {
+    public Object getProperty(final String name) {
         return getSource().getProperty(name);
     }
 }

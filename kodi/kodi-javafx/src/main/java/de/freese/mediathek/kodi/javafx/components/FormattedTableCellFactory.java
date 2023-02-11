@@ -13,8 +13,7 @@ import javafx.util.Callback;
 /**
  * @author Thomas Freese
  */
-public class FormattedTableCellFactory<S, T> implements Callback<TableColumn<S, T>, TableCell<S, T>>
-{
+public class FormattedTableCellFactory<S, T> implements Callback<TableColumn<S, T>, TableCell<S, T>> {
     private TextAlignment alignment;
 
     private Format format;
@@ -23,39 +22,31 @@ public class FormattedTableCellFactory<S, T> implements Callback<TableColumn<S, 
      * @see javafx.util.Callback#call(java.lang.Object)
      */
     @Override
-    public TableCell<S, T> call(final TableColumn<S, T> param)
-    {
-        TableCell<S, T> cell = new TableCell<>()
-        {
+    public TableCell<S, T> call(final TableColumn<S, T> param) {
+        TableCell<S, T> cell = new TableCell<>() {
             /**
              * @see javafx.scene.control.Cell#updateItem(java.lang.Object, boolean)
              */
             @Override
-            public void updateItem(final T item, final boolean empty)
-            {
-                if (item == getItem())
-                {
+            public void updateItem(final T item, final boolean empty) {
+                if (item == getItem()) {
                     return;
                 }
 
                 super.updateItem(item, empty);
 
-                if (item == null)
-                {
+                if (item == null) {
                     super.setText(null);
                     super.setGraphic(null);
                 }
-                else if (FormattedTableCellFactory.this.format != null)
-                {
+                else if (FormattedTableCellFactory.this.format != null) {
                     super.setText(FormattedTableCellFactory.this.format.format(item));
                 }
-                else if (item instanceof Node m)
-                {
+                else if (item instanceof Node m) {
                     super.setText(null);
                     super.setGraphic(m);
                 }
-                else
-                {
+                else {
                     super.setText(item.toString());
                     super.setGraphic(null);
                 }
@@ -64,8 +55,7 @@ public class FormattedTableCellFactory<S, T> implements Callback<TableColumn<S, 
 
         cell.setTextAlignment(this.alignment);
 
-        switch (this.alignment)
-        {
+        switch (this.alignment) {
             case CENTER -> cell.setAlignment(Pos.CENTER);
             case RIGHT -> cell.setAlignment(Pos.CENTER_RIGHT);
             default -> cell.setAlignment(Pos.CENTER_LEFT);
@@ -74,23 +64,19 @@ public class FormattedTableCellFactory<S, T> implements Callback<TableColumn<S, 
         return cell;
     }
 
-    public TextAlignment getAlignment()
-    {
+    public TextAlignment getAlignment() {
         return this.alignment;
     }
 
-    public Format getFormat()
-    {
+    public Format getFormat() {
         return this.format;
     }
 
-    public void setAlignment(final TextAlignment alignment)
-    {
+    public void setAlignment(final TextAlignment alignment) {
         this.alignment = alignment;
     }
 
-    public void setFormat(final Format format)
-    {
+    public void setFormat(final Format format) {
         this.format = format;
     }
 }

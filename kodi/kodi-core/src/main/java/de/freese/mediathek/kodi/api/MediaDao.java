@@ -10,8 +10,7 @@ import de.freese.mediathek.kodi.model.Show;
 /**
  * @author Thomas Freese
  */
-public interface MediaDao
-{
+public interface MediaDao {
     void deleteMovieGenres(int movieID);
 
     void deleteShowGenres(int showID);

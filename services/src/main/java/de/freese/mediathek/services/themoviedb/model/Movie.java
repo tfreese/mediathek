@@ -10,8 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Thomas Freese
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Movie implements Comparable<Movie>
-{
+public class Movie implements Comparable<Movie> {
     @JsonProperty("backdrop_path")
     private String backdrop;
     /**
@@ -38,90 +37,74 @@ public class Movie implements Comparable<Movie>
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override
-    public int compareTo(final Movie o)
-    {
+    public int compareTo(final Movie o) {
         String s1 = getJahr();
         String s2 = o.getJahr();
 
         return s1.compareTo(s2);
     }
 
-    public String getBackdrop()
-    {
+    public String getBackdrop() {
         return this.backdrop;
     }
 
-    public int getId()
-    {
+    public int getId() {
         return this.id;
     }
 
-    public ImageIcon getImageIcon()
-    {
+    public ImageIcon getImageIcon() {
         return this.imageIcon;
     }
 
-    public String getJahr()
-    {
+    public String getJahr() {
         return getReleaseDate().substring(0, 4);
     }
 
-    public String getOriginalTitle()
-    {
+    public String getOriginalTitle() {
         return this.originalTitle;
     }
 
-    public String getPoster()
-    {
+    public String getPoster() {
         return this.poster;
     }
 
-    public String getReleaseDate()
-    {
+    public String getReleaseDate() {
         return this.releaseDate;
     }
 
-    public String getTitle()
-    {
+    public String getTitle() {
         return this.title;
     }
 
     // @JsonSetter("backdrop_path")
-    public void setBackdrop(final String backdrop)
-    {
+    public void setBackdrop(final String backdrop) {
         this.backdrop = backdrop;
     }
 
-    public void setId(final int id)
-    {
+    public void setId(final int id) {
         this.id = id;
     }
 
-    public void setImageIcon(final ImageIcon imageIcon)
-    {
+    public void setImageIcon(final ImageIcon imageIcon) {
         this.imageIcon = imageIcon;
     }
 
     // @JsonSetter("original_title")
-    public void setOriginalTitle(final String originalTitle)
-    {
+    public void setOriginalTitle(final String originalTitle) {
         this.originalTitle = originalTitle;
     }
 
     // @JsonSetter("poster_path")
-    public void setPoster(final String poster)
-    {
+    public void setPoster(final String poster) {
         this.poster = poster;
     }
 
     // @JsonSetter("release_date")
-    public void setReleaseDate(final String releaseDate)
-    {
+    public void setReleaseDate(final String releaseDate) {
         this.releaseDate = releaseDate;
     }
 
-    public void setTitle(final String title)
-    {
+    public void setTitle(final String title) {
         this.title = title;
     }
 
@@ -129,8 +112,7 @@ public class Movie implements Comparable<Movie>
      * @see java.lang.Object#toString()
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Movie [id=");
         builder.append(this.id);

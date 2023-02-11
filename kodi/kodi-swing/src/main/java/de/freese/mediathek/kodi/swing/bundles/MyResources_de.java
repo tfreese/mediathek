@@ -6,11 +6,9 @@ import java.util.Map;
 /**
  * @author Thomas Freese
  */
-public class MyResources_de extends AbstractMapResourceBundle
-{
+public class MyResources_de extends AbstractMapResourceBundle {
     @Override
-    protected Map<String, Object> getContents()
-    {
+    protected Map<String, Object> getContents() {
         return Map.of("shows", "Serien", "movies", "Filme");
     }
 }

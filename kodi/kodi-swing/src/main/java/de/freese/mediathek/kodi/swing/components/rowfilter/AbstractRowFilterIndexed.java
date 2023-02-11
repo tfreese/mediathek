@@ -10,12 +10,10 @@ import javax.swing.RowFilter;
  *
  * @author Thomas Freese
  */
-public abstract class AbstractRowFilterIndexed extends RowFilter<Object, Object>
-{
+public abstract class AbstractRowFilterIndexed extends RowFilter<Object, Object> {
     private final List<Integer> columns;
 
-    protected AbstractRowFilterIndexed(final List<Integer> columns)
-    {
+    protected AbstractRowFilterIndexed(final List<Integer> columns) {
         super();
 
         checkIndices(columns);
@@ -26,32 +24,24 @@ public abstract class AbstractRowFilterIndexed extends RowFilter<Object, Object>
      * @see javax.swing.RowFilter#include(javax.swing.RowFilter.Entry)
      */
     @Override
-    public boolean include(final Entry<?, ?> value)
-    {
+    public boolean include(final Entry<?, ?> value) {
         int count = value.getValueCount();
 
-        if (this.columns.size() > 0)
-        {
-            for (int i = this.columns.size() - 1; i >= 0; i--)
-            {
+        if (this.columns.size() > 0) {
+            for (int i = this.columns.size() - 1; i >= 0; i--) {
                 int index = this.columns.get(i);
 
-                if (index < count)
-                {
-                    if (isInclude(value, index))
-                    {
+                if (index < count) {
+                    if (isInclude(value, index)) {
                         return true;
                     }
                 }
             }
         }
-        else
-        {
+        else {
             // Alle Spalten.
-            while (--count >= 0)
-            {
-                if (isInclude(value, count))
-                {
+            while (--count >= 0) {
+                if (isInclude(value, count)) {
                     return true;
                 }
             }
@@ -60,10 +50,8 @@ public abstract class AbstractRowFilterIndexed extends RowFilter<Object, Object>
         return false;
     }
 
-    protected void checkIndices(final List<Integer> columns)
-    {
-        if (columns.stream().anyMatch(c -> c < 0))
-        {
+    protected void checkIndices(final List<Integer> columns) {
+        if (columns.stream().anyMatch(c -> c < 0)) {
             throw new IllegalArgumentException("Index must be >= 0");
         }
     }

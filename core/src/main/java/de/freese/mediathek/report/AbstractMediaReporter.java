@@ -8,19 +8,18 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import de.freese.mediathek.utils.MediaDbUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import de.freese.mediathek.utils.MediaDbUtils;
 
 /**
  * @author Thomas Freese
  */
-public abstract class AbstractMediaReporter implements MediaReporter
-{
+public abstract class AbstractMediaReporter implements MediaReporter {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    protected Logger getLogger()
-    {
+    protected Logger getLogger() {
         return logger;
     }
 
@@ -33,12 +32,9 @@ public abstract class AbstractMediaReporter implements MediaReporter
      * <li>LASTPLAYED
      * </ul>
      */
-    protected List<Map<String, String>> readMovies(final Path path) throws IOException
-    {
-        return MediaDbUtils.parseCsv(path).stream()
-                .skip(1)// Header überspringen
-                .map(row ->
-                {
+    protected List<Map<String, String>> readMovies(final Path path) throws IOException {
+        return MediaDbUtils.parseCsv(path).stream().skip(1)// Header überspringen
+                .map(row -> {
                     Map<String, String> map = new LinkedHashMap<>();
                     map.put("MOVIE", row[0]);
                     map.put("PLAYCOUNT", row[1]);
@@ -57,12 +53,9 @@ public abstract class AbstractMediaReporter implements MediaReporter
      * <li>PLAYCOUNT
      * </ul>
      */
-    protected List<Map<String, String>> readMusik(final Path path) throws IOException
-    {
-        return MediaDbUtils.parseCsv(path).stream()
-                .skip(1)// Header überspringen
-                .map(row ->
-                {
+    protected List<Map<String, String>> readMusik(final Path path) throws IOException {
+        return MediaDbUtils.parseCsv(path).stream().skip(1)// Header überspringen
+                .map(row -> {
                     Map<String, String> map = new LinkedHashMap<>();
                     map.put("ARTIST", row[0]);
                     map.put("SONG", row[1]);
@@ -84,12 +77,9 @@ public abstract class AbstractMediaReporter implements MediaReporter
      * <li>LASTPLAYED
      * </ul>
      */
-    protected List<Map<String, String>> readTVShows(final Path path) throws IOException
-    {
-        return MediaDbUtils.parseCsv(path).stream()
-                .skip(1)// Header überspringen
-                .map(row ->
-                {
+    protected List<Map<String, String>> readTVShows(final Path path) throws IOException {
+        return MediaDbUtils.parseCsv(path).stream().skip(1)// Header überspringen
+                .map(row -> {
                     Map<String, String> map = new LinkedHashMap<>();
                     map.put("TVSHOW", row[0]);
                     map.put("SEASON", row[1]);
@@ -106,14 +96,11 @@ public abstract class AbstractMediaReporter implements MediaReporter
      * Schreibt das ResultSet als CSV-Datei.<br>
      * Wenn das ResultSet einen Typ != ResultSet.TYPE_FORWARD_ONLY besitzt, wird {@link ResultSet#first()} aufgerufen und kann weiter verwendet werden.
      */
-    protected void writeResultSet(final ResultSet resultSet, final Path path)
-    {
-        try
-        {
+    protected void writeResultSet(final ResultSet resultSet, final Path path) {
+        try {
             MediaDbUtils.writeCsv(resultSet, path);
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex) {
             getLogger().error(ex.getMessage(), ex);
         }
     }

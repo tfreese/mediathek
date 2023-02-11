@@ -7,29 +7,27 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
-import de.freese.mediathek.services.Settings;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
+import de.freese.mediathek.services.Settings;
+
 /**
  * @author Thomas Freese
  */
-class TestTvShowApi
-{
+class TestTvShowApi {
     private static TVService service;
 
     @BeforeAll
-    public static void beforeClass() throws Exception
-    {
+    public static void beforeClass() throws Exception {
         service = new TVService(Settings.getTvDbApiKey());
         service.afterPropertiesSet();
     }
 
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_TV_DB_API_KEY, matches = ".*")
-    void testDetails() throws Exception
-    {
+    void testDetails() throws Exception {
         TVShow show = service.getDetails(TvShowApiDebug.TEST_SHOW_ID);
 
         assertNotNull(show);
@@ -55,8 +53,7 @@ class TestTvShowApi
 
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_TV_DB_API_KEY, matches = ".*")
-    void testDetailsAll() throws Exception
-    {
+    void testDetailsAll() throws Exception {
         TVShow show = service.getDetailsAll(TvShowApiDebug.TEST_SHOW_ID);
 
         assertNotNull(show);
@@ -100,15 +97,13 @@ class TestTvShowApi
 
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_TV_DB_API_KEY, matches = ".*")
-    void testSearch() throws Exception
-    {
+    void testSearch() throws Exception {
         List<TVShow> result = service.search(TvShowApiDebug.TEST_SHOW);
 
         assertNotNull(result);
         assertTrue(result.size() > 1);
 
-        for (TVShow show : result)
-        {
+        for (TVShow show : result) {
             assertNotNull(show.getBeschreibung());
             assertNotNull(show.getBanner());
             assertNotNull(show.getID());

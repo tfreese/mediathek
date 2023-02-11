@@ -9,8 +9,7 @@ import de.freese.mediathek.services.themoviedb.model.Configuration;
  * @author Thomas Freese
  */
 @FunctionalInterface
-public interface AccountService
-{
+public interface AccountService {
     /**
      * Liefert die Konfiguration des Accounts,<br>
      * Pfade, Bildergrößen etc.

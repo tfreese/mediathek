@@ -10,17 +10,14 @@ import de.freese.mediathek.kodi.swing.components.table.ShowTableModel;
 /**
  * @author Thomas Freese
  */
-public class ShowView extends AbstractShowAndMovieView<Show>
-{
+public class ShowView extends AbstractShowAndMovieView<Show> {
     @Override
-    protected String getKeyForIdLabel()
-    {
+    protected String getKeyForIdLabel() {
         return "id.label.show";
     }
 
     @Override
-    protected void initTable(final JTable table, final JTextField textFieldFilter)
-    {
+    protected void initTable(final JTable table, final JTextField textFieldFilter) {
         table.setModel(new ShowTableModel());
 
         super.initTable(table, textFieldFilter);

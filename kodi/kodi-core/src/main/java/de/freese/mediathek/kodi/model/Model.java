@@ -4,8 +4,7 @@ package de.freese.mediathek.kodi.model;
 /**
  * @author Thomas Freese
  */
-public interface Model extends Comparable<Model>
-{
+public interface Model extends Comparable<Model> {
     String getName();
 
     int getPk();

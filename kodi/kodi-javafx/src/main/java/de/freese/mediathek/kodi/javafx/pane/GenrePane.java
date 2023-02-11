@@ -3,9 +3,6 @@ package de.freese.mediathek.kodi.javafx.pane;
 
 import java.util.ResourceBundle;
 
-import de.freese.mediathek.kodi.javafx.components.ModelListCellFactory;
-import de.freese.mediathek.kodi.model.Genre;
-import de.freese.mediathek.kodi.model.Model;
 import javafx.collections.ObservableList;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
@@ -21,11 +18,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
+import de.freese.mediathek.kodi.javafx.components.ModelListCellFactory;
+import de.freese.mediathek.kodi.model.Genre;
+import de.freese.mediathek.kodi.model.Model;
+
 /**
  * @author Thomas Freese
  */
-public class GenrePane extends VBox
-{
+public class GenrePane extends VBox {
     private final Button buttonReload;
 
     private final ListView<Model> listViewFilme;
@@ -34,8 +34,7 @@ public class GenrePane extends VBox
 
     private final TableView<Genre> tableViewGenres;
 
-    public GenrePane(final ResourceBundle resourceBundle)
-    {
+    public GenrePane(final ResourceBundle resourceBundle) {
         super();
 
         getStyleClass().addAll("vbox", "padding");
@@ -76,33 +75,27 @@ public class GenrePane extends VBox
         splitPane.getItems().add(hBox);
     }
 
-    public Button getButtonReload()
-    {
+    public Button getButtonReload() {
         return this.buttonReload;
     }
 
-    public ObservableList<Model> getFilmeItems()
-    {
+    public ObservableList<Model> getFilmeItems() {
         return this.listViewFilme.getItems();
     }
 
-    public ObservableList<Model> getSerienItems()
-    {
+    public ObservableList<Model> getSerienItems() {
         return this.listViewSerien.getItems();
     }
 
-    public ObservableList<Genre> getTableItems()
-    {
+    public ObservableList<Genre> getTableItems() {
         return this.tableViewGenres.getItems();
     }
 
-    public TableViewSelectionModel<Genre> getTableSelectionModel()
-    {
+    public TableViewSelectionModel<Genre> getTableSelectionModel() {
         return this.tableViewGenres.getSelectionModel();
     }
 
-    private TableView<Genre> createTableViewGenres(final ResourceBundle resourceBundle)
-    {
+    private TableView<Genre> createTableViewGenres(final ResourceBundle resourceBundle) {
         TableView<Genre> tableView = new TableView<>();
         tableView.setEditable(false);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);

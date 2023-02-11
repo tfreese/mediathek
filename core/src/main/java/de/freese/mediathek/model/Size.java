@@ -6,8 +6,7 @@ package de.freese.mediathek.model;
  *
  * @author Thomas Freese
  */
-public enum Size
-{
+public enum Size {
     original,
     w1280,
     w154,

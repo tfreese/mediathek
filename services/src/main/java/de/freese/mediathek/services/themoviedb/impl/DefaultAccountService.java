@@ -10,10 +10,8 @@ import de.freese.mediathek.services.themoviedb.model.Configuration;
  *
  * @author Thomas Freese
  */
-public class DefaultAccountService extends AbstractMovieDbService implements AccountService
-{
-    public DefaultAccountService(final String apiKey)
-    {
+public class DefaultAccountService extends AbstractMovieDbService implements AccountService {
+    public DefaultAccountService(final String apiKey) {
         super(apiKey);
     }
 
@@ -21,8 +19,7 @@ public class DefaultAccountService extends AbstractMovieDbService implements Acc
      * @see de.freese.mediathek.services.themoviedb.api.AccountService#getConfiguration()
      */
     @Override
-    public Configuration getConfiguration()
-    {
+    public Configuration getConfiguration() {
         StringBuilder url = url().append("configuration?api_key={api_key}");
 
         return getRestTemplate().getForObject(url.toString(), Configuration.class, getApiKey());

@@ -8,8 +8,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
  * @author Thomas Freese
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Image implements Comparable<Image>
-{
+public class Image implements Comparable<Image> {
     /**
      * height
      */
@@ -31,50 +30,41 @@ public class Image implements Comparable<Image>
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override
-    public int compareTo(final Image o)
-    {
+    public int compareTo(final Image o) {
         return Float.compare(o.getVoteAverage(), this.voteAverage);
     }
 
-    public int getHeight()
-    {
+    public int getHeight() {
         return this.height;
     }
 
-    public String getPath()
-    {
+    public String getPath() {
         return this.path;
     }
 
-    public float getVoteAverage()
-    {
+    public float getVoteAverage() {
         return this.voteAverage;
     }
 
-    public int getWidth()
-    {
+    public int getWidth() {
         return this.width;
     }
 
-    public void setHeight(final int height)
-    {
+    public void setHeight(final int height) {
         this.height = height;
     }
 
     @JsonSetter("file_path")
-    public void setPath(final String path)
-    {
+    public void setPath(final String path) {
         this.path = path;
     }
 
     @JsonSetter("vote_average")
-    public void setVoteAverage(final float voteAverage)
-    {
+    public void setVoteAverage(final float voteAverage) {
         this.voteAverage = voteAverage;
     }
 
-    public void setWidth(final int width)
-    {
+    public void setWidth(final int width) {
         this.width = width;
     }
 
@@ -82,8 +72,7 @@ public class Image implements Comparable<Image>
      * @see java.lang.Object#toString()
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Image [width=");
         builder.append(this.width);

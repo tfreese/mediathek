@@ -3,7 +3,6 @@ package de.freese.mediathek.kodi.javafx.pane;
 
 import java.util.ResourceBundle;
 
-import de.freese.mediathek.kodi.model.Model;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -28,11 +27,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
+import de.freese.mediathek.kodi.model.Model;
+
 /**
  * @author Thomas Freese
  */
-public class TvShowMoviePane<T extends Model> extends VBox
-{
+public class TvShowMoviePane<T extends Model> extends VBox {
     private final Button buttonEditGenres;
 
     private final Button buttonReload;
@@ -49,8 +49,7 @@ public class TvShowMoviePane<T extends Model> extends VBox
 
     private final TableView<T> tableView;
 
-    public TvShowMoviePane(final ResourceBundle resourceBundle)
-    {
+    public TvShowMoviePane(final ResourceBundle resourceBundle) {
         super();
 
         getStyleClass().addAll("vbox", "padding");
@@ -114,45 +113,37 @@ public class TvShowMoviePane<T extends Model> extends VBox
         splitPane.getItems().add(vBox);
     }
 
-    public Button getButtonEditGenres()
-    {
+    public Button getButtonEditGenres() {
         return this.buttonEditGenres;
     }
 
-    public Button getButtonReload()
-    {
+    public Button getButtonReload() {
         return this.buttonReload;
     }
 
-    public StringProperty getGenresProperty()
-    {
+    public StringProperty getGenresProperty() {
         return this.labelGenres.textProperty();
     }
 
-    public StringProperty getIdProperty()
-    {
+    public StringProperty getIdProperty() {
         return this.labelId.textProperty();
     }
 
-    public ObjectProperty<Image> getImageProperty()
-    {
+    public ObjectProperty<Image> getImageProperty() {
         return this.imageView.imageProperty();
     }
 
-    public ObservableList<T> getTableItems()
-    {
+    public ObservableList<T> getTableItems() {
         // return this.tableView.getItems();
         return this.tableList;
     }
 
-    public TableViewSelectionModel<T> getTableSelectionModel()
-    {
+    public TableViewSelectionModel<T> getTableSelectionModel() {
         return this.tableView.getSelectionModel();
     }
 
     @SuppressWarnings("unchecked")
-    private TableView<T> createTableView(final StringProperty propertyItemFilter, final ResourceBundle resourceBundle)
-    {
+    private TableView<T> createTableView(final StringProperty propertyItemFilter, final ResourceBundle resourceBundle) {
         TableView<T> tableView = new TableView<>();
         tableView.setEditable(false);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -179,10 +170,8 @@ public class TvShowMoviePane<T extends Model> extends VBox
         FilteredList<T> filteredData = new FilteredList<>(this.tableList, p -> true);
 
         // Filter-Textfeld mit FilteredList verbinden.
-        propertyItemFilter.addListener((observable, oldValue, newValue) -> filteredData.setPredicate(value ->
-        {
-            if (newValue == null || newValue.isBlank())
-            {
+        propertyItemFilter.addListener((observable, oldValue, newValue) -> filteredData.setPredicate(value -> {
+            if (newValue == null || newValue.isBlank()) {
                 return true;
             }
 
