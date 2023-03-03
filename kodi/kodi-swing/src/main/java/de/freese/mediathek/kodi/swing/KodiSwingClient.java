@@ -50,7 +50,11 @@ public class KodiSwingClient {
         }
     }
 
-    public static Frame frame;
+    private static Frame frame;
+
+    public static Frame getFrame() {
+        return frame;
+    }
 
     public static void main(final String[] args) throws Exception {
         // To avoid Comparator Errors.

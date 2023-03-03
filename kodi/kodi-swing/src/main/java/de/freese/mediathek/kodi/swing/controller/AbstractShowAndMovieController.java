@@ -54,7 +54,7 @@ public abstract class AbstractShowAndMovieController<T> extends AbstractControll
                 try {
                     List<List<Genre>> result = get();
 
-                    GenreDialog dialog = new GenreDialog(KodiSwingClient.frame);
+                    GenreDialog dialog = new GenreDialog(KodiSwingClient.getFrame());
                     dialog.open(result.get(0), result.get(1));
 
                     if (dialog.hasBeenCanceled()) {
