@@ -1,6 +1,7 @@
 // Created: 03.11.2015
 package de.freese.mediathek.utils;
 
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
@@ -22,18 +23,6 @@ import java.util.function.UnaryOperator;
  */
 public final class MediaDbUtils {
     public static List<String[]> parseCsv(final Path path) throws IOException {
-        //        try (Stream<String> stream = Files.lines(path))
-        //        {
-        //            // @formatter:off
-//            return stream
-//                    .map(MediaDbUtils::splitCsvRow)
-//                    .filter(Objects::nonNull)
-//                    .filter(line -> !line.strip().isEmpty())
-//                    .toList()
-//            ;
-//            // @formatter:on
-        //        }
-
         // @formatter:off
         return Files.readAllLines(path).stream()
                 .filter(Objects::nonNull)
@@ -94,12 +83,17 @@ public final class MediaDbUtils {
 
             String v = value;
 
-            // Enthaltene Anführungszeichen escapen.
+            // Escape quotes.
             if (v.contains("\"")) {
-                v = v.replace("\"", "\"\"");
+                v = v.replace("\"", "\\\"\"");
             }
 
-            // Den Wert selbst in Anführungszeichen setzen.
+            // Escape comma.
+            if (v.contains(",")) {
+                v = v.replace(",", "\\,");
+            }
+
+            // Value in quotes.
             return "\"" + v + "\"";
         };
 
@@ -151,7 +145,7 @@ public final class MediaDbUtils {
     public static void writeCsv(final ResultSet resultSet, final Path path) throws Exception {
         rename(path);
 
-        try (PrintStream ps = new PrintStream(Files.newOutputStream(path), true, StandardCharsets.UTF_8)) {
+        try (PrintStream ps = new PrintStream(new BufferedOutputStream(Files.newOutputStream(path)), true, StandardCharsets.UTF_8)) {
             writeCsv(resultSet, ps);
         }
     }
@@ -162,7 +156,7 @@ public final class MediaDbUtils {
 
         while (!row.isBlank()) {
             if (row.startsWith(",")) {
-                // Leerer Wert
+                // Empty Value
                 token.add("");
                 row = row.substring(1);
                 continue;
@@ -171,7 +165,7 @@ public final class MediaDbUtils {
             int endIndex = row.indexOf("\",");
 
             if (endIndex < 0) {
-                // Letzter Wert -> Ende
+                // Last Value -> End
                 token.add(row);
                 break;
             }
@@ -180,8 +174,9 @@ public final class MediaDbUtils {
             row = row.substring(endIndex + 2);
         }
 
-        return token.stream().map(t -> t.replaceAll("^\"|\"$", "")) // Erstes und letztes '"' entfernen
-                .map(l -> l.replace("\"\"", "\"")) // Escapte Anführungszeichen ersetzen: "" -> "
+        return token.stream().map(t -> t.replaceAll("^\"|\"$", "")) // Remove first and last quote.
+                .map(l -> l.replace("\\\"\"", "\"")) // Unescape quotes.
+                .map(l -> l.replace("\\,", ",")) // Unescape comma.
                 .map(String::strip).toArray(String[]::new);
     }
 
