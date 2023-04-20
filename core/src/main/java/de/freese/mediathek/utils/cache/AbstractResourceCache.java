@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
-import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -21,20 +20,7 @@ import org.slf4j.LoggerFactory;
  * @author Thomas Freese
  */
 public abstract class AbstractResourceCache implements ResourceCache {
-    private final HexFormat hexFormat;
-
-    private final Logger logger = LoggerFactory.getLogger(getClass());
-
-    private final MessageDigest messageDigest;
-
-    protected AbstractResourceCache() {
-        super();
-
-        this.messageDigest = createMessageDigest();
-        this.hexFormat = HexFormat.of().withUpperCase();
-    }
-
-    protected MessageDigest createMessageDigest() {
+    protected static MessageDigest createMessageDigest(Logger logger) {
         // String algorithm ="SHA"; // 40 Zeichen
         // String algorithm ="SHA-1"; // 40 Zeichen
         // String algorithm ="SHA-256"; // 64 Zeichen
@@ -45,7 +31,7 @@ public abstract class AbstractResourceCache implements ResourceCache {
             return MessageDigest.getInstance(algorithm);
         }
         catch (final NoSuchAlgorithmException ex) {
-            getLogger().error("Algorithm '{}' not found, trying 'MD5'", algorithm);
+            logger.error("Algorithm '{}' not found, trying 'MD5'", algorithm);
 
             try {
                 return MessageDigest.getInstance("MD5"); // 32 Zeichen
@@ -54,6 +40,17 @@ public abstract class AbstractResourceCache implements ResourceCache {
                 throw new RuntimeException(ex2);
             }
         }
+    }
+
+    private final HexFormat hexFormat;
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private final MessageDigest messageDigest;
+
+    protected AbstractResourceCache() {
+        super();
+
+        this.messageDigest = createMessageDigest(this.logger);
+        this.hexFormat = HexFormat.of().withUpperCase();
     }
 
     protected String generateKey(final URI uri) {
@@ -116,7 +113,7 @@ public abstract class AbstractResourceCache implements ResourceCache {
 
                     httpURLConnection.disconnect();
 
-                    httpURLConnection = (HttpURLConnection) new URL(newUrl).openConnection();
+                    httpURLConnection = (HttpURLConnection) URI.create(newUrl).toURL().openConnection();
                     httpURLConnection.setRequestProperty("Cookie", cookies);
                     // conn.addRequestProperty("Accept-Language", "en-US,en;q=0.8");
                     // conn.addRequestProperty("User-Agent", "Mozilla");
