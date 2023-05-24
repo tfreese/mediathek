@@ -36,7 +36,7 @@ subprojects {
     }
 
     dependencies {
-        testImplementation("org.junit.jupiter:junit-jupiter-engine")
+        testImplementation("org.junit.jupiter:junit-jupiter")
     }
 }
 
@@ -72,7 +72,7 @@ project("services") {
         api("jakarta.xml.bind:jakarta.xml.bind-api")
         api("org.springframework:spring-web")
 
-        testImplementation("org.junit.jupiter:junit-jupiter-engine")
+        testImplementation("org.junit.jupiter:junit-jupiter")
     }
 }
 
