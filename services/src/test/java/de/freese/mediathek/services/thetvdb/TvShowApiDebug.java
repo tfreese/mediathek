@@ -3,7 +3,7 @@ package de.freese.mediathek.services.thetvdb;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.URI;
 import java.util.Locale;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -66,8 +66,8 @@ public class TvShowApiDebug {
 
     // @Test
     public void testHTTP() throws Exception {
-        URL url = new URL(String.format("http://thetvdb.com/api/GetSeries.php?seriesname=%s&language=%s", TEST_SHOW, "de"));
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        URI uri = URI.create(String.format("http://thetvdb.com/api/GetSeries.php?seriesname=%s&language=%s", TEST_SHOW, "de"));
+        HttpURLConnection connection = (HttpURLConnection) uri.toURL().openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Accept", "application/xml");
 

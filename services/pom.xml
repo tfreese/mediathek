@@ -15,10 +15,6 @@
     <name>${project.groupId} - ${project.artifactId}</name>
     <description>API for Online-Media-Databases (www.themoviedb.org, www.thetvdb.com)</description>
 
-    <properties>
-        <maven.test.skip>true</maven.test.skip>
-    </properties>
-
     <dependencies>
         <!-- compile scope -->
         <dependency>

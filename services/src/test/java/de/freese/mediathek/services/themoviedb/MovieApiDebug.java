@@ -3,7 +3,7 @@ package de.freese.mediathek.services.themoviedb;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.URI;
 import java.util.Locale;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -63,8 +63,8 @@ public class MovieApiDebug {
 
     // @Test
     public void testHTTP() throws Exception {
-        URL url = new URL(String.format("https://api.themoviedb.org/3/search/movie?api_key=%s&language=de&query=%s", getApiKey(), TEST_MOVIE));
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        URI uri = URI.create(String.format("https://api.themoviedb.org/3/search/movie?api_key=%s&language=de&query=%s", getApiKey(), TEST_MOVIE));
+        HttpURLConnection connection = (HttpURLConnection) uri.toURL().openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Accept", "application/json");
 
