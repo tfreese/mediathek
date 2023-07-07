@@ -12,8 +12,6 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 /**
- * Nützliches für die Bildverarbeitung.
- *
  * @author Thomas Freese
  */
 public final class ImageUtils {
@@ -26,18 +24,12 @@ public final class ImageUtils {
         return hints;
     }
 
-    /**
-     * Skaliert das Bild auf eine feste Größe.
-     */
     public static BufferedImage scaleImage(final Image src, final int width, final int height) {
         Image scaled = src.getScaledInstance(width, height, Image.SCALE_SMOOTH);
 
         return toBufferedImage(scaled);
     }
 
-    /**
-     * Skaliert das Bild auf die neuen Seitenverhältnisse.
-     */
     public static BufferedImage scaleImageByRatio(final Image src, final double ratioWidth, final double ratioHeight) {
         BufferedImage bufferedImage = toBufferedImage(src);
 
@@ -55,9 +47,6 @@ public final class ImageUtils {
         return op.filter(bufferedImage, null);
     }
 
-    /**
-     * Skaliert das Bild unter Beibehaltung des Seitenverhältnisses bis auf die maximale angegebene Höhe oder Breite.
-     */
     public static BufferedImage scaleImageKeepRatio(final Image src, final int maxWidth, final int maxHeight) {
         BufferedImage bufferedImage = toBufferedImage(src);
 
@@ -74,9 +63,6 @@ public final class ImageUtils {
         // return scaleImage(bufferedImage, (int) newWidth, (int) newHeight);
     }
 
-    /**
-     * Kopiert ein Icon in eine Image-Kopie.
-     */
     public static BufferedImage toBufferedImage(final Icon icon) {
         if (icon instanceof ImageIcon imageIcon) {
             if (imageIcon.getImage() instanceof BufferedImage bi) {
@@ -93,9 +79,6 @@ public final class ImageUtils {
         return returnImage;
     }
 
-    /**
-     * Konvertiert ein {@link Image} in ein {@link BufferedImage}.
-     */
     public static BufferedImage toBufferedImage(final Image image) {
         if (image instanceof BufferedImage bi) {
             return bi;

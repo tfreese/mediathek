@@ -28,9 +28,6 @@ public class RegExRowFilter extends AbstractRowFilterIndexed {
         this.matcher = Objects.requireNonNull(regexPattern).matcher("");
     }
 
-    /**
-     * @see de.freese.mediathek.kodi.swing.components.rowfilter.AbstractRowFilterIndexed#isInclude(javax.swing.RowFilter.Entry, int)
-     */
     @Override
     protected boolean isInclude(final RowFilter.Entry<?, ?> value, final int index) {
         this.matcher.reset(value.getStringValue(index));

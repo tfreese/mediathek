@@ -39,9 +39,6 @@ public class GenreDialog extends JDialog {
             super("Cancel");
         }
 
-        /**
-         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-         */
         @Override
         public void actionPerformed(final ActionEvent event) {
             GenreDialog.this.canceled = true;
@@ -60,9 +57,6 @@ public class GenreDialog extends JDialog {
             super("OK");
         }
 
-        /**
-         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-         */
         @Override
         public void actionPerformed(final ActionEvent event) {
             GenreDialog.this.canceled = false;
@@ -81,9 +75,6 @@ public class GenreDialog extends JDialog {
             super("<");
         }
 
-        /**
-         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-         */
         @Override
         public void actionPerformed(final ActionEvent event) {
             Genre genre = GenreDialog.this.listRechts.getSelectedValue();
@@ -113,9 +104,6 @@ public class GenreDialog extends JDialog {
             super(">");
         }
 
-        /**
-         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-         */
         @Override
         public void actionPerformed(final ActionEvent event) {
             Genre genre = GenreDialog.this.listLinks.getSelectedValue();

@@ -8,12 +8,12 @@ import org.springframework.core.env.StandardEnvironment;
 
 import de.freese.mediathek.kodi.spring.AbstractAppConfig;
 import de.freese.mediathek.kodi.spring.AppConfigSqLite;
-import de.freese.mediathek.report.KodiVideoReporter;
+import de.freese.mediathek.report.KodiMovieReporter;
 
 /**
  * @author Thomas Freese
  */
-public class KodiSpringVideoReporter extends KodiVideoReporter {
+public class KodiSpringMovieReporter extends KodiMovieReporter {
     public DataSource createDataSource(final boolean readonly) throws Exception {
         ConfigurableEnvironment environment = new StandardEnvironment();
         environment.getPropertySources().addLast(new KodiPropertySource());

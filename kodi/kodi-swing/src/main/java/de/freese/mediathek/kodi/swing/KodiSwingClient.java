@@ -41,9 +41,6 @@ public class KodiSwingClient {
     private static final Logger LOGGER = LoggerFactory.getLogger("KODI-Client");
 
     private static class MainFrameListener extends WindowAdapter {
-        /**
-         * @see WindowAdapter#windowClosing(WindowEvent)
-         */
         @Override
         public void windowClosing(final WindowEvent event) {
             System.exit(0);
@@ -191,11 +188,6 @@ public class KodiSwingClient {
         //
         // SortedSet<Object> uiKeys = new TreeSet<>(new Comparator<Object>()
         // {
-        // /**
-        // * @param o1 Object
-        // * @param o2 Object
-        // * @return int
-        // */
         // @Override
         // public int compare(final Object o1, final Object o2)
         // {

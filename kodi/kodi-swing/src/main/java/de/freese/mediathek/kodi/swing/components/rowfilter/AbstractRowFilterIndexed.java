@@ -20,9 +20,6 @@ public abstract class AbstractRowFilterIndexed extends RowFilter<Object, Object>
         this.columns = columns;
     }
 
-    /**
-     * @see javax.swing.RowFilter#include(javax.swing.RowFilter.Entry)
-     */
     @Override
     public boolean include(final Entry<?, ?> value) {
         int count = value.getValueCount();

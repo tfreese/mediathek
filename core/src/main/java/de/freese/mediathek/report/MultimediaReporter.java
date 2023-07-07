@@ -9,7 +9,6 @@ import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.sqlite.SQLiteConfig;
 import org.sqlite.SQLiteDataSource;
 import org.sqlite.javax.SQLiteConnectionPoolDataSource;
@@ -41,10 +40,11 @@ public final class MultimediaReporter {
         }
 
         static DataSource plexSqlite(final boolean readonly) throws Exception {
-            // jdbc:sqlite:/var/lib/plex/Plex\\ Media\\ Server/Plug-in\\ Support/Databases/com.plexapp.plugins.library.db
-            // jdbc:sqlite:/opt/plexmediaserver/Resources/com.plexapp.plugins.library.db
-            // jdbc:sqlite:/home/tommy/.config/plex/com.plexapp.plugins.library.db
             return createSqLite(readonly, "jdbc:sqlite:/home/tommy/com.plexapp.plugins.library.db");
+        }
+
+        static DataSource strawberrySqLite(final boolean readonly) throws Exception {
+            return createSqLite(readonly, "jdbc:sqlite:/home/tommy/.local/share/strawberry/strawberry/strawberry.db");
         }
 
         private static DataSource createSqLite(final boolean readonly, final String url) throws Exception {
@@ -63,14 +63,11 @@ public final class MultimediaReporter {
 
             // SingleConnectionDataSource dataSource = new SingleConnectionDataSource();
             // dataSource.setDriverClassName("org.sqlite.JDBC");
-            // dataSource.setUrl("jdbc:sqlite:/home/tommy/com.plexapp.plugins.library.db");
+            // dataSource.setUrl(url);
             // dataSource.setSuppressClose(true);
             // dataSource.setConnectionProperties(config.toProperties())
 
             SQLiteDataSource dataSource = new SQLiteConnectionPoolDataSource(config);
-            // dataSource.setUrl("jdbc:sqlite:/var/lib/plex/Plex\\ Media\\ Server/Plug-in\\ Support/Databases/com.plexapp.plugins.library.db");
-            // dataSource.setUrl("jdbc:sqlite:/opt/plexmediaserver/Resources/com.plexapp.plugins.library.db");
-            // dataSource.setUrl("jdbc:sqlite:/home/tommy/.config/plex/com.plexapp.plugins.library.db");
             dataSource.setUrl(url);
 
             // Export View-Status: echo ".dump metadata_item_settings" | sqlite3 com.plexapp.plugins.library.db | grep -v TABLE | grep -v INDEX > settings.sql
@@ -86,13 +83,13 @@ public final class MultimediaReporter {
 
     public static void main(final String[] args) throws Exception {
         // MediaReporter mediaReporter = new BansheeAudioReporter();
-        MediaReporter mediaReporter = new ClementineAudioReporter();
+        //        MediaReporter mediaReporter = new ClementineAudioReporter();
         //MediaReporter mediaReporter = new KodiAudioReporter();
         // MediaReporter mediaReporter = new PlexAudioReporter();
+        MediaReporter mediaReporter = new StrawberryAudioReporter();
 
         STOP_WATCH.start("connect");
-        DataSource dataSource = DataSources.clementineSqLite(true);
-        //DataSource dataSource = DataSources.kodiMusikSqLite(true);
+        DataSource dataSource = DataSources.strawberrySqLite(true);
         STOP_WATCH.stop();
 
         try {
@@ -103,8 +100,8 @@ public final class MultimediaReporter {
 
             LOGGER.info("Path: {}", path);
 
-            mediaReporter.writeReport(dataSource, path);
-            //mediaReporter.updateDbFromReport(dataSource, path);
+            mediaReporter.writeReport(dataSource, path.resolve("musik-report-strawberry.csv"));
+            //            mediaReporter.updateDbFromReport(dataSource, path.resolve("musik-report-clementine.csv"));
 
             STOP_WATCH.stop();
         }
@@ -115,10 +112,11 @@ public final class MultimediaReporter {
         finally {
             STOP_WATCH.start("disconnect");
 
-            if (dataSource instanceof SingleConnectionDataSource ds) {
-                ds.destroy();
-            }
-            else if (dataSource instanceof Closeable c) {
+            //            if (dataSource instanceof SingleConnectionDataSource ds) {
+            //                ds.destroy();
+            //            }
+            //            else
+            if (dataSource instanceof Closeable c) {
                 c.close();
             }
             else if (dataSource instanceof AutoCloseable ac) {

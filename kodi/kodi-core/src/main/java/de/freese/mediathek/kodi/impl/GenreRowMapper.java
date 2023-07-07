@@ -12,9 +12,6 @@ import de.freese.mediathek.kodi.model.Genre;
  * @author Thomas Freese
  */
 public class GenreRowMapper implements RowMapper<Genre> {
-    /**
-     * @see org.springframework.jdbc.core.RowMapper#mapRow(java.sql.ResultSet, int)
-     */
     @Override
     public Genre mapRow(final ResultSet rs, final int rowNum) throws SQLException {
         Genre genre = new Genre();

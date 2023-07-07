@@ -11,9 +11,6 @@ public abstract class AbstractModel implements Model {
 
     private int pk = -1;
 
-    /**
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     */
     @Override
     public int compareTo(final Model o) {
         if (o == null) {
@@ -43,17 +40,11 @@ public abstract class AbstractModel implements Model {
         return pk == model.pk && Objects.equals(getName(), model.getName());
     }
 
-    /**
-     * @see Model#getName()
-     */
     @Override
     public String getName() {
         return this.name;
     }
 
-    /**
-     * @see Model#getPk()
-     */
     @Override
     public int getPk() {
         return this.pk;
@@ -64,31 +55,23 @@ public abstract class AbstractModel implements Model {
         return Objects.hash(getName(), pk);
     }
 
-    /**
-     * @see Model#setName(java.lang.String)
-     */
     @Override
     public void setName(final String name) {
         this.name = name;
     }
 
-    /**
-     * @see Model#setPk(int)
-     */
     @Override
     public void setPk(final int pk) {
         this.pk = pk;
     }
 
-    /**
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append(getClass().getSimpleName()).append(" [pk=");
-        builder.append(this.pk).append(", name=");
-        builder.append(this.name).append("]");
+        builder.append(getClass().getSimpleName()).append(" [");
+        builder.append("pk=").append(this.pk);
+        builder.append(", name=").append(this.name);
+        builder.append("]");
 
         return builder.toString();
     }

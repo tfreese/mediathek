@@ -31,9 +31,6 @@ public abstract class AbstractShowAndMovieController<T> extends AbstractControll
         T entity = getView().getSelected();
 
         SwingWorker<List<List<Genre>>, Void> worker = new SwingWorker<>() {
-            /**
-             * @see javax.swing.SwingWorker#doInBackground()
-             */
             @Override
             protected List<List<Genre>> doInBackground() throws Exception {
                 List<Genre> allGenres = getService().getAllGenres();
@@ -46,9 +43,6 @@ public abstract class AbstractShowAndMovieController<T> extends AbstractControll
                 return result;
             }
 
-            /**
-             * @see javax.swing.SwingWorker#done()
-             */
             @Override
             protected void done() {
                 try {
@@ -100,17 +94,11 @@ public abstract class AbstractShowAndMovieController<T> extends AbstractControll
 
     protected void setImageIcon(T entity) {
         SwingWorker<ImageIcon, Void> worker = new SwingWorker<>() {
-            /**
-             * @see javax.swing.SwingWorker#doInBackground()
-             */
             @Override
             protected ImageIcon doInBackground() throws Exception {
                 return getService().loadImageIcon(entity);
             }
 
-            /**
-             * @see javax.swing.SwingWorker#done()
-             */
             @Override
             protected void done() {
                 try {

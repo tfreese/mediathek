@@ -34,9 +34,13 @@ import de.freese.mediathek.kodi.swing.controller.Controller;
  */
 public abstract class AbstractShowAndMovieView<T> extends AbstractView {
     private JButton genreButton;
+
     private JLabel genreLabel;
+
     private JLabel idLabel;
+
     private JLabel imageLabel;
+
     private JTable table;
 
     public void clear() {

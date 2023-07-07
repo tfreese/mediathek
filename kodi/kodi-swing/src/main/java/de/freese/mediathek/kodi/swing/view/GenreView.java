@@ -33,7 +33,9 @@ import de.freese.mediathek.kodi.swing.controller.GenreController;
  */
 public class GenreView extends AbstractView {
     private JList<Movie> listMovies;
+
     private JList<Show> listShows;
+
     private JTable table;
 
     public void clear() {

@@ -40,9 +40,6 @@ public abstract class AbstractTvShowMovieController<T extends Model> extends Abs
         return this.pane;
     }
 
-    /**
-     * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
-     */
     @Override
     public void initialize(final URL url, final ResourceBundle rb) {
         ObservableList<T> dataList = getPane().getTableItems();
@@ -62,9 +59,6 @@ public abstract class AbstractTvShowMovieController<T extends Model> extends Abs
 
     protected abstract String getImageUrl(T value);
 
-    /**
-     * @see de.freese.mediathek.kodi.javafx.controller.AbstractController#updateDetails(Model)
-     */
     @Override
     protected void updateDetails(final T value) {
         getPane().getImageProperty().set(null);

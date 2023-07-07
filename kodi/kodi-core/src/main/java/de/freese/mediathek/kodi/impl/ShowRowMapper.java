@@ -12,9 +12,6 @@ import de.freese.mediathek.kodi.model.Show;
  * @author Thomas Freese
  */
 public class ShowRowMapper implements RowMapper<Show> {
-    /**
-     * @see org.springframework.jdbc.core.RowMapper#mapRow(java.sql.ResultSet, int)
-     */
     @Override
     public Show mapRow(final ResultSet rs, final int rowNum) throws SQLException {
         Show show = new Show();

@@ -16,9 +16,6 @@ import org.sqlite.SQLiteDataSource;
 @Configuration
 @Profile("sqlite")
 public class AppConfigSqLite extends AbstractAppConfig {
-    /**
-     * @see de.freese.mediathek.kodi.spring.AbstractAppConfig#dataSourceAudio()
-     */
     @Override
     @Bean
     public DataSource dataSourceAudio() {
@@ -31,9 +28,6 @@ public class AppConfigSqLite extends AbstractAppConfig {
         return dataSource;
     }
 
-    /**
-     * @see de.freese.mediathek.kodi.spring.AbstractAppConfig#dataSourceVideo()
-     */
     @Override
     @Bean
     @Primary

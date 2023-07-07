@@ -18,9 +18,6 @@ public class FormattedTableCellFactory<S, T> implements Callback<TableColumn<S, 
 
     private Format format;
 
-    /**
-     * @see javafx.util.Callback#call(java.lang.Object)
-     */
     @Override
     public TableCell<S, T> call(final TableColumn<S, T> param) {
         TableCell<S, T> cell = new TableCell<>() {

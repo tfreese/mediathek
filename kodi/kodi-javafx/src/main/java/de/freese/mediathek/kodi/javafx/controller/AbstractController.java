@@ -37,9 +37,6 @@ public abstract class AbstractController<T extends Model> implements Initializab
         this.resourceCache = applicationContext.getBean(ResourceCache.class);
     }
 
-    /**
-     * @see javafx.beans.value.ChangeListener#changed(javafx.beans.value.ObservableValue, java.lang.Object, java.lang.Object)
-     */
     @Override
     public void changed(final ObservableValue<? extends T> observable, final T oldValue, final T newValue) {
         // System.out.printf("%s, %s, %s%n", observable, oldValue, newValue);

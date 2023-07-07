@@ -44,7 +44,7 @@ public class KodiJavaFxClient extends Application {
     }
 
     /**
-     * @return int; Beispiel: 14.0.1 = 014.000.001 = 14000001
+     * @return int; Example: 14.0.1 = 014.000.001 = 14000001
      */
     private static int getJavaVersion() {
         // String javaVersion = SystemUtils.JAVA_VERSION;
@@ -83,9 +83,6 @@ public class KodiJavaFxClient extends Application {
 
     private AnnotationConfigApplicationContext applicationContext;
 
-    /**
-     * @see javafx.application.Application#init()
-     */
     @Override
     public void init() throws Exception {
         getLogger().info("init");
@@ -111,9 +108,6 @@ public class KodiJavaFxClient extends Application {
         this.applicationContext.registerShutdownHook();
     }
 
-    /**
-     * @see javafx.application.Application#start(javafx.stage.Stage)
-     */
     @Override
     public void start(final Stage stage) throws Exception {
         getLogger().info("start");
@@ -172,9 +166,6 @@ public class KodiJavaFxClient extends Application {
         stage.show();
     }
 
-    /**
-     * @see javafx.application.Application#stop()
-     */
     @Override
     public void stop() throws Exception {
         getLogger().info("stop");

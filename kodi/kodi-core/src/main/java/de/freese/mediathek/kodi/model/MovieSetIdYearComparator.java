@@ -7,20 +7,11 @@ import java.util.Locale;
 import java.util.Objects;
 
 /**
- * Sortiert Filme in einem Set nach Jahr und nicht nach Name.<br>
- * Comparison method violates its general contract!<br>
- * Reflexivität -> compare(a,a)==0<br>
- * Antisymmetrie -> compare(a,b)==-compare(b,a)<br>
- * Transitivität -> compare(a,b)==-1 && compare(b,c)==-1 => compare(a,c)==-1<br>
- *
  * @author Thomas Freese
  */
 public class MovieSetIdYearComparator implements Comparator<Movie> {
     private static final Collator COLLATOR = Collator.getInstance(Locale.GERMANY);
 
-    /**
-     * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
-     */
     @Override
     public int compare(final Movie o1, final Movie o2) {
         if (o1.getPk() == o2.getPk()) {

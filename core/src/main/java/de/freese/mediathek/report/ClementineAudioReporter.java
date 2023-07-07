@@ -4,20 +4,17 @@ package de.freese.mediathek.report;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.springframework.jdbc.core.JdbcTemplate;
-
 /**
  * @author Thomas Freese
  */
 public class ClementineAudioReporter extends AbstractMediaReporter {
-    /**
-     * @see de.freese.mediathek.report.MediaReporter#updateDbFromReport(javax.sql.DataSource, java.nio.file.Path)
-     */
     @Override
     public void updateDbFromReport(final DataSource dataSource, final Path path) throws Exception {
         // TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
@@ -30,13 +27,14 @@ public class ClementineAudioReporter extends AbstractMediaReporter {
         sql.append("update songs set playcount = ?"); // , lastplayed = ?
         sql.append(" where artist = ? and title = ?");
 
-        List<Map<String, String>> hearedMusic = readMusik(path.resolve("musik-report-clementine.csv"));
+        List<Map<String, String>> heardMusic = readHeardMusik(path);
 
-        try (Connection con = dataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql.toString())) {
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(sql.toString())) {
             con.setAutoCommit(false);
 
             try {
-                for (Map<String, String> map : hearedMusic) {
+                for (Map<String, String> map : heardMusic) {
                     String artist = map.get("ARTIST");
                     String song = map.get("SONG");
                     int playCount = Integer.parseInt(map.get("PLAYCOUNT"));
@@ -69,9 +67,6 @@ public class ClementineAudioReporter extends AbstractMediaReporter {
         // transactionManager.rollback(transactionStatus);
     }
 
-    /**
-     * @see de.freese.mediathek.report.MediaReporter#writeReport(javax.sql.DataSource, java.nio.file.Path)
-     */
     @Override
     public void writeReport(final DataSource dataSource, final Path path) throws Exception {
         StringBuilder sql = new StringBuilder();
@@ -80,12 +75,18 @@ public class ClementineAudioReporter extends AbstractMediaReporter {
         sql.append(" where PLAYCOUNT > 0");
         sql.append(" order by ARTIST asc, SONG asc");
 
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql.toString())) {
+            writeResultSet(resultSet, path);
+        }
 
-        jdbcTemplate.query(sql.toString(), resultSet -> {
-            writeResultSet(resultSet, path.resolve("musik-report-clementine.csv"));
-
-            return null;
-        });
+        //        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        //
+        //        jdbcTemplate.query(sql.toString(), resultSet -> {
+        //            writeResultSet(resultSet, path);
+        //
+        //            return null;
+        //        });
     }
 }

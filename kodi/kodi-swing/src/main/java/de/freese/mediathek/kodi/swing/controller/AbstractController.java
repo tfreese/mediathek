@@ -17,6 +17,7 @@ public abstract class AbstractController implements Controller {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final Service service;
+
     private final View view;
 
     protected AbstractController(final Service service, View view) {

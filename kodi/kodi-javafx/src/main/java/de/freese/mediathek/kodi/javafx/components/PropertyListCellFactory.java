@@ -22,9 +22,6 @@ public class PropertyListCellFactory<T> implements Callback<ListView<T>, ListCel
         this.method = ReflectionUtils.findMethod(clazz, methodName);
     }
 
-    /**
-     * @see javafx.util.Callback#call(java.lang.Object)
-     */
     @Override
     public ListCell<T> call(final ListView<T> param) {
         return new ListCell<>() {

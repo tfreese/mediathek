@@ -59,9 +59,6 @@ public class DefaultListListModel<T> implements ListModel<T>, Serializable {
         fireIntervalAdded(this, sizeOld, getList().size() - 1);
     }
 
-    /**
-     * @see ListModel#addListDataListener(ListDataListener)
-     */
     @Override
     public synchronized void addListDataListener(final ListDataListener listener) {
         this.eventListenerList.add(ListDataListener.class, listener);
@@ -77,9 +74,6 @@ public class DefaultListListModel<T> implements ListModel<T>, Serializable {
         return getList().contains(object);
     }
 
-    /**
-     * @see ListModel#getElementAt(int)
-     */
     @Override
     public T getElementAt(final int index) {
         return getList().get(index);
@@ -93,9 +87,6 @@ public class DefaultListListModel<T> implements ListModel<T>, Serializable {
         return getList().indexOf(object);
     }
 
-    /**
-     * @see ListModel#getSize()
-     */
     @Override
     public int getSize() {
         return getList().size();
@@ -106,7 +97,7 @@ public class DefaultListListModel<T> implements ListModel<T>, Serializable {
     }
 
     /**
-     * Fires the ContentsChanged Event.
+     * Fires a ContentsChanged Event.
      */
     public void refresh() {
         fireContentsChanged(this, 0, getSize() - 1);
@@ -124,9 +115,6 @@ public class DefaultListListModel<T> implements ListModel<T>, Serializable {
         fireIntervalRemoved(this, index, index);
     }
 
-    /**
-     * @see ListModel#removeListDataListener(ListDataListener)
-     */
     @Override
     public synchronized void removeListDataListener(final ListDataListener listener) {
         this.eventListenerList.add(ListDataListener.class, listener);

@@ -38,9 +38,6 @@ public class GenreController extends AbstractController<Genre> {
         return this.scene;
     }
 
-    /**
-     * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
-     */
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
         ObservableList<Genre> dataList = getPane().getTableItems();
@@ -52,17 +49,11 @@ public class GenreController extends AbstractController<Genre> {
         selectionModel.selectedItemProperty().addListener(this);
     }
 
-    /**
-     * @see de.freese.mediathek.kodi.javafx.controller.AbstractController#load()
-     */
     @Override
     protected List<Genre> load() {
         return getMediaService().getGenres();
     }
 
-    /**
-     * @see de.freese.mediathek.kodi.javafx.controller.AbstractController#updateDetails(Model)
-     */
     @Override
     protected void updateDetails(final Genre value) {
         getPane().getFilmeItems().clear();

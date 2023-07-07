@@ -2,26 +2,21 @@
 package de.freese.mediathek.report;
 
 import java.nio.file.Path;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import javax.sql.DataSource;
-
-import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  * @author Thomas Freese
  */
 public class BansheeAudioReporter extends AbstractMediaReporter {
-    /**
-     * @see de.freese.mediathek.report.MediaReporter#updateDbFromReport(javax.sql.DataSource, java.nio.file.Path)
-     */
     @Override
     public void updateDbFromReport(final DataSource dataSource, final Path path) throws Exception {
         throw new UnsupportedOperationException("updateDbFromReport not implemented");
     }
 
-    /**
-     * @see de.freese.mediathek.report.MediaReporter#writeReport(javax.sql.DataSource, java.nio.file.Path)
-     */
     @Override
     public void writeReport(final DataSource dataSource, final Path path) throws Exception {
         StringBuilder sql = new StringBuilder();
@@ -31,12 +26,18 @@ public class BansheeAudioReporter extends AbstractMediaReporter {
         sql.append(" where ct.playcount > 0");
         sql.append(" order by artist asc, song asc");
 
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql.toString())) {
+            writeResultSet(resultSet, path);
+        }
 
-        jdbcTemplate.query(sql.toString(), resultSet -> {
-            writeResultSet(resultSet, path.resolve("musik-report-banshee.csv"));
-
-            return null;
-        });
+        //        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        //
+        //        jdbcTemplate.query(sql.toString(), resultSet -> {
+        //            writeResultSet(resultSet, path);
+        //
+        //            return null;
+        //        });
     }
 }

@@ -6,18 +6,12 @@ import java.nio.file.Path;
 import javax.sql.DataSource;
 
 /**
- * Interface um Medien zu berichten und deren Datenbank zu aktualisieren.
+ * Interface for reporting Media and update their Databases.
  *
  * @author Thomas Freese
  */
 public interface MediaReporter {
-    /**
-     * Aktualisiert die Datenbank mit den Media-Infos aus der Datei.
-     */
     void updateDbFromReport(DataSource dataSource, Path path) throws Exception;
 
-    /**
-     * Schreibt die Media-Infos aus der Datenbank in die Datei.
-     */
     void writeReport(DataSource dataSource, Path path) throws Exception;
 }

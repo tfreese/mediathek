@@ -17,9 +17,6 @@ import de.freese.mediathek.kodi.model.Show;
 public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
     private String schema = "";
 
-    /**
-     * @see MediaDao#deleteMovieGenres(int)
-     */
     @Override
     public void deleteMovieGenres(final int movieID) {
         StringBuilder sql = new StringBuilder();
@@ -31,9 +28,6 @@ public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
         getJdbcTemplate().update(sql.toString(), movieID);
     }
 
-    /**
-     * @see MediaDao#deleteShowGenres(int)
-     */
     @Override
     public void deleteShowGenres(final int showID) {
         StringBuilder sql = new StringBuilder();
@@ -45,9 +39,6 @@ public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
         getJdbcTemplate().update(sql.toString(), showID);
     }
 
-    /**
-     * @see MediaDao#getGenreMovies(int)
-     */
     @Override
     public List<Movie> getGenreMovies(final int genreID) {
         StringBuilder sql = new StringBuilder();
@@ -69,9 +60,6 @@ public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
         return getJdbcTemplate().query(sql.toString(), new MovieRowMapper(), genreID);
     }
 
-    /**
-     * @see MediaDao#getGenreShows(int)
-     */
     @Override
     public List<Show> getGenreShows(final int genreID) {
         StringBuilder sql = new StringBuilder();
@@ -91,9 +79,6 @@ public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
         return getJdbcTemplate().query(sql.toString(), new ShowRowMapper(), genreID);
     }
 
-    /**
-     * @see MediaDao#getGenres()
-     */
     @Override
     public List<Genre> getGenres() {
         StringBuilder sql = new StringBuilder();
@@ -133,9 +118,6 @@ public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
         return getJdbcTemplate().query(sql.toString(), new GenreRowMapper());
     }
 
-    /**
-     * @see MediaDao#getMovieGenres(int)
-     */
     @Override
     public List<Genre> getMovieGenres(final int movieID) {
         StringBuilder sql = new StringBuilder();
@@ -154,9 +136,6 @@ public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
         return getJdbcTemplate().query(sql.toString(), new GenreRowMapper(), movieID);
     }
 
-    /**
-     * @see MediaDao#getMovies()
-     */
     @Override
     public List<Movie> getMovies() {
         StringBuilder sql = new StringBuilder();
@@ -181,9 +160,6 @@ public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
         return getJdbcTemplate().query(sql.toString(), new MovieRowMapper());
     }
 
-    /**
-     * @see MediaDao#getShowGenres(int)
-     */
     @Override
     public List<Genre> getShowGenres(final int showID) {
         StringBuilder sql = new StringBuilder();
@@ -201,9 +177,6 @@ public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
         return getJdbcTemplate().query(sql.toString(), new GenreRowMapper(), showID);
     }
 
-    /**
-     * @see MediaDao#getShows()
-     */
     @Override
     public List<Show> getShows() {
         StringBuilder sql = new StringBuilder();
@@ -226,9 +199,6 @@ public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
         return getJdbcTemplate().query(sql.toString(), new ShowRowMapper());
     }
 
-    /**
-     * @see MediaDao#insertMovieGenre(int, int)
-     */
     @Override
     public void insertMovieGenre(final int movieID, final int genreID) {
         StringBuilder sql = new StringBuilder();
@@ -239,9 +209,6 @@ public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
         getJdbcTemplate().update(sql.toString(), genreID, movieID);
     }
 
-    /**
-     * @see MediaDao#insertShowGenre(int, int)
-     */
     @Override
     public void insertShowGenre(final int showID, final int genreID) {
         StringBuilder sql = new StringBuilder();
@@ -256,9 +223,6 @@ public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
         this.schema = schema;
     }
 
-    /**
-     * @see MediaDao#updateMovieGenres(int)
-     */
     @Override
     public String updateMovieGenres(final int movieID) {
         // Mysql
@@ -312,9 +276,6 @@ public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
 
     }
 
-    /**
-     * @see MediaDao#updateShowGenres(int)
-     */
     @Override
     public String updateShowGenres(final int showID) {
         // Mysql

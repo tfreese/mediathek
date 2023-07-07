@@ -5,11 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.MethodOrderer;
@@ -25,28 +27,15 @@ import de.freese.mediathek.utils.MediaDbUtils;
 @Disabled
 class TestParseCsv {
     @Test
-    void testParseClementine() throws IOException {
-        Path path = Paths.get("/home/tommy/dokumente/linux/musik-report-clementine.csv");
-
-        List<String> list = MediaDbUtils.parseCsv(path).stream().limit(3).map(Arrays::toString).toList();
-
-        assertFalse(list.isEmpty());
-        assertEquals(3, list.size());
-
-        list.forEach(System.out::println);
-    }
-
-    @Test
     void testParseCsvRow() {
-        String line = "\"\"\"A\"\" b\",\"c\",\"d\",,\"e\",\"\",\"f\"";
+        String row = "\"\"\"A\"\" b\",\"c\",\"d\",,\"e\",\"\",\"f\"";
 
-        String row = line;
-        List<String> token = new ArrayList<>();
+        List<String> tokens = new ArrayList<>();
 
         while (!row.isBlank()) {
             // Empty Value
             if (row.startsWith(",")) {
-                token.add("");
+                tokens.add("");
                 row = row.substring(1);
                 continue;
             }
@@ -55,20 +44,39 @@ class TestParseCsv {
 
             if (endIndex < 0) {
                 // Last Value -> End
-                token.add(row);
+                tokens.add(row);
                 break;
             }
 
-            token.add(row.substring(0, endIndex + 1));
+            tokens.add(row.substring(0, endIndex + 1));
             row = row.substring(endIndex + 2);
         }
 
-        assertFalse(token.isEmpty());
-        assertEquals(7, token.size());
+        assertFalse(tokens.isEmpty());
+        assertEquals(7, tokens.size());
 
-        token = token.stream().map(t -> t.replaceAll("^\"|\"$", "")) // Remove first and last '"'
+        tokens = tokens.stream().map(t -> t.replaceAll("^\"|\"$", "")) // Remove first and last '"'
                 .map(l -> l.replace("\"\"", "\"")) // Replace escaped quotes: "" -> "
                 .map(String::strip).toList();
-        System.out.println(token);
+
+        assertFalse(tokens.isEmpty());
+        assertEquals(7, tokens.size());
+        assertEquals("\"A\" b,c,d,,e,,f", tokens.stream().collect(Collectors.joining(",")));
+    }
+
+    @Test
+    void testParseFile() throws IOException {
+        Path path = Paths.get("/home/tommy/dokumente/linux/musik-report-strawberry.csv");
+
+        if (!Files.exists(path)) {
+            return;
+        }
+
+        List<String> list = MediaDbUtils.parseCsv(path).stream().limit(3).map(Arrays::toString).toList();
+
+        assertFalse(list.isEmpty());
+        assertEquals(3, list.size());
+
+        assertEquals("[ARTIST, SONG, PLAYCOUNT]", list.get(0));
     }
 }

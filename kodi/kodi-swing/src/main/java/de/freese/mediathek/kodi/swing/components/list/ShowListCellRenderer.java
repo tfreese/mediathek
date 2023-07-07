@@ -16,9 +16,6 @@ public class ShowListCellRenderer extends DefaultListCellRenderer {
     @Serial
     private static final long serialVersionUID = 3721555812207440061L;
 
-    /**
-     * @see javax.swing.ListCellRenderer#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)
-     */
     @Override
     public Component getListCellRendererComponent(final JList<?> list, final Object value, final int index, final boolean isSelected, final boolean cellHasFocus) {
         super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);

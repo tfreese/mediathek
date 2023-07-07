@@ -25,9 +25,6 @@ public class MediaServiceImpl implements MediaService {
         this.mediaDAO = Objects.requireNonNull(mediaDAO, "mediaDAO required");
     }
 
-    /**
-     * @see de.freese.mediathek.kodi.api.MediaService#getGenreMovies(int)
-     */
     @Override
     public List<Movie> getGenreMovies(final int genreID) {
         List<Movie> movies = getMediaDAO().getGenreMovies(genreID);
@@ -36,9 +33,6 @@ public class MediaServiceImpl implements MediaService {
         return movies;
     }
 
-    /**
-     * @see de.freese.mediathek.kodi.api.MediaService#getGenreShows(int)
-     */
     @Override
     public List<Show> getGenreShows(final int genreID) {
         List<Show> shows = getMediaDAO().getGenreShows(genreID);
@@ -47,9 +41,6 @@ public class MediaServiceImpl implements MediaService {
         return shows;
     }
 
-    /**
-     * @see de.freese.mediathek.kodi.api.MediaService#getGenres()
-     */
     @Override
     public List<Genre> getGenres() {
         List<Genre> genres = getMediaDAO().getGenres();
@@ -58,9 +49,6 @@ public class MediaServiceImpl implements MediaService {
         return genres;
     }
 
-    /**
-     * @see de.freese.mediathek.kodi.api.MediaService#getMovieGenres(int)
-     */
     @Override
     public List<Genre> getMovieGenres(final int movieID) {
         List<Genre> genres = getMediaDAO().getMovieGenres(movieID);
@@ -69,9 +57,6 @@ public class MediaServiceImpl implements MediaService {
         return genres;
     }
 
-    /**
-     * @see de.freese.mediathek.kodi.api.MediaService#getMovies()
-     */
     @Override
     @Transactional(value = "txManagerVideo", readOnly = true)
     public List<Movie> getMovies() {
@@ -82,9 +67,6 @@ public class MediaServiceImpl implements MediaService {
         return movies;
     }
 
-    /**
-     * @see de.freese.mediathek.kodi.api.MediaService#getShowGenres(int)
-     */
     @Override
     public List<Genre> getShowGenres(final int showID) {
         List<Genre> genres = getMediaDAO().getShowGenres(showID);
@@ -93,9 +75,6 @@ public class MediaServiceImpl implements MediaService {
         return genres;
     }
 
-    /**
-     * @see de.freese.mediathek.kodi.api.MediaService#getShows()
-     */
     @Override
     @Transactional(value = "txManagerVideo", readOnly = true)
     public List<Show> getShows() {
@@ -105,9 +84,6 @@ public class MediaServiceImpl implements MediaService {
         return shows;
     }
 
-    /**
-     * @see de.freese.mediathek.kodi.api.MediaService#updateMovieGenres(int, int[])
-     */
     @Override
     @Transactional("txManagerVideo")
     public String updateMovieGenres(final int movieID, final int... genreIDs) {
@@ -124,9 +100,6 @@ public class MediaServiceImpl implements MediaService {
         return getMediaDAO().updateMovieGenres(movieID);
     }
 
-    /**
-     * @see de.freese.mediathek.kodi.api.MediaService#updateShowGenres(int, int[])
-     */
     @Override
     @Transactional("txManagerVideo")
     public String updateShowGenres(final int showID, final int... genreIDs) {

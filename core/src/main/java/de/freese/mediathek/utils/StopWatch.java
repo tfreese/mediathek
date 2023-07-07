@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
 /**
- * Geklaut und verfeinert von org.springframework.util.StopWatch.
+ * org.springframework.util.StopWatch.
  *
  * @author Thomas Freese
  */
@@ -32,9 +32,6 @@ public class StopWatch {
             this.printStream = Objects.requireNonNull(printStream, "printStream required");
         }
 
-        /**
-         * @see Consumer#accept(Object)
-         */
         @Override
         public void accept(final StopWatch sw) {
             printSummary(sw, this.printStream, TimeUnit.MILLISECONDS);

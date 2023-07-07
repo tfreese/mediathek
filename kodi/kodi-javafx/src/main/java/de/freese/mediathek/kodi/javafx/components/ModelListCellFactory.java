@@ -11,9 +11,6 @@ import de.freese.mediathek.kodi.model.Model;
  * @author Thomas Freese
  */
 public class ModelListCellFactory implements Callback<ListView<Model>, ListCell<Model>> {
-    /**
-     * @see javafx.util.Callback#call(java.lang.Object)
-     */
     @Override
     public ListCell<Model> call(final ListView<Model> param) {
         ListCell<Model> cell = new ListCell<>() {

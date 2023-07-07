@@ -36,9 +36,6 @@ public class GenreController extends AbstractController {
         getView().clear();
 
         SwingWorker<List<List<? extends Model>>, Void> worker = new SwingWorker<>() {
-            /**
-             * @see javax.swing.SwingWorker#doInBackground()
-             */
             @Override
             protected List<List<? extends Model>> doInBackground() throws Exception {
                 List<Show> shows = getService().getGenreShows(genre);
@@ -51,9 +48,6 @@ public class GenreController extends AbstractController {
                 return results;
             }
 
-            /**
-             * @see javax.swing.SwingWorker#done()
-             */
             @Override
             protected void done() {
                 try {

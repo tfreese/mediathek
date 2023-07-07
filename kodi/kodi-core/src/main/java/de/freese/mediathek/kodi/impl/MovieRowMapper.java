@@ -12,9 +12,6 @@ import de.freese.mediathek.kodi.model.Movie;
  * @author Thomas Freese
  */
 public class MovieRowMapper implements RowMapper<Movie> {
-    /**
-     * @see org.springframework.jdbc.core.RowMapper#mapRow(java.sql.ResultSet, int)
-     */
     @Override
     public Movie mapRow(final ResultSet rs, final int rowNum) throws SQLException {
         Movie movie = new Movie();

@@ -16,9 +16,6 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 @Profile("mysql")
 public class AppConfigMySQL extends AbstractAppConfig {
-    /**
-     * @see de.freese.mediathek.kodi.spring.AbstractAppConfig#dataSourceAudio()
-     */
     @Override
     @Bean(destroyMethod = "close")
     public DataSource dataSourceAudio() {
@@ -30,9 +27,6 @@ public class AppConfigMySQL extends AbstractAppConfig {
         return new HikariDataSource(config);
     }
 
-    /**
-     * @see de.freese.mediathek.kodi.spring.AbstractAppConfig#dataSourceVideo()
-     */
     @Override
     @Bean(destroyMethod = "close")
     @Primary

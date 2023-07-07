@@ -17,9 +17,6 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 @Configuration
 @Profile("hsqldb")
 public class AppConfigHsqlDb extends AbstractAppConfig {
-    /**
-     * @see de.freese.mediathek.kodi.spring.AbstractAppConfig#dataSourceAudio()
-     */
     @Override
     @Bean
     public DataSource dataSourceAudio() {
@@ -29,9 +26,6 @@ public class AppConfigHsqlDb extends AbstractAppConfig {
         return dataSource;
     }
 
-    /**
-     * @see de.freese.mediathek.kodi.spring.AbstractAppConfig#dataSourceVideo()
-     */
     @Override
     @Bean
     @Primary

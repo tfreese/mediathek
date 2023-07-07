@@ -8,7 +8,7 @@ import javafx.application.Application;
  */
 public final class KodiJavaFxClientLauncher {
     public static void main(final String[] args) {
-        // Warn-Meldungen bei Bindings verhindern.
+        // Avoid Warnings at JavaFx-Bindings.
         // Logging.getLogger().setLevel(Level.SEVERE);
         System.setProperty("org.slf4j.simpleLogger.log.de.freese.mediathek.kodi.javafx", "DEBUG");
 

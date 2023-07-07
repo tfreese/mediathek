@@ -19,9 +19,6 @@ class KodiPropertySource extends PropertySource<Properties> {
         }
     }
 
-    /**
-     * @see org.springframework.core.env.PropertySource#getProperty(java.lang.String)
-     */
     @Override
     public Object getProperty(final String name) {
         return getSource().getProperty(name);

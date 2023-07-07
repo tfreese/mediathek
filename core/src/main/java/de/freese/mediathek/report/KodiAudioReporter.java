@@ -20,9 +20,6 @@ import de.freese.mediathek.utils.MediaDbUtils;
  * @author Thomas Freese
  */
 public class KodiAudioReporter extends AbstractMediaReporter {
-    /**
-     * @see de.freese.mediathek.report.MediaReporter#updateDbFromReport(javax.sql.DataSource, java.nio.file.Path)
-     */
     @Override
     public void updateDbFromReport(final DataSource dataSource, final Path path) throws Exception {
         StringBuilder sqlSelect = new StringBuilder();
@@ -35,13 +32,14 @@ public class KodiAudioReporter extends AbstractMediaReporter {
         sqlUpdate.append(" set iTimesPlayed = ?");
         sqlUpdate.append(" WHERE strArtistDisp = ? AND strTitle = ?");
 
-        List<Map<String, String>> hearedMusic = readMusik(path.resolve("musik-report-kodi.csv"));
+        List<Map<String, String>> heardMusic = readHeardMusik(path);
 
         try (Connection connection = dataSource.getConnection()) {
             connection.setAutoCommit(false);
 
-            try (PreparedStatement stmtUpdate = connection.prepareStatement(sqlUpdate.toString()); PreparedStatement stmtSelect = connection.prepareStatement(sqlSelect.toString())) {
-                for (Map<String, String> map : hearedMusic) {
+            try (PreparedStatement stmtUpdate = connection.prepareStatement(sqlUpdate.toString());
+                 PreparedStatement stmtSelect = connection.prepareStatement(sqlSelect.toString())) {
+                for (Map<String, String> map : heardMusic) {
                     String artist = map.get("ARTIST");
                     String song = map.get("SONG");
                     int playCount = Integer.parseInt(map.get("PLAYCOUNT"));
@@ -75,12 +73,9 @@ public class KodiAudioReporter extends AbstractMediaReporter {
         }
     }
 
-    /**
-     * @see de.freese.mediathek.report.MediaReporter#writeReport(javax.sql.DataSource, java.nio.file.Path)
-     */
     @Override
     public void writeReport(final DataSource dataSource, final Path path) throws Exception {
-        writeMusic(dataSource, path.resolve("musik-report-kodi.csv"));
+        writeMusic(dataSource, path);
 
         // Playlisten
         // Nur mit expliziter Tabelle möglich: tommy.playlist_music_artist
@@ -95,7 +90,9 @@ public class KodiAudioReporter extends AbstractMediaReporter {
         sql.append(" WHERE iTimesPlayed > 0");
         sql.append(" ORDER BY artist asc, song asc");
 
-        try (Connection connection = dataSource.getConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(sql.toString())) {
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql.toString())) {
             writeResultSet(resultSet, path);
         }
     }
@@ -113,7 +110,10 @@ public class KodiAudioReporter extends AbstractMediaReporter {
         sql.append(" (sw.strArtists = pl.artist and pl.operator = 'is') or (sw.strArtists like concat('%',pl.artist,'%') and pl.operator = 'contains')");
         sql.append(" ORDER BY artist, album, song, duration");
 
-        try (Connection connection = dataSource.getConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(sql.toString()); PrintWriter pw = new PrintWriter(Files.newOutputStream(path), true, StandardCharsets.UTF_8)) {
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql.toString());
+             PrintWriter pw = new PrintWriter(Files.newOutputStream(path), true, StandardCharsets.UTF_8)) {
             pw.println("#EXTM3U");
 
             // #EXTINF:0,AC/DC - Baby, Please Don't Go
@@ -137,7 +137,10 @@ public class KodiAudioReporter extends AbstractMediaReporter {
         sql.append(" FROM tommy.playlist_music_artist");
         sql.append(" ORDER BY operator, artist");
 
-        try (Connection connection = dataSource.getConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(sql.toString()); PrintWriter pw = new PrintWriter(Files.newOutputStream(path), true, StandardCharsets.UTF_8)) {
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql.toString());
+             PrintWriter pw = new PrintWriter(Files.newOutputStream(path), true, StandardCharsets.UTF_8)) {
             pw.println("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?>");
             pw.println("<smartplaylist type=\"songs\">");
             pw.println("    <name>Mix</name>");

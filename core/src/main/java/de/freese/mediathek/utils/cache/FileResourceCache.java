@@ -30,9 +30,6 @@ public class FileResourceCache extends AbstractResourceCache {
         this.cacheDirectory = Objects.requireNonNull(cacheDirectory, "cacheDirectory required");
     }
 
-    /**
-     * @see ResourceCache#clear()
-     */
     @Override
     public void clear() {
         try {
@@ -41,9 +38,6 @@ public class FileResourceCache extends AbstractResourceCache {
             }
 
             Files.walkFileTree(this.cacheDirectory, new SimpleFileVisitor<>() {
-                /**
-                 * @see SimpleFileVisitor#postVisitDirectory(Object, IOException)
-                 */
                 @Override
                 public FileVisitResult postVisitDirectory(final Path dir, final IOException exc) throws IOException {
                     Files.delete(dir);
@@ -51,9 +45,6 @@ public class FileResourceCache extends AbstractResourceCache {
                     return FileVisitResult.CONTINUE;
                 }
 
-                /**
-                 * @see SimpleFileVisitor#visitFile(Object, BasicFileAttributes)
-                 */
                 @Override
                 public FileVisitResult visitFile(final Path file, final BasicFileAttributes attrs) throws IOException {
                     Files.delete(file);
@@ -67,9 +58,6 @@ public class FileResourceCache extends AbstractResourceCache {
         }
     }
 
-    /**
-     * @see ResourceCache#getResource(URI)
-     */
     @Override
     public InputStream getResource(final URI uri) throws Exception {
         String key = generateKey(uri);

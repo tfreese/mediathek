@@ -17,8 +17,6 @@ import java.util.StringJoiner;
 import java.util.function.UnaryOperator;
 
 /**
- * Utils für Mediatheken.
- *
  * @author Thomas Freese
  */
 public final class MediaDbUtils {
@@ -33,9 +31,6 @@ public final class MediaDbUtils {
         // @formatter:on
     }
 
-    /**
-     * Benennt die bestehende Datei in *.last um.
-     */
     public static void rename(final Path path) throws IOException {
         Objects.requireNonNull(path, "path required");
 
@@ -71,9 +66,8 @@ public final class MediaDbUtils {
     }
 
     /**
-     * Schreibt das ResultSet als CSV-Datei.<br>
-     * Der Stream wird nicht geschlossen.<br>
-     * Wenn das ResultSet vom Typ != ResultSet.TYPE_FORWARD_ONLY ist, wird {@link ResultSet#first()} aufgerufen und kann weiter verwendet werden.
+     * Stream is not closed.<br>
+     * If the ResultSet is != ResultSet.TYPE_FORWARD_ONLY, {@link ResultSet#first()} is called and the {@link ResultSet} can still used.
      */
     public static void writeCsv(final ResultSet resultSet, final PrintStream ps) throws SQLException {
         UnaryOperator<String> valueFunction = value -> {
@@ -132,16 +126,11 @@ public final class MediaDbUtils {
 
         ps.flush();
 
-        // ResultSet wieder zurück auf Anfang.
         if (resultSet.getType() != ResultSet.TYPE_FORWARD_ONLY) {
             resultSet.first();
         }
     }
 
-    /**
-     * Schreibt das ResultSet als CSV-Datei.<br>
-     * Wenn das ResultSet vom Typ != ResultSet.TYPE_FORWARD_ONLY ist, wird {@link ResultSet#first()} aufgerufen und kann weiter verwendet werden.
-     */
     public static void writeCsv(final ResultSet resultSet, final Path path) throws Exception {
         rename(path);
 
