@@ -33,9 +33,6 @@ public class Movie implements Comparable<Movie> {
      */
     private String title;
 
-    /**
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     */
     @Override
     public int compareTo(final Movie o) {
         String s1 = getJahr();
@@ -108,9 +105,6 @@ public class Movie implements Comparable<Movie> {
         this.title = title;
     }
 
-    /**
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

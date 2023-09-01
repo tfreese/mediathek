@@ -90,9 +90,6 @@ public abstract class AbstractAppConfig implements EnvironmentAware {
         return new FileResourceCache(Paths.get(System.getProperty("java.io.tmpdir"), ".javaCache"));
     }
 
-    /**
-     * @see org.springframework.context.EnvironmentAware#setEnvironment(org.springframework.core.env.Environment)
-     */
     @Override
     public void setEnvironment(final Environment environment) {
         this.environment = environment;

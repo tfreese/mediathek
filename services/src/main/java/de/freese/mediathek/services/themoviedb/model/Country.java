@@ -18,9 +18,6 @@ public class Country implements Comparable<Country> {
      */
     private String name;
 
-    /**
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     */
     @Override
     public int compareTo(final Country o) {
         return this.name.compareTo(o.getName());
@@ -43,9 +40,6 @@ public class Country implements Comparable<Country> {
         this.name = name;
     }
 
-    /**
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

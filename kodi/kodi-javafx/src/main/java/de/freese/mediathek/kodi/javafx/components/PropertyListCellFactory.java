@@ -25,9 +25,6 @@ public class PropertyListCellFactory<T> implements Callback<ListView<T>, ListCel
     @Override
     public ListCell<T> call(final ListView<T> param) {
         return new ListCell<>() {
-            /**
-             * @see javafx.scene.control.Cell#updateItem(java.lang.Object, boolean)
-             */
             @Override
             protected void updateItem(final T entity, final boolean empty) {
                 super.updateItem(entity, empty);

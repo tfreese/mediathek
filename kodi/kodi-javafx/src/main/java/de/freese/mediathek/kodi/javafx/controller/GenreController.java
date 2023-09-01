@@ -60,9 +60,6 @@ public class GenreController extends AbstractController<Genre> {
         getPane().getSerienItems().clear();
 
         final Task<List<Model>[]> task = new Task<>() {
-            /**
-             * @see javafx.concurrent.Task#call()
-             */
             @SuppressWarnings("unchecked")
             @Override
             protected List<Model>[] call() throws Exception {

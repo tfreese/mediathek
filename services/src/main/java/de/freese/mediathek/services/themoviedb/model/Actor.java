@@ -26,9 +26,6 @@ public class Actor implements Comparable<Actor> {
      */
     private String role;
 
-    /**
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     */
     @Override
     public int compareTo(final Actor o) {
         return this.order - o.getOrder();
@@ -68,9 +65,6 @@ public class Actor implements Comparable<Actor> {
         this.role = role;
     }
 
-    /**
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

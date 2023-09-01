@@ -32,9 +32,6 @@ public class Episode implements Comparable<Episode> {
     @XmlElement(name = "EpisodeName")
     private String title;
 
-    /**
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     */
     @Override
     public int compareTo(final Episode o) {
         int comp = getSeason() - o.getSeason();
@@ -82,9 +79,6 @@ public class Episode implements Comparable<Episode> {
         return this.title;
     }
 
-    /**
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

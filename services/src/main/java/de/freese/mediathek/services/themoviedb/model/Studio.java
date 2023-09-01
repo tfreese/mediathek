@@ -17,9 +17,6 @@ public class Studio implements Comparable<Studio> {
      */
     private String name;
 
-    /**
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     */
     @Override
     public int compareTo(final Studio o) {
         return this.name.compareTo(o.getName());
@@ -41,9 +38,6 @@ public class Studio implements Comparable<Studio> {
         this.name = name;
     }
 
-    /**
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

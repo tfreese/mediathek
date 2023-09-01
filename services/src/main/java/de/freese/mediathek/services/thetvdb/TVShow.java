@@ -62,9 +62,6 @@ public class TVShow implements Comparable<TVShow> {
     @XmlElement(name = "SeriesName")
     private String title;
 
-    /**
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     */
     @Override
     public int compareTo(final TVShow o) {
         int comp = getJahr().compareTo(o.getJahr());
@@ -148,9 +145,6 @@ public class TVShow implements Comparable<TVShow> {
         return this.title;
     }
 
-    /**
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

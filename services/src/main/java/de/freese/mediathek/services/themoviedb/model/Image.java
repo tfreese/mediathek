@@ -26,9 +26,6 @@ public class Image implements Comparable<Image> {
      */
     private int width;
 
-    /**
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     */
     @Override
     public int compareTo(final Image o) {
         return Float.compare(o.getVoteAverage(), this.voteAverage);
@@ -68,9 +65,6 @@ public class Image implements Comparable<Image> {
         this.width = width;
     }
 
-    /**
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

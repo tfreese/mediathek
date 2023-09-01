@@ -35,9 +35,6 @@ public class TVService extends AbstractService {
         super(apiKey);
     }
 
-    /**
-     * @see de.freese.mediathek.services.AbstractService#afterPropertiesSet()
-     */
     @Override
     public void afterPropertiesSet() throws Exception {
         super.afterPropertiesSet();

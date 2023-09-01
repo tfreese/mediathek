@@ -23,9 +23,6 @@ public class Actor implements Comparable<Actor> {
     @XmlElement(name = "Role")
     private String role;
 
-    /**
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     */
     @Override
     public int compareTo(final Actor o) {
         int comp = this.sortOrder - o.sortOrder;
@@ -49,9 +46,6 @@ public class Actor implements Comparable<Actor> {
         return this.role;
     }
 
-    /**
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

@@ -21,9 +21,6 @@ public class FormattedTableCellFactory<S, T> implements Callback<TableColumn<S, 
     @Override
     public TableCell<S, T> call(final TableColumn<S, T> param) {
         TableCell<S, T> cell = new TableCell<>() {
-            /**
-             * @see javafx.scene.control.Cell#updateItem(java.lang.Object, boolean)
-             */
             @Override
             public void updateItem(final T item, final boolean empty) {
                 if (item == getItem()) {

@@ -180,8 +180,6 @@ public class StopWatch {
 
     /**
      * Prints all the task details on the {@link PrintStream}.
-     *
-     * @see DefaultPrettyPrinter
      */
     public void prettyPrint(final Consumer<StopWatch> consumer)
     {
@@ -190,8 +188,6 @@ public class StopWatch {
 
     /**
      * Prints all the task details on the {@link PrintStream}.
-     *
-     * @see DefaultPrettyPrinter
      */
     public void prettyPrint(final PrintStream printStream)
     {
@@ -236,9 +232,6 @@ public class StopWatch {
     /**
      * Stop the current task.<br>
      * The results are undefined if {@code start()}is called.
-     *
-     * @see #start()
-     * @see #start(String)
      */
     public void stop()
     {

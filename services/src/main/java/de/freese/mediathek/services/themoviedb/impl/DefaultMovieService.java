@@ -18,9 +18,6 @@ public class DefaultMovieService extends AbstractMovieDbService implements Movie
         super(apiKey);
     }
 
-    /**
-     * @see de.freese.mediathek.services.themoviedb.api.MovieService#casts(int)
-     */
     @Override
     public Casts casts(final int id) {
         Appendable url = url().append("movie/{movieID}/casts?api_key={api_key}&language=de");
@@ -28,9 +25,6 @@ public class DefaultMovieService extends AbstractMovieDbService implements Movie
         return getRestTemplate().getForObject(url.toString(), Casts.class, id, getApiKey());
     }
 
-    /**
-     * @see de.freese.mediathek.services.themoviedb.api.MovieService#details(int)
-     */
     @Override
     public MovieDetails details(final int id) {
         Appendable url = url().append("movie/{movieID}?api_key={api_key}&language=de");
@@ -38,9 +32,6 @@ public class DefaultMovieService extends AbstractMovieDbService implements Movie
         return getRestTemplate().getForObject(url.toString(), MovieDetails.class, id, getApiKey());
     }
 
-    /**
-     * @see de.freese.mediathek.services.themoviedb.api.MovieService#images(int)
-     */
     @Override
     public Images images(final int id) {
         Appendable url = url().append("movie/{movieID}/images?api_key={api_key}"); // &language=de
@@ -48,9 +39,6 @@ public class DefaultMovieService extends AbstractMovieDbService implements Movie
         return getRestTemplate().getForObject(url.toString(), Images.class, id, getApiKey());
     }
 
-    /**
-     * @see de.freese.mediathek.services.themoviedb.api.MovieService#search(java.lang.String)
-     */
     @Override
     public Search search(final String movie) {
         Appendable url = url().append("search/movie?api_key={api_key}&language=de&query={query}");
@@ -58,9 +46,6 @@ public class DefaultMovieService extends AbstractMovieDbService implements Movie
         return getRestTemplate().getForObject(url.toString(), Search.class, getApiKey(), urlEncode(movie));
     }
 
-    /**
-     * @see de.freese.mediathek.services.themoviedb.api.MovieService#search(java.lang.String, int)
-     */
     @Override
     public Search search(final String movie, final int year) {
         Appendable url = url().append("search/movie?api_key={api_key}&language=de&query={query}&year={year}");

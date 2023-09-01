@@ -4,14 +4,12 @@ package de.freese.mediathek.kodi.swing.bundles;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
-import java.util.ListResourceBundle;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
 /**
  * @author Thomas Freese
- * @see ListResourceBundle
  */
 public abstract class AbstractMapResourceBundle extends ResourceBundle {
     private volatile Map<String, Object> lookup;

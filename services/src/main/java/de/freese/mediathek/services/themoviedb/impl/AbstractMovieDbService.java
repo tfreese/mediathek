@@ -18,9 +18,6 @@ public abstract class AbstractMovieDbService extends AbstractService {
         super(apiKey);
     }
 
-    /**
-     * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
-     */
     @Override
     public void afterPropertiesSet() throws Exception {
         Assert.notNull(getApiKey(), "API-Key is missing");

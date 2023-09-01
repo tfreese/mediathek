@@ -64,9 +64,6 @@ public abstract class AbstractController<T extends Model> implements Initializab
         dataList.clear();
 
         final Task<List<T>> task = new Task<>() {
-            /**
-             * @see javafx.concurrent.Task#call()
-             */
             @Override
             protected List<T> call() throws Exception {
                 return load();

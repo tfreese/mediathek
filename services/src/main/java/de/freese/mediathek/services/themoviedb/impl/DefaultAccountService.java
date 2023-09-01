@@ -15,9 +15,6 @@ public class DefaultAccountService extends AbstractMovieDbService implements Acc
         super(apiKey);
     }
 
-    /**
-     * @see de.freese.mediathek.services.themoviedb.api.AccountService#getConfiguration()
-     */
     @Override
     public Configuration getConfiguration() {
         StringBuilder url = url().append("configuration?api_key={api_key}");

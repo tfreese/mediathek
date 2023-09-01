@@ -18,9 +18,6 @@ public class Language implements Comparable<Language> {
      */
     private String name;
 
-    /**
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     */
     @Override
     public int compareTo(final Language o) {
         return this.name.compareTo(o.getName());
@@ -43,9 +40,6 @@ public class Language implements Comparable<Language> {
         this.name = name;
     }
 
-    /**
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

@@ -84,9 +84,6 @@ public class Configuration {
     // this.changeKeys = changeKeys;
     // }
 
-    /**
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

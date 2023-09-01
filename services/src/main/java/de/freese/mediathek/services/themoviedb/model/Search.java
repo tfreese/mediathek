@@ -24,9 +24,6 @@ public class Search implements Iterable<Movie> {
         return this.results;
     }
 
-    /**
-     * @see java.lang.Iterable#iterator()
-     */
     @Override
     public Iterator<Movie> iterator() {
         if (getResults() != null) {

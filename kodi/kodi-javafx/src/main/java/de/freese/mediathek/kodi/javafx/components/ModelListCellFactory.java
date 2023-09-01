@@ -14,9 +14,6 @@ public class ModelListCellFactory implements Callback<ListView<Model>, ListCell<
     @Override
     public ListCell<Model> call(final ListView<Model> param) {
         ListCell<Model> cell = new ListCell<>() {
-            /**
-             * @see javafx.scene.control.Cell#updateItem(java.lang.Object, boolean)
-             */
             @Override
             protected void updateItem(final Model model, final boolean empty) {
                 super.updateItem(model, empty);

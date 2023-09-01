@@ -17,9 +17,6 @@ public class Genre implements Comparable<Genre> {
      */
     private String name;
 
-    /**
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     */
     @Override
     public int compareTo(final Genre o) {
         return this.name.compareTo(o.getName());
@@ -41,9 +38,6 @@ public class Genre implements Comparable<Genre> {
         this.name = name;
     }
 
-    /**
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

@@ -34,9 +34,6 @@ public abstract class AbstractService implements InitializingBean {
         this.apiKey = apiKey;
     }
 
-    /**
-     * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
-     */
     @Override
     public void afterPropertiesSet() throws Exception {
         Assert.notNull(this.apiKey, "API-Key is missing");

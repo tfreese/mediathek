@@ -68,9 +68,6 @@ public abstract class AbstractTvShowMovieController<T extends Model> extends Abs
         }
 
         final Task<Image> task = new Task<>() {
-            /**
-             * @see javafx.concurrent.Task#call()
-             */
             @Override
             protected Image call() throws Exception {
                 String url = getImageUrl(value);

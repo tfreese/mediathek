@@ -47,9 +47,6 @@ public class Crew {
         this.profile = profile;
     }
 
-    /**
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
