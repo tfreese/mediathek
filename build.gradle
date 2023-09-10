@@ -73,6 +73,7 @@ project("services") {
         api("org.springframework:spring-web")
 
         testImplementation("org.junit.jupiter:junit-jupiter")
+        testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     }
 }
 
@@ -117,7 +118,7 @@ project("kodi:kodi-javafx") {
         implementation(project(":kodi:kodi-core"))
 
         javafx {
-            version = "$version_javafxBase"
+            version = "$version_javafx"
             modules = ["javafx.controls", "javafx.fxml"]
         }
     }
