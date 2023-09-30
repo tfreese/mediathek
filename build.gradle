@@ -7,26 +7,26 @@ buildscript {
     }
 
     dependencies {
-        classpath "de.freese.gradle:gradle-plugins:0.0.1-SNAPSHOT"
-        classpath "io.spring.gradle:dependency-management-plugin:$version_springDependencyManagement"
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:$version_springBoot"
-        classpath "org.openjfx:javafx-plugin:$version_javafxPlugin"
+        classpath("de.freese.gradle:gradle-plugins:$version_myConventionPlugin")
+        classpath("io.spring.gradle:dependency-management-plugin:$version_springDependencyManagement")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:$version_springBoot")
+        classpath("org.openjfx:javafx-plugin:$version_javafxPlugin")
     }
 }
 
 subprojects {
     apply plugin: "java"
-    apply plugin: "maven-publish"
+//    apply plugin: "maven-publish"
     apply plugin: "io.spring.dependency-management"
     apply plugin: "de.freese.gradle.plugin.conventions"
 
-    configurations.all {
+    configurations.configureEach {
         exclude group: "ch.qos.logback", module: "logback-classic"
     }
 
     dependencyManagement {
         imports {
-            mavenBom "org.springframework.boot:spring-boot-dependencies:$version_springBoot"
+            mavenBom("org.springframework.boot:spring-boot-dependencies:$version_springBoot")
         }
 
         dependencies {
@@ -36,13 +36,13 @@ subprojects {
 
     dependencies {
         testImplementation("org.junit.jupiter:junit-jupiter")
+        testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     }
 }
 
 project("core") {
     apply plugin: "java-library"
     apply plugin: "application"
-//    apply plugin: "org.springframework.boot"
     description "Base-Projekt for Media-Access"
     dependencies {
         api("org.springframework.boot:spring-boot-starter-jdbc") {
@@ -65,13 +65,6 @@ project("core") {
             )
         }
     }
-    // Start: gradle bootRun --args="--spring.profiles.active=dev"
-    // The archive name. If the name has not been explicitly set, the pattern for the name is:
-    // [archiveBaseName]-[archiveAppendix]-[archiveVersion]-[archiveClassifier].[archiveExtension]
-    // archiveFileName = "my-boot.jar"
-//    springBoot {
-//        mainClass = "de.freese.mediathek.report.MultimediaReporter"
-//    }
 }
 
 project("services") {
@@ -82,9 +75,6 @@ project("services") {
         api("com.fasterxml.jackson.dataformat:jackson-dataformat-xml")
         api("jakarta.xml.bind:jakarta.xml.bind-api")
         api("org.springframework:spring-web")
-
-        testImplementation("org.junit.jupiter:junit-jupiter")
-        testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     }
 }
 
@@ -138,6 +128,6 @@ project("kodi:kodi-javafx") {
     // [archiveBaseName]-[archiveAppendix]-[archiveVersion]-[archiveClassifier].[archiveExtension]
     // archiveFileName = "my-boot.jar"
     springBoot {
-        mainClass = "de.freese.mediathek.kodi.javafx.KodiJavaFXClientLauncher"
+        mainClass = "de.freese.mediathek.kodi.javafx.KodiJavaFxClientLauncher"
     }
 }

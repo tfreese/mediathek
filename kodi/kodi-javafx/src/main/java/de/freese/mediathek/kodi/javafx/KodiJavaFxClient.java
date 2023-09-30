@@ -43,42 +43,13 @@ public class KodiJavaFxClient extends Application {
         return LOGGER;
     }
 
-    /**
-     * @return int; Example: 14.0.1 = 014.000.001 = 14000001
-     */
     private static int getJavaVersion() {
-        // String javaVersion = SystemUtils.JAVA_VERSION;
-        String javaVersion = System.getProperty("java.version");
-        // String javaVersionDate = System.getProperty("java.version.date");
-        // String vmVersion = System.getProperty("java.vm.version");
-        String[] splits = javaVersion.toLowerCase().split("[._]");
+        //        System.getProperty("java.version")
+        Runtime.Version version = Runtime.version();
 
-        // Major
-        String versionString = String.format("%03d", Integer.parseInt(splits[0]));
+        getLogger().info("JavaVersion = {}", version);
 
-        // Minor
-        versionString += "." + String.format("%03d", Integer.parseInt(splits[1]));
-
-        if (splits.length > 2) {
-            // Micro
-            versionString += "." + String.format("%03d", Integer.parseInt(splits[2]));
-        }
-
-        if ((splits.length > 3) && !splits[3].startsWith("ea")) {
-            // Update
-            try {
-                versionString += "." + String.format("%03d", Integer.parseInt(splits[3]));
-            }
-            catch (Exception ex) {
-                getLogger().error(ex.getMessage(), ex);
-            }
-        }
-
-        int version = Integer.parseInt(versionString.replace(".", ""));
-
-        getLogger().info("JavaVersion = {} = {} = {}", javaVersion, versionString, version);
-
-        return version;
+        return version.feature();
     }
 
     private AnnotationConfigApplicationContext applicationContext;
@@ -149,8 +120,8 @@ public class KodiJavaFxClient extends Application {
         // Momentan kein Antialiasing wegen JavaFX-Bug.
         int javaVersion = getJavaVersion();
 
-        if (Platform.isSupported(ConditionalFeature.SCENE3D) && (javaVersion >= 1_800_072)) {
-
+        // 1_800_072 = 1.8.72
+        if (Platform.isSupported(ConditionalFeature.SCENE3D) && (javaVersion >= 8)) {
             scene = new Scene(tabPane, 1920, 1080, true, SceneAntialiasing.BALANCED);
         }
         else {
