@@ -26,7 +26,7 @@ cd $BASEDIR
 #mvn -q exec:exec;
 ## mvn exec:exec;
 
-gradle -quiet run
+gradle --quiet run
 
 cd ~
 
