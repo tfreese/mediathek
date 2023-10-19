@@ -49,14 +49,17 @@ project("core") {
         runtimeOnly("org.slf4j:slf4j-simple")
         runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
     }
+    ext {
+        main = "de.freese.mediathek.report.MultimediaReporter"
+    }
     // Start: gradle run
     application {
-        mainClass = "de.freese.mediathek.report.MultimediaReporter"
+        mainClass = project.main
     }
     jar {
         manifest {
             attributes(
-                    "Main-Class": "de.freese.mediathek.report.MultimediaReporter"
+                    "Main-Class": project.main
             )
         }
     }
