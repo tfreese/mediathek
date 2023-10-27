@@ -120,6 +120,7 @@ public class GenreView extends AbstractView {
         return parentPanel;
     }
 
+    @SuppressWarnings("unchecked")
     public void setShowsAndMovies(List<? extends Model> shows, List<? extends Model> movies) {
         ((DefaultListListModel<?>) this.listShows.getModel()).clear();
         ((DefaultListListModel<?>) this.listMovies.getModel()).clear();

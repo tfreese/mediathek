@@ -155,6 +155,7 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView {
         return parentPanel;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected AbstractShowAndMovieController<T> getController() {
         return (AbstractShowAndMovieController) super.getController();
@@ -162,6 +163,7 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView {
 
     protected abstract String getKeyForIdLabel();
 
+    @SuppressWarnings("unchecked")
     protected AbstractListTableModel<T> getTableModel() {
         return (AbstractListTableModel<T>) table.getModel();
     }

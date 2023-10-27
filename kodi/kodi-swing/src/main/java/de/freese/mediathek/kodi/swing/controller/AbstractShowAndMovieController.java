@@ -82,11 +82,13 @@ public abstract class AbstractShowAndMovieController<T> extends AbstractControll
 
     public abstract void setSelected(T entity);
 
+    @SuppressWarnings("unchecked")
     @Override
     protected AbstractShowAndMovieService<T> getService() {
         return (AbstractShowAndMovieService<T>) super.getService();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected AbstractShowAndMovieView<T> getView() {
         return (AbstractShowAndMovieView<T>) super.getView();
