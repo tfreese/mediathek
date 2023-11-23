@@ -48,7 +48,7 @@ public class AppConfigSqLite extends AbstractAppConfig {
 
         SQLiteConfig config = new SQLiteConfig();
         config.setReadOnly(true);
-        config.setReadUncommited(true);
+        config.setReadUncommitted(true);
 
         return config;
     }

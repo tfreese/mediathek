@@ -59,7 +59,7 @@ public final class MultimediaReporter {
 
             SQLiteConfig config = new SQLiteConfig();
             config.setReadOnly(readonly);
-            config.setReadUncommited(true);
+            config.setReadUncommitted(true);
 
             // SingleConnectionDataSource dataSource = new SingleConnectionDataSource();
             // dataSource.setDriverClassName("org.sqlite.JDBC");
