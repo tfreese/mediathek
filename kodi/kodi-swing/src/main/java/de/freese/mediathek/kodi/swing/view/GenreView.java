@@ -121,7 +121,7 @@ public class GenreView extends AbstractView {
     }
 
     @SuppressWarnings("unchecked")
-    public void setShowsAndMovies(List<? extends Model> shows, List<? extends Model> movies) {
+    public void setShowsAndMovies(final List<? extends Model> shows, final List<? extends Model> movies) {
         ((DefaultListListModel<?>) this.listShows.getModel()).clear();
         ((DefaultListListModel<?>) this.listMovies.getModel()).clear();
 

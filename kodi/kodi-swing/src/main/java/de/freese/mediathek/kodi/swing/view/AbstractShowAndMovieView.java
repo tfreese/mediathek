@@ -168,7 +168,7 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView {
         return (AbstractListTableModel<T>) table.getModel();
     }
 
-    protected void initTable(JTable table, JTextField textFieldFilter) {
+    protected void initTable(final JTable table, final JTextField textFieldFilter) {
         AbstractListTableModel<T> tableModel = getTableModel();
 
         table.getSelectionModel().addListSelectionListener(event -> {

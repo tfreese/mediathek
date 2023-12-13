@@ -20,7 +20,7 @@ public abstract class AbstractController implements Controller {
 
     private final View view;
 
-    protected AbstractController(final Service service, View view) {
+    protected AbstractController(final Service service, final View view) {
         super();
 
         this.service = service;

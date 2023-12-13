@@ -17,7 +17,7 @@ import de.freese.mediathek.kodi.swing.view.AbstractShowAndMovieView;
  * @author Thomas Freese
  */
 public abstract class AbstractShowAndMovieController<T> extends AbstractController {
-    protected AbstractShowAndMovieController(AbstractShowAndMovieService<T> service, AbstractShowAndMovieView<T> view) {
+    protected AbstractShowAndMovieController(final AbstractShowAndMovieService<T> service, final AbstractShowAndMovieView<T> view) {
         super(service, view);
     }
 
@@ -94,7 +94,7 @@ public abstract class AbstractShowAndMovieController<T> extends AbstractControll
         return (AbstractShowAndMovieView<T>) super.getView();
     }
 
-    protected void setImageIcon(T entity) {
+    protected void setImageIcon(final T entity) {
         SwingWorker<ImageIcon, Void> worker = new SwingWorker<>() {
             @Override
             protected ImageIcon doInBackground() throws Exception {

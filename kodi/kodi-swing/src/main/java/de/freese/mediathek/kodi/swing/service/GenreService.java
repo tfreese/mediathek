@@ -17,11 +17,11 @@ public class GenreService extends AbstractService {
         super(applicationContext);
     }
 
-    public List<Movie> getGenreMovies(Genre genre) {
+    public List<Movie> getGenreMovies(final Genre genre) {
         return getMediaService().getGenreMovies(genre.getPk());
     }
 
-    public List<Show> getGenreShows(Genre genre) {
+    public List<Show> getGenreShows(final Genre genre) {
         return getMediaService().getGenreShows(genre.getPk());
     }
 

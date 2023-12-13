@@ -9,7 +9,7 @@ import de.freese.mediathek.kodi.swing.view.ShowView;
  * @author Thomas Freese
  */
 public class ShowController extends AbstractShowAndMovieController<Show> {
-    public ShowController(final ShowService service, ShowView view) {
+    public ShowController(final ShowService service, final ShowView view) {
         super(service, view);
     }
 

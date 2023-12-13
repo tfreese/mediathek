@@ -35,7 +35,7 @@ public abstract class AbstractView implements View {
         return logger;
     }
 
-    protected String getTranslation(String key) {
+    protected String getTranslation(final String key) {
         return resourceBundle.getString(key);
     }
 }

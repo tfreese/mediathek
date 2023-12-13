@@ -9,7 +9,7 @@ import de.freese.mediathek.kodi.swing.view.MovieView;
  * @author Thomas Freese
  */
 public class MovieController extends AbstractShowAndMovieController<Movie> {
-    public MovieController(final MovieService service, MovieView view) {
+    public MovieController(final MovieService service, final MovieView view) {
         super(service, view);
     }
 

@@ -17,7 +17,7 @@ import de.freese.mediathek.kodi.swing.view.GenreView;
  * @author Thomas Freese
  */
 public class GenreController extends AbstractController {
-    public GenreController(final GenreService service, GenreView view) {
+    public GenreController(final GenreService service, final GenreView view) {
         super(service, view);
     }
 
@@ -32,7 +32,7 @@ public class GenreController extends AbstractController {
         getView().fill(data);
     }
 
-    public void setSelected(Genre genre) {
+    public void setSelected(final Genre genre) {
         getView().clear();
 
         SwingWorker<List<List<? extends Model>>, Void> worker = new SwingWorker<>() {

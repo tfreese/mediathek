@@ -31,7 +31,7 @@ public abstract class AbstractShowAndMovieService<T> extends AbstractService {
 
     public abstract List<T> load();
 
-    public ImageIcon loadImageIcon(T entity) throws Exception {
+    public ImageIcon loadImageIcon(final T entity) throws Exception {
         String url = getImageUrl(entity);
 
         try (InputStream inputStream = getResourceCache().getResource(URI.create(url))) {

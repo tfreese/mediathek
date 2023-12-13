@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * @author Thomas Freese
  */
 public abstract class AbstractResourceCache implements ResourceCache {
-    protected static MessageDigest createMessageDigest(Logger logger) {
+    protected static MessageDigest createMessageDigest(final Logger logger) {
         // String algorithm ="SHA"; // 40 Zeichen
         // String algorithm ="SHA-1"; // 40 Zeichen
         // String algorithm ="SHA-256"; // 64 Zeichen
@@ -43,7 +43,7 @@ public abstract class AbstractResourceCache implements ResourceCache {
     }
 
     private final HexFormat hexFormat;
-    
+
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final MessageDigest messageDigest;

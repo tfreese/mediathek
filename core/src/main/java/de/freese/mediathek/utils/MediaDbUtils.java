@@ -51,7 +51,7 @@ public final class MediaDbUtils {
         }
     }
 
-    public static String subStringBetween(String open, String close, String str) {
+    public static String subStringBetween(final String open, final String close, final String str) {
         int start = str.indexOf(open);
 
         if (start != -1) {
@@ -139,7 +139,7 @@ public final class MediaDbUtils {
         }
     }
 
-    private static String[] parseCsvRow(String csvRow) {
+    private static String[] parseCsvRow(final String csvRow) {
         String row = csvRow;
         List<String> token = new ArrayList<>();
 
