@@ -35,9 +35,6 @@ public class Configuration {
      */
     private List<String> profileSizes;
 
-    /**
-     * @return {@link List}<String>
-     */
     public List<String> getBackdropSizes() {
         return this.backdropSizes;
     }

@@ -26,9 +26,9 @@ public abstract class AbstractMediaReporter implements MediaReporter {
     /**
      * Map-Keys:
      * <ul>
-     * <li>ARTIST
-     * <li>SONG
-     * <li>PLAYCOUNT
+     * <li>ARTIST</li>
+     * <li>SONG</li>
+     * <li>PLAYCOUNT</li>
      * </ul>
      */
     protected List<Map<String, String>> readHeardMusik(final Path path) throws IOException {
@@ -46,9 +46,9 @@ public abstract class AbstractMediaReporter implements MediaReporter {
     /**
      * Map-Keys:
      * <ul>
-     * <li>MOVIE
-     * <li>PLAYCOUNT
-     * <li>LASTPLAYED
+     * <li>MOVIE</li>
+     * <li>PLAYCOUNT</li>
+     * <li>LASTPLAYED</li>
      * </ul>
      */
     protected List<Map<String, String>> readSeenMovies(final Path path) throws IOException {
@@ -66,12 +66,12 @@ public abstract class AbstractMediaReporter implements MediaReporter {
     /**
      * Map-Keys:
      * <ul>
-     * <li>TVSHOW
-     * <li>SEASON
-     * <li>EPISODE
-     * <li>TITLE
-     * <li>PLAYCOUNT
-     * <li>LASTPLAYED
+     * <li>TVSHOW</li>
+     * <li>SEASON</li>
+     * <li>EPISODE</li>
+     * <li>TITLE</li>
+     * <li>PLAYCOUNT</li>
+     * <li>LASTPLAYED</li>
      * </ul>
      */
     protected List<Map<String, String>> readSeenTvShows(final Path path) throws IOException {

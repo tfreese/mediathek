@@ -144,27 +144,27 @@ public class TvShowMoviePane<T extends Model> extends VBox {
 
     @SuppressWarnings("unchecked")
     private TableView<T> createTableView(final StringProperty propertyItemFilter, final ResourceBundle resourceBundle) {
-        TableView<T> tableView = new TableView<>();
-        tableView.setEditable(false);
-        tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        TableView<T> tw = new TableView<>();
+        tw.setEditable(false);
+        tw.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         // Tabellen alignment über CellStyle
         TableColumn<T, Integer> columnID = new TableColumn<>(resourceBundle.getString("id"));
         columnID.setResizable(false);
-        columnID.prefWidthProperty().bind(tableView.widthProperty().multiply(0.1D)); // 10 % Breite
+        columnID.prefWidthProperty().bind(tw.widthProperty().multiply(0.1D)); // 10 % Breite
         columnID.setCellValueFactory(new PropertyValueFactory<>("pk"));
         columnID.setStyle("-fx-alignment: CENTER-RIGHT;");
 
         // Sortierung auf Name-Spalte
         TableColumn<T, String> columnName = new TableColumn<>(resourceBundle.getString("name"));
-        columnName.prefWidthProperty().bind(tableView.widthProperty().multiply(0.9D)); // 90 % Breite
+        columnName.prefWidthProperty().bind(tw.widthProperty().multiply(0.9D)); // 90 % Breite
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         // columnName.setSortType(TableColumn.SortType.ASCENDING);
 
-        tableView.getColumns().addAll(columnID, columnName);
+        tw.getColumns().addAll(columnID, columnName);
 
         // Aller verfügbarer Platz für Genre-Spalte, Rest hat feste Breite
-        // columnName.prefWidthProperty().bind(tableView.widthProperty().subtract(columnID.getMaxWidth() + 16D));
+        // columnName.prefWidthProperty().bind(tw.widthProperty().subtract(columnID.getMaxWidth() + 16D));
 
         // Für Filter
         FilteredList<T> filteredData = new FilteredList<>(this.tableList, p -> true);
@@ -182,10 +182,10 @@ public class TvShowMoviePane<T extends Model> extends VBox {
 
         // Da die ObservableList der TableItems neu gesetzt wird, muss auch die Sortierung neu gemacht werden.
         SortedList<T> sortedData = new SortedList<>(filteredData);
-        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+        sortedData.comparatorProperty().bind(tw.comparatorProperty());
 
-        tableView.setItems(sortedData);
+        tw.setItems(sortedData);
 
-        return tableView;
+        return tw;
     }
 }

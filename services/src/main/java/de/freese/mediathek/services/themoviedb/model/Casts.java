@@ -27,9 +27,9 @@ public class Casts {
     public List<Crew> getDirectors() {
         List<Crew> directors = new ArrayList<>();
 
-        for (Crew crew : getCrew()) {
-            if ("Director".equals(crew.getJob())) {
-                directors.add(crew);
+        for (Crew c : getCrew()) {
+            if ("Director".equals(c.getJob())) {
+                directors.add(c);
             }
         }
 
