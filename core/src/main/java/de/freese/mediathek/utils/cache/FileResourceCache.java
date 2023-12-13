@@ -60,7 +60,7 @@ public class FileResourceCache extends AbstractResourceCache {
 
     @Override
     public InputStream getResource(final URI uri) throws Exception {
-        String key = generateKey(uri);
+        final String key = generateKey(uri);
 
         Path path = this.cacheDirectory;
 

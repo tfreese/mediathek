@@ -20,7 +20,7 @@ public class AppConfigHsqlDb extends AbstractAppConfig {
     @Override
     @Bean
     public DataSource dataSourceAudio() {
-        SingleConnectionDataSource dataSource = createSingleConnectionDataSource();
+        final SingleConnectionDataSource dataSource = createSingleConnectionDataSource();
         dataSource.setUrl(getEnvironment().getProperty("hsqldb.audio.db.url"));
 
         return dataSource;
@@ -30,10 +30,10 @@ public class AppConfigHsqlDb extends AbstractAppConfig {
     @Bean
     @Primary
     public DataSource dataSourceVideo() {
-        SingleConnectionDataSource dataSource = createSingleConnectionDataSource();
+        final SingleConnectionDataSource dataSource = createSingleConnectionDataSource();
         dataSource.setUrl("jdbc:hsqldb:mem:kodi_video");
 
-        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
         populator.addScript(new ClassPathResource("kodi_video_hsqldb_schema.sql"));
         populator.addScript(new ClassPathResource("kodi_video_hsqldb_data.sql"));
         populator.execute(dataSource);
@@ -42,7 +42,7 @@ public class AppConfigHsqlDb extends AbstractAppConfig {
     }
 
     private SingleConnectionDataSource createSingleConnectionDataSource() {
-        SingleConnectionDataSource dataSource = new SingleConnectionDataSource();
+        final SingleConnectionDataSource dataSource = new SingleConnectionDataSource();
         dataSource.setDriverClassName("org.hsqldb.jdbc.JDBCDriver");
         dataSource.setUsername("sa");
         dataSource.setPassword("");

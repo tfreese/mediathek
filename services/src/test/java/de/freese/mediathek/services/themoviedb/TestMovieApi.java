@@ -45,7 +45,7 @@ class TestMovieApi {
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
     void testCasts() throws Exception {
-        Casts casts = movieService.casts(Settings.TEST_MOVIE_ID);
+        final Casts casts = movieService.casts(Settings.TEST_MOVIE_ID);
 
         assertNotNull(casts);
         assertNotNull(casts.getCast());
@@ -53,7 +53,7 @@ class TestMovieApi {
         assertNotNull(casts.getCrew());
         assertTrue(casts.getCrew().size() > 1);
 
-        List<Crew> directors = casts.getDirectors();
+        final List<Crew> directors = casts.getDirectors();
         assertNotNull(directors);
         assertTrue(directors.size() >= 1);
     }
@@ -61,7 +61,7 @@ class TestMovieApi {
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
     void testConfiguration() throws Exception {
-        Configuration configuration = accountService.getConfiguration();
+        final Configuration configuration = accountService.getConfiguration();
 
         assertNotNull(configuration);
         assertNotNull(configuration.getImageBaseURL());
@@ -80,7 +80,7 @@ class TestMovieApi {
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
     void testDetails() throws Exception {
-        MovieDetails details = movieService.details(Settings.TEST_MOVIE_ID);
+        final MovieDetails details = movieService.details(Settings.TEST_MOVIE_ID);
 
         assertNotNull(details);
         assertNotEquals(0, details.getId());
@@ -115,7 +115,7 @@ class TestMovieApi {
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
     void testImages() throws Exception {
-        Images images = movieService.images(Settings.TEST_MOVIE_ID);
+        final Images images = movieService.images(Settings.TEST_MOVIE_ID);
 
         assertNotNull(images);
         assertNotNull(images.getBackdrops());
@@ -127,7 +127,7 @@ class TestMovieApi {
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
     void testSearch() throws Exception {
-        Search result = movieService.search(Settings.TEST_MOVIE);
+        final Search result = movieService.search(Settings.TEST_MOVIE);
 
         assertNotNull(result.getResults());
         assertTrue(result.getResults().size() >= 1);
@@ -148,7 +148,7 @@ class TestMovieApi {
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
     void testSearchYear() throws Exception {
-        Search result = movieService.search(Settings.TEST_MOVIE, Settings.TEST_MOVIE_YEAR);
+        final Search result = movieService.search(Settings.TEST_MOVIE, Settings.TEST_MOVIE_YEAR);
 
         assertNotNull(result.getResults());
         assertEquals(2, result.getResults().size());

@@ -18,12 +18,12 @@ public class PlexAudioReporter extends AbstractMediaReporter {
         // ZoneId zoneId = ZoneId.of("Europe/Berlin");
         // ZoneOffset zoneOffset = ZoneOffset.ofHours(+1);
 
-        StringBuilder sql = new StringBuilder();
+        final StringBuilder sql = new StringBuilder();
         sql.append("update metadata_item_settings");
         sql.append(" set view_count = ?");
         sql.append(" where guid = (select guid from metadata_items where original_title = ? and title = ?)");
 
-        List<Map<String, String>> heardMusic = readHeardMusik(path);
+        final List<Map<String, String>> heardMusic = readHeardMusik(path);
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement pstmt = con.prepareStatement(sql.toString())) {
@@ -31,9 +31,9 @@ public class PlexAudioReporter extends AbstractMediaReporter {
 
             try {
                 for (Map<String, String> map : heardMusic) {
-                    String artist = map.get("ARTIST");
-                    String song = map.get("SONG");
-                    int playCount = Integer.parseInt(map.get("PLAYCOUNT"));
+                    final String artist = map.get("ARTIST");
+                    final String song = map.get("SONG");
+                    final int playCount = Integer.parseInt(map.get("PLAYCOUNT"));
 
                     getLogger().info("Update Song: {} - {}", artist, song);
 
@@ -44,7 +44,7 @@ public class PlexAudioReporter extends AbstractMediaReporter {
                     pstmt.addBatch();
                 }
 
-                int[] affectedRows = pstmt.executeBatch();
+                final int[] affectedRows = pstmt.executeBatch();
                 getLogger().info("Affected Rows: {}", affectedRows.length);
 
                 con.commit();

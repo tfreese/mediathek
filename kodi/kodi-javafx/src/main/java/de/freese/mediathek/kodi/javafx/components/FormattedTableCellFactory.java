@@ -15,12 +15,11 @@ import javafx.util.Callback;
  */
 public class FormattedTableCellFactory<S, T> implements Callback<TableColumn<S, T>, TableCell<S, T>> {
     private TextAlignment alignment;
-
     private Format format;
 
     @Override
     public TableCell<S, T> call(final TableColumn<S, T> param) {
-        TableCell<S, T> cell = new TableCell<>() {
+        final TableCell<S, T> cell = new TableCell<>() {
             @Override
             public void updateItem(final T item, final boolean empty) {
                 if (item == getItem()) {

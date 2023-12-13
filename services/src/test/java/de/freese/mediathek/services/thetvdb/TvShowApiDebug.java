@@ -25,7 +25,7 @@ public class TvShowApiDebug {
     public static final String TEST_SHOW_ID = Settings.TEST_SHOW_ID;
 
     public static void main(final String[] args) throws Exception {
-        TvShowApiDebug debug = new TvShowApiDebug();
+        final TvShowApiDebug debug = new TvShowApiDebug();
         // debug.testSearch();
         // debug.testDetails();
         // debug.testDetailsAll();
@@ -39,35 +39,35 @@ public class TvShowApiDebug {
 
     // @Test
     public void testActors() throws Exception {
-        RestTemplate template = new RestTemplate();
+        final RestTemplate template = new RestTemplate();
 
-        String result = template.getForObject("http://thetvdb.com/api/{apiKey}/series/{id}/actors.xml", String.class, getApiKey(), TEST_SHOW_ID, getLocale().getLanguage());
+        final String result = template.getForObject("http://thetvdb.com/api/{apiKey}/series/{id}/actors.xml", String.class, getApiKey(), TEST_SHOW_ID, getLocale().getLanguage());
 
         prettyPrint(result);
     }
 
     // @Test
     public void testDetails() throws Exception {
-        RestTemplate template = new RestTemplate();
+        final RestTemplate template = new RestTemplate();
 
-        String result = template.getForObject("http://thetvdb.com/api/{apiKey}/series/{id}/{lang}.xml", String.class, getApiKey(), TEST_SHOW_ID, getLocale().getLanguage());
+        final String result = template.getForObject("http://thetvdb.com/api/{apiKey}/series/{id}/{lang}.xml", String.class, getApiKey(), TEST_SHOW_ID, getLocale().getLanguage());
 
         prettyPrint(result);
     }
 
     // @Test
     public void testDetailsAll() throws Exception {
-        RestTemplate template = new RestTemplate();
+        final RestTemplate template = new RestTemplate();
 
-        String result = template.getForObject("http://thetvdb.com/api/{apiKey}/series/{id}/all/{lang}.xml", String.class, getApiKey(), TEST_SHOW_ID, getLocale().getLanguage());
+        final String result = template.getForObject("http://thetvdb.com/api/{apiKey}/series/{id}/all/{lang}.xml", String.class, getApiKey(), TEST_SHOW_ID, getLocale().getLanguage());
 
         prettyPrint(result);
     }
 
     // @Test
     public void testHTTP() throws Exception {
-        URI uri = URI.create(String.format("http://thetvdb.com/api/GetSeries.php?seriesname=%s&language=%s", TEST_SHOW, "de"));
-        HttpURLConnection connection = (HttpURLConnection) uri.toURL().openConnection();
+        final URI uri = URI.create(String.format("http://thetvdb.com/api/GetSeries.php?seriesname=%s&language=%s", TEST_SHOW, "de"));
+        final HttpURLConnection connection = (HttpURLConnection) uri.toURL().openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Accept", "application/xml");
 
@@ -78,10 +78,10 @@ public class TvShowApiDebug {
         System.out.println("Content-Type = " + connection.getContentType());
         System.out.println("Location: " + connection.getHeaderField("Location"));
 
-        ObjectMapper mapper = new XmlMapper();
+        final ObjectMapper mapper = new XmlMapper();
 
         try (InputStream inputStream = connection.getInputStream()) {
-            Object xml = mapper.readValue(inputStream, Object.class);
+            final Object xml = mapper.readValue(inputStream, Object.class);
             // System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(xml));
             prettyPrint(xml.toString());
 
@@ -102,18 +102,18 @@ public class TvShowApiDebug {
 
     // @Test
     public void testImages() throws Exception {
-        RestTemplate template = new RestTemplate();
+        final RestTemplate template = new RestTemplate();
 
-        String result = template.getForObject("http://thetvdb.com/api/{apiKey}/series/{id}/banners.xml", String.class, getApiKey(), TEST_SHOW_ID, getLocale().getLanguage());
+        final String result = template.getForObject("http://thetvdb.com/api/{apiKey}/series/{id}/banners.xml", String.class, getApiKey(), TEST_SHOW_ID, getLocale().getLanguage());
 
         prettyPrint(result);
     }
 
     // @Test
     public void testSearch() throws Exception {
-        RestTemplate template = new RestTemplate();
+        final RestTemplate template = new RestTemplate();
 
-        String result = template.getForObject("http://thetvdb.com/api/GetSeries.php?seriesname={name}&language={lang}", String.class, TEST_SHOW, getLocale().getLanguage());
+        final String result = template.getForObject("http://thetvdb.com/api/GetSeries.php?seriesname={name}&language={lang}", String.class, TEST_SHOW, getLocale().getLanguage());
 
         prettyPrint(result);
     }

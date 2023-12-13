@@ -13,7 +13,6 @@ import javafx.scene.layout.VBox;
  */
 public class PickList<T extends Comparable<? super T>> extends HBox {
     private final ListView<T> listViewLeft;
-
     private final ListView<T> listViewRight;
 
     public PickList() {
@@ -25,10 +24,11 @@ public class PickList<T extends Comparable<? super T>> extends HBox {
 
         this.listViewLeft = new ListView<>();
         this.listViewRight = new ListView<>();
-        Button buttonLeftToRight = new Button(">");
-        Button buttonRightToLeft = new Button("<");
 
-        VBox vBox = new VBox(100);
+        final Button buttonLeftToRight = new Button(">");
+        final Button buttonRightToLeft = new Button("<");
+
+        final VBox vBox = new VBox(100);
         vBox.setAlignment(Pos.CENTER);
         vBox.getChildren().addAll(buttonLeftToRight, buttonRightToLeft);
 

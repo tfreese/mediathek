@@ -13,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Casts {
     private List<Actor> cast;
-
     private List<Crew> crew;
 
     public List<Actor> getCast() {
@@ -25,7 +24,7 @@ public class Casts {
     }
 
     public List<Crew> getDirectors() {
-        List<Crew> directors = new ArrayList<>();
+        final List<Crew> directors = new ArrayList<>();
 
         for (Crew c : getCrew()) {
             if ("Director".equals(c.getJob())) {

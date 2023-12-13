@@ -16,7 +16,6 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 class Search {
     @XmlElement(name = "Episode", required = false)
     private List<Episode> episodes;
-
     @XmlElement(name = "Series")
     private List<TVShow> series;
 

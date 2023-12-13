@@ -20,9 +20,9 @@ public class AppConfigSqLite extends AbstractAppConfig {
     @Bean
     public DataSource dataSourceAudio() {
         // @Value("${sqlite.audio.db.url}") final String url
-        SQLiteConfig config = createSQLiteConfig();
+        final SQLiteConfig config = createSQLiteConfig();
 
-        SQLiteDataSource dataSource = new SQLiteDataSource(config);
+        final SQLiteDataSource dataSource = new SQLiteDataSource(config);
         dataSource.setUrl(getEnvironment().getProperty("sqlite.audio.db.url"));
 
         return dataSource;
@@ -32,9 +32,9 @@ public class AppConfigSqLite extends AbstractAppConfig {
     @Bean
     @Primary
     public DataSource dataSourceVideo() {
-        SQLiteConfig config = createSQLiteConfig();
+        final SQLiteConfig config = createSQLiteConfig();
 
-        SQLiteDataSource dataSource = new SQLiteDataSource(config);
+        final SQLiteDataSource dataSource = new SQLiteDataSource(config);
         dataSource.setUrl(getEnvironment().getProperty("sqlite.video.db.url"));
 
         return dataSource;
@@ -46,7 +46,7 @@ public class AppConfigSqLite extends AbstractAppConfig {
         // System.setProperty("org.sqlite.lib.path", "/home/tommy");
         // System.setProperty("org.sqlite.lib.name", "sqlite-libsqlitejdbc.so");
 
-        SQLiteConfig config = new SQLiteConfig();
+        final SQLiteConfig config = new SQLiteConfig();
         config.setReadOnly(true);
         config.setReadUncommitted(true);
 

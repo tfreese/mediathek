@@ -28,20 +28,20 @@ public class GenreController extends AbstractController {
     public void reload() {
         getView().clear();
 
-        List<Genre> data = getService().load();
+        final List<Genre> data = getService().load();
         getView().fill(data);
     }
 
     public void setSelected(final Genre genre) {
         getView().clear();
 
-        SwingWorker<List<List<? extends Model>>, Void> worker = new SwingWorker<>() {
+        final SwingWorker<List<List<? extends Model>>, Void> worker = new SwingWorker<>() {
             @Override
             protected List<List<? extends Model>> doInBackground() throws Exception {
-                List<Show> shows = getService().getGenreShows(genre);
-                List<Movie> movies = getService().getGenreMovies(genre);
+                final List<Show> shows = getService().getGenreShows(genre);
+                final List<Movie> movies = getService().getGenreMovies(genre);
 
-                List<List<? extends Model>> results = new ArrayList<>();
+                final List<List<? extends Model>> results = new ArrayList<>();
                 results.add(shows);
                 results.add(movies);
 
@@ -51,7 +51,7 @@ public class GenreController extends AbstractController {
             @Override
             protected void done() {
                 try {
-                    List<List<? extends Model>> results = get();
+                    final List<List<? extends Model>> results = get();
 
                     getView().setShowsAndMovies(results.get(0), results.get(1));
                 }

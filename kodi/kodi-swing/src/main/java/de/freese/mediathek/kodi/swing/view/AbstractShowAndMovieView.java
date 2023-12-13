@@ -34,13 +34,9 @@ import de.freese.mediathek.kodi.swing.controller.Controller;
  */
 public abstract class AbstractShowAndMovieView<T> extends AbstractView {
     private JButton genreButton;
-
     private JLabel genreLabel;
-
     private JLabel idLabel;
-
     private JLabel imageLabel;
-
     private JTable table;
 
     public void clear() {
@@ -68,13 +64,13 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView {
     }
 
     public T getSelected() {
-        int viewRow = this.table.getSelectedRow();
+        final int viewRow = this.table.getSelectedRow();
 
         if (viewRow < 0) {
             return null;
         }
 
-        int modelRow = this.table.convertRowIndexToModel(viewRow);
+        final int modelRow = this.table.convertRowIndexToModel(viewRow);
 
         return getTableModel().getObjectAt(modelRow);
     }
@@ -83,26 +79,26 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView {
     public Component init(final Controller controller, final ResourceBundle resourceBundle) {
         super.init(controller, resourceBundle);
 
-        JPanel parentPanel = new JPanel();
+        final JPanel parentPanel = new JPanel();
         parentPanel.setLayout(new BorderLayout());
 
-        JButton reloadButton = new JButton(getTranslation("reload"));
+        final JButton reloadButton = new JButton(getTranslation("reload"));
         reloadButton.addActionListener(event -> getController().reload());
         parentPanel.add(reloadButton, BorderLayout.NORTH);
 
-        JSplitPane splitPane = new JSplitPane();
+        final JSplitPane splitPane = new JSplitPane();
         splitPane.setOneTouchExpandable(true);
         splitPane.setContinuousLayout(true);
         splitPane.setDividerLocation(500);
 
         // Liste
-        JPanel leftPanel = new JPanel();
+        final JPanel leftPanel = new JPanel();
         leftPanel.setLayout(new GridBagLayout());
 
-        JLabel label = new JLabel(getTranslation("filter") + ":");
+        final JLabel label = new JLabel(getTranslation("filter") + ":");
         leftPanel.add(label, GbcBuilder.of(0, 0));
 
-        JTextField textFieldFilter = new JTextField();
+        final JTextField textFieldFilter = new JTextField();
         leftPanel.add(textFieldFilter, GbcBuilder.of(1, 0).fillHorizontal());
 
         this.table = new JTable();
@@ -111,17 +107,17 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView {
         this.table.getColumnModel().getColumn(0).setMinWidth(30);
         this.table.getColumnModel().getColumn(0).setMaxWidth(50);
 
-        JScrollPane scrollPane = new JScrollPane(this.table);
+        final JScrollPane scrollPane = new JScrollPane(this.table);
 
         leftPanel.add(scrollPane, GbcBuilder.of(0, 1).gridWidth(2).fillBoth());
         splitPane.setLeftComponent(leftPanel);
 
-        JPanel rightPanel = new JPanel();
+        final JPanel rightPanel = new JPanel();
         rightPanel.setLayout(new GridBagLayout());
         splitPane.setRightComponent(rightPanel);
 
         // Details
-        JPanel detailPanel = new JPanel();
+        final JPanel detailPanel = new JPanel();
         detailPanel.setLayout(new GridBagLayout());
         detailPanel.setBorder(new TitledBorder(getTranslation("details")));
 
@@ -169,7 +165,7 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView {
     }
 
     protected void initTable(final JTable table, final JTextField textFieldFilter) {
-        AbstractListTableModel<T> tableModel = getTableModel();
+        final AbstractListTableModel<T> tableModel = getTableModel();
 
         table.getSelectionModel().addListSelectionListener(event -> {
             if (event.getValueIsAdjusting()) {
@@ -178,7 +174,7 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView {
 
             getController().clear();
 
-            int viewRow = table.getSelectedRow();
+            final int viewRow = table.getSelectedRow();
 
             if (viewRow == -1) {
                 genreButton.setEnabled(false);
@@ -186,16 +182,16 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView {
             }
 
             genreButton.setEnabled(true);
-            int modelRow = table.convertRowIndexToModel(viewRow);
+            final int modelRow = table.convertRowIndexToModel(viewRow);
 
-            T entity = tableModel.getObjectAt(modelRow);
+            final T entity = tableModel.getObjectAt(modelRow);
 
             getController().setSelected(entity);
 
             getLogger().debug("{}", entity);
         });
 
-        TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tableModel);
+        final TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tableModel);
         rowSorter.addRowSorterListener(event -> {
             if (rowSorter.getViewRowCount() > 0 && table.getSelectedRowCount() == 0) {
                 table.setRowSelectionInterval(0, 0);
@@ -221,7 +217,7 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView {
             }
 
             private void updateFilter() {
-                String text = textFieldFilter.getText();
+                final String text = textFieldFilter.getText();
 
                 if (text == null || text.isBlank()) {
                     rowSorter.setRowFilter(null);

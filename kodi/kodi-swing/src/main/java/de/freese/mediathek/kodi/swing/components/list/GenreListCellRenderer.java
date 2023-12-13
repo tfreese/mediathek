@@ -20,7 +20,7 @@ public class GenreListCellRenderer extends DefaultListCellRenderer {
     public Component getListCellRendererComponent(final JList<?> list, final Object value, final int index, final boolean isSelected, final boolean cellHasFocus) {
         super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
-        Genre genre = (Genre) value;
+        final Genre genre = (Genre) value;
         setText(String.format("%s (%d)", genre.getName(), genre.getPk()));
 
         return this;

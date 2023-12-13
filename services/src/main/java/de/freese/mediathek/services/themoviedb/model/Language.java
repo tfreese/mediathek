@@ -42,7 +42,7 @@ public class Language implements Comparable<Language> {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
         builder.append("Language [iso_639_1=");
         builder.append(this.iso6391);
         builder.append(", name=");

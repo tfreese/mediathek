@@ -20,7 +20,7 @@ public class MovieListCellRenderer extends DefaultListCellRenderer {
     public Component getListCellRendererComponent(final JList<?> list, final Object value, final int index, final boolean isSelected, final boolean cellHasFocus) {
         super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
-        Movie movie = (Movie) value;
+        final Movie movie = (Movie) value;
         setText(String.format("%s (%d)", movie.getName(), movie.getPk()));
 
         return this;

@@ -22,17 +22,17 @@ import de.freese.mediathek.utils.MediaDbUtils;
 public class KodiAudioReporter extends AbstractMediaReporter {
     @Override
     public void updateDbFromReport(final DataSource dataSource, final Path path) throws Exception {
-        StringBuilder sqlSelect = new StringBuilder();
+        final StringBuilder sqlSelect = new StringBuilder();
         sqlSelect.append("select iTimesPlayed as playcount");
         sqlSelect.append(" from song");
         sqlSelect.append(" where strArtistDisp = ? and strTitle = ?");
 
-        StringBuilder sqlUpdate = new StringBuilder();
+        final StringBuilder sqlUpdate = new StringBuilder();
         sqlUpdate.append("UPDATE song");
         sqlUpdate.append(" set iTimesPlayed = ?");
         sqlUpdate.append(" WHERE strArtistDisp = ? AND strTitle = ?");
 
-        List<Map<String, String>> heardMusic = readHeardMusik(path);
+        final List<Map<String, String>> heardMusic = readHeardMusik(path);
 
         try (Connection connection = dataSource.getConnection()) {
             connection.setAutoCommit(false);
@@ -40,9 +40,9 @@ public class KodiAudioReporter extends AbstractMediaReporter {
             try (PreparedStatement stmtUpdate = connection.prepareStatement(sqlUpdate.toString());
                  PreparedStatement stmtSelect = connection.prepareStatement(sqlSelect.toString())) {
                 for (Map<String, String> map : heardMusic) {
-                    String artist = map.get("ARTIST");
-                    String song = map.get("SONG");
-                    int playCount = Integer.parseInt(map.get("PLAYCOUNT"));
+                    final String artist = map.get("ARTIST");
+                    final String song = map.get("SONG");
+                    final int playCount = Integer.parseInt(map.get("PLAYCOUNT"));
 
                     stmtSelect.setString(1, artist);
                     stmtSelect.setString(2, song);
@@ -84,7 +84,7 @@ public class KodiAudioReporter extends AbstractMediaReporter {
     }
 
     protected void writeMusic(final DataSource dataSource, final Path path) throws Exception {
-        StringBuilder sql = new StringBuilder();
+        final StringBuilder sql = new StringBuilder();
         sql.append("SELECT strArtists AS artist, strTitle AS song, iTimesPlayed AS playcount");
         sql.append(" FROM songView");
         sql.append(" WHERE iTimesPlayed > 0");
@@ -103,7 +103,7 @@ public class KodiAudioReporter extends AbstractMediaReporter {
     protected void writeMusicPlaylistM3U(final DataSource dataSource, final Path path) throws Exception {
         MediaDbUtils.rename(path);
 
-        StringBuilder sql = new StringBuilder();
+        final StringBuilder sql = new StringBuilder();
         sql.append("SELECT DISTINCT sw.strArtists AS artist, sw.strAlbum AS album, sw.strTitle AS song, sw.strFileName AS filename, sw.strPath AS path, sw.iDuration AS duration");
         sql.append(" FROM songview sw");
         sql.append(" inner join tommy.playlist_music_artist pl on");
@@ -132,7 +132,7 @@ public class KodiAudioReporter extends AbstractMediaReporter {
     protected void writeMusicPlaylistXSP(final DataSource dataSource, final Path path) throws Exception {
         MediaDbUtils.rename(path);
 
-        StringBuilder sql = new StringBuilder();
+        final StringBuilder sql = new StringBuilder();
         sql.append("SELECT artist, operator");
         sql.append(" FROM tommy.playlist_music_artist");
         sql.append(" ORDER BY operator, artist");

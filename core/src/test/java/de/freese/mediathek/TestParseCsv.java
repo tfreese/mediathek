@@ -40,7 +40,7 @@ class TestParseCsv {
                 continue;
             }
 
-            int endIndex = row.indexOf("\",");
+            final int endIndex = row.indexOf("\",");
 
             if (endIndex < 0) {
                 // Last Value -> End
@@ -66,13 +66,13 @@ class TestParseCsv {
 
     @Test
     void testParseFile() throws IOException {
-        Path path = Paths.get("/home/tommy/dokumente/linux/musik-report-strawberry.csv");
+        final Path path = Paths.get("/home/tommy/dokumente/linux/musik-report-strawberry.csv");
 
         if (!Files.exists(path)) {
             return;
         }
 
-        List<String> list = MediaDbUtils.parseCsv(path).stream().limit(3).map(Arrays::toString).toList();
+        final List<String> list = MediaDbUtils.parseCsv(path).stream().limit(3).map(Arrays::toString).toList();
 
         assertFalse(list.isEmpty());
         assertEquals(3, list.size());

@@ -20,35 +20,35 @@ public class DefaultMovieService extends AbstractMovieDbService implements Movie
 
     @Override
     public Casts casts(final int id) {
-        Appendable url = url().append("movie/{movieID}/casts?api_key={api_key}&language=de");
+        final Appendable url = url().append("movie/{movieID}/casts?api_key={api_key}&language=de");
 
         return getRestTemplate().getForObject(url.toString(), Casts.class, id, getApiKey());
     }
 
     @Override
     public MovieDetails details(final int id) {
-        Appendable url = url().append("movie/{movieID}?api_key={api_key}&language=de");
+        final Appendable url = url().append("movie/{movieID}?api_key={api_key}&language=de");
 
         return getRestTemplate().getForObject(url.toString(), MovieDetails.class, id, getApiKey());
     }
 
     @Override
     public Images images(final int id) {
-        Appendable url = url().append("movie/{movieID}/images?api_key={api_key}"); // &language=de
+        final Appendable url = url().append("movie/{movieID}/images?api_key={api_key}"); // &language=de
 
         return getRestTemplate().getForObject(url.toString(), Images.class, id, getApiKey());
     }
 
     @Override
     public Search search(final String movie) {
-        Appendable url = url().append("search/movie?api_key={api_key}&language=de&query={query}");
+        final Appendable url = url().append("search/movie?api_key={api_key}&language=de&query={query}");
 
         return getRestTemplate().getForObject(url.toString(), Search.class, getApiKey(), urlEncode(movie));
     }
 
     @Override
     public Search search(final String movie, final int year) {
-        Appendable url = url().append("search/movie?api_key={api_key}&language=de&query={query}&year={year}");
+        final Appendable url = url().append("search/movie?api_key={api_key}&language=de&query={query}&year={year}");
 
         return getRestTemplate().getForObject(url.toString(), Search.class, getApiKey(), urlEncode(movie), year);
     }

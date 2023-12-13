@@ -21,7 +21,6 @@ public class MovieDetails extends Movie {
      * production_countries
      */
     private List<Country> countries;
-
     private List<Crew> directors;
     /**
      * genres

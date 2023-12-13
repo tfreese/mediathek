@@ -14,7 +14,7 @@ import de.freese.mediathek.kodi.model.Show;
 public class ShowRowMapper implements RowMapper<Show> {
     @Override
     public Show mapRow(final ResultSet rs, final int rowNum) throws SQLException {
-        Show show = new Show();
+        final Show show = new Show();
         show.setPk(rs.getInt("pk"));
         show.setName(rs.getString("name"));
         show.setGenres(rs.getString("genres"));

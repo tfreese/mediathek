@@ -28,15 +28,15 @@ public abstract class AbstractShowAndMovieController<T> extends AbstractControll
     }
 
     public void openGenreDialog() {
-        T entity = getView().getSelected();
+        final T entity = getView().getSelected();
 
-        SwingWorker<List<List<Genre>>, Void> worker = new SwingWorker<>() {
+        final SwingWorker<List<List<Genre>>, Void> worker = new SwingWorker<>() {
             @Override
             protected List<List<Genre>> doInBackground() throws Exception {
-                List<Genre> allGenres = getService().getAllGenres();
-                List<Genre> entityGenres = getService().getEntityGenres(entity);
+                final List<Genre> allGenres = getService().getAllGenres();
+                final List<Genre> entityGenres = getService().getEntityGenres(entity);
 
-                List<List<Genre>> result = new ArrayList<>();
+                final List<List<Genre>> result = new ArrayList<>();
                 result.add(allGenres);
                 result.add(entityGenres);
 
@@ -46,17 +46,17 @@ public abstract class AbstractShowAndMovieController<T> extends AbstractControll
             @Override
             protected void done() {
                 try {
-                    List<List<Genre>> result = get();
+                    final List<List<Genre>> result = get();
 
-                    GenreDialog dialog = new GenreDialog(KodiSwingClient.getFrame());
+                    final GenreDialog dialog = new GenreDialog(KodiSwingClient.getFrame());
                     dialog.open(result.get(0), result.get(1));
 
                     if (dialog.hasBeenCanceled()) {
                         return;
                     }
 
-                    List<Genre> selected = dialog.getSelectedGenres();
-                    int[] newGenreIDs = new int[selected.size()];
+                    final List<Genre> selected = dialog.getSelectedGenres();
+                    final int[] newGenreIDs = new int[selected.size()];
 
                     for (int i = 0; i < newGenreIDs.length; i++) {
                         newGenreIDs[i] = selected.get(i).getPk();
@@ -76,7 +76,7 @@ public abstract class AbstractShowAndMovieController<T> extends AbstractControll
     public void reload() {
         getView().clear();
 
-        List<T> data = getService().load();
+        final List<T> data = getService().load();
         getView().fill(data);
     }
 
@@ -95,7 +95,7 @@ public abstract class AbstractShowAndMovieController<T> extends AbstractControll
     }
 
     protected void setImageIcon(final T entity) {
-        SwingWorker<ImageIcon, Void> worker = new SwingWorker<>() {
+        final SwingWorker<ImageIcon, Void> worker = new SwingWorker<>() {
             @Override
             protected ImageIcon doInBackground() throws Exception {
                 return getService().loadImageIcon(entity);

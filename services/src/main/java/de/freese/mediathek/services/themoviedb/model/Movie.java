@@ -17,15 +17,11 @@ public class Movie implements Comparable<Movie> {
      * id
      */
     private int id = -1;
-
     private ImageIcon imageIcon;
-
     @JsonProperty("original_title")
     private String originalTitle;
-
     @JsonProperty("poster_path")
     private String poster;
-
     @JsonProperty("release_date")
     private String releaseDate;
     /**
@@ -35,8 +31,8 @@ public class Movie implements Comparable<Movie> {
 
     @Override
     public int compareTo(final Movie o) {
-        String s1 = getJahr();
-        String s2 = o.getJahr();
+        final String s1 = getJahr();
+        final String s2 = o.getJahr();
 
         return s1.compareTo(s2);
     }
@@ -107,7 +103,7 @@ public class Movie implements Comparable<Movie> {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
         builder.append("Movie [id=");
         builder.append(this.id);
         builder.append(", title=");

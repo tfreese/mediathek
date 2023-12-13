@@ -20,7 +20,6 @@ import de.freese.mediathek.utils.StopWatch;
  */
 public final class MultimediaReporter {
     private static final Logger LOGGER = LoggerFactory.getLogger(MultimediaReporter.class);
-
     private static final StopWatch STOP_WATCH = new StopWatch();
 
     /**
@@ -57,17 +56,17 @@ public final class MultimediaReporter {
 
             // DriverManager.setLogWriter(new PrintWriter(System.out, true));
 
-            SQLiteConfig config = new SQLiteConfig();
+            final SQLiteConfig config = new SQLiteConfig();
             config.setReadOnly(readonly);
             config.setReadUncommitted(true);
 
-            // SingleConnectionDataSource dataSource = new SingleConnectionDataSource();
+            // final SingleConnectionDataSource dataSource = new SingleConnectionDataSource();
             // dataSource.setDriverClassName("org.sqlite.JDBC");
             // dataSource.setUrl(url);
             // dataSource.setSuppressClose(true);
             // dataSource.setConnectionProperties(config.toProperties())
 
-            SQLiteDataSource dataSource = new SQLiteConnectionPoolDataSource(config);
+            final SQLiteDataSource dataSource = new SQLiteConnectionPoolDataSource(config);
             dataSource.setUrl(url);
 
             // Export View-Status: echo ".dump metadata_item_settings" | sqlite3 com.plexapp.plugins.library.db | grep -v TABLE | grep -v INDEX > settings.sql
@@ -82,21 +81,21 @@ public final class MultimediaReporter {
     }
 
     public static void main(final String[] args) throws Exception {
-        // MediaReporter mediaReporter = new BansheeAudioReporter();
-        //        MediaReporter mediaReporter = new ClementineAudioReporter();
-        //MediaReporter mediaReporter = new KodiAudioReporter();
-        // MediaReporter mediaReporter = new PlexAudioReporter();
-        MediaReporter mediaReporter = new StrawberryAudioReporter();
+        // final MediaReporter mediaReporter = new BansheeAudioReporter();
+        // final MediaReporter mediaReporter = new ClementineAudioReporter();
+        // final MediaReporter mediaReporter = new KodiAudioReporter();
+        // final MediaReporter mediaReporter = new PlexAudioReporter();
+        final MediaReporter mediaReporter = new StrawberryAudioReporter();
 
         STOP_WATCH.start("connect");
-        DataSource dataSource = DataSources.strawberrySqLite(true);
+        final DataSource dataSource = DataSources.strawberrySqLite(true);
         STOP_WATCH.stop();
 
         try {
             STOP_WATCH.start("writeReport");
 
-            Path path = Paths.get("/home/tommy/dokumente/linux");
-            // Path path = Paths.get("/tmp");
+            final Path path = Paths.get("/home/tommy/dokumente/linux");
+            // final Path path = Paths.get("/tmp");
 
             LOGGER.info("Path: {}", path);
 

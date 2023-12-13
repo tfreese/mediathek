@@ -16,7 +16,6 @@ public abstract class AbstractView implements View {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private Controller controller;
-
     private ResourceBundle resourceBundle;
 
     @Override

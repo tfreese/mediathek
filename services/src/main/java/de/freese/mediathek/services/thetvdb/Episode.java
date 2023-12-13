@@ -81,7 +81,7 @@ public class Episode implements Comparable<Episode> {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
         builder.append("Episode [");
         builder.append("id=").append(this.id);
         builder.append(", season=").append(this.season);

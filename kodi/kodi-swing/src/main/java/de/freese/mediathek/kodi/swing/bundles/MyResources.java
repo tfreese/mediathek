@@ -10,7 +10,7 @@ import java.util.Map;
 public class MyResources extends AbstractMapResourceBundle {
     @Override
     protected Map<String, Object> getContents() {
-        Map<String, Object> map = new HashMap<>();
+        final Map<String, Object> map = new HashMap<>();
 
         map.put("reload", "Reload");
         map.put("id.label.show", "TvDb Id");

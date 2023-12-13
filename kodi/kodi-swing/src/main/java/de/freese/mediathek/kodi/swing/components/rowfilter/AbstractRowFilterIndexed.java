@@ -26,7 +26,7 @@ public abstract class AbstractRowFilterIndexed extends RowFilter<Object, Object>
 
         if (this.columns.size() > 0) {
             for (int i = this.columns.size() - 1; i >= 0; i--) {
-                int index = this.columns.get(i);
+                final int index = this.columns.get(i);
 
                 if (index < count) {
                     if (isInclude(value, index)) {

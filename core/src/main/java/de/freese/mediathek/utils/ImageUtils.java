@@ -16,7 +16,7 @@ import javax.swing.ImageIcon;
  */
 public final class ImageUtils {
     public static RenderingHints getRenderingHintsQuality() {
-        RenderingHints hints = new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        final RenderingHints hints = new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         // hints.put(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
         hints.put(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         hints.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -25,35 +25,35 @@ public final class ImageUtils {
     }
 
     public static BufferedImage scaleImage(final Image src, final int width, final int height) {
-        Image scaled = src.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        final Image scaled = src.getScaledInstance(width, height, Image.SCALE_SMOOTH);
 
         return toBufferedImage(scaled);
     }
 
     public static BufferedImage scaleImageByRatio(final Image src, final double ratioWidth, final double ratioHeight) {
-        BufferedImage bufferedImage = toBufferedImage(src);
+        final BufferedImage bufferedImage = toBufferedImage(src);
 
-        AffineTransform tx = new AffineTransform();
+        final AffineTransform tx = new AffineTransform();
         tx.scale(ratioWidth, ratioHeight);
 
         // tx.shear(shiftx, shifty);
         // tx.translate(x, y);
         // tx.rotate(radians, origin.getWidth()/2, origin.getHeight()/2);
 
-        RenderingHints hints = getRenderingHintsQuality();
+        final RenderingHints hints = getRenderingHintsQuality();
 
-        AffineTransformOp op = new AffineTransformOp(tx, hints);
+        final AffineTransformOp op = new AffineTransformOp(tx, hints);
 
         return op.filter(bufferedImage, null);
     }
 
     public static BufferedImage scaleImageKeepRatio(final Image src, final int maxWidth, final int maxHeight) {
-        BufferedImage bufferedImage = toBufferedImage(src);
+        final BufferedImage bufferedImage = toBufferedImage(src);
 
-        double widthRatio = (double) maxWidth / bufferedImage.getWidth();
-        double heightRatio = (double) maxHeight / bufferedImage.getHeight();
+        final double widthRatio = (double) maxWidth / bufferedImage.getWidth();
+        final double heightRatio = (double) maxHeight / bufferedImage.getHeight();
 
-        double ratio = Math.min(widthRatio, heightRatio);
+        final double ratio = Math.min(widthRatio, heightRatio);
 
         return scaleImageByRatio(bufferedImage, ratio, ratio);
 
@@ -70,8 +70,8 @@ public final class ImageUtils {
             }
         }
 
-        BufferedImage returnImage = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
-        Graphics graphics = returnImage.getGraphics();
+        final BufferedImage returnImage = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+        final Graphics graphics = returnImage.getGraphics();
 
         icon.paintIcon(null, graphics, 0, 0);
         graphics.dispose();
@@ -84,7 +84,7 @@ public final class ImageUtils {
             return bi;
         }
 
-        BufferedImage bufferedImage;
+        final BufferedImage bufferedImage;
 
         // boolean hasAlpha = hasAlpha(image);
         //
@@ -123,9 +123,9 @@ public final class ImageUtils {
 
         bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
 
-        RenderingHints hints = getRenderingHintsQuality();
+        final RenderingHints hints = getRenderingHintsQuality();
 
-        Graphics2D graphics = bufferedImage.createGraphics();
+        final Graphics2D graphics = bufferedImage.createGraphics();
         graphics.setRenderingHints(hints);
 
         graphics.drawImage(image, 0, 0, null);

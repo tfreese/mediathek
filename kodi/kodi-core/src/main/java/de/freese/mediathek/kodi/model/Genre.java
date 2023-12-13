@@ -6,7 +6,6 @@ package de.freese.mediathek.kodi.model;
  */
 public class Genre extends AbstractModel {
     private int anzahlFilme;
-
     private int anzahlSerien;
 
     public int getAnzahlFilme() {

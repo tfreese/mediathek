@@ -49,7 +49,7 @@ public class Crew {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
         builder.append("Crew [name=");
         builder.append(this.name);
         builder.append(", job=");

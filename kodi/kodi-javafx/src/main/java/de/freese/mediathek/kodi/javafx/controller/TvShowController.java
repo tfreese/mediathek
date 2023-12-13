@@ -35,7 +35,7 @@ public class TvShowController extends AbstractTvShowMovieController<Show> {
 
     @Override
     protected String getImageUrl(final Show value) {
-        String url = MediaDbUtils.subStringBetween("preview=\"", "\">", value.getBanner());
+        final String url = MediaDbUtils.subStringBetween("preview=\"", "\">", value.getBanner());
 
         if ((url == null) || url.isBlank()) {
             return null;
@@ -62,7 +62,7 @@ public class TvShowController extends AbstractTvShowMovieController<Show> {
 
     @Override
     protected void updateGenres(final Show value, final int[] genreIDs) {
-        String newGenres = getMediaService().updateShowGenres(value.getPk(), genreIDs);
+        final String newGenres = getMediaService().updateShowGenres(value.getPk(), genreIDs);
         getPane().getGenresProperty().set(newGenres);
         value.setGenres(newGenres);
     }

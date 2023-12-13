@@ -6,17 +6,11 @@ package de.freese.mediathek.kodi.model;
  */
 public class Movie extends AbstractModel {
     private String fanArts;
-
     private String genres;
-
     private String imDbId;
-
     private String poster;
-
     private String posters;
-
     private int setID;
-
     private int year;
 
     public String getFanArts() {

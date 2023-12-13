@@ -6,7 +6,6 @@ package de.freese.mediathek.services;
  */
 public final class Settings {
     public static final String PROPERTY_MOVIE_DB_API_KEY = "MOVIE_DB_API_KEY";
-
     public static final String PROPERTY_TV_DB_API_KEY = "TV_DB_API_KEY";
     /**
      * Das Boot (1981), imdb_id: tt0082096
@@ -30,7 +29,7 @@ public final class Settings {
     public static final String TEST_SHOW_ID = "72449";
 
     public static String getMovieDbApiKey() {
-        String apiKey = "generateMe";
+        final String apiKey = "generateMe";
 
         // System.setProperty(PROPERTY_MOVIE_DB_API_KEY, apiKey);
 
@@ -38,7 +37,7 @@ public final class Settings {
     }
 
     public static String getTvDbApiKey() {
-        String apiKey = "generateMe";
+        final String apiKey = "generateMe";
 
         // System.setProperty(PROPERTY_TV_DB_API_KEY, apiKey);
 

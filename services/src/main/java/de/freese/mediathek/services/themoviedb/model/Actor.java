@@ -67,7 +67,7 @@ public class Actor implements Comparable<Actor> {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
         builder.append("Actor [name=");
         builder.append(this.name);
         builder.append(", role=");

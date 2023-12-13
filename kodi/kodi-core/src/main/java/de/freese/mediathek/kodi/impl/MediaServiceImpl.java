@@ -27,7 +27,7 @@ public class MediaServiceImpl implements MediaService {
 
     @Override
     public List<Movie> getGenreMovies(final int genreID) {
-        List<Movie> movies = getMediaDAO().getGenreMovies(genreID);
+        final List<Movie> movies = getMediaDAO().getGenreMovies(genreID);
         Collections.sort(movies);
 
         return movies;
@@ -35,7 +35,7 @@ public class MediaServiceImpl implements MediaService {
 
     @Override
     public List<Show> getGenreShows(final int genreID) {
-        List<Show> shows = getMediaDAO().getGenreShows(genreID);
+        final List<Show> shows = getMediaDAO().getGenreShows(genreID);
         Collections.sort(shows);
 
         return shows;
@@ -43,7 +43,7 @@ public class MediaServiceImpl implements MediaService {
 
     @Override
     public List<Genre> getGenres() {
-        List<Genre> genres = getMediaDAO().getGenres();
+        final List<Genre> genres = getMediaDAO().getGenres();
         Collections.sort(genres);
 
         return genres;
@@ -51,7 +51,7 @@ public class MediaServiceImpl implements MediaService {
 
     @Override
     public List<Genre> getMovieGenres(final int movieID) {
-        List<Genre> genres = getMediaDAO().getMovieGenres(movieID);
+        final List<Genre> genres = getMediaDAO().getMovieGenres(movieID);
         Collections.sort(genres);
 
         return genres;
@@ -60,7 +60,7 @@ public class MediaServiceImpl implements MediaService {
     @Override
     @Transactional(value = "txManagerVideo", readOnly = true)
     public List<Movie> getMovies() {
-        List<Movie> movies = getMediaDAO().getMovies();
+        final List<Movie> movies = getMediaDAO().getMovies();
         Collections.sort(movies);
         // Collections.sort(movies, new MovieSetIdYearComparator());
 
@@ -69,7 +69,7 @@ public class MediaServiceImpl implements MediaService {
 
     @Override
     public List<Genre> getShowGenres(final int showID) {
-        List<Genre> genres = getMediaDAO().getShowGenres(showID);
+        final List<Genre> genres = getMediaDAO().getShowGenres(showID);
         Collections.sort(genres);
 
         return genres;
@@ -78,7 +78,7 @@ public class MediaServiceImpl implements MediaService {
     @Override
     @Transactional(value = "txManagerVideo", readOnly = true)
     public List<Show> getShows() {
-        List<Show> shows = getMediaDAO().getShows();
+        final List<Show> shows = getMediaDAO().getShows();
         Collections.sort(shows);
 
         return shows;

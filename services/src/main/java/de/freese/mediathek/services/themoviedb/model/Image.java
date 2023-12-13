@@ -67,7 +67,7 @@ public class Image implements Comparable<Image> {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
         builder.append("Image [width=");
         builder.append(this.width);
         builder.append(", height=");

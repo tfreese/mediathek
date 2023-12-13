@@ -48,7 +48,7 @@ public class Actor implements Comparable<Actor> {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
         builder.append("Actor [");
         builder.append("id=").append(this.id);
         builder.append(", name=").append(this.name);
@@ -56,6 +56,7 @@ public class Actor implements Comparable<Actor> {
         builder.append(", sortOrder=").append(this.sortOrder);
         builder.append(", image=").append(this.image);
         builder.append("]");
+        
         return builder.toString();
     }
 }

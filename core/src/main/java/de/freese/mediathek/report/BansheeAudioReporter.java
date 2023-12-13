@@ -19,7 +19,7 @@ public class BansheeAudioReporter extends AbstractMediaReporter {
 
     @Override
     public void writeReport(final DataSource dataSource, final Path path) throws Exception {
-        StringBuilder sql = new StringBuilder();
+        final StringBuilder sql = new StringBuilder();
         sql.append("select car.name as artist, ct.title as song, ct.playcount");
         sql.append(" from coretracks ct");
         sql.append(" inner join coreartists car on car.artistid = ct.artistid");

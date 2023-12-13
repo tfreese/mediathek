@@ -17,7 +17,6 @@ import java.util.function.Consumer;
  */
 public class StopWatch {
     private static final AtomicInteger ID_NUMBER = new AtomicInteger(1);
-
     private static final AtomicInteger TASK_NUMBER = new AtomicInteger(1);
 
     /**
@@ -62,7 +61,7 @@ public class StopWatch {
                 printStream.printf("%15s | %9s | %3s | Task Name%n", TimeUnit.NANOSECONDS.toChronoUnit(), timeUnit.toChronoUnit(), "%");
 
                 for (TaskInfo task : sw.getTaskList()) {
-                    long nanos = task.getTime(TimeUnit.NANOSECONDS);
+                    final long nanos = task.getTime(TimeUnit.NANOSECONDS);
 
                     // @formatter:off
                     printStream.printf("%,15d | %,9d | %3.0f | %s%n"
@@ -71,91 +70,72 @@ public class StopWatch {
                             , ((double) nanos / sw.getTotalTimeNanos()) * 100D
                             , task.taskName)
                             ;
-                    // @formatter:off
+                    // @formatter:on
                 }
             }
         }
     }
 
-    public record TaskInfo(String taskName, long timeNanos)
-    {
-        public TaskInfo
-        {
+    public record TaskInfo(String taskName, long timeNanos) {
+        public TaskInfo {
             Objects.requireNonNull(taskName);
         }
 
-        public long getTime(final TimeUnit timeUnit)
-        {
+        public long getTime(final TimeUnit timeUnit) {
             return timeUnit.convert(this.timeNanos, TimeUnit.NANOSECONDS);
         }
     }
 
     private final String id;
-
     private final List<TaskInfo> taskList = new LinkedList<>();
-
     private String currentTaskName;
-
     private boolean keepTaskList = true;
-
     private TaskInfo lastTaskInfo;
-
     private long startTimeNanos;
-
     private long totalTimeNanos;
 
-    public StopWatch()
-    {
+    public StopWatch() {
         this("StopWatch-" + ID_NUMBER.getAndIncrement());
     }
 
-    public StopWatch(final String id)
-    {
+    public StopWatch(final String id) {
         super();
 
         this.id = id;
     }
 
-    public void clearTaskList()
-    {
+    public void clearTaskList() {
         this.taskList.clear();
     }
 
-    public String getCurrentTaskName()
-    {
+    public String getCurrentTaskName() {
         return this.currentTaskName;
     }
 
-    public String getId()
-    {
+    public String getId() {
         return this.id;
     }
 
-    public TaskInfo getLastTaskInfo()
-    {
-        if (this.lastTaskInfo == null)
-        {
+    public TaskInfo getLastTaskInfo() {
+        if (this.lastTaskInfo == null) {
             throw new IllegalStateException("No tasks run: can't get last task info");
         }
 
         return this.lastTaskInfo;
     }
 
-    public int getTaskCount()
-    {
+    public int getTaskCount() {
         return this.taskList.size();
     }
 
-    public List<TaskInfo> getTaskList()
-    {
-        List<TaskInfo> copy = new ArrayList<>(getTaskCount());
+    public List<TaskInfo> getTaskList() {
+        final List<TaskInfo> copy = new ArrayList<>(getTaskCount());
         copy.addAll(this.taskList);
 
         return copy;
     }
 
-    public long getTotalTimeNanos()
-    {
+    public long getTotalTimeNanos() {
         return this.totalTimeNanos;
     }
 
@@ -165,32 +145,28 @@ public class StopWatch {
      * memory.<br>
      * Default is {@code true}.
      */
-    public boolean isKeepTaskList()
-    {
+    public boolean isKeepTaskList() {
         return this.keepTaskList;
     }
 
     /**
      * Determine whether this {@code StopWatch} is currently running.
      */
-    public boolean isRunning()
-    {
+    public boolean isRunning() {
         return getCurrentTaskName() != null;
     }
 
     /**
      * Prints all the task details on the {@link PrintStream}.
      */
-    public void prettyPrint(final Consumer<StopWatch> consumer)
-    {
+    public void prettyPrint(final Consumer<StopWatch> consumer) {
         consumer.accept(this);
     }
 
     /**
      * Prints all the task details on the {@link PrintStream}.
      */
-    public void prettyPrint(final PrintStream printStream)
-    {
+    public void prettyPrint(final PrintStream printStream) {
         prettyPrint(new DefaultPrettyPrinter(printStream));
     }
 
@@ -200,8 +176,7 @@ public class StopWatch {
      * memory.<br>
      * Default is {@code true}.
      */
-    public void setKeepTaskList(final boolean keepTaskList)
-    {
+    public void setKeepTaskList(final boolean keepTaskList) {
         this.keepTaskList = keepTaskList;
     }
 
@@ -209,8 +184,7 @@ public class StopWatch {
      * Start an unnamed task.<br>
      * The results are undefined if {@link #stop()} is called without invoking this method first.
      */
-    public void start()
-    {
+    public void start() {
         start("Task-" + TASK_NUMBER.getAndIncrement());
     }
 
@@ -218,10 +192,8 @@ public class StopWatch {
      * Start a named task.<br>
      * The results are undefined if {@link #stop()} is called without invoking this method first.t.
      */
-    public void start(final String taskName)
-    {
-        if (this.currentTaskName != null)
-        {
+    public void start(final String taskName) {
+        if (this.currentTaskName != null) {
             throw new IllegalStateException("Can't start StopWatch: it's already running");
         }
 
@@ -233,19 +205,16 @@ public class StopWatch {
      * Stop the current task.<br>
      * The results are undefined if {@code start()}is called.
      */
-    public void stop()
-    {
-        if (this.currentTaskName == null)
-        {
+    public void stop() {
+        if (this.currentTaskName == null) {
             throw new IllegalStateException("Can't stop StopWatch: it's not running");
         }
 
-        long lastTime = System.nanoTime() - this.startTimeNanos;
+        final long lastTime = System.nanoTime() - this.startTimeNanos;
         this.totalTimeNanos += lastTime;
         this.lastTaskInfo = new TaskInfo(this.currentTaskName, lastTime);
 
-        if (this.keepTaskList)
-        {
+        if (this.keepTaskList) {
             this.taskList.add(this.lastTaskInfo);
         }
 

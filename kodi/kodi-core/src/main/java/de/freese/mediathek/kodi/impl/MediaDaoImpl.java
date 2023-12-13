@@ -19,7 +19,7 @@ public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
 
     @Override
     public void deleteMovieGenres(final int movieID) {
-        StringBuilder sql = new StringBuilder();
+        final StringBuilder sql = new StringBuilder();
         sql.append("delete from ").append(prependSchema("genre_link"));
         sql.append(" where");
         sql.append(" media_type = 'movie'");
@@ -30,7 +30,7 @@ public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
 
     @Override
     public void deleteShowGenres(final int showID) {
-        StringBuilder sql = new StringBuilder();
+        final StringBuilder sql = new StringBuilder();
         sql.append("delete from ").append(prependSchema("genre_link"));
         sql.append(" where");
         sql.append(" media_type = 'tvshow'");
@@ -41,7 +41,7 @@ public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
 
     @Override
     public List<Movie> getGenreMovies(final int genreID) {
-        StringBuilder sql = new StringBuilder();
+        final StringBuilder sql = new StringBuilder();
         sql.append("select");
         sql.append(" m.idMovie as pk");
         sql.append(", m.c00 as name");
@@ -62,7 +62,7 @@ public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
 
     @Override
     public List<Show> getGenreShows(final int genreID) {
-        StringBuilder sql = new StringBuilder();
+        final StringBuilder sql = new StringBuilder();
         sql.append("select");
         sql.append(" s.idShow as pk");
         sql.append(", s.c00 as name");
@@ -81,7 +81,7 @@ public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
 
     @Override
     public List<Genre> getGenres() {
-        StringBuilder sql = new StringBuilder();
+        final StringBuilder sql = new StringBuilder();
         sql.append("select");
         sql.append(" g.genre_id as pk");
         sql.append(", g.name");
@@ -120,7 +120,7 @@ public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
 
     @Override
     public List<Genre> getMovieGenres(final int movieID) {
-        StringBuilder sql = new StringBuilder();
+        final StringBuilder sql = new StringBuilder();
         sql.append("select");
         sql.append(" g.genre_id as pk");
         sql.append(", g.name");
@@ -138,7 +138,7 @@ public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
 
     @Override
     public List<Movie> getMovies() {
-        StringBuilder sql = new StringBuilder();
+        final StringBuilder sql = new StringBuilder();
         sql.append("select");
         sql.append(" m.idMovie as pk");
         sql.append(", m.c00 as name");
@@ -162,7 +162,7 @@ public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
 
     @Override
     public List<Genre> getShowGenres(final int showID) {
-        StringBuilder sql = new StringBuilder();
+        final StringBuilder sql = new StringBuilder();
         sql.append("select");
         sql.append(" g.genre_id as pk");
         sql.append(", g.name");
@@ -179,7 +179,7 @@ public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
 
     @Override
     public List<Show> getShows() {
-        StringBuilder sql = new StringBuilder();
+        final StringBuilder sql = new StringBuilder();
         sql.append("select");
         sql.append(" s.idShow as pk");
         sql.append(", s.c00 as name");
@@ -201,7 +201,7 @@ public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
 
     @Override
     public void insertMovieGenre(final int movieID, final int genreID) {
-        StringBuilder sql = new StringBuilder();
+        final StringBuilder sql = new StringBuilder();
         sql.append("insert into ").append(prependSchema("genre_link"));
         sql.append(" (genre_id, media_id, media_type)");
         sql.append(" values (?, ?, 'movie')");
@@ -211,7 +211,7 @@ public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
 
     @Override
     public void insertShowGenre(final int showID, final int genreID) {
-        StringBuilder sql = new StringBuilder();
+        final StringBuilder sql = new StringBuilder();
         sql.append("insert into ").append(prependSchema("genre_link"));
         sql.append(" (genre_id, media_id, media_type)");
         sql.append(" values (?, ?, 'tvshow')");
@@ -254,8 +254,8 @@ public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
         sql.append(" and gl.media_id = ?");
         sql.append(" order by g.name");
 
-        List<String> genreList = getJdbcTemplate().queryForList(sql.toString(), String.class, movieID);
-        StringBuilder genres = new StringBuilder();
+        final List<String> genreList = getJdbcTemplate().queryForList(sql.toString(), String.class, movieID);
+        final StringBuilder genres = new StringBuilder();
 
         for (Iterator<String> iterator = genreList.iterator(); iterator.hasNext(); ) {
             genres.append(iterator.next());
@@ -306,8 +306,8 @@ public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
         sql.append(" and gl.media_id = ?");
         sql.append(" order by g.name");
 
-        List<String> genreList = getJdbcTemplate().queryForList(sql.toString(), String.class, showID);
-        StringBuilder genres = new StringBuilder();
+        final List<String> genreList = getJdbcTemplate().queryForList(sql.toString(), String.class, showID);
+        final StringBuilder genres = new StringBuilder();
 
         for (Iterator<String> iterator = genreList.iterator(); iterator.hasNext(); ) {
             genres.append(iterator.next());

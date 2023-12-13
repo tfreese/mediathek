@@ -10,7 +10,6 @@ import org.springframework.context.ApplicationContext;
  */
 public abstract class AbstractService implements Service {
     private final ApplicationContext applicationContext;
-
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     protected AbstractService(final ApplicationContext applicationContext) {

@@ -42,7 +42,7 @@ public class Country implements Comparable<Country> {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
         builder.append("Country [iso_3166_1=");
         builder.append(this.iso31661);
         builder.append(", name=");

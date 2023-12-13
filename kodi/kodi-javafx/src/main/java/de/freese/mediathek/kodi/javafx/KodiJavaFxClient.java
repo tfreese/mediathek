@@ -45,7 +45,7 @@ public class KodiJavaFxClient extends Application {
 
     private static int getJavaVersion() {
         //        System.getProperty("java.version")
-        Runtime.Version version = Runtime.version();
+        final Runtime.Version version = Runtime.version();
 
         getLogger().info("JavaVersion = {}", version);
 
@@ -58,7 +58,7 @@ public class KodiJavaFxClient extends Application {
     public void init() throws Exception {
         getLogger().info("init");
 
-        List<String> parameters = getParameters().getRaw();
+        final List<String> parameters = getParameters().getRaw();
         String profile = null;
         // Class<?> clazz = null;
 
@@ -83,9 +83,9 @@ public class KodiJavaFxClient extends Application {
     public void start(final Stage stage) throws Exception {
         getLogger().info("start");
 
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("bundles/messages");
+        final ResourceBundle resourceBundle = ResourceBundle.getBundle("bundles/messages");
 
-        TabPane tabPane = new TabPane();
+        final TabPane tabPane = new TabPane();
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
         // Tab tab = new Tab(resourceBundle.getString("serien"));
@@ -118,7 +118,7 @@ public class KodiJavaFxClient extends Application {
         Scene scene = null;
 
         // Momentan kein Antialiasing wegen JavaFX-Bug.
-        int javaVersion = getJavaVersion();
+        final int javaVersion = getJavaVersion();
 
         // 1_800_072 = 1.8.72
         if (Platform.isSupported(ConditionalFeature.SCENE3D) && (javaVersion >= 8)) {

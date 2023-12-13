@@ -29,7 +29,7 @@ public class ShowService extends AbstractShowAndMovieService<Show> {
 
     @Override
     public void updateEntityGenres(final Show entity, final int[] newGenreIDs) {
-        String newGenres = getMediaService().updateShowGenres(entity.getPk(), newGenreIDs);
+        final String newGenres = getMediaService().updateShowGenres(entity.getPk(), newGenreIDs);
         entity.setGenres(newGenres);
     }
 

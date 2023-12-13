@@ -58,7 +58,7 @@ public class KodiSwingClient {
         //        System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
 
         SwingUtilities.invokeLater(() -> {
-            KodiSwingClient application = new KodiSwingClient();
+            final KodiSwingClient application = new KodiSwingClient();
 
             try {
                 application.init(args);
@@ -104,7 +104,7 @@ public class KodiSwingClient {
         }
 
         // AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(clazz);
-        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
+        final AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
         ctx.getEnvironment().setActiveProfiles(profile);
         // ctx.register(AppConfigMySQL.class, AppConfigHsqlDb.class, AppConfigSqLite.class);
         ctx.register(AppConfigSqLite.class);
@@ -113,15 +113,15 @@ public class KodiSwingClient {
 
         initUIDefaults();
 
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("de.freese.mediathek.kodi.swing.bundles.MyResources", Locale.getDefault());
+        final ResourceBundle resourceBundle = ResourceBundle.getBundle("de.freese.mediathek.kodi.swing.bundles.MyResources", Locale.getDefault());
 
-        JFrame f = new JFrame();
+        final JFrame f = new JFrame();
         f.setTitle(resourceBundle.getString("f.title"));
         f.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         f.addWindowListener(new MainFrameListener());
         f.setLayout(new BorderLayout());
 
-        JTabbedPane tabbedPane = new JTabbedPane();
+        final JTabbedPane tabbedPane = new JTabbedPane();
 
         Controller controller = new ShowController(new ShowService(ctx), new ShowView());
         tabbedPane.addTab(resourceBundle.getString("shows"), controller.init(resourceBundle));
@@ -158,14 +158,14 @@ public class KodiSwingClient {
 
         // Farben
         // Color color = new Color(215, 215, 215); // Für helles L&F
-        Color color = new Color(60, 60, 60);  // Für dunkles L&F
+        final Color color = new Color(60, 60, 60);  // Für dunkles L&F
         UIManager.put("Table.alternatingBackground", color);
         UIManager.put("Table.alternateRowColor", color);
         UIManager.put("List.alternatingBackground", color);
         // defaults.put("Tree.alternatingBackground", color);
 
         // Fonts: Dialog, Monospaced, Arial, DejaVu Sans
-        Font font = new Font("DejaVu Sans", Font.PLAIN, 16);
+        final Font font = new Font("DejaVu Sans", Font.PLAIN, 16);
 
         UIManager.getLookAndFeelDefaults().forEach((key, value) -> {
             if (value instanceof FontUIResource) {
@@ -181,7 +181,7 @@ public class KodiSwingClient {
         });
 
         // Ausnahmen
-        Font fontBold = font.deriveFont(Font.BOLD);
+        final Font fontBold = font.deriveFont(Font.BOLD);
         UIManager.put("TitledBorder.font", fontBold);
 
         // UIDefaults defaults = UIManager.getLookAndFeelDefaults();

@@ -20,7 +20,7 @@ public class ShowListCellRenderer extends DefaultListCellRenderer {
     public Component getListCellRendererComponent(final JList<?> list, final Object value, final int index, final boolean isSelected, final boolean cellHasFocus) {
         super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
-        Show show = (Show) value;
+        final Show show = (Show) value;
         setText(String.format("%s (%d)", show.getName(), show.getPk()));
 
         return this;

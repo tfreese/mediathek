@@ -21,11 +21,8 @@ import de.freese.mediathek.utils.cache.ResourceCache;
  */
 public abstract class AbstractController<T extends Model> implements Initializable, ChangeListener<T> {
     private final ApplicationContext applicationContext;
-
     private final Executor executor;
-
     private final MediaService mediaService;
-
     private final ResourceCache resourceCache;
 
     protected AbstractController(final ApplicationContext applicationContext) {
@@ -70,7 +67,7 @@ public abstract class AbstractController<T extends Model> implements Initializab
             }
         };
         task.setOnSucceeded(event -> {
-            List<T> media = task.getValue();
+            final List<T> media = task.getValue();
             dataList.addAll(media);
             // selectionModel.select(0);
             selectionModel.selectFirst();

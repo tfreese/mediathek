@@ -40,7 +40,7 @@ public class Studio implements Comparable<Studio> {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
         builder.append("Studio [name=");
         builder.append(this.name);
         builder.append(", id=");

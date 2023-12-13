@@ -16,7 +16,6 @@ public class Configuration {
      * backdrop_sizes
      */
     private List<String> backdropSizes;
-
     // private List<String> changeKeys = null;
     /**
      * secure_base_url
@@ -64,7 +63,7 @@ public class Configuration {
     @JsonAnySetter
     public void parseUnknownProperties(final String propertyName, final Object propertyValue) {
         if ("images".equals(propertyName)) {
-            Map<String, Object> map = (Map<String, Object>) propertyValue;
+            final Map<String, Object> map = (Map<String, Object>) propertyValue;
 
             this.imageBaseURL = (String) map.get("secure_base_url");
             // this.imageBaseURL = (String) map.get("base_url");
@@ -83,7 +82,7 @@ public class Configuration {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
         builder.append("Configuration [imageBaseURL=");
         builder.append(this.imageBaseURL);
         builder.append(", backdropSizes=");

@@ -14,7 +14,7 @@ import de.freese.mediathek.kodi.model.Genre;
 public class GenreRowMapper implements RowMapper<Genre> {
     @Override
     public Genre mapRow(final ResultSet rs, final int rowNum) throws SQLException {
-        Genre genre = new Genre();
+        final Genre genre = new Genre();
         genre.setPk(rs.getInt("pk"));
         genre.setName(rs.getString("name"));
         genre.setAnzahlFilme(rs.getInt("filme_anzahl"));

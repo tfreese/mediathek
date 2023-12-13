@@ -29,7 +29,7 @@ public class MovieService extends AbstractShowAndMovieService<Movie> {
 
     @Override
     public void updateEntityGenres(final Movie entity, final int[] newGenreIDs) {
-        String newGenres = getMediaService().updateMovieGenres(entity.getPk(), newGenreIDs);
+        final String newGenres = getMediaService().updateMovieGenres(entity.getPk(), newGenreIDs);
         entity.setGenres(newGenres);
     }
 

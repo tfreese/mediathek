@@ -20,9 +20,7 @@ public abstract class AbstractListTableModel<T> extends AbstractTableModel {
     private static final long serialVersionUID = 8219964863357772409L;
 
     private final int columnCount;
-
     private final transient List<String> columnNames;
-
     private final transient List<T> list;
 
     protected AbstractListTableModel(final int columnCount) {
@@ -61,7 +59,7 @@ public abstract class AbstractListTableModel<T> extends AbstractTableModel {
     }
 
     public void addAll(final Collection<T> objects) {
-        int sizeOld = getList().size();
+        final int sizeOld = getList().size();
 
         getList().addAll(objects);
 
@@ -78,7 +76,7 @@ public abstract class AbstractListTableModel<T> extends AbstractTableModel {
     public Class<?> getColumnClass(final int columnIndex) {
         if (getRowCount() != 0) {
             for (int row = 0; row < getRowCount(); row++) {
-                Object object = getValueAt(row, columnIndex);
+                final Object object = getValueAt(row, columnIndex);
 
                 if (object != null) {
                     return object.getClass();
@@ -128,7 +126,7 @@ public abstract class AbstractListTableModel<T> extends AbstractTableModel {
     }
 
     public void remove(final T object) {
-        int row = getRowOf(object);
+        final int row = getRowOf(object);
 
         getList().remove(object);
 
@@ -142,7 +140,7 @@ public abstract class AbstractListTableModel<T> extends AbstractTableModel {
             return null;
         }
 
-        T object = getList().remove(rowIndex);
+        final T object = getList().remove(rowIndex);
 
         fireTableRowsDeleted(rowIndex, rowIndex);
 

@@ -27,11 +27,8 @@ import de.freese.mediathek.kodi.model.Model;
  */
 public class GenrePane extends VBox {
     private final Button buttonReload;
-
     private final ListView<Model> listViewFilme;
-
     private final ListView<Model> listViewSerien;
-
     private final TableView<Genre> tableViewGenres;
 
     public GenrePane(final ResourceBundle resourceBundle) {
@@ -43,7 +40,7 @@ public class GenrePane extends VBox {
         this.buttonReload.setMaxWidth(Double.MAX_VALUE);
         getChildren().add(this.buttonReload);
 
-        SplitPane splitPane = new SplitPane();
+        final SplitPane splitPane = new SplitPane();
         splitPane.setOrientation(Orientation.HORIZONTAL);
         splitPane.setDividerPositions(0.4D);
         splitPane.setFocusTraversable(true);
@@ -52,12 +49,13 @@ public class GenrePane extends VBox {
         this.tableViewGenres = createTableViewGenres(resourceBundle);
         splitPane.getItems().add(this.tableViewGenres);
 
-        HBox hBox = new HBox();
+        final HBox hBox = new HBox();
 
         this.listViewFilme = new ListView<>();
         this.listViewFilme.setEditable(false);
         this.listViewFilme.setCellFactory(new ModelListCellFactory());
         this.listViewFilme.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
         TitledPane titledPane = new TitledPane(resourceBundle.getString("filme"), this.listViewFilme);
         titledPane.setPrefHeight(10000D);
         HBox.setHgrow(titledPane, Priority.ALWAYS);
@@ -67,6 +65,7 @@ public class GenrePane extends VBox {
         this.listViewSerien.setEditable(false);
         this.listViewSerien.setCellFactory(new ModelListCellFactory());
         this.listViewSerien.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
         titledPane = new TitledPane(resourceBundle.getString("serien"), this.listViewSerien);
         titledPane.setPrefHeight(10000D);
         HBox.setHgrow(titledPane, Priority.ALWAYS);
@@ -96,12 +95,12 @@ public class GenrePane extends VBox {
     }
 
     private TableView<Genre> createTableViewGenres(final ResourceBundle resourceBundle) {
-        TableView<Genre> tableView = new TableView<>();
+        final TableView<Genre> tableView = new TableView<>();
         tableView.setEditable(false);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         // Tabellen alignment über CellStyle
-        TableColumn<Genre, Integer> columnID = new TableColumn<>(resourceBundle.getString("id"));
+        final TableColumn<Genre, Integer> columnID = new TableColumn<>(resourceBundle.getString("id"));
         columnID.setResizable(false);
         columnID.prefWidthProperty().bind(tableView.widthProperty().multiply(0.1D)); // 10 % Breite
         columnID.setCellValueFactory(new PropertyValueFactory<>("pk"));
@@ -109,13 +108,13 @@ public class GenrePane extends VBox {
         columnID.setStyle("-fx-alignment: CENTER-RIGHT;");
 
         // Sortierung auf Genre Spalte
-        TableColumn<Genre, String> columnGenre = new TableColumn<>(resourceBundle.getString("genre"));
+        final TableColumn<Genre, String> columnGenre = new TableColumn<>(resourceBundle.getString("genre"));
         columnGenre.prefWidthProperty().bind(tableView.widthProperty().multiply(0.58D)); // 58 % Breite
         columnGenre.setCellValueFactory(new PropertyValueFactory<>("name"));
         // columnGenre.setCellValueFactory(cell -> cell.getValue().getName());
         // columnGenre.setSortType(TableColumn.SortType.ASCENDING);
 
-        TableColumn<Genre, Integer> columnFilme = new TableColumn<>(resourceBundle.getString("filme"));
+        final TableColumn<Genre, Integer> columnFilme = new TableColumn<>(resourceBundle.getString("filme"));
         columnFilme.setResizable(false);
         columnFilme.prefWidthProperty().bind(tableView.widthProperty().multiply(0.16D)); // 16 % Breite
         columnFilme.setCellValueFactory(new PropertyValueFactory<>("anzahlFilme"));
@@ -123,7 +122,7 @@ public class GenrePane extends VBox {
         columnFilme.setStyle("-fx-alignment: CENTER-RIGHT;");
 
         // Alignment über CellFactory
-        TableColumn<Genre, String> columnSerien = new TableColumn<>(resourceBundle.getString("serien"));
+        final TableColumn<Genre, String> columnSerien = new TableColumn<>(resourceBundle.getString("serien"));
         columnSerien.setResizable(false);
         columnSerien.prefWidthProperty().bind(tableView.widthProperty().multiply(0.16D)); // 16 % Breite
         columnSerien.setCellValueFactory(new PropertyValueFactory<>("anzahlSerien"));

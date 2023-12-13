@@ -15,10 +15,10 @@ import de.freese.mediathek.report.KodiAudioReporter;
  */
 public class KodiSpringAudioReporter extends KodiAudioReporter {
     public DataSource createDataSource(final boolean readonly) throws Exception {
-        ConfigurableEnvironment environment = new StandardEnvironment();
+        final ConfigurableEnvironment environment = new StandardEnvironment();
         environment.getPropertySources().addLast(new KodiPropertySource());
 
-        AbstractAppConfig appConfig = new AppConfigSqLite();
+        final AbstractAppConfig appConfig = new AppConfigSqLite();
         appConfig.setEnvironment(environment);
 
         return appConfig.dataSourceAudio();

@@ -17,14 +17,14 @@ import javax.sql.DataSource;
 public class KodiTvShowReporter extends AbstractMediaReporter {
     @Override
     public void updateDbFromReport(final DataSource dataSource, final Path path) throws Exception {
-        StringBuilder sqlSelect = new StringBuilder();
+        final StringBuilder sqlSelect = new StringBuilder();
         sqlSelect.append("select files.playcount, files.lastPlayed, files.idfile");
         sqlSelect.append(" from files");
         sqlSelect.append(" INNER JOIN episode ON episode.idfile = files.idfile");
         sqlSelect.append(" INNER JOIN tvshow ON tvshow.idshow = episode.idshow");
         sqlSelect.append(" where tvshow.c00 = ? and episode.c12 = ? and episode.c13 = ?");
 
-        StringBuilder sqlUpdate = new StringBuilder();
+        final StringBuilder sqlUpdate = new StringBuilder();
         // mysql
         // sqlUpdate.append("UPDATE files");
         // sqlUpdate.append(" INNER JOIN episode ON episode.idfile = files.idfile");
@@ -37,7 +37,7 @@ public class KodiTvShowReporter extends AbstractMediaReporter {
         sqlUpdate.append(" set playcount = ?, lastplayed = ?");
         sqlUpdate.append(" where idfile = ?");
 
-        List<Map<String, String>> seenTvShows = readSeenTvShows(path);
+        final List<Map<String, String>> seenTvShows = readSeenTvShows(path);
 
         try (Connection connection = dataSource.getConnection()) {
             connection.setAutoCommit(false);
@@ -45,12 +45,12 @@ public class KodiTvShowReporter extends AbstractMediaReporter {
             try (PreparedStatement stmtUpdate = connection.prepareStatement(sqlUpdate.toString());
                  PreparedStatement stmtSelect = connection.prepareStatement(sqlSelect.toString())) {
                 for (Map<String, String> map : seenTvShows) {
-                    String tvshow = map.get("TVSHOW");
-                    String season = map.get("SEASON");
-                    String episode = map.get("EPISODE");
-                    String title = map.get("TITLE");
-                    int playCount = Integer.parseInt(map.get("PLAYCOUNT"));
-                    String lastPlayed = map.get("LASTPLAYED");
+                    final String tvshow = map.get("TVSHOW");
+                    final String season = map.get("SEASON");
+                    final String episode = map.get("EPISODE");
+                    final String title = map.get("TITLE");
+                    final int playCount = Integer.parseInt(map.get("PLAYCOUNT"));
+                    final String lastPlayed = map.get("LASTPLAYED");
 
                     stmtSelect.setString(1, tvshow);
                     stmtSelect.setString(2, season);
@@ -60,7 +60,7 @@ public class KodiTvShowReporter extends AbstractMediaReporter {
                         if (resultSet.next()) {
                             // Eintrag gefunden -> Update
                             if ((playCount != resultSet.getInt("PLAYCOUNT")) || !lastPlayed.equals(resultSet.getString("LASTPLAYED"))) {
-                                int idFile = resultSet.getInt("IDFILE");
+                                final int idFile = resultSet.getInt("IDFILE");
 
                                 getLogger().info(String.format("Update TvShow: IDFile=%d, %s - S%02dE%02d - %s%n", idFile, tvshow, Integer.parseInt(season), Integer.parseInt(episode), title));
 
@@ -86,7 +86,7 @@ public class KodiTvShowReporter extends AbstractMediaReporter {
 
     @Override
     public void writeReport(final DataSource dataSource, final Path path) throws Exception {
-        StringBuilder sql = new StringBuilder();
+        final StringBuilder sql = new StringBuilder();
         sql.append("SELECT strTitle AS tvshow, c12 AS season, c13 AS episode, c00 AS title, playcount, lastplayed");
         sql.append(" FROM episode_view");
         sql.append(" WHERE playcount > 0");

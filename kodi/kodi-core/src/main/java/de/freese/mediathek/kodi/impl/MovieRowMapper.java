@@ -14,7 +14,7 @@ import de.freese.mediathek.kodi.model.Movie;
 public class MovieRowMapper implements RowMapper<Movie> {
     @Override
     public Movie mapRow(final ResultSet rs, final int rowNum) throws SQLException {
-        Movie movie = new Movie();
+        final Movie movie = new Movie();
         movie.setPk(rs.getInt("pk"));
         movie.setName(rs.getString("name"));
         movie.setGenres(rs.getString("genres"));

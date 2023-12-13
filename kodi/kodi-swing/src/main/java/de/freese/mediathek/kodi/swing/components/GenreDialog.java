@@ -77,13 +77,13 @@ public class GenreDialog extends JDialog {
 
         @Override
         public void actionPerformed(final ActionEvent event) {
-            Genre genre = GenreDialog.this.listRechts.getSelectedValue();
+            final Genre genre = GenreDialog.this.listRechts.getSelectedValue();
 
             if ((genre == null)) {
                 return;
             }
 
-            DefaultListListModel<Genre> listModel = (DefaultListListModel<Genre>) GenreDialog.this.listRechts.getModel();
+            final DefaultListListModel<Genre> listModel = (DefaultListListModel<Genre>) GenreDialog.this.listRechts.getModel();
 
             if (listModel.getSize() == 1) {
                 return;
@@ -106,13 +106,13 @@ public class GenreDialog extends JDialog {
 
         @Override
         public void actionPerformed(final ActionEvent event) {
-            Genre genre = GenreDialog.this.listLinks.getSelectedValue();
+            final Genre genre = GenreDialog.this.listLinks.getSelectedValue();
 
             if (genre == null) {
                 return;
             }
 
-            DefaultListListModel<Genre> listModel = (DefaultListListModel<Genre>) GenreDialog.this.listRechts.getModel();
+            final DefaultListListModel<Genre> listModel = (DefaultListListModel<Genre>) GenreDialog.this.listRechts.getModel();
 
             if (listModel.contains(genre)) {
                 return;
@@ -123,9 +123,7 @@ public class GenreDialog extends JDialog {
     }
 
     private boolean canceled;
-
     private JList<Genre> listLinks;
-
     private JList<Genre> listRechts;
 
     public GenreDialog(final Window owner) {
@@ -146,7 +144,7 @@ public class GenreDialog extends JDialog {
             return null;
         }
 
-        DefaultListListModel<Genre> defaultListListModel = (DefaultListListModel<Genre>) this.listRechts.getModel();
+        final DefaultListListModel<Genre> defaultListListModel = (DefaultListListModel<Genre>) this.listRechts.getModel();
 
         return defaultListListModel.getStream().toList();
     }
@@ -156,12 +154,13 @@ public class GenreDialog extends JDialog {
     }
 
     public void open(final List<Genre> links, final List<Genre> rechts) {
-        JPanel panel = new JPanel();
+        final JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
 
         // Links
         this.listLinks = new JList<>(new DefaultListListModel<>(links));
         this.listLinks.setCellRenderer(new GenreListCellRenderer());
+
         JScrollPane scrollPane = new JScrollPane(this.listLinks);
         scrollPane.setBorder(new TitledBorder("Verfügbar"));
         panel.add(scrollPane, GbcBuilder.of(0, 0).gridHeight(10).gridWidth(2).fillBoth());

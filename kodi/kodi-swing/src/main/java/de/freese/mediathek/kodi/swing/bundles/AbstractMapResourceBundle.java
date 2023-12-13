@@ -20,7 +20,7 @@ public abstract class AbstractMapResourceBundle extends ResourceBundle {
             loadLookup();
         }
 
-        Set<String> keys = new HashSet<>(lookup.keySet());
+        final Set<String> keys = new HashSet<>(lookup.keySet());
 
         if (this.parent != null) {
             this.parent.getKeys().asIterator().forEachRemaining(keys::add);

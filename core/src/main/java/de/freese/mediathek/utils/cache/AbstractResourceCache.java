@@ -21,11 +21,11 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractResourceCache implements ResourceCache {
     protected static MessageDigest createMessageDigest(final Logger logger) {
-        // String algorithm ="SHA"; // 40 Zeichen
-        // String algorithm ="SHA-1"; // 40 Zeichen
-        // String algorithm ="SHA-256"; // 64 Zeichen
-        // String algorithm ="SHA-384"; // 96 Zeichen
-        String algorithm = "SHA-512"; // 128 Zeichen
+        // final String algorithm ="SHA"; // 40 Zeichen
+        // final String algorithm ="SHA-1"; // 40 Zeichen
+        // final String algorithm ="SHA-256"; // 64 Zeichen
+        // final String algorithm ="SHA-384"; // 96 Zeichen
+        final String algorithm = "SHA-512"; // 128 Zeichen
 
         try {
             return MessageDigest.getInstance(algorithm);
@@ -43,9 +43,7 @@ public abstract class AbstractResourceCache implements ResourceCache {
     }
 
     private final HexFormat hexFormat;
-
     private final Logger logger = LoggerFactory.getLogger(getClass());
-
     private final MessageDigest messageDigest;
 
     protected AbstractResourceCache() {
@@ -56,23 +54,23 @@ public abstract class AbstractResourceCache implements ResourceCache {
     }
 
     protected String generateKey(final URI uri) {
-        String uriString = uri.toString();
-        byte[] uriBytes = uriString.getBytes(StandardCharsets.UTF_8);
-        byte[] digest = getMessageDigest().digest(uriBytes);
+        final String uriString = uri.toString();
+        final byte[] uriBytes = uriString.getBytes(StandardCharsets.UTF_8);
+        final byte[] digest = getMessageDigest().digest(uriBytes);
 
         return getHexFormat().formatHex(digest);
     }
 
     protected long getContentLength(final URI uri) throws IOException {
-        String protocol = uri.getScheme();
+        final String protocol = uri.getScheme();
 
         if ("file".equals(protocol)) {
-            Path path = Path.of(uri);
+            final Path path = Path.of(uri);
 
             return Files.size(path);
         }
         else if ("http".equals(protocol) || "https".equals(protocol)) {
-            URLConnection connection = uri.toURL().openConnection();
+            final URLConnection connection = uri.toURL().openConnection();
 
             if (connection instanceof HttpURLConnection con) {
                 con.setRequestMethod("HEAD");
@@ -97,21 +95,21 @@ public abstract class AbstractResourceCache implements ResourceCache {
     }
 
     protected InputStream toInputStream(final URI uri) throws Exception {
-        URLConnection connection = uri.toURL().openConnection();
+        final URLConnection connection = uri.toURL().openConnection();
 
         try {
             if (connection instanceof HttpURLConnection httpURLConnection) {
                 // To avoid 'HTTP 301 Moved Permanently' -> but does not work !
                 // httpURLConnection.setInstanceFollowRedirects(true);
 
-                int status = httpURLConnection.getResponseCode();
+                final int status = httpURLConnection.getResponseCode();
 
                 if ((status == HttpURLConnection.HTTP_MOVED_TEMP) || (status == HttpURLConnection.HTTP_MOVED_PERM) || (status == HttpURLConnection.HTTP_SEE_OTHER)) {
                     // get redirect url from "location" header field
-                    String newUrl = httpURLConnection.getHeaderField("Location");
+                    final String newUrl = httpURLConnection.getHeaderField("Location");
 
                     // get the cookie if we need, for login
-                    String cookies = httpURLConnection.getHeaderField("Set-Cookie");
+                    final String cookies = httpURLConnection.getHeaderField("Set-Cookie");
 
                     httpURLConnection.disconnect();
 

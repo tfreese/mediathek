@@ -8,7 +8,6 @@ import java.util.Objects;
  */
 public abstract class AbstractModel implements Model {
     private String name;
-
     private int pk = -1;
 
     @Override
@@ -21,8 +20,8 @@ public abstract class AbstractModel implements Model {
             return 0;
         }
 
-        String value1 = Objects.toString(getName()).strip();
-        String value2 = Objects.toString(o.getName()).strip();
+        final String value1 = Objects.toString(getName()).strip();
+        final String value2 = Objects.toString(o.getName()).strip();
 
         return value1.compareTo(value2);
     }
@@ -67,7 +66,7 @@ public abstract class AbstractModel implements Model {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
         builder.append(getClass().getSimpleName()).append(" [");
         builder.append("pk=").append(this.pk);
         builder.append(", name=").append(this.name);

@@ -42,10 +42,10 @@ public abstract class AbstractTvShowMovieController<T extends Model> extends Abs
 
     @Override
     public void initialize(final URL url, final ResourceBundle rb) {
-        ObservableList<T> dataList = getPane().getTableItems();
-        TableViewSelectionModel<T> selectionModel = getPane().getTableSelectionModel();
+        final ObservableList<T> dataList = getPane().getTableItems();
+        final TableViewSelectionModel<T> selectionModel = getPane().getTableSelectionModel();
 
-        ReadOnlyObjectProperty<T> selectedItemProperty = selectionModel.selectedItemProperty();
+        final ReadOnlyObjectProperty<T> selectedItemProperty = selectionModel.selectedItemProperty();
         selectedItemProperty.addListener(this);
 
         // getPane().getGenresProperty().bind(Bindings.when(selectedItemProperty.isNull()).then("").otherwise(Bindings.selectString(selectedItemProperty,
@@ -77,7 +77,7 @@ public abstract class AbstractTvShowMovieController<T extends Model> extends Abs
                         url = url.substring(0, url.indexOf('"'));
                     }
 
-                    URI uri = URI.create(url);
+                    final URI uri = URI.create(url);
 
                     try (InputStream inputStream = getResourceCache().getResource(uri)) {
                         return new Image(inputStream, 1024, 768, true, true);
@@ -88,7 +88,7 @@ public abstract class AbstractTvShowMovieController<T extends Model> extends Abs
             }
         };
         task.setOnSucceeded(event -> {
-            Image image = task.getValue();
+            final Image image = task.getValue();
             getPane().getImageProperty().set(image);
 
         });
@@ -106,7 +106,7 @@ public abstract class AbstractTvShowMovieController<T extends Model> extends Abs
     protected abstract void updateGenres(T value, int[] genreIDs);
 
     protected void updateGenres(final TableViewSelectionModel<T> selectionModel) {
-        T model = selectionModel.getSelectedItem();
+        final T model = selectionModel.getSelectedItem();
 
         final PickList<Model> pickList = new PickList<>();
         pickList.getListViewLeft().getItems().addAll(getMediaService().getGenres());
@@ -116,7 +116,7 @@ public abstract class AbstractTvShowMovieController<T extends Model> extends Abs
         pickList.getListViewLeft().setCellFactory(new ModelListCellFactory());
         pickList.getListViewRight().setCellFactory(new ModelListCellFactory());
 
-        ChoiceDialog<List<Model>> dialog = new ChoiceDialog<>();
+        final ChoiceDialog<List<Model>> dialog = new ChoiceDialog<>();
         dialog.setTitle("Genre Editor");
         dialog.setHeaderText(model.getName());
         dialog.setGraphic(null);
@@ -129,11 +129,11 @@ public abstract class AbstractTvShowMovieController<T extends Model> extends Abs
             return null;
         });
 
-        Optional<List<Model>> result = dialog.showAndWait();
+        final Optional<List<Model>> result = dialog.showAndWait();
 
         if (result.isPresent()) {
-            List<Model> genres = result.get();
-            int[] genreIDs = new int[genres.size()];
+            final List<Model> genres = result.get();
+            final int[] genreIDs = new int[genres.size()];
 
             for (int i = 0; i < genreIDs.length; i++) {
                 genreIDs[i] = genres.get(i).getPk();

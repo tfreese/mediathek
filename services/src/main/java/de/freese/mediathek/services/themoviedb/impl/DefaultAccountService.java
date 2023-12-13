@@ -17,7 +17,7 @@ public class DefaultAccountService extends AbstractMovieDbService implements Acc
 
     @Override
     public Configuration getConfiguration() {
-        StringBuilder url = url().append("configuration?api_key={api_key}");
+        final StringBuilder url = url().append("configuration?api_key={api_key}");
 
         return getRestTemplate().getForObject(url.toString(), Configuration.class, getApiKey());
     }

@@ -40,8 +40,8 @@ public class GenreController extends AbstractController<Genre> {
 
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
-        ObservableList<Genre> dataList = getPane().getTableItems();
-        TableViewSelectionModel<Genre> selectionModel = getPane().getTableSelectionModel();
+        final ObservableList<Genre> dataList = getPane().getTableItems();
+        final TableViewSelectionModel<Genre> selectionModel = getPane().getTableSelectionModel();
 
         final Button buttonReload = this.scene.getButtonReload();
         buttonReload.setOnAction(event -> handleReload(dataList, selectionModel));
@@ -78,7 +78,7 @@ public class GenreController extends AbstractController<Genre> {
         task.setOnFailed(event -> {
             KodiJavaFxClient.LOGGER.info("failed");
 
-            Alert alert = new Alert(AlertType.ERROR, task.getException().getMessage());
+            final Alert alert = new Alert(AlertType.ERROR, task.getException().getMessage());
             alert.showAndWait();
         });
 

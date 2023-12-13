@@ -39,7 +39,7 @@ public abstract class AbstractMovieDbService extends AbstractService {
      * Liefert <a href="https://api.themoviedb.org/3/">themoviedb</a>.
      */
     protected StringBuilder url() {
-        StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder();
         sb.append("https://api.themoviedb.org/3/");
 
         return sb;

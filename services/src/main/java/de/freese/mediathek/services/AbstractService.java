@@ -21,11 +21,9 @@ import de.freese.mediathek.utils.cache.ResourceCache;
  */
 public abstract class AbstractService implements InitializingBean {
     private final String apiKey;
-
     private final Logger logger = LoggerFactory.getLogger(getClass());
-
+    
     private ResourceCache cache;
-
     private Locale locale = Locale.GERMANY;
 
     protected AbstractService(final String apiKey) {

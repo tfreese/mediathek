@@ -19,7 +19,7 @@ public class MovieTableModel extends AbstractListTableModel<Movie> {
 
     @Override
     public Object getValueAt(final int rowIndex, final int columnIndex) {
-        Movie movie = getObjectAt(rowIndex);
+        final Movie movie = getObjectAt(rowIndex);
 
         return switch (columnIndex) {
             case 0 -> movie.getPk();

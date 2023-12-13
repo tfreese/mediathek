@@ -53,12 +53,12 @@ public abstract class AbstractAppConfig implements EnvironmentAware {
     @ConditionalOnMissingBean({Executor.class, ExecutorService.class})
     @Primary
     public ThreadPoolExecutorFactoryBean executorService() {
-        int coreSize = Math.max(8, Runtime.getRuntime().availableProcessors());
-        int maxSize = coreSize * 2;
-        int queueSize = maxSize * 2;
-        int keepAliveSeconds = 60;
+        final int coreSize = Math.max(8, Runtime.getRuntime().availableProcessors());
+        final int maxSize = coreSize * 2;
+        final int queueSize = maxSize * 2;
+        final int keepAliveSeconds = 60;
 
-        ThreadPoolExecutorFactoryBean bean = new ThreadPoolExecutorFactoryBean();
+        final ThreadPoolExecutorFactoryBean bean = new ThreadPoolExecutorFactoryBean();
         bean.setCorePoolSize(coreSize);
         bean.setMaxPoolSize(maxSize);
         bean.setQueueCapacity(queueSize);
@@ -74,7 +74,7 @@ public abstract class AbstractAppConfig implements EnvironmentAware {
 
     @Bean
     public MediaDao mediaDAO(@Qualifier("dataSourceVideo") final DataSource dataSourceVideo, @Qualifier("dataSourceAudio") final DataSource dataSourceAudio) {
-        MediaDaoImpl dao = new MediaDaoImpl();
+        final MediaDaoImpl dao = new MediaDaoImpl();
         dao.setDataSource(dataSourceVideo);
 
         return dao;

@@ -6,11 +6,8 @@ package de.freese.mediathek.kodi.model;
  */
 public class Show extends AbstractModel {
     private String banner;
-
     private String fanArt;
-
     private String genres;
-
     private String tvDbId;
 
     public String getBanner() {

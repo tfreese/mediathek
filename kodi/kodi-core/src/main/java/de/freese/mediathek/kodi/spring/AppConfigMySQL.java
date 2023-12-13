@@ -20,7 +20,7 @@ public class AppConfigMySQL extends AbstractAppConfig {
     @Bean(destroyMethod = "close")
     public DataSource dataSourceAudio() {
         // @Value("${mysql.audio.db.url}") final String url
-        HikariConfig config = createHikariConfig();
+        final HikariConfig config = createHikariConfig();
         config.setJdbcUrl(getEnvironment().getProperty("mysql.audio.db.url"));
         config.setPoolName("dataSourceMusik");
 
@@ -31,7 +31,7 @@ public class AppConfigMySQL extends AbstractAppConfig {
     @Bean(destroyMethod = "close")
     @Primary
     public DataSource dataSourceVideo() {
-        HikariConfig config = createHikariConfig();
+        final HikariConfig config = createHikariConfig();
         config.setJdbcUrl(getEnvironment().getProperty("mysql.video.db.url"));
         config.setPoolName("dataSourceVideo");
 
@@ -39,7 +39,7 @@ public class AppConfigMySQL extends AbstractAppConfig {
     }
 
     private HikariConfig createHikariConfig() {
-        HikariConfig config = new HikariConfig();
+        final HikariConfig config = new HikariConfig();
         config.setDriverClassName("org.mariadb.jdbc.Driver");
 
         config.setUsername(getEnvironment().getProperty("mysql.db.user"));

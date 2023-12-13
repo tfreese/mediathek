@@ -40,7 +40,7 @@ public class Genre implements Comparable<Genre> {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
         builder.append("Genre [name=");
         builder.append(this.name);
         builder.append(", id=");

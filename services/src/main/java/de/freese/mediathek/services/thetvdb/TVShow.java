@@ -19,46 +19,30 @@ import de.freese.mediathek.services.themoviedb.model.Image;
 public class TVShow implements Comparable<TVShow> {
     @XmlElement(name = "Actors", required = false)
     private String actors;
-
     private List<Actor> actorsList;
-
     @XmlElement()
     private String banner;
-
     @XmlElement(name = "Overview")
     private String beschreibung;
-
     private List<Episode> episodes;
-
     @XmlElement(name = "fanart", required = false)
     private String fanArt;
-
     private List<Image> fanartList;
-
     @XmlElement(name = "Genre", required = false)
     private String genres;
-
     @XmlElement(name = "id")
     private String id;
-
     @XmlElement(name = "IMDB_ID")
     private String imdbID;
-
     @XmlElements({@XmlElement(name = "language"), @XmlElement(name = "Language")})
     private String language;
-
     @XmlElement(required = false)
     private String poster;
-
     private List<Image> posterList;
-
     @XmlElement(name = "FirstAired")
     private String releaseDate;
-
     private List<Image> seasonList;
-
     private List<Image> seriesList;
-
     @XmlElement(name = "SeriesName")
     private String title;
 
@@ -147,7 +131,7 @@ public class TVShow implements Comparable<TVShow> {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
         builder.append("Serie [");
         builder.append("id=").append(this.id);
         builder.append(", releaseDate=").append(this.releaseDate);

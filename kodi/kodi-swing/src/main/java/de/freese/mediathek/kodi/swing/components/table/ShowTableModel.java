@@ -19,7 +19,7 @@ public class ShowTableModel extends AbstractListTableModel<Show> {
 
     @Override
     public Object getValueAt(final int rowIndex, final int columnIndex) {
-        Show show = getObjectAt(rowIndex);
+        final Show show = getObjectAt(rowIndex);
 
         return switch (columnIndex) {
             case 0 -> show.getPk();

@@ -19,7 +19,7 @@ public class GenreTableModel extends AbstractListTableModel<Genre> {
 
     @Override
     public Object getValueAt(final int rowIndex, final int columnIndex) {
-        Genre genre = getObjectAt(rowIndex);
+        final Genre genre = getObjectAt(rowIndex);
 
         return switch (columnIndex) {
             case 0 -> String.format("%s (%d)", genre.getName(), genre.getPk());

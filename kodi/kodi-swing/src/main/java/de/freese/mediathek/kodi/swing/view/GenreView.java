@@ -33,9 +33,7 @@ import de.freese.mediathek.kodi.swing.controller.GenreController;
  */
 public class GenreView extends AbstractView {
     private JList<Movie> listMovies;
-
     private JList<Show> listShows;
-
     private JTable table;
 
     public void clear() {
@@ -55,14 +53,14 @@ public class GenreView extends AbstractView {
     public Component init(final Controller controller, final ResourceBundle resourceBundle) {
         super.init(controller, resourceBundle);
 
-        JPanel parentPanel = new JPanel();
+        final JPanel parentPanel = new JPanel();
         parentPanel.setLayout(new BorderLayout());
 
-        JButton reloadButton = new JButton(getTranslation("reload"));
+        final JButton reloadButton = new JButton(getTranslation("reload"));
         reloadButton.addActionListener(event -> getController().reload());
         parentPanel.add(reloadButton, BorderLayout.NORTH);
 
-        JSplitPane splitPane = new JSplitPane();
+        final JSplitPane splitPane = new JSplitPane();
         splitPane.setOneTouchExpandable(true);
         splitPane.setContinuousLayout(true);
         splitPane.setDividerLocation(500);
@@ -78,15 +76,15 @@ public class GenreView extends AbstractView {
 
             getController().clear();
 
-            int viewRow = this.table.getSelectedRow();
+            final int viewRow = this.table.getSelectedRow();
 
             if (viewRow == -1) {
                 return;
             }
 
-            int modelRow = this.table.convertRowIndexToModel(viewRow);
+            final int modelRow = this.table.convertRowIndexToModel(viewRow);
 
-            Genre genre = getTableModel().getObjectAt(modelRow);
+            final Genre genre = getTableModel().getObjectAt(modelRow);
 
             getController().setSelected(genre);
 
@@ -96,7 +94,7 @@ public class GenreView extends AbstractView {
         JScrollPane scrollPane = new JScrollPane(this.table);
         splitPane.setLeftComponent(scrollPane);
 
-        JPanel panel = new JPanel();
+        final JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         splitPane.setRightComponent(panel);
 

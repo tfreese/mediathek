@@ -32,7 +32,7 @@ public abstract class AbstractShowAndMovieService<T> extends AbstractService {
     public abstract List<T> load();
 
     public ImageIcon loadImageIcon(final T entity) throws Exception {
-        String url = getImageUrl(entity);
+        final String url = getImageUrl(entity);
 
         try (InputStream inputStream = getResourceCache().getResource(URI.create(url))) {
             BufferedImage image = ImageIO.read(inputStream);
