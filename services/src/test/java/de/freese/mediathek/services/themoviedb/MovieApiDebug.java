@@ -107,7 +107,8 @@ public class MovieApiDebug {
     // @Test
     public void testSearch() throws Exception {
         final RestTemplate template = new RestTemplate();
-        final String result = template.getForObject("https://api.themoviedb.org/3/search/movie?api_key={api_key}&language={lang}&query={query}", String.class, getApiKey(), getLocale().getLanguage(), TEST_MOVIE);
+        final String result = template.getForObject("https://api.themoviedb.org/3/search/movie?api_key={api_key}&language={lang}&query={query}", String.class, getApiKey(),
+                getLocale().getLanguage(), TEST_MOVIE);
         // String result =
         // template.getForObject("https://api.themoviedb.org/3/search/tv?api_key={api_key}&language={lang}&query={query}", String.class, getApiKey(),
         // getLocale().getLanguage(), "stargate"); // 4629

@@ -29,7 +29,7 @@
             <artifactId>slf4j-simple</artifactId>
             <scope>runtime</scope>
         </dependency>
-        
+
         <!-- provided scope -->
         <!-- test scope -->
     </dependencies>

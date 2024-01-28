@@ -15,6 +15,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.image.Image;
+
 import org.springframework.context.ApplicationContext;
 
 import de.freese.mediathek.kodi.javafx.KodiJavaFxClient;

@@ -40,14 +40,14 @@ import de.freese.mediathek.kodi.swing.view.ShowView;
 public class KodiSwingClient {
     private static final Logger LOGGER = LoggerFactory.getLogger("KODI-Client");
 
+    private static Frame frame;
+
     private static final class MainFrameListener extends WindowAdapter {
         @Override
         public void windowClosing(final WindowEvent event) {
             System.exit(0);
         }
     }
-
-    private static Frame frame;
 
     public static Frame getFrame() {
         return frame;

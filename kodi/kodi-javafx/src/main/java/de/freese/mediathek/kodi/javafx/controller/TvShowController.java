@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
+
 import org.springframework.context.ApplicationContext;
 
 import de.freese.mediathek.kodi.model.Genre;

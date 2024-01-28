@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableView.TableViewSelectionModel;
+
 import org.springframework.context.ApplicationContext;
 
 import de.freese.mediathek.kodi.api.MediaService;

@@ -1,26 +1,26 @@
 package de.freese.mediathek.kodi.javafx.controller;
-//package de.freese.mediadb.kodi.javafx.controller;
+// package de.freese.mediadb.kodi.javafx.controller;
 //
-//import java.net.URL;
-//import java.util.List;
-//import java.util.ResourceBundle;
-//import org.apache.commons.lang3.StringUtils;
-//import org.springframework.context.ApplicationContext;
-//import de.freese.mediadb.kodi.model.Genre;
-//import de.freese.mediadb.kodi.model.Movie;
-//import javafx.beans.binding.Bindings;
-//import javafx.event.ActionEvent;
-//import javafx.fxml.FXML;
-//import javafx.scene.control.Button;
-//import javafx.scene.control.Label;
-//import javafx.scene.control.TableView;
-//import javafx.scene.image.ImageView;
-//import javafx.scene.text.Text;
+// import java.net.URL;
+// import java.util.List;
+// import java.util.ResourceBundle;
+// import org.apache.commons.lang3.StringUtils;
+// import org.springframework.context.ApplicationContext;
+// import de.freese.mediadb.kodi.model.Genre;
+// import de.freese.mediadb.kodi.model.Movie;
+// import javafx.beans.binding.Bindings;
+// import javafx.event.ActionEvent;
+// import javafx.fxml.FXML;
+// import javafx.scene.control.Button;
+// import javafx.scene.control.Label;
+// import javafx.scene.control.TableView;
+// import javafx.scene.image.ImageView;
+// import javafx.scene.text.Text;
 //
 ///**
 // * @author Thomas Freese
 // */
-//public class MovieControllerFXML extends AbstractMediaController<Movie>
+// public class MovieControllerFXML extends AbstractMediaController<Movie>
 //{
 //    @FXML
 //    private Button buttonGenres = null;

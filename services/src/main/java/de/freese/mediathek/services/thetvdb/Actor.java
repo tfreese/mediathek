@@ -56,7 +56,7 @@ public class Actor implements Comparable<Actor> {
         builder.append(", sortOrder=").append(this.sortOrder);
         builder.append(", image=").append(this.image);
         builder.append("]");
-        
+
         return builder.toString();
     }
 }

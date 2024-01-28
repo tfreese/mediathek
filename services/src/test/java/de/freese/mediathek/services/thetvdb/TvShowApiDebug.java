@@ -59,7 +59,8 @@ public class TvShowApiDebug {
     public void testDetailsAll() throws Exception {
         final RestTemplate template = new RestTemplate();
 
-        final String result = template.getForObject("http://thetvdb.com/api/{apiKey}/series/{id}/all/{lang}.xml", String.class, getApiKey(), TEST_SHOW_ID, getLocale().getLanguage());
+        final String result = template.getForObject("http://thetvdb.com/api/{apiKey}/series/{id}/all/{lang}.xml", String.class, getApiKey(), TEST_SHOW_ID,
+                getLocale().getLanguage());
 
         prettyPrint(result);
     }
