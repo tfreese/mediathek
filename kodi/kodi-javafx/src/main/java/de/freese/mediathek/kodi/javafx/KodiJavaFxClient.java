@@ -63,7 +63,7 @@ public class KodiJavaFxClient extends Application {
         String profile = null;
         // Class<?> clazz = null;
 
-        if ((parameters == null) || parameters.isEmpty()) {
+        if (parameters == null || parameters.isEmpty()) {
             // clazz = AppConfigMySQL.class;
             profile = "sqlite";
         }
@@ -122,7 +122,7 @@ public class KodiJavaFxClient extends Application {
         final int javaVersion = getJavaVersion();
 
         // 1_800_072 = 1.8.72
-        if (Platform.isSupported(ConditionalFeature.SCENE3D) && (javaVersion >= 8)) {
+        if (Platform.isSupported(ConditionalFeature.SCENE3D) && javaVersion >= 8) {
             scene = new Scene(tabPane, 1920, 1080, true, SceneAntialiasing.BALANCED);
         }
         else {

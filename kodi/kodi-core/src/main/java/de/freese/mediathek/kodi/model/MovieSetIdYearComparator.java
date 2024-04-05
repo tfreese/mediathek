@@ -20,7 +20,7 @@ public class MovieSetIdYearComparator implements Comparator<Movie> {
 
         int comp = 0;
 
-        if ((o1.getSetID() > 0) && (o1.getSetID() == o2.getSetID())) {
+        if (o1.getSetID() > 0 && o1.getSetID() == o2.getSetID()) {
             comp = Integer.compare(o1.getYear(), o2.getYear());
         }
 

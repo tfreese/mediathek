@@ -38,7 +38,7 @@ public class TvShowController extends AbstractTvShowMovieController<Show> {
     protected String getImageUrl(final Show value) {
         final String url = MediaDbUtils.subStringBetween("preview=\"", "\">", value.getBanner());
 
-        if ((url == null) || url.isBlank()) {
+        if (url == null || url.isBlank()) {
             return null;
         }
 

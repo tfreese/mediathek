@@ -39,7 +39,7 @@ public class MovieController extends AbstractTvShowMovieController<Movie> {
         String url = MediaDbUtils.subStringBetween("preview=\"", "\">", value.getPosters());
         url = url.replace("t/p/w500", "t/p/w342"); // w92, w154, w185, w342, w500
 
-        if ((url == null) || url.isBlank()) {
+        if (url.isBlank()) {
             return null;
         }
 

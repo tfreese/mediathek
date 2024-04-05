@@ -59,7 +59,7 @@ public class KodiTvShowReporter extends AbstractMediaReporter {
                     try (ResultSet resultSet = stmtSelect.executeQuery()) {
                         if (resultSet.next()) {
                             // Eintrag gefunden -> Update
-                            if ((playCount != resultSet.getInt("PLAYCOUNT")) || !lastPlayed.equals(resultSet.getString("LASTPLAYED"))) {
+                            if (playCount != resultSet.getInt("PLAYCOUNT") || !lastPlayed.equals(resultSet.getString("LASTPLAYED"))) {
                                 final int idFile = resultSet.getInt("IDFILE");
 
                                 getLogger().info(

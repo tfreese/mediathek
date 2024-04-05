@@ -79,7 +79,7 @@ public class GenreDialog extends JDialog {
         public void actionPerformed(final ActionEvent event) {
             final Genre genre = GenreDialog.this.listRechts.getSelectedValue();
 
-            if ((genre == null)) {
+            if (genre == null) {
                 return;
             }
 
