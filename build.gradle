@@ -56,13 +56,14 @@ project("core") {
     application {
         mainClass = project.main
     }
-    jar {
-        manifest {
-            attributes(
-                    "Main-Class": project.main
-            )
-        }
-    }
+    // Done by Convention-Plugin.
+    // jar {
+    //     manifest {
+    //         attributes(
+    //                 "Main-Class": project.main
+    //         )
+    //     }
+    // }
 }
 
 project("services") {
