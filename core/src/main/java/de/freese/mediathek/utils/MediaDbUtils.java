@@ -21,14 +21,12 @@ import java.util.function.UnaryOperator;
  */
 public final class MediaDbUtils {
     public static List<String[]> parseCsv(final Path path) throws IOException {
-        // @formatter:off
         return Files.readAllLines(path).stream()
                 .filter(Objects::nonNull)
                 .filter(line -> !line.strip().isBlank())
                 .map(MediaDbUtils::parseCsvRow)
                 .toList()
                 ;
-        // @formatter:on
     }
 
     public static void rename(final Path path) throws IOException {
