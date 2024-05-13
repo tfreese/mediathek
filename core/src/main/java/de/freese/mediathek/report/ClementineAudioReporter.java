@@ -23,14 +23,21 @@ public class ClementineAudioReporter extends AbstractMediaReporter {
         // ZoneId zoneId = ZoneId.of("Europe/Berlin");
         // ZoneOffset zoneOffset = ZoneOffset.ofHours(+1);
 
-        final StringBuilder sql = new StringBuilder();
-        sql.append("update songs set playcount = ?"); // , lastplayed = ?
-        sql.append(" where artist = ? and title = ?");
+        // , lastplayed = ?
+        final String sql = """
+                update
+                    songs
+                set
+                    playcount = ?
+                where
+                    artist = ?
+                    and title = ?
+                """;
 
         final List<Map<String, String>> heardMusic = readHeardMusik(path);
 
         try (Connection con = dataSource.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql.toString())) {
+             PreparedStatement pstmt = con.prepareStatement(sql)) {
             con.setAutoCommit(false);
 
             try {
@@ -69,15 +76,21 @@ public class ClementineAudioReporter extends AbstractMediaReporter {
 
     @Override
     public void writeReport(final DataSource dataSource, final Path path) throws Exception {
-        final StringBuilder sql = new StringBuilder();
-        sql.append("select ARTIST, TITLE as SONG, PLAYCOUNT");
-        sql.append(" from songs");
-        sql.append(" where PLAYCOUNT > 0");
-        sql.append(" order by ARTIST asc, SONG asc");
+        final String sql = """
+                select
+                    ARTIST,
+                    TITLE as SONG,
+                    PLAYCOUNT
+                from
+                    songs
+                where
+                    PLAYCOUNT > 0
+                order by ARTIST asc, SONG asc
+                """;
 
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql.toString())) {
+             ResultSet resultSet = statement.executeQuery(sql)) {
             writeResultSet(resultSet, path);
         }
 

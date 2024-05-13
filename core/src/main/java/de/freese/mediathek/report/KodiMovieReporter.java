@@ -17,31 +17,42 @@ import javax.sql.DataSource;
 public class KodiMovieReporter extends AbstractMediaReporter {
     @Override
     public void updateDbFromReport(final DataSource dataSource, final Path path) throws Exception {
-        final StringBuilder sqlSelect = new StringBuilder();
-        sqlSelect.append("select files.playcount, files.lastPlayed, files.idfile");
-        sqlSelect.append(" from files");
-        sqlSelect.append(" INNER JOIN movie ON movie.idfile = files.idfile");
-        sqlSelect.append(" where movie.c00 = ?");
+        final String sqlSelect = """
+                select
+                    files.playcount,
+                    files.lastPlayed,
+                    files.idfile
+                from
+                    files
+                INNER JOIN movie ON movie.idfile = files.idfile
+                where
+                    movie.c00 = ?
+                """;
 
-        final StringBuilder sqlUpdate = new StringBuilder();
-        // mysql
-        // sqlUpdate.append("UPDATE files");
-        // sqlUpdate.append(" INNER JOIN movie ON movie.idfile = files.idfile");
-        // sqlUpdate.append(" set files.playcount = ?, files.lastplayed = ?");
-        // sqlUpdate.append(" where movie.c00 = ?");
-
-        // sqlite unterstützt keine joins in updates.
-        sqlUpdate.append("UPDATE files");
-        sqlUpdate.append(" set playcount = ?, lastplayed = ?");
-        sqlUpdate.append(" where idfile = ?");
+        // sqlite does not support joins in updates.
+        final String sqlUpdate = """
+                UPDATE
+                    files
+                set
+                    playcount = ?,
+                    lastplayed = ?
+                where
+                    idfile = ?
+                """;
+        
+        // mysql:
+        // UPDATE files
+        // INNER JOIN movie ON movie.idfile = files.idfile"
+        // set files.playcount = ?, files.lastplayed = ?
+        // where movie.c00 = ?
 
         final List<Map<String, String>> seenMovies = readSeenMovies(path);
 
         try (Connection connection = dataSource.getConnection()) {
             connection.setAutoCommit(false);
 
-            try (PreparedStatement stmtUpdate = connection.prepareStatement(sqlUpdate.toString());
-                 PreparedStatement stmtSelect = connection.prepareStatement(sqlSelect.toString())) {
+            try (PreparedStatement stmtUpdate = connection.prepareStatement(sqlUpdate);
+                 PreparedStatement stmtSelect = connection.prepareStatement(sqlSelect)) {
                 for (Map<String, String> map : seenMovies) {
                     final String movie = map.get("MOVIE");
                     final int playCount = Integer.parseInt(map.get("PLAYCOUNT"));
@@ -79,15 +90,21 @@ public class KodiMovieReporter extends AbstractMediaReporter {
 
     @Override
     public void writeReport(final DataSource dataSource, final Path path) throws Exception {
-        final StringBuilder sql = new StringBuilder();
-        sql.append("SELECT c00 AS movie, playcount, lastplayed");
-        sql.append(" FROM movie_view");
-        sql.append(" WHERE playcount > 0");
-        sql.append(" ORDER BY movie asc");
+        final String sql = """
+                SELECT
+                    c00 AS movie,
+                    playcount,
+                    lastplayed
+                FROM
+                    movie_view
+                WHERE
+                    playcount > 0
+                ORDER BY movie asc
+                """;
 
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql.toString())) {
+             ResultSet resultSet = statement.executeQuery(sql)) {
             writeResultSet(resultSet, path);
         }
     }

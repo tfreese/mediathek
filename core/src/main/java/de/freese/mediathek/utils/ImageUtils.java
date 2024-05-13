@@ -64,10 +64,8 @@ public final class ImageUtils {
     }
 
     public static BufferedImage toBufferedImage(final Icon icon) {
-        if (icon instanceof ImageIcon imageIcon) {
-            if (imageIcon.getImage() instanceof BufferedImage bi) {
-                return bi;
-            }
+        if (icon instanceof ImageIcon imageIcon && imageIcon.getImage() instanceof BufferedImage bi) {
+            return bi;
         }
 
         final BufferedImage returnImage = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);

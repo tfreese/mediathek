@@ -18,15 +18,19 @@ public class PlexAudioReporter extends AbstractMediaReporter {
         // ZoneId zoneId = ZoneId.of("Europe/Berlin");
         // ZoneOffset zoneOffset = ZoneOffset.ofHours(+1);
 
-        final StringBuilder sql = new StringBuilder();
-        sql.append("update metadata_item_settings");
-        sql.append(" set view_count = ?");
-        sql.append(" where guid = (select guid from metadata_items where original_title = ? and title = ?)");
+        final String sql = """
+                update
+                    metadata_item_settings
+                set
+                    view_count = ?
+                where
+                    guid = (select guid from metadata_items where original_title = ? and title = ?)
+                """;
 
         final List<Map<String, String>> heardMusic = readHeardMusik(path);
 
         try (Connection con = dataSource.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql.toString())) {
+             PreparedStatement pstmt = con.prepareStatement(sql)) {
             con.setAutoCommit(false);
 
             try {

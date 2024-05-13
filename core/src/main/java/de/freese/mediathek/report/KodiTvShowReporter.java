@@ -17,33 +17,45 @@ import javax.sql.DataSource;
 public class KodiTvShowReporter extends AbstractMediaReporter {
     @Override
     public void updateDbFromReport(final DataSource dataSource, final Path path) throws Exception {
-        final StringBuilder sqlSelect = new StringBuilder();
-        sqlSelect.append("select files.playcount, files.lastPlayed, files.idfile");
-        sqlSelect.append(" from files");
-        sqlSelect.append(" INNER JOIN episode ON episode.idfile = files.idfile");
-        sqlSelect.append(" INNER JOIN tvshow ON tvshow.idshow = episode.idshow");
-        sqlSelect.append(" where tvshow.c00 = ? and episode.c12 = ? and episode.c13 = ?");
+        final String sqlSelect = """
+                select
+                    files.playcount,
+                    files.lastPlayed,
+                    files.idfile
+                from
+                    files
+                INNER JOIN episode ON episode.idfile = files.idfile
+                INNER JOIN tvshow ON tvshow.idshow = episode.idshow
+                where
+                    tvshow.c00 = ?
+                    and episode.c12 = ?
+                    and episode.c13 = ?
+                """;
 
-        final StringBuilder sqlUpdate = new StringBuilder();
-        // mysql
-        // sqlUpdate.append("UPDATE files");
-        // sqlUpdate.append(" INNER JOIN episode ON episode.idfile = files.idfile");
-        // sqlUpdate.append(" INNER JOIN tvshow ON tvshow.idshow = episode.idshow");
-        // sqlUpdate.append(" set files.playcount = ?, files.lastplayed = ?");
-        // sqlUpdate.append(" where tvshow.c00 = ? and episode.c12 = ? and episode.c13 = ?"); // show, season, episode
+        final String sqlUpdate = """
+                UPDATE
+                    files
+                set
+                    playcount = ?,
+                    lastplayed = ?
+                where
+                    idfile = ?
+                """;
 
-        // sqlite unterstützt keine joins in updates.
-        sqlUpdate.append("UPDATE files");
-        sqlUpdate.append(" set playcount = ?, lastplayed = ?");
-        sqlUpdate.append(" where idfile = ?");
+        // mysql:
+        // UPDATE files
+        // INNER JOIN episode ON episode.idfile = files.idfile
+        // INNER JOIN tvshow ON tvshow.idshow = episode.idshow
+        // set files.playcount = ?, files.lastplayed = ?
+        // where tvshow.c00 = ? and episode.c12 = ? and episode.c13 = ? // show, season, episode
 
         final List<Map<String, String>> seenTvShows = readSeenTvShows(path);
 
         try (Connection connection = dataSource.getConnection()) {
             connection.setAutoCommit(false);
 
-            try (PreparedStatement stmtUpdate = connection.prepareStatement(sqlUpdate.toString());
-                 PreparedStatement stmtSelect = connection.prepareStatement(sqlSelect.toString())) {
+            try (PreparedStatement stmtUpdate = connection.prepareStatement(sqlUpdate);
+                 PreparedStatement stmtSelect = connection.prepareStatement(sqlSelect)) {
                 for (Map<String, String> map : seenTvShows) {
                     final String tvshow = map.get("TVSHOW");
                     final String season = map.get("SEASON");
@@ -88,15 +100,24 @@ public class KodiTvShowReporter extends AbstractMediaReporter {
 
     @Override
     public void writeReport(final DataSource dataSource, final Path path) throws Exception {
-        final StringBuilder sql = new StringBuilder();
-        sql.append("SELECT strTitle AS tvshow, c12 AS season, c13 AS episode, c00 AS title, playcount, lastplayed");
-        sql.append(" FROM episode_view");
-        sql.append(" WHERE playcount > 0");
-        sql.append(" ORDER BY tvshow asc, CAST(season AS UNSIGNED) asc, CAST(episode AS UNSIGNED) asc");
+        final String sql = """
+                SELECT
+                    strTitle AS tvshow,
+                    c12 AS season,
+                    c13 AS episode,
+                    c00 AS title,
+                    playcount,
+                    lastplayed
+                FROM
+                    episode_view
+                WHERE
+                    playcount > 0
+                ORDER BY tvshow asc, CAST(season AS UNSIGNED) asc, CAST(episode AS UNSIGNED) asc
+                """;
 
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql.toString())) {
+             ResultSet resultSet = statement.executeQuery(sql)) {
             writeResultSet(resultSet, path);
         }
     }

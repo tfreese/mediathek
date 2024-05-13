@@ -11,9 +11,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -24,7 +22,6 @@ import de.freese.mediathek.utils.MediaDbUtils;
  * @author Thomas Freese
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
-@Disabled
 class TestParseCsv {
     @Test
     void testParseCsvRow() {
@@ -61,7 +58,7 @@ class TestParseCsv {
 
         assertFalse(tokens.isEmpty());
         assertEquals(7, tokens.size());
-        assertEquals("\"A\" b,c,d,,e,,f", tokens.stream().collect(Collectors.joining(",")));
+        assertEquals("\"A\" b,c,d,,e,,f", String.join(",", tokens));
     }
 
     @Test
@@ -77,6 +74,6 @@ class TestParseCsv {
         assertFalse(list.isEmpty());
         assertEquals(3, list.size());
 
-        assertEquals("[ARTIST, SONG, PLAYCOUNT]", list.get(0));
+        assertEquals("[ARTIST, SONG, PLAYCOUNT]", list.getFirst());
     }
 }

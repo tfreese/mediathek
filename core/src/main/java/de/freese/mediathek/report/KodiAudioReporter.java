@@ -22,23 +22,34 @@ import de.freese.mediathek.utils.MediaDbUtils;
 public class KodiAudioReporter extends AbstractMediaReporter {
     @Override
     public void updateDbFromReport(final DataSource dataSource, final Path path) throws Exception {
-        final StringBuilder sqlSelect = new StringBuilder();
-        sqlSelect.append("select iTimesPlayed as playcount");
-        sqlSelect.append(" from song");
-        sqlSelect.append(" where strArtistDisp = ? and strTitle = ?");
+        final String sqlSelect = """
+                select
+                    iTimesPlayed as playcount
+                from
+                    song
+                where
+                    strArtistDisp = ?
+                    and strTitle = ?
+                """;
 
-        final StringBuilder sqlUpdate = new StringBuilder();
-        sqlUpdate.append("UPDATE song");
-        sqlUpdate.append(" set iTimesPlayed = ?");
-        sqlUpdate.append(" WHERE strArtistDisp = ? AND strTitle = ?");
+        // sqlite does not support joins in updates.
+        final String sqlUpdate = """
+                UPDATE
+                    song
+                set
+                    iTimesPlayed = ?
+                WHERE
+                    strArtistDisp = ?
+                    AND strTitle = ?
+                """;
 
         final List<Map<String, String>> heardMusic = readHeardMusik(path);
 
         try (Connection connection = dataSource.getConnection()) {
             connection.setAutoCommit(false);
 
-            try (PreparedStatement stmtUpdate = connection.prepareStatement(sqlUpdate.toString());
-                 PreparedStatement stmtSelect = connection.prepareStatement(sqlSelect.toString())) {
+            try (PreparedStatement stmtUpdate = connection.prepareStatement(sqlUpdate);
+                 PreparedStatement stmtSelect = connection.prepareStatement(sqlSelect)) {
                 for (Map<String, String> map : heardMusic) {
                     final String artist = map.get("ARTIST");
                     final String song = map.get("SONG");
@@ -49,7 +60,7 @@ public class KodiAudioReporter extends AbstractMediaReporter {
 
                     try (ResultSet resultSet = stmtSelect.executeQuery()) {
                         if (resultSet.next()) {
-                            // Eintrag gefunden -> Update
+                            // Entry found -> Update
                             if (playCount != resultSet.getInt("PLAYCOUNT")) {
                                 getLogger().info("Update Song: {} - {}", artist, song);
 
@@ -84,15 +95,21 @@ public class KodiAudioReporter extends AbstractMediaReporter {
     }
 
     protected void writeMusic(final DataSource dataSource, final Path path) throws Exception {
-        final StringBuilder sql = new StringBuilder();
-        sql.append("SELECT strArtists AS artist, strTitle AS song, iTimesPlayed AS playcount");
-        sql.append(" FROM songView");
-        sql.append(" WHERE iTimesPlayed > 0");
-        sql.append(" ORDER BY artist asc, song asc");
+        final String sql = """
+                SELECT
+                    strArtists AS artist,
+                    strTitle AS song,
+                    iTimesPlayed AS playcount
+                FROM
+                    songView
+                WHERE
+                    iTimesPlayed > 0
+                ORDER BY artist asc, song asc
+                """;
 
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql.toString())) {
+             ResultSet resultSet = statement.executeQuery(sql)) {
             writeResultSet(resultSet, path);
         }
     }
@@ -103,16 +120,24 @@ public class KodiAudioReporter extends AbstractMediaReporter {
     protected void writeMusicPlaylistM3U(final DataSource dataSource, final Path path) throws Exception {
         MediaDbUtils.rename(path);
 
-        final StringBuilder sql = new StringBuilder();
-        sql.append("SELECT DISTINCT sw.strArtists AS artist, sw.strAlbum AS album, sw.strTitle AS song, sw.strFileName AS filename, sw.strPath AS path, sw.iDuration AS duration");
-        sql.append(" FROM songview sw");
-        sql.append(" inner join tommy.playlist_music_artist pl on");
-        sql.append(" (sw.strArtists = pl.artist and pl.operator = 'is') or (sw.strArtists like concat('%',pl.artist,'%') and pl.operator = 'contains')");
-        sql.append(" ORDER BY artist, album, song, duration");
+        final String sql = """
+                SELECT DISTINCT
+                    sw.strArtists AS artist,
+                    sw.strAlbum AS album,
+                    sw.strTitle AS song,
+                    sw.strFileName AS filename,
+                    sw.strPath AS path,
+                    sw.iDuration AS duration
+                FROM
+                    songview sw
+                inner join tommy.playlist_music_artist pl on
+                    (sw.strArtists = pl.artist and pl.operator = 'is') or (sw.strArtists like concat('%',pl.artist,'%') and pl.operator = 'contains')
+                ORDER BY artist, album, song, duration
+                """;
 
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql.toString());
+             ResultSet resultSet = statement.executeQuery(sql);
              PrintWriter pw = new PrintWriter(Files.newOutputStream(path), true, StandardCharsets.UTF_8)) {
             pw.println("#EXTM3U");
 
@@ -132,14 +157,18 @@ public class KodiAudioReporter extends AbstractMediaReporter {
     protected void writeMusicPlaylistXSP(final DataSource dataSource, final Path path) throws Exception {
         MediaDbUtils.rename(path);
 
-        final StringBuilder sql = new StringBuilder();
-        sql.append("SELECT artist, operator");
-        sql.append(" FROM tommy.playlist_music_artist");
-        sql.append(" ORDER BY operator, artist");
+        final String sql = """
+                SELECT
+                    artist,
+                    operator
+                FROM
+                    tommy.playlist_music_artist
+                ORDER BY operator, artist
+                """;
 
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql.toString());
+             ResultSet resultSet = statement.executeQuery(sql);
              PrintWriter pw = new PrintWriter(Files.newOutputStream(path), true, StandardCharsets.UTF_8)) {
             pw.println("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?>");
             pw.println("<smartplaylist type=\"songs\">");
