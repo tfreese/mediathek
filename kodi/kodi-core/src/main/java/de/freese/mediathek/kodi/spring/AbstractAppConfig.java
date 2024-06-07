@@ -97,7 +97,7 @@ public abstract class AbstractAppConfig implements EnvironmentAware {
 
     @Bean
     @Qualifier("txManagerAudio")
-    public PlatformTransactionManager txManagerMusik(@Qualifier("dataSourceAudio") final DataSource dataSource) {
+    public PlatformTransactionManager txManagerAudio(@Qualifier("dataSourceAudio") final DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 

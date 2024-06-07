@@ -65,6 +65,12 @@ public abstract class AbstractShowAndMovieController<T> extends AbstractControll
                     getService().updateEntityGenres(entity, newGenreIDs);
                     setSelected(entity);
                 }
+                catch (InterruptedException ex) {
+                    getLogger().error(ex.getMessage(), ex);
+
+                    // Restore interrupted state.
+                    Thread.currentThread().interrupt();
+                }
                 catch (Exception ex) {
                     getLogger().error(ex.getMessage(), ex);
                 }
@@ -105,6 +111,12 @@ public abstract class AbstractShowAndMovieController<T> extends AbstractControll
             protected void done() {
                 try {
                     getView().getImageLabel().setIcon(get());
+                }
+                catch (InterruptedException ex) {
+                    getLogger().error("No valid url: {}", ex.getMessage());
+
+                    // Restore interrupted state.
+                    Thread.currentThread().interrupt();
                 }
                 catch (Exception ex) {
                     getLogger().error("No valid url: {}", ex.getMessage());

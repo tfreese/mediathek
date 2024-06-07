@@ -55,6 +55,12 @@ public class GenreController extends AbstractController {
 
                     getView().setShowsAndMovies(results.get(0), results.get(1));
                 }
+                catch (InterruptedException ex) {
+                    getLogger().error(ex.getMessage(), ex);
+
+                    // Restore interrupted state.
+                    Thread.currentThread().interrupt();
+                }
                 catch (Exception ex) {
                     getLogger().error(ex.getMessage(), ex);
                 }
