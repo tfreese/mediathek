@@ -4,14 +4,15 @@ plugins {
     id "io.spring.dependency-management" version "$version_springDependencyManagement" apply false
     id "org.openjfx.javafxplugin" version "$version_javafxPlugin" apply false
     id "org.springframework.boot" version "$version_springBoot" apply false
+
     id "name.remal.sonarlint" version "$version_nameRemalSonarlint" apply false
     id "de.freese.gradle.sonarlint-conventions" version "$version_myConventionPlugin" apply false
 }
 
 subprojects {
     apply plugin: "base"
-    apply plugin: "de.freese.gradle.conventions"
     apply plugin: "io.spring.dependency-management"
+    apply plugin: "de.freese.gradle.conventions"
     // apply plugin: "name.remal.sonarlint"
     // apply plugin: "de.freese.gradle.sonarlint-conventions"
 
@@ -30,7 +31,9 @@ subprojects {
     }
 
     afterEvaluate { project ->
-        if (project.plugins.hasPlugin("java") || project.plugins.hasPlugin("java-library") || project.plugins.hasPlugin("application")) {
+        if (project.plugins.hasPlugin("java")
+                || project.plugins.hasPlugin("java-library")
+                || project.plugins.hasPlugin("application")) {
             dependencies {
                 testImplementation("org.junit.jupiter:junit-jupiter")
                 testRuntimeOnly("org.junit.platform:junit-platform-launcher")
