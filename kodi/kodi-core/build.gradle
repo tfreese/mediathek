@@ -1,0 +1,20 @@
+plugins {
+    id "java-library"
+    id "org.springframework.boot"
+}
+
+description "API for KODI"
+
+dependencies {
+    api(project(":core"))
+
+    testImplementation("org.hsqldb:hsqldb")
+}
+
+// Start: gradle bootRun --args="--spring.profiles.active=dev"
+// The archive name. If the name has not been explicitly set, the pattern for the name is:
+// [archiveBaseName]-[archiveAppendix]-[archiveVersion]-[archiveClassifier].[archiveExtension]
+// archiveFileName = "my-boot.jar"
+springBoot {
+    mainClass = "de.freese.mediathek.kodi.report.KodiReporter"
+}

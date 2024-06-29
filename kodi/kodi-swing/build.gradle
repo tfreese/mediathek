@@ -1,0 +1,18 @@
+plugins {
+    id "java"
+    id "org.springframework.boot"
+}
+
+description "Swing GUI for KODI"
+
+dependencies {
+    implementation(project(":kodi:kodi-core"))
+}
+
+// Start: gradle bootRun --args="--spring.profiles.active=dev"
+// The archive name. If the name has not been explicitly set, the pattern for the name is:
+// [archiveBaseName]-[archiveAppendix]-[archiveVersion]-[archiveClassifier].[archiveExtension]
+// archiveFileName = "my-boot.jar"
+springBoot {
+    mainClass = "de.freese.mediathek.kodi.swing.KodiSwingClient"
+}

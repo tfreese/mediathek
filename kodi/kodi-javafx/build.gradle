@@ -1,0 +1,24 @@
+plugins {
+    id "java"
+    id "org.springframework.boot"
+    id "org.openjfx.javafxplugin"
+}
+
+description "JavaFX GUI for KODI"
+
+dependencies {
+    implementation(project(":kodi:kodi-core"))
+
+    javafx {
+        version = "$version_javafx"
+        modules = ["javafx.controls", "javafx.fxml"]
+    }
+}
+
+// Start: gradle bootRun --args="--spring.profiles.active=dev"
+// The archive name. If the name has not been explicitly set, the pattern for the name is:
+// [archiveBaseName]-[archiveAppendix]-[archiveVersion]-[archiveClassifier].[archiveExtension]
+// archiveFileName = "my-boot.jar"
+springBoot {
+    mainClass = "de.freese.mediathek.kodi.javafx.KodiJavaFxClientLauncher"
+}
