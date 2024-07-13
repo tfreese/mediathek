@@ -93,7 +93,7 @@ public class KodiSwingClient {
         // thread.start();
     }
 
-    private void init(final String[] args) throws Exception {
+    private void init(final String[] args) {
         String profile = null;
 
         if (args == null || args.length == 0) {
@@ -115,11 +115,11 @@ public class KodiSwingClient {
 
         final ResourceBundle resourceBundle = ResourceBundle.getBundle("de.freese.mediathek.kodi.swing.bundles.MyResources", Locale.getDefault());
 
-        final JFrame f = new JFrame();
-        f.setTitle(resourceBundle.getString("f.title"));
-        f.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        f.addWindowListener(new MainFrameListener());
-        f.setLayout(new BorderLayout());
+        final JFrame frame = new JFrame();
+        frame.setTitle(resourceBundle.getString("frame.title"));
+        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        frame.addWindowListener(new MainFrameListener());
+        frame.setLayout(new BorderLayout());
 
         final JTabbedPane tabbedPane = new JTabbedPane();
 
@@ -132,17 +132,17 @@ public class KodiSwingClient {
         controller = new GenreController(new GenreService(ctx), new GenreView());
         tabbedPane.addTab(resourceBundle.getString("genres"), controller.init(resourceBundle));
 
-        f.add(tabbedPane, BorderLayout.CENTER);
+        frame.add(tabbedPane, BorderLayout.CENTER);
 
-        // f.setSize(800, 600);
-        // f.setSize(1280, 768);
-        // f.setSize(1280, 1024);
-        // f.setSize(1680, 1050);
-        f.setSize(1920, 1080);
-        // f.setExtendedState(Frame.MAXIMIZED_BOTH);
-        f.setLocationRelativeTo(null);
-        f.setVisible(true);
-        KodiSwingClient.frame = f;
+        // frame.setSize(800, 600);
+        // frame.setSize(1280, 768);
+        // frame.setSize(1280, 1024);
+        // frame.setSize(1680, 1050);
+        frame.setSize(1920, 1080);
+        // frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        KodiSwingClient.frame = frame;
     }
 
     private void initUIDefaults() {
