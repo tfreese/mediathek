@@ -91,6 +91,18 @@ public final class MultimediaReporter {
         final DataSource dataSource = DataSources.strawberrySqLite(true);
         STOP_WATCH.stop();
 
+        // final Set<String> extensions = new TreeSet<>();
+        // try (Connection connection = dataSource.getConnection();
+        //      Statement statement = connection.createStatement();
+        //      ResultSet resultSet = statement.executeQuery("select url from songs")) {
+        //     while (resultSet.next()) {
+        //         final String url = resultSet.getString("URL");
+        //         extensions.add(url.substring(url.lastIndexOf(".") + 1).toLowerCase());
+        //     }
+        // }
+        //
+        // LOGGER.info("Extensions: {}", extensions);
+
         try {
             STOP_WATCH.start("writeReport");
 
