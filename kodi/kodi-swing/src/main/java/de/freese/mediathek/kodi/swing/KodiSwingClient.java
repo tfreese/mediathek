@@ -115,11 +115,11 @@ public class KodiSwingClient {
 
         final ResourceBundle resourceBundle = ResourceBundle.getBundle("de.freese.mediathek.kodi.swing.bundles.MyResources", Locale.getDefault());
 
-        final JFrame frame = new JFrame();
-        frame.setTitle(resourceBundle.getString("frame.title"));
-        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        frame.addWindowListener(new MainFrameListener());
-        frame.setLayout(new BorderLayout());
+        final JFrame jFrame = new JFrame();
+        jFrame.setTitle(resourceBundle.getString("frame.title"));
+        jFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        jFrame.addWindowListener(new MainFrameListener());
+        jFrame.setLayout(new BorderLayout());
 
         final JTabbedPane tabbedPane = new JTabbedPane();
 
@@ -132,17 +132,17 @@ public class KodiSwingClient {
         controller = new GenreController(new GenreService(ctx), new GenreView());
         tabbedPane.addTab(resourceBundle.getString("genres"), controller.init(resourceBundle));
 
-        frame.add(tabbedPane, BorderLayout.CENTER);
+        jFrame.add(tabbedPane, BorderLayout.CENTER);
 
         // frame.setSize(800, 600);
         // frame.setSize(1280, 768);
         // frame.setSize(1280, 1024);
         // frame.setSize(1680, 1050);
-        frame.setSize(1920, 1080);
+        jFrame.setSize(1920, 1080);
         // frame.setExtendedState(Frame.MAXIMIZED_BOTH);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-        KodiSwingClient.frame = frame;
+        jFrame.setLocationRelativeTo(null);
+        jFrame.setVisible(true);
+        KodiSwingClient.frame = jFrame;
     }
 
     private void initUIDefaults() {
