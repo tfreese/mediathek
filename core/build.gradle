@@ -16,13 +16,19 @@ dependencies {
     runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
 }
 
-// ext {
-//     main = "de.freese.mediathek.report.MultimediaReporter"
-// }
+ext {
+    main = "de.freese.mediathek.report.MultimediaReporter"
+}
 
 // Start: gradle run
 // application {
 //     mainClass = project.main
+//
+//     applicationDefaultJvmArgs = ["-Xms1024m", "-Xmx2048m"]
+// }
+//
+// distTar {
+//     enabled = false
 // }
 
 // Done by Convention-Plugin.
@@ -37,8 +43,20 @@ dependencies {
 tasks.register("runMultimediaReporter", JavaExec) {
     group = "MyTasks"
     description = "Run the main class with JavaExecTask"
+
+    // executable = "…/java.exe"
+    // workingDir = workDir
+    // args = ["...","..."]
+    // jvmArgs( "myArgument")
+    // debugOptions {
+    //     enabled = true
+    //     port = 5566
+    //     server = true
+    //     suspend = false
+    // }
+
+    // classpath = files(...)
     // classpath = configurations.runtimeClasspath // Doesn't contain Main-Class !
     classpath = sourceSets.main.runtimeClasspath
-    mainClass = "de.freese.mediathek.report.MultimediaReporter"
-    // args = ["...","..."]
+    mainClass = project.main
 }
