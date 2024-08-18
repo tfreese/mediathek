@@ -1,0 +1,8 @@
+Infinite Impulse Response (IIR) algorithm.
+
+* https://github.com/whamtet/jeq.git[jeq,window="_blank"]
+* https://github.com/pdudits/soundlibs[soundlibs,window="_blank"]
+* https://github.com/goxr3plus/java-sound-libraries[java-sound-libraries,window="_blank"]
+* https://github.com/sedmelluq/lavaplayer.git[lavaplayer,window="_blank"]
+* https://github.com/piotr-szachewicz/iir-filter-designer.git[iir-filter-designer,window="_blank"]
+* https://jdsp.dev/filters.html[jdsp,window="_blank"]

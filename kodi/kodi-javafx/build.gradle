@@ -12,6 +12,7 @@ dependencies {
     javafx {
         version = "$version_javafx"
         modules = ["javafx.controls", "javafx.fxml"]
+        configuration = "implementation"
     }
 }
 

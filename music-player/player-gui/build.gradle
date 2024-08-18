@@ -1,0 +1,18 @@
+plugins {
+    id "java"
+    id "org.openjfx.javafxplugin"
+}
+
+dependencies {
+    implementation(project(":music-player:player-core"))
+    implementation(project(":music-player:player-equalizer"))
+    implementation(project(":music-player:player-fft"))
+
+    runtimeOnly("org.slf4j:slf4j-simple")
+
+    javafx {
+        version = "$version_javafx"
+        modules = ["javafx.controls"]
+        configuration = "implementation"
+    }
+}

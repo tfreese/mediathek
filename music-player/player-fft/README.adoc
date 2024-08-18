@@ -1,0 +1,8 @@
+= syro
+
+Inspired by...
+
+== Link
+
+* https://github.com/mileshenrichs/QuiFFT[QuiFFT,window="_blank"]
+* https://github.com/mileshenrichs/quifft-examples[quifft-examples,window="_blank"]

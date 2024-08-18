@@ -81,7 +81,7 @@ public class KodiJavaFxClient extends Application {
     }
 
     @Override
-    public void start(final Stage stage) throws Exception {
+    public void start(final Stage primaryStage) throws Exception {
         getLogger().info("start");
 
         final ResourceBundle resourceBundle = ResourceBundle.getBundle("bundles/messages");
@@ -133,9 +133,9 @@ public class KodiJavaFxClient extends Application {
 
         getLogger().info("Antialiasing: {}", scene.getAntiAliasing());
 
-        stage.setTitle("KODI-Client");
-        stage.setScene(scene);
-        stage.show();
+        primaryStage.setTitle("KODI-Client");
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
     @Override

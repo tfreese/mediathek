@@ -55,7 +55,7 @@ public class KodiSwingClient {
 
     public static void main(final String[] args) throws Exception {
         // To avoid Comparator Errors.
-        //        System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
+        // System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
 
         SwingUtilities.invokeLater(() -> {
             final KodiSwingClient application = new KodiSwingClient();
@@ -68,17 +68,15 @@ public class KodiSwingClient {
             }
         });
 
-        // Runnable task = () -> {
-        // KodiSwingClient application = new KodiSwingClient();
+        // final Runnable task = () -> {
+        //     final KodiSwingClient application = new KodiSwingClient();
         //
-        // try
-        // {
-        // application.init(args);
-        // }
-        // catch (Exception ex)
-        // {
-        // throw new RuntimeException(ex);
-        // }
+        //     try {
+        //         application.init(args);
+        //     }
+        //     catch (Exception ex) {
+        //         throw new RuntimeException(ex);
+        //     }
         // };
         // task.run();
 
@@ -139,7 +137,7 @@ public class KodiSwingClient {
         // frame.setSize(1280, 1024);
         // frame.setSize(1680, 1050);
         jFrame.setSize(1920, 1080);
-        // frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+        // jFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
         jFrame.setLocationRelativeTo(null);
         jFrame.setVisible(true);
         KodiSwingClient.frame = jFrame;
@@ -174,9 +172,8 @@ public class KodiSwingClient {
 
             // String keyString = key.toString();
             //
-            // if (keyString.endsWith(".font") || keyString.endsWith(".acceleratorFont"))
-            // {
-            // UIManager.put(key, new FontUIResource(font));
+            // if (keyString.endsWith(".font") || keyString.endsWith(".acceleratorFont")) {
+            //     UIManager.put(key, new FontUIResource(font));
             // }
         });
 
@@ -186,24 +183,21 @@ public class KodiSwingClient {
 
         // UIDefaults defaults = UIManager.getLookAndFeelDefaults();
         //
-        // SortedSet<Object> uiKeys = new TreeSet<>(new Comparator<Object>()
-        // {
-        // @Override
-        // public int compare(final Object o1, final Object o2)
-        // {
-        // return o1.toString().compareTo(o2.toString());
-        // }
+        // final SortedSet<Object> uiKeys = new TreeSet<>(new Comparator<Object>() {
+        //     @Override
+        //     public int compare(final Object o1, final Object o2) {
+        //         return o1.toString().compareTo(o2.toString());
+        //     }
         //
         // });
         // uiKeys.addAll(defaults.keySet());
         //
-        // String format = "%1$s \t %2$s %n";
+        // final String format = "%1$s \t %2$s %n";
         //
-        // for (Object key : uiKeys)
-        // {
-        // Object value = defaults.get(key);
+        // for (Object key : uiKeys) {
+        //     final Object value = defaults.get(key);
         //
-        // System.out.printf(format, key.toString(), (value != null) ? value.toString() : "NULL");
+        //     System.out.printf(format, key.toString(), (value != null) ? value.toString() : "NULL");
         // }
     }
 }
