@@ -26,17 +26,14 @@ package de.freese.player.equalizer;
  */
 public class XYData {
     /**
-     * X data
+     * X data: x[n], x[n-1], x[n-2]
      */
-    private final double[] x = new double[3]; /* x[n], x[n-1], x[n-2] */
+    private final double[] x = new double[3];
     /**
-     * Y data
+     * Y data: y[n], y[n-1], y[n-2]
      */
-    private final double[] y = new double[3]; /* y[n], y[n-1], y[n-2] */
+    private final double[] y = new double[3];
 
-    /**
-     * Constructs new XYData object
-     */
     public XYData() {
         super();
 

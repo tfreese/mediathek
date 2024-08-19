@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import de.freese.player.exception.PlayerException;
-import de.freese.player.input.AudioFile;
+import de.freese.player.input.FileAudioSource;
 
 /**
  * @author Thomas Freese
@@ -35,7 +35,7 @@ final class DefaultFFprobeRegEx extends AbstractFF implements FFprobe {
     }
 
     @Override
-    public AudioFile getMetaData(final URI uri) throws Exception {
+    public FileAudioSource getMetaData(final URI uri) throws Exception {
         addArgument("-hide_banner");
         addArgument("-select_streams a");
         addArgument("-i");
@@ -64,7 +64,7 @@ final class DefaultFFprobeRegEx extends AbstractFF implements FFprobe {
 
         getLogger().debug("info: {}", output);
 
-        final AudioFile audioFile = parseMetaData(output);
+        final FileAudioSource audioFile = parseMetaData(output);
         audioFile.setUri(uri);
 
         return audioFile;
@@ -75,8 +75,8 @@ final class DefaultFFprobeRegEx extends AbstractFF implements FFprobe {
         return super.getVersion();
     }
 
-    private AudioFile parseMetaData(final String content) {
-        final AudioFile audioFile = new AudioFile();
+    private FileAudioSource parseMetaData(final String content) {
+        final FileAudioSource audioFile = new FileAudioSource();
 
         // Format
         final String format = parseMetaDataFormat(content);

@@ -14,7 +14,8 @@ import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioSystem;
 
 import de.freese.player.ffmpeg.FFLocator;
-import de.freese.player.input.AudioFile;
+import de.freese.player.input.AudioSource;
+import de.freese.player.input.FileAudioSource;
 import de.freese.player.model.AudioCodec;
 
 /**
@@ -34,25 +35,28 @@ public final class PlayerFactory {
             .map(type -> AudioCodec.valueOf(type.toString()))
             .collect(Collectors.toUnmodifiableSet());
 
-    public static ClipPlayer createPlayer(final AudioFile audioFile) {
-        final String fileName = audioFile.getUri().toString();
+    public static ClipPlayer createPlayer(final AudioSource audioSource) {
+        final String fileName = audioSource.getUri().toString();
         final String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
         final AudioCodec audioCodec = AudioCodec.getByExtension(fileExtension);
         final ClipPlayer player;
 
         if (SUPPORTED_AUDIO_CODECS.contains(audioCodec)) {
-            player = new DefaultClipPlayer(() -> AudioSystem.getAudioInputStream(new BufferedInputStream(audioFile.getUri().toURL().openStream())));
+            player = new DefaultClipPlayer(() -> AudioSystem.getAudioInputStream(new BufferedInputStream(audioSource.getUri().toURL().openStream())));
         }
         else if (AudioCodec.M4B.equals(audioCodec) || AudioCodec.OGG.equals(audioCodec)) {
             player = new DefaultClipPlayer(() -> {
-                final Path tmpFile = FFLocator.createFFmpeg().encodeToWav(audioFile);
-                audioFile.setTmpFile(tmpFile);
+                final Path tmpFile = FFLocator.createFFmpeg().encodeToWav(audioSource);
+
+                if (audioSource instanceof FileAudioSource fas) {
+                    fas.setTmpFile(tmpFile);
+                }
 
                 return AudioSystem.getAudioInputStream(new BufferedInputStream(Files.newInputStream(tmpFile)));
             });
         }
         else {
-            player = new DefaultClipPlayer(() -> FFLocator.createFFmpeg().toAudioStreamWav(audioFile));
+            player = new DefaultClipPlayer(() -> FFLocator.createFFmpeg().toAudioStreamWav(audioSource));
         }
 
         return player;
@@ -75,18 +79,21 @@ public final class PlayerFactory {
         }
         else if (AudioCodec.M4B.equals(audioCodec) || AudioCodec.OGG.equals(audioCodec)) {
             player = new DefaultClipPlayer(() -> {
-                final AudioFile audioFile = FFLocator.createFFprobe().getMetaData(uri);
+                final AudioSource audioSource = FFLocator.createFFprobe().getMetaData(uri);
 
-                final Path tmpFile = FFLocator.createFFmpeg().encodeToWav(audioFile);
-                audioFile.setTmpFile(tmpFile);
+                final Path tmpFile = FFLocator.createFFmpeg().encodeToWav(audioSource);
+
+                if (audioSource instanceof FileAudioSource fas) {
+                    fas.setTmpFile(tmpFile);
+                }
 
                 return AudioSystem.getAudioInputStream(new BufferedInputStream(Files.newInputStream(tmpFile)));
             });
         }
         else {
             player = new DefaultClipPlayer(() -> {
-                final AudioFile audioFile = FFLocator.createFFprobe().getMetaData(uri);
-                return FFLocator.createFFmpeg().toAudioStreamWav(audioFile);
+                final AudioSource audioSource = FFLocator.createFFprobe().getMetaData(uri);
+                return FFLocator.createFFmpeg().toAudioStreamWav(audioSource);
             });
         }
 

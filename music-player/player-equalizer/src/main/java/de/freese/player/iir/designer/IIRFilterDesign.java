@@ -24,8 +24,8 @@ import javax.swing.JFrame;
 
 public final class IIRFilterDesign extends JFrame {
     @Serial
-    private static final long serialVersionUID = -2284879212465893870L;
-    
+    private static final long serialVersionUID = 1L;
+
     public static void main(final String[] args) {
         final IIRFilterDesign iirFilterDesign = new IIRFilterDesign();
         iirFilterDesign.init();

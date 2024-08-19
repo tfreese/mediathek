@@ -11,7 +11,8 @@ import java.util.List;
 import java.util.Objects;
 
 import de.freese.player.exception.PlayerException;
-import de.freese.player.input.AudioFile;
+import de.freese.player.input.AudioSource;
+import de.freese.player.input.FileAudioSource;
 
 /**
  * @author Thomas Freese
@@ -23,7 +24,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
     }
 
     @Override
-    public AudioFile getMetaData(final URI uri) throws Exception {
+    public AudioSource getMetaData(final URI uri) throws Exception {
         addArgument("-hide_banner");
         addArgument("-select_streams a");
         addArgument("-i");
@@ -55,7 +56,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
             getLogger().debug("info: {}", metaData);
         }
 
-        final AudioFile audioFile = parseMetaData(output);
+        final FileAudioSource audioFile = parseMetaData(output);
         audioFile.setUri(uri);
         audioFile.setMetaData(metaData);
 
@@ -67,8 +68,8 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
         return super.getVersion();
     }
 
-    private AudioFile parseMetaData(final List<String> output) {
-        final AudioFile audioFile = new AudioFile();
+    private FileAudioSource parseMetaData(final List<String> output) {
+        final FileAudioSource audioSource = new FileAudioSource();
 
         // Format
         final String format = parseMetaDataFormat(output);
@@ -77,7 +78,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
             throw new PlayerException("MetaData Problems - Format invalid: " + System.lineSeparator() + String.join(System.lineSeparator(), output));
         }
         else {
-            audioFile.setFormat(format);
+            audioSource.setFormat(format);
         }
 
         // Duration
@@ -87,7 +88,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
             throw new PlayerException("MetaData Problems - Duration invalid: " + System.lineSeparator() + String.join(System.lineSeparator(), output));
         }
         else {
-            audioFile.setDuration(duration);
+            audioSource.setDuration(duration);
         }
 
         // Channels
@@ -97,7 +98,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
             throw new PlayerException("MetaData Problems - Channels invalid: " + channels + System.lineSeparator() + String.join(System.lineSeparator(), output));
         }
         else {
-            audioFile.setChannels(channels);
+            audioSource.setChannels(channels);
         }
 
         // Bit-Rate
@@ -107,7 +108,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
             throw new PlayerException("MetaData Problems - Bit-Rate invalid: " + bitRate + System.lineSeparator() + String.join(System.lineSeparator(), output));
         }
         else {
-            audioFile.setBitRate(bitRate);
+            audioSource.setBitRate(bitRate);
         }
 
         // Sampling-Rate
@@ -117,19 +118,19 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
             throw new PlayerException("MetaData Problems - Sampling-Rate invalid: " + samplingRate + System.lineSeparator() + String.join(System.lineSeparator(), output));
         }
         else {
-            audioFile.setSamplingRate(samplingRate);
+            audioSource.setSamplingRate(samplingRate);
         }
 
-        audioFile.setAlbum(parseMetaDataAlbum(output));
-        audioFile.setArtist(parseMetaDataArtist(output));
-        audioFile.setTitle(parseMetaDataTitle(output));
-        audioFile.setGenre(parseMetaDataGenre(output));
-        audioFile.setDate(parseMetaDataDate(output));
-        audioFile.setDisc(parseMetaDataDisk(output));
-        audioFile.setTrack(parseMetaDataTrack(output));
-        audioFile.setCompilation(parseMetaDataCompilation(output));
+        audioSource.setAlbum(parseMetaDataAlbum(output));
+        audioSource.setArtist(parseMetaDataArtist(output));
+        audioSource.setTitle(parseMetaDataTitle(output));
+        audioSource.setGenre(parseMetaDataGenre(output));
+        audioSource.setDate(parseMetaDataDate(output));
+        audioSource.setDisc(parseMetaDataDisk(output));
+        audioSource.setTrack(parseMetaDataTrack(output));
+        audioSource.setCompilation(parseMetaDataCompilation(output));
 
-        return audioFile;
+        return audioSource;
     }
 
     private String parseMetaDataAlbum(final List<String> output) {

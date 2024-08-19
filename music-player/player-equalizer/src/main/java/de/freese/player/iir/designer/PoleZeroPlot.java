@@ -5,8 +5,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.io.Serial;
 
 public class PoleZeroPlot extends Canvas {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private Color axisColor = Color.darkGray;
     private Color bgColor = Color.lightGray;

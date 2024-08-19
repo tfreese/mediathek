@@ -5,7 +5,6 @@ import java.nio.file.Path;
 
 import javax.sound.sampled.AudioInputStream;
 
-import de.freese.player.input.AudioFile;
 import de.freese.player.input.AudioSource;
 
 /**
@@ -16,5 +15,5 @@ public interface FFmpeg {
 
     String getVersion() throws Exception;
 
-    AudioInputStream toAudioStreamWav(AudioFile audioFile) throws Exception;
+    AudioInputStream toAudioStreamWav(AudioSource audioSource) throws Exception;
 }

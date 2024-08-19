@@ -3,13 +3,13 @@ package de.freese.player.ffmpeg;
 
 import java.net.URI;
 
-import de.freese.player.input.AudioFile;
+import de.freese.player.input.AudioSource;
 
 /**
  * @author Thomas Freese
  */
 public interface FFprobe {
-    AudioFile getMetaData(URI uri) throws Exception;
+    AudioSource getMetaData(URI uri) throws Exception;
 
     String getVersion() throws Exception;
 }

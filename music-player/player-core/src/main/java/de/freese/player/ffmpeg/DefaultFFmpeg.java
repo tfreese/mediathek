@@ -14,20 +14,19 @@ import javax.sound.sampled.AudioSystem;
 
 import de.freese.player.PlayerSettings;
 import de.freese.player.exception.PlayerException;
-import de.freese.player.input.AudioFile;
 import de.freese.player.input.AudioSource;
 
 /**
  * @author Thomas Freese
  */
 final class DefaultFFmpeg extends AbstractFF implements FFmpeg {
-    private static AudioFormat getTargetAudioFormat(final AudioFile audioFile) {
+    private static AudioFormat getTargetAudioFormat(final AudioSource audioSource) {
         return new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
-                audioFile.getSamplingRate(),
+                audioSource.getSamplingRate(),
                 16,
-                audioFile.getChannels(),
-                audioFile.getChannels() * 2,
-                audioFile.getSamplingRate(),
+                audioSource.getChannels(),
+                audioSource.getChannels() * 2,
+                audioSource.getSamplingRate(),
                 ByteOrder.BIG_ENDIAN.equals(ByteOrder.nativeOrder()) // false
         );
         // return new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
@@ -89,8 +88,8 @@ final class DefaultFFmpeg extends AbstractFF implements FFmpeg {
     }
 
     @Override
-    public AudioInputStream toAudioStreamWav(final AudioFile audioFile) throws Exception {
-        addArguments(audioFile);
+    public AudioInputStream toAudioStreamWav(final AudioSource audioSource) throws Exception {
+        addArguments(audioSource);
 
         // Pipe the output to stdout
         addArgument("pipe:1");
@@ -101,7 +100,7 @@ final class DefaultFFmpeg extends AbstractFF implements FFmpeg {
 
         getLogger().debug("execute: {}", command);
 
-        final AudioFormat audioFormatTarget = getTargetAudioFormat(audioFile);
+        final AudioFormat audioFormatTarget = getTargetAudioFormat(audioSource);
 
         final Process process = processBuilder.start();
 

@@ -8,7 +8,7 @@ import java.time.Duration;
 /**
  * @author Thomas Freese
  */
-public class AudioFile implements AudioSource {
+public class FileAudioSource implements AudioSource {
     private String album;
     private String artist;
     private int bitRate;

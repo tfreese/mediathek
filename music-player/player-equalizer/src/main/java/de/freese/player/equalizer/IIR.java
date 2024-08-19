@@ -88,24 +88,26 @@ public class IIR extends IIRBase {
 
     private final int bands;
     private final int channels;
-    /* History for two filters */
+    /**
+     * History
+     */
     private final XYData[][] dataHistory = new XYData[EQ_MAX_BANDS][EQ_MAX_CHANNELS];
-    private final XYData[][] dataHistory2 = new XYData[EQ_MAX_BANDS][EQ_MAX_CHANNELS];
-    /* Equalizer config */
+    /**
+     * Equalizer config
+     */
     private final IIRControls eqcfg;
     private final float rate;
 
-    /* Indexes for the history arrays
-     * These have to be kept between calls to this function
-     * hence they are static */
+    /**
+     * Indexes for the history arrays.
+     * These have to be kept between calls to this function hence they are static.
+     */
     private int i;
     private IIRCoefficients[] iircf;
     private int j;
     private int k;
 
     /**
-     * Constructs equalizer with given config
-     *
      * @param bands is the number of bands to be used
      * @param rate is the sample rate of equalizer
      * @param channels is the number of channels
@@ -132,7 +134,6 @@ public class IIR extends IIRBase {
         for (int ii = 0; ii < EQ_MAX_BANDS; ii++) {
             for (int jj = 0; jj < EQ_MAX_CHANNELS; jj++) {
                 dataHistory[ii][jj].zero();
-                dataHistory2[ii][jj].zero();
             }
         }
 
@@ -142,7 +143,7 @@ public class IIR extends IIRBase {
     }
 
     /**
-     * Returns Controls of equalizer
+     * Returns Controls of equalizer.
      */
     public IIRControls getControls() {
         return eqcfg;
@@ -163,13 +164,14 @@ public class IIR extends IIRBase {
         //
         // NOTE: The 2 factor was introduced in the coefficients to save a multiplication
         //
-        // This algorithm cascades two filters to get nice filtering
-        // at the expense of extra CPU cycles
-        IIRCoefficients tempcf;
-        XYData tempd;
+        // This algorithm cascades two filters to get nice filtering at the expense of extra CPU cycles.
 
         for (int index = 0; index < length; index += channels) {
             // For each channel
+            // IntStream.range(0,channels).parallel().forEach(channel->{
+            //
+            // });
+
             for (int channel = 0; channel < channels; channel++) {
                 // Preamp gain
                 final double pcm = data[index + channel] * eqpreamp[channel];
@@ -179,23 +181,25 @@ public class IIR extends IIRBase {
                 // For each band
                 for (int band = 0; band < bands; band++) {
                     // Store Xi(n)
-                    tempd = dataHistory[band][channel];
-                    tempd.setX(i, pcm);
+                    final XYData xyData = dataHistory[band][channel];
+                    xyData.setX(i, pcm);
+
                     // Calculate and store Yi(n)
-                    tempcf = iircf[band];
-                    tempd.setY(i,
+                    final IIRCoefficients coefficients = iircf[band];
+
+                    xyData.setY(i,
                             // = alpha * [x(n)-x(n-2)]
-                            tempcf.getAlpha() * (pcm - tempd.getX(k))
+                            coefficients.getAlpha() * (pcm - xyData.getX(k))
                                     // + gamma * y(n-1)
-                                    + tempcf.getGamma() * tempd.getY(j)
+                                    + coefficients.getGamma() * xyData.getY(j)
                                     // - beta * y(n-2)
-                                    - tempcf.getBeta() * tempd.getY(k)
+                                    - coefficients.getBeta() * xyData.getY(k)
                     );
 
-                    // The multiplication by 2.0 was 'moved' into the coefficients to save CPU cycles here
+                    // The multiplication by 2.0 was 'moved' into the coefficients to save CPU cycles here.
                     // Apply the gain
-                    out += tempd.getY(i) * eqbands[band][channel]; // * 2.0D;
-                } // For each band
+                    out += xyData.getY(i) * eqbands[band][channel]; // * 2.0D;
+                }
 
                 // Volume stuff
                 // Scale down original PCM sample and add it to the filters output.
@@ -224,7 +228,6 @@ public class IIR extends IIRBase {
             else {
                 k = 0;
             }
-
         }
     }
 
@@ -232,21 +235,16 @@ public class IIR extends IIRBase {
      * Init the filters
      */
     private void initIir() {
-        setFilters();
-
         for (int ii = 0; ii < EQ_MAX_BANDS; ii++) {
             for (int jj = 0; jj < EQ_MAX_CHANNELS; jj++) {
                 dataHistory[ii][jj] = new XYData();
-                dataHistory2[ii][jj] = new XYData();
             }
         }
 
         i = 0;
         j = 2;
         k = 1;
-    }
 
-    private void setFilters() {
         if (Float.compare(rate, EQ_11025_RATE) == 0) {
             iircf = IIR_CF10_11K_11025;
         }
@@ -254,36 +252,20 @@ public class IIR extends IIRBase {
             iircf = IIR_CF10_22K_22050;
         }
         else if (Float.compare(rate, EQ_44100_RATE) == 0) {
-            switch (bands) {
-                case 31:
-                    iircf = IIR_CF31_44100;
-                    break;
-                case 25:
-                    iircf = IIR_CF25_44100;
-                    break;
-                case 15:
-                    iircf = IIR_CF15_44100;
-                    break;
-                default:
-                    iircf = IIR_CF10_44100;
-                    break;
-            }
+            iircf = switch (bands) {
+                case 31 -> IIR_CF31_44100;
+                case 25 -> IIR_CF25_44100;
+                case 15 -> IIR_CF15_44100;
+                default -> IIR_CF10_44100;
+            };
         }
         else if (Float.compare(rate, EQ_48000_RATE) == 0) {
-            switch (bands) {
-                case 31:
-                    iircf = IIR_CF31_48000;
-                    break;
-                case 25:
-                    iircf = IIR_CF25_48000;
-                    break;
-                case 15:
-                    iircf = IIR_CF15_48000;
-                    break;
-                default:
-                    iircf = IIR_CF10_48000;
-                    break;
-            }
+            iircf = switch (bands) {
+                case 31 -> IIR_CF31_48000;
+                case 25 -> IIR_CF25_48000;
+                case 15 -> IIR_CF15_48000;
+                default -> IIR_CF10_48000;
+            };
         }
     }
 }

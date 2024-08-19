@@ -26,19 +26,17 @@ package de.freese.player.equalizer;
  */
 public class IIRControls {
     /**
-     * Gain for each band
-     * values should be between -0.2 and 1.0
+     * Gain for each band.
+     * Values should be between -0.2 and 1.0
      */
     private final float[][] bands;
     /**
-     * Volume gain
-     * values should be between 0.0 and 1.0
+     * Volume gain.
+     * Values should be between 0.0 and 1.0
      */
     private final float[] preamp;
 
     /**
-     * Creates new IIRControls object for given number of bands
-     *
      * @param bandsNum is the number of bands
      * @param channels is the number of channels
      */

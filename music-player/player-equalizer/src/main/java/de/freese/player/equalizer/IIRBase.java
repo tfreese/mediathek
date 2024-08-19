@@ -25,7 +25,7 @@ package de.freese.player.equalizer;
  */
 public class IIRBase {
     /* BETA, ALPHA, GAMMA */
-    protected static final IIRCoefficients[] IIR_CF10_11K_11025 = {
+    static final IIRCoefficients[] IIR_CF10_11K_11025 = {
             /* 31 Hz*/
             new IIRCoefficients(9.8758524689e-01, 6.2073765555e-03, 1.9872750693e+00),
             /* 62 Hz*/
@@ -48,7 +48,7 @@ public class IIRBase {
             new IIRCoefficients(3.3453245058e-01, 3.3273377471e-01, -1.3344985880e+00)
     };
 
-    protected static final IIRCoefficients[] IIR_CF10_22K_22050 = {
+    static final IIRCoefficients[] IIR_CF10_22K_22050 = {
             /* 31 Hz*/
             new IIRCoefficients(9.9377323686e-01, 3.1133815717e-03, 1.9936954495e+00),
             /* 62 Hz*/
@@ -70,7 +70,7 @@ public class IIRBase {
             /* 11k Hz*/
             new IIRCoefficients(3.3453245058e-01, 3.3273377471e-01, -1.3344985880e+00)
     };
-    protected static final IIRCoefficients[] IIR_CF10_44100 = {
+    static final IIRCoefficients[] IIR_CF10_44100 = {
             /* 31 Hz*/
             new IIRCoefficients(9.9688176273e-01, 1.5591186337e-03, 1.9968622855e+00),
             /* 62 Hz*/
@@ -92,7 +92,7 @@ public class IIRBase {
             /* 16k Hz*/
             new IIRCoefficients(2.4198119087e-01, 3.7900940457e-01, -8.0845085113e-01)
     };
-    protected static final IIRCoefficients[] IIR_CF10_48000 = {
+    static final IIRCoefficients[] IIR_CF10_48000 = {
             /* 31 Hz*/
             new IIRCoefficients(9.9713475915e-01, 1.4326204244e-03, 1.9971183163e+00),
             /* 62 Hz*/
@@ -114,7 +114,7 @@ public class IIRBase {
             /* 16k Hz*/
             new IIRCoefficients(2.5620076154e-01, 3.7189961923e-01, -6.2810038077e-01)
     };
-    protected static final IIRCoefficients[] IIR_CF15_44100 = {
+    static final IIRCoefficients[] IIR_CF15_44100 = {
             /* 25 Hz*/
             new IIRCoefficients(9.9834072702e-01, 8.2963648917e-04, 1.9983280505e+00),
             /* 40 Hz*/
@@ -146,7 +146,7 @@ public class IIRBase {
             /* 16k Hz*/
             new IIRCoefficients(4.0179628792e-01, 2.9910185604e-01, -9.1248032613e-01)
     };
-    protected static final IIRCoefficients[] IIR_CF15_48000 = {
+    static final IIRCoefficients[] IIR_CF15_48000 = {
             /* 25 Hz*/
             new IIRCoefficients(9.9847546664e-01, 7.6226668143e-04, 1.9984647656e+00),
             /* 40 Hz*/
@@ -178,7 +178,7 @@ public class IIRBase {
             /* 16k Hz*/
             new IIRCoefficients(4.1811888447e-01, 2.9094055777e-01, -7.0905944223e-01)
     };
-    protected static final IIRCoefficients[] IIR_CF25_44100 = {
+    static final IIRCoefficients[] IIR_CF25_44100 = {
             /* 20 Hz*/
             new IIRCoefficients(9.9934037157e-01, 3.2981421662e-04, 1.9993322545e+00),
             /* 31.5 Hz*/
@@ -230,7 +230,7 @@ public class IIRBase {
             /* 20k Hz*/
             new IIRCoefficients(6.1776148240e-01, 1.9111925880e-01, -1.5492465594e+00)
     };
-    protected static final IIRCoefficients[] IIR_CF25_48000 = {
+    static final IIRCoefficients[] IIR_CF25_48000 = {
             /* 20 Hz*/
             new IIRCoefficients(9.9939388451e-01, 3.0305774630e-04, 1.9993870327e+00),
             /* 31.5 Hz*/
@@ -282,7 +282,7 @@ public class IIRBase {
             /* 20k Hz*/
             new IIRCoefficients(6.0884213704e-01, 1.9557893148e-01, -1.3932981614e+00)
     };
-    protected static final IIRCoefficients[] IIR_CF31_44100 = {
+    static final IIRCoefficients[] IIR_CF31_44100 = {
             /* 20 Hz*/
             new IIRCoefficients(9.9934037157e-01, 3.2981421662e-04, 1.9993322545e+00),
             /* 25 Hz*/
@@ -346,7 +346,7 @@ public class IIRBase {
             /* 20k Hz*/
             new IIRCoefficients(6.1776148240e-01, 1.9111925880e-01, -1.5492465594e+00)
     };
-    protected static final IIRCoefficients[] IIR_CF31_48000 = {
+    static final IIRCoefficients[] IIR_CF31_48000 = {
             /* 20 Hz*/
             new IIRCoefficients(9.9939388451e-01, 3.0305774630e-04, 1.9993870327e+00),
             /* 25 Hz*/
@@ -410,4 +410,8 @@ public class IIRBase {
             /* 20k Hz*/
             new IIRCoefficients(6.0884213704e-01, 1.9557893148e-01, -1.3932981614e+00)
     };
+
+    protected IIRBase() {
+        super();
+    }
 }
