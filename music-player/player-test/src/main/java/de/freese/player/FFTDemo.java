@@ -6,8 +6,7 @@ import javax.sound.sampled.LineUnavailableException;
 
 import org.quifft.config.FFTConfig;
 import org.quifft.fft.FFTComputationWrapper;
-import org.quifft.output.FFTFrame;
-import org.quifft.output.Frequency;
+import org.quifft.output.Spectrum;
 
 import de.freese.player.model.Window;
 import de.freese.player.player.SourceDataLinePlayer;
@@ -85,14 +84,13 @@ public final class FFTDemo {
         final FFTConfig fftConfig = new FFTConfig();
         fftConfig.windowSize(samples.length);
 
-        final FFTFrame fftFrame = FFTComputationWrapper.doFFT(samples, audioFormat.getSampleRate(), fftConfig);
+        final Spectrum spectrum = FFTComputationWrapper.createSpectrum(samples, audioFormat.getSampleRate(), fftConfig);
         // final double maxAmplitude = FFTUtils.findMaxAmplitude(fftFrame);
-        // FFTUtils.normalizeFFTResult(fftFrame, maxAmplitude);
+        // FFTUtils.normalize(spectrum, maxAmplitude);
 
-        for (int c = 0; c < fftFrame.getFrequencies().length; c++) {
-            final Frequency frequency = fftFrame.getFrequencies()[c];
-            System.out.printf("%f + %fi%n", frequency.getFrequency(), frequency.getAmplitude());
-        }
+        spectrum.forEach(frequency ->
+                System.out.printf("%f + %fi%n", frequency.getFrequency(), frequency.getAmplitude())
+        );
     }
 
     private FFTDemo() {

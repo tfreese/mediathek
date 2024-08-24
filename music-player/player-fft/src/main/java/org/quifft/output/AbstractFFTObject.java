@@ -8,7 +8,7 @@ import org.quifft.config.FFTConfig;
 import org.quifft.reader.AudioReader;
 
 /**
- * Object representing the result of a Fourier transform; superclass of two result types {@link FFTResult} and {@link FFTStream}.
+ * Object representing the result of a Fourier transform; superclass of two result types {@link SpectraResult} and {@link FFTStream}.
  */
 public abstract class AbstractFFTObject {
     /**
@@ -54,7 +54,7 @@ public abstract class AbstractFFTObject {
     }
 
     /**
-     * Sets metadata to be returned by an output object ({@link FFTResult} or {@link FFTStream}).
+     * Sets metadata to be returned by an output object ({@link SpectraResult} or {@link FFTStream}).
      */
     public void setMetadata(final AudioReader audioReader, final FFTConfig config) {
         this.fileDurationMs = audioReader.getDurationMs();

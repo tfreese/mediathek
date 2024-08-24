@@ -18,9 +18,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.quifft.config.FFTConfig;
-import org.quifft.output.FFTFrame;
-import org.quifft.output.FFTResult;
 import org.quifft.output.FFTStream;
+import org.quifft.output.SpectraResult;
+import org.quifft.output.Spectrum;
 import org.quifft.sampling.WindowFunction;
 
 /**
@@ -149,18 +149,18 @@ class TestFFTStream {
 
     @Test
     void testComputeSameFrameStartTimesAsFullFFT() throws IOException, UnsupportedAudioFileException {
-        final FFTFrame[] fullFFTFrames = new QuiFFT(mono600Hz3SecsWav, new FFTConfig().windowOverlap(0.25D)).fullFFT().getFFTFrames();
+        final Spectrum[] spectra = new QuiFFT(mono600Hz3SecsWav, new FFTConfig().windowOverlap(0.25D)).fullFFT().getSpectra();
         final FFTStream fftStream = new QuiFFT(mono600Hz3SecsWav, new FFTConfig().windowOverlap(0.25D)).fftStream();
 
         for (int i = 0; i < 3; i++) {
-            assertEquals(fullFFTFrames[i].getFrameStartMs(), fftStream.next().getFrameStartMs(), 0.0001D);
+            assertEquals(spectra[i].getFrameStartMs(), fftStream.next().getFrameStartMs(), 0.0001D);
         }
     }
 
     @Test
     void testComputeSameNumberOfFramesAsFullFFT() throws IOException, UnsupportedAudioFileException {
         final FFTStream stream = new QuiFFT(stereo600Hz500MsWAV, new FFTConfig().windowSize(8192)).fftStream();
-        final FFTResult full = new QuiFFT(stereo600Hz500MsWAV, new FFTConfig().windowSize(8192)).fullFFT();
+        final SpectraResult result = new QuiFFT(stereo600Hz500MsWAV, new FFTConfig().windowSize(8192)).fullFFT();
 
         int streamedFFTFramesCount = 0;
 
@@ -169,19 +169,19 @@ class TestFFTStream {
             streamedFFTFramesCount++;
         }
 
-        assertEquals(full.getFFTFrames().length, streamedFFTFramesCount);
+        assertEquals(result.getSpectra().length, streamedFFTFramesCount);
     }
 
     @Test
     void testComputeTheSameFFTOutputAsFullFFT() throws IOException, UnsupportedAudioFileException {
         final FFTStream stream = new QuiFFT(stereo600Hz500MsWAV, new FFTConfig().windowSize(8192)).fftStream();
-        final FFTResult full = new QuiFFT(stereo600Hz500MsWAV, new FFTConfig().windowSize(8192)).fullFFT();
+        final SpectraResult result = new QuiFFT(stereo600Hz500MsWAV, new FFTConfig().windowSize(8192)).fullFFT();
 
-        for (int i = 0; i < full.getFFTFrames().length; i++) {
-            final FFTFrame streamFrame = stream.next();
+        for (int i = 0; i < result.getSpectra().length; i++) {
+            final Spectrum spectrum = stream.next();
 
-            for (int j = 0; j < full.getFFTFrames()[i].getFrequencies().length; j++) {
-                assertEquals(full.getFFTFrames()[i].getFrequencies()[j].getAmplitude(), streamFrame.getFrequencies()[j].getAmplitude(), 0.01D);
+            for (int j = 0; j < result.getSpectra()[i].length(); j++) {
+                assertEquals(result.getSpectra()[i].getFrequency(j).getAmplitude(), spectrum.getFrequency(j).getAmplitude(), 0.01D);
             }
         }
     }
@@ -189,12 +189,12 @@ class TestFFTStream {
     @Test
     void testHaveSameFrameStartAndEndTimesAsFullFft() throws IOException, UnsupportedAudioFileException {
         final FFTStream stream = new QuiFFT(stereo600Hz500MsWAV).fftStream();
-        final FFTResult full = new QuiFFT(stereo600Hz500MsWAV).fullFFT();
+        final SpectraResult result = new QuiFFT(stereo600Hz500MsWAV).fullFFT();
 
         for (int i = 0; i < 3; i++) {
-            final FFTFrame streamFrame = stream.next();
-            assertEquals(full.getFFTFrames()[i].getFrameStartMs(), streamFrame.getFrameStartMs(), 0.001D);
-            assertEquals(full.getFFTFrames()[i].getFrameEndMs(), streamFrame.getFrameEndMs(), 0.001D);
+            final Spectrum spectrum = stream.next();
+            assertEquals(result.getSpectra()[i].getFrameStartMs(), spectrum.getFrameStartMs(), 0.001D);
+            assertEquals(result.getSpectra()[i].getFrameEndMs(), spectrum.getFrameEndMs(), 0.001D);
         }
     }
 
@@ -205,11 +205,11 @@ class TestFFTStream {
         final FFTStream withPaddingResult = new QuiFFT(mono600Hz3SecsWav, new FFTConfig().windowSize(2048).numPoints(4096)).fftStream();
 
         // test window duration
-        final FFTFrame noPaddingFrame = noPaddingResult.next();
-        final FFTFrame withPaddingFrame = withPaddingResult.next();
+        final Spectrum noPaddingSpectrum = noPaddingResult.next();
+        final Spectrum withPaddingSpectrum = withPaddingResult.next();
 
-        assertEquals(EXPECTED_WINDOW_DURATION, noPaddingFrame.getFrameEndMs(), 0.01D);
-        assertEquals(EXPECTED_WINDOW_DURATION, withPaddingFrame.getFrameEndMs(), 0.01D);
+        assertEquals(EXPECTED_WINDOW_DURATION, noPaddingSpectrum.getFrameEndMs(), 0.01D);
+        assertEquals(EXPECTED_WINDOW_DURATION, withPaddingSpectrum.getFrameEndMs(), 0.01D);
 
         // test frequency resolution
         assertEquals(21.5D, noPaddingResult.getFrequencyResolution(), 0.1D);
@@ -250,10 +250,10 @@ class TestFFTStream {
         final FFTStream noOverlap = new QuiFFT(mono600Hz3SecsWav, new FFTConfig().windowOverlap(0D)).fftStream();
         final FFTStream overlap = new QuiFFT(mono600Hz3SecsWav, new FFTConfig().windowOverlap(0.5D)).fftStream();
 
-        final FFTFrame noOverlap1 = noOverlap.next();
-        final FFTFrame noOverlap2 = noOverlap.next();
-        final FFTFrame overlap1 = overlap.next();
-        final FFTFrame overlap2 = overlap.next();
+        final Spectrum noOverlap1 = noOverlap.next();
+        final Spectrum noOverlap2 = noOverlap.next();
+        final Spectrum overlap1 = overlap.next();
+        final Spectrum overlap2 = overlap.next();
 
         final double noOverlapTime = noOverlap2.getFrameStartMs() - noOverlap1.getFrameStartMs();
         final double overlapTime = overlap2.getFrameStartMs() - overlap1.getFrameStartMs();

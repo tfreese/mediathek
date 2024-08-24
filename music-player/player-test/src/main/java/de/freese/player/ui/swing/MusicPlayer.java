@@ -20,8 +20,8 @@ import org.slf4j.LoggerFactory;
 
 import de.freese.player.PlayerSettings;
 import de.freese.player.model.AudioCodec;
-import de.freese.player.player.ClipPlayer;
-import de.freese.player.player.PlayerFactory;
+import de.freese.player.player.DefaultClipPlayer;
+import de.freese.player.player.Player;
 
 /**
  * @author Thomas Freese
@@ -58,7 +58,7 @@ public final class MusicPlayer {
         super();
     }
 
-    private JPanel createPlayerPanel(final AudioCodec audioCodec, final ClipPlayer player) {
+    private JPanel createPlayerPanel(final AudioCodec audioCodec, final Player player) {
         final JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
 
@@ -105,7 +105,7 @@ public final class MusicPlayer {
     }
 
     private void init(final String[] args) throws Exception {
-        final JFrame frame = new JFrame("Music ClipPlayer");
+        final JFrame frame = new JFrame("Music Player");
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.addWindowListener(new MainFrameListener());
         frame.setLayout(new GridBagLayout());
@@ -127,7 +127,7 @@ public final class MusicPlayer {
                 gbc.gridx = 0;
                 gbc.gridy = row;
                 gbc.fill = GridBagConstraints.BOTH;
-                frame.add(createPlayerPanel(audioCodec, PlayerFactory.createPlayer(Path.of("samples/sample." + audioCodec.getFileExtension()).toUri())), gbc);
+                frame.add(createPlayerPanel(audioCodec, new DefaultClipPlayer().addAudioSource(Path.of("samples/sample." + audioCodec.getFileExtension()).toUri())), gbc);
             }
             catch (Exception ex) {
                 LOGGER.error(ex.getMessage(), ex);

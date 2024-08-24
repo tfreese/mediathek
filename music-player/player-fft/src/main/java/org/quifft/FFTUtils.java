@@ -3,8 +3,8 @@ package org.quifft;
 
 import java.util.Arrays;
 
-import org.quifft.output.FFTFrame;
 import org.quifft.output.Frequency;
+import org.quifft.output.Spectrum;
 
 /**
  * @author Thomas Freese
@@ -17,11 +17,11 @@ public final class FFTUtils {
      */
     private static final int MAX_AMPLITUDE_INTENSITY = 32768;
 
-    public static double findFrequencyWithHighestAmplitude(final FFTFrame fftFrame) {
+    public static double findFrequencyWithHighestAmplitude(final Spectrum spectrum) {
         double maxAmplitude = -100D;
         double maxFrequency = 0D;
 
-        for (Frequency frequency : fftFrame.getFrequencies()) {
+        for (Frequency frequency : spectrum.getFrequencies()) {
             if (frequency.getAmplitude() > maxAmplitude) {
                 maxAmplitude = frequency.getAmplitude();
                 maxFrequency = frequency.getFrequency();
@@ -31,35 +31,35 @@ public final class FFTUtils {
         return maxFrequency;
     }
 
-    public static double findMaxAmplitude(final FFTFrame fftFrame) {
+    public static double findMaxAmplitude(final Spectrum spectrum) {
         double maxAmp = 0D;
 
-        for (Frequency frequency : fftFrame.getFrequencies()) {
+        for (Frequency frequency : spectrum.getFrequencies()) {
             maxAmp = Math.max(maxAmp, frequency.getAmplitude());
         }
 
         return maxAmp;
     }
 
-    public static double findMaxAmplitude(final FFTFrame[] fftFrames) {
+    public static double findMaxAmplitude(final Spectrum[] spectra) {
         // double maxAmp = 0D;
         //
-        // for (FFTFrame fftFrame : fftFrames) {
+        // for (Spectrum spectrum : spectra) {
         //     maxAmp = Math.max(maxAmp, findMaxAmplitude(fftFrame));
         // }
         //
         // return maxAmp;
 
-        return Arrays.stream(fftFrames)
+        return Arrays.stream(spectra)
                 .parallel()
-                .flatMap(frame -> Arrays.stream(frame.getFrequencies()))
+                .flatMap(Spectrum::asStream)
                 .mapToDouble(Frequency::getAmplitude)
                 .max()
                 .orElse(0D);
     }
 
-    public static void normalizeFFTResult(final FFTFrame fftFrame, final double maxAmp) {
-        for (Frequency frequency : fftFrame.getFrequencies()) {
+    public static void normalize(final Spectrum spectrum, final double maxAmp) {
+        for (Frequency frequency : spectrum.getFrequencies()) {
             frequency.setAmplitude(frequency.getAmplitude() / maxAmp);
         }
     }
@@ -67,40 +67,40 @@ public final class FFTUtils {
     /**
      * Normalizes each amplitude by dividing all amplitudes by the max amplitude.
      */
-    public static void normalizeFFTResult(final FFTFrame[] fftFrames, final double maxAmp) {
-        // for (FFTFrame fftFrame : fftFrames) {
-        //     normalizeFFTResult(fftFrame, maxAmp);
+    public static void normalize(final Spectrum[] spectra, final double maxAmp) {
+        // for (Spectrum spectrum : spectra) {
+        //     normalize(spectrum, maxAmp);
         // }
 
-        Arrays.stream(fftFrames)
+        Arrays.stream(spectra)
                 .parallel()
-                .flatMap(fftFrame -> Arrays.stream(fftFrame.getFrequencies()))
+                .flatMap(Spectrum::asStream)
                 .forEach(frequency -> frequency.setAmplitude(frequency.getAmplitude() / maxAmp));
     }
 
     /**
      * Converts amplitudes contents of a single FFT frame to a decibel (dB) scale.
      */
-    public static void scaleLogarithmically(final FFTFrame fftFrame) {
-        for (Frequency frequency : fftFrame.getFrequencies()) {
+    public static void scaleLogarithmically(final Spectrum spectrum) {
+        spectrum.forEach(frequency -> {
             frequency.setAmplitude(10D * Math.log10(frequency.getAmplitude() / MAX_AMPLITUDE_INTENSITY));
 
             // establish -100 dB floor (avoid infinitely negative values)
             frequency.setAmplitude(Math.max(frequency.getAmplitude(), -100D));
-        }
+        });
     }
 
     /**
      * Converts amplitudes contents of FFT frames to a decibel (dB) scale.
      */
-    public static void scaleLogarithmically(final FFTFrame[] fftFrames) {
-        // for (FFTFrame frame : fftFrames) {
-        //     scaleLogarithmically(frame);
+    public static void scaleLogarithmically(final Spectrum[] spectra) {
+        // for (Spectrum spectrum : spectra) {
+        //     scaleLogarithmically(spectrum);
         // }
 
-        Arrays.stream(fftFrames)
+        Arrays.stream(spectra)
                 .parallel()
-                .flatMap(fftFrame -> Arrays.stream(fftFrame.getFrequencies()))
+                .flatMap(Spectrum::asStream)
                 .forEach(frequency -> {
                     frequency.setAmplitude(10D * Math.log10(frequency.getAmplitude() / MAX_AMPLITUDE_INTENSITY));
 

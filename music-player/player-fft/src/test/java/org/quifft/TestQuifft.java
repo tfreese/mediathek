@@ -18,9 +18,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.quifft.config.FFTConfig;
-import org.quifft.output.FFTFrame;
-import org.quifft.output.FFTResult;
-import org.quifft.output.Frequency;
+import org.quifft.output.SpectraResult;
+import org.quifft.output.Spectrum;
 import org.quifft.sampling.WindowFunction;
 
 /**
@@ -54,41 +53,41 @@ class TestQuifft {
 
     @Test
     void testAmplitudesBetween0And1WhenNormalized() throws IOException, UnsupportedAudioFileException {
-        final FFTResult result = new QuiFFT(stereo600Hz500MsWAV, new FFTConfig().decibelScale(false).normalized(true)).fullFFT();
+        final SpectraResult result = new QuiFFT(stereo600Hz500MsWAV, new FFTConfig().decibelScale(false).normalized(true)).fullFFT();
 
-        for (FFTFrame frame : result.getFFTFrames()) {
-            for (Frequency frequency : frame.getFrequencies()) {
+        for (Spectrum spectrum : result.getSpectra()) {
+            spectrum.forEach(frequency -> {
                 assertTrue(frequency.getAmplitude() >= 0D);
                 assertTrue(frequency.getAmplitude() <= 1D);
-            }
+            });
         }
     }
 
     @Test
     void testComputeApprox4TimesAsManyFramesWith75PercentOverlap() throws IOException, UnsupportedAudioFileException {
-        final FFTResult noOverlap = new QuiFFT(mono600Hz3SecsWav, new FFTConfig().windowOverlap(0D)).fullFFT();
-        final FFTResult overlap = new QuiFFT(mono600Hz3SecsWav, new FFTConfig().windowOverlap(0.75D)).fullFFT();
+        final SpectraResult noOverlap = new QuiFFT(mono600Hz3SecsWav, new FFTConfig().windowOverlap(0D)).fullFFT();
+        final SpectraResult overlap = new QuiFFT(mono600Hz3SecsWav, new FFTConfig().windowOverlap(0.75D)).fullFFT();
 
-        assertTrue(Math.abs(noOverlap.getFFTFrames().length - (overlap.getFFTFrames().length / 4)) <= 1);
+        assertTrue(Math.abs(noOverlap.getSpectra().length - (overlap.getSpectra().length / 4)) <= 1);
     }
 
     @Test
     void testComputeApproxDoubleAsManyFramesWith50PercentOverlap() throws IOException, UnsupportedAudioFileException {
-        final FFTResult noOverlap = new QuiFFT(mono600Hz3SecsWav, new FFTConfig().windowOverlap(0D)).fullFFT();
-        final FFTResult overlap = new QuiFFT(mono600Hz3SecsWav, new FFTConfig().windowOverlap(0.5D)).fullFFT();
+        final SpectraResult noOverlap = new QuiFFT(mono600Hz3SecsWav, new FFTConfig().windowOverlap(0D)).fullFFT();
+        final SpectraResult overlap = new QuiFFT(mono600Hz3SecsWav, new FFTConfig().windowOverlap(0.5D)).fullFFT();
 
-        assertTrue(Math.abs(noOverlap.getFFTFrames().length - (overlap.getFFTFrames().length / 2)) <= 1);
+        assertTrue(Math.abs(noOverlap.getSpectra().length - (overlap.getSpectra().length / 2)) <= 1);
     }
 
     @Test
     void testKeepFftResultMetadataConstantWhenZeroPadding() throws IOException, UnsupportedAudioFileException {
         final double EXPECTED_WINDOW_DURATION = 46.44D;
-        final FFTResult noPaddingResult = new QuiFFT(mono600Hz3SecsWav, new FFTConfig().windowSize(2048)).fullFFT();
-        final FFTResult withPaddingResult = new QuiFFT(mono600Hz3SecsWav, new FFTConfig().windowSize(2048).numPoints(4096)).fullFFT();
+        final SpectraResult noPaddingResult = new QuiFFT(mono600Hz3SecsWav, new FFTConfig().windowSize(2048)).fullFFT();
+        final SpectraResult withPaddingResult = new QuiFFT(mono600Hz3SecsWav, new FFTConfig().windowSize(2048).numPoints(4096)).fullFFT();
 
         // test window duration
-        assertEquals(EXPECTED_WINDOW_DURATION, noPaddingResult.getFFTFrames()[0].getFrameEndMs(), 0.01D);
-        assertEquals(EXPECTED_WINDOW_DURATION, withPaddingResult.getFFTFrames()[0].getFrameEndMs(), 0.01D);
+        assertEquals(EXPECTED_WINDOW_DURATION, noPaddingResult.getSpectra()[0].getFrameEndMs(), 0.01D);
+        assertEquals(EXPECTED_WINDOW_DURATION, withPaddingResult.getSpectra()[0].getFrameEndMs(), 0.01D);
 
         // test frequency resolution
         assertEquals(21.5, noPaddingResult.getFrequencyResolution(), 0.1D);
@@ -98,60 +97,60 @@ class TestQuifft {
     @Disabled("mp3 currently not supported")
     @Test
     void testKeepMP3MetadataEqualWhetherStereoOrMono() throws IOException, UnsupportedAudioFileException {
-        final FFTResult stereoResult = new QuiFFT(stereo500Hz3SecsMP3).fullFFT();
-        final FFTResult monoResult = new QuiFFT(mono500Hz3SecsMP3).fullFFT();
+        final SpectraResult stereoResult = new QuiFFT(stereo500Hz3SecsMP3).fullFFT();
+        final SpectraResult monoResult = new QuiFFT(mono500Hz3SecsMP3).fullFFT();
 
         assertEquals(stereoResult.getFileDurationMs(), monoResult.getFileDurationMs());
-        assertEquals(stereoResult.getFFTFrames().length, monoResult.getFFTFrames().length);
-        assertEquals(stereoResult.getFFTFrames()[0].getFrameEndMs(), monoResult.getFFTFrames()[0].getFrameEndMs(), 0.001D);
+        assertEquals(stereoResult.getSpectra().length, monoResult.getSpectra().length);
+        assertEquals(stereoResult.getSpectra()[0].getFrameEndMs(), monoResult.getSpectra()[0].getFrameEndMs(), 0.001D);
     }
 
     @Test
     void testKeepWavMetadataEqualWhetherStereoOrMono() throws IOException, UnsupportedAudioFileException {
-        final FFTResult stereoResult = new QuiFFT(stereo600Hz3SecsWav).fullFFT();
-        final FFTResult monoResult = new QuiFFT(mono600Hz3SecsWav).fullFFT();
+        final SpectraResult stereoResult = new QuiFFT(stereo600Hz3SecsWav).fullFFT();
+        final SpectraResult monoResult = new QuiFFT(mono600Hz3SecsWav).fullFFT();
 
         assertEquals(stereoResult.getFileDurationMs(), monoResult.getFileDurationMs());
-        assertEquals(stereoResult.getFFTFrames().length, monoResult.getFFTFrames().length);
-        assertEquals(stereoResult.getFFTFrames()[0].getFrameEndMs(), monoResult.getFFTFrames()[0].getFrameEndMs(), 0.001D);
+        assertEquals(stereoResult.getSpectra().length, monoResult.getSpectra().length);
+        assertEquals(stereoResult.getSpectra()[0].getFrameEndMs(), monoResult.getSpectra()[0].getFrameEndMs(), 0.001D);
     }
 
     @Test
     void testNotAllowLastFramesEndTimesToBeGreaterThanAudioLength() throws IOException, UnsupportedAudioFileException {
         // no overlap (only check last frame)
-        final FFTResult result = new QuiFFT(stereo600Hz3SecsWav, new FFTConfig().windowOverlap(0)).fullFFT();
-        assertEquals(result.getFFTFrames()[result.getFFTFrames().length - 1].getFrameEndMs(), result.getFileDurationMs(), 0.0001D);
+        final SpectraResult result = new QuiFFT(stereo600Hz3SecsWav, new FFTConfig().windowOverlap(0)).fullFFT();
+        assertEquals(result.getSpectra()[result.getSpectra().length - 1].getFrameEndMs(), result.getFileDurationMs(), 0.0001D);
 
         // 50% overlap = 2x the frames (check the last 2 frames)
-        final FFTResult overlapResult = new QuiFFT(stereo600Hz3SecsWav, new FFTConfig().windowOverlap(0.5D)).fullFFT();
-        assertEquals(overlapResult.getFFTFrames()[overlapResult.getFFTFrames().length - 1].getFrameEndMs(), result.getFileDurationMs(), 0.0001D);
-        assertEquals(overlapResult.getFFTFrames()[overlapResult.getFFTFrames().length - 2].getFrameEndMs(), result.getFileDurationMs(), 0.0001D);
+        final SpectraResult overlapResult = new QuiFFT(stereo600Hz3SecsWav, new FFTConfig().windowOverlap(0.5D)).fullFFT();
+        assertEquals(overlapResult.getSpectra()[overlapResult.getSpectra().length - 1].getFrameEndMs(), result.getFileDurationMs(), 0.0001D);
+        assertEquals(overlapResult.getSpectra()[overlapResult.getSpectra().length - 2].getFrameEndMs(), result.getFileDurationMs(), 0.0001D);
     }
 
     @Disabled("mp3 currently not supported")
     @Test
     void testPeakAt500HzFor500HzMonoMP3Signal() throws IOException, UnsupportedAudioFileException {
-        final FFTResult result = new QuiFFT(mono500Hz3SecsMP3).fullFFT();
-        assertEquals(500, FFTUtils.findFrequencyWithHighestAmplitude(result.getFFTFrames()[0]), result.getFrequencyResolution());
+        final SpectraResult result = new QuiFFT(mono500Hz3SecsMP3).fullFFT();
+        assertEquals(500, FFTUtils.findFrequencyWithHighestAmplitude(result.getSpectra()[0]), result.getFrequencyResolution());
     }
 
     @Test
     void testPeakAt500HzFor500HzMonoWavSignal() throws IOException, UnsupportedAudioFileException {
-        final FFTResult result = new QuiFFT(mono500Hz3SecsWav).fullFFT();
-        assertEquals(500, FFTUtils.findFrequencyWithHighestAmplitude(result.getFFTFrames()[0]), result.getFrequencyResolution());
+        final SpectraResult result = new QuiFFT(mono500Hz3SecsWav).fullFFT();
+        assertEquals(500, FFTUtils.findFrequencyWithHighestAmplitude(result.getSpectra()[0]), result.getFrequencyResolution());
     }
 
     @Disabled("mp3 currently not supported")
     @Test
     void testPeakAt500HzFor500HzStereoMP3Signal() throws IOException, UnsupportedAudioFileException {
-        final FFTResult result = new QuiFFT(stereo500Hz3SecsMP3).fullFFT();
-        assertEquals(500, FFTUtils.findFrequencyWithHighestAmplitude(result.getFFTFrames()[0]), result.getFrequencyResolution());
+        final SpectraResult result = new QuiFFT(stereo500Hz3SecsMP3).fullFFT();
+        assertEquals(500, FFTUtils.findFrequencyWithHighestAmplitude(result.getSpectra()[0]), result.getFrequencyResolution());
     }
 
     @Test
     void testPeakAt500HzFor500HzStereoWavSignal() throws IOException, UnsupportedAudioFileException {
-        final FFTResult result = new QuiFFT(stereo500Hz3SecsWav).fullFFT();
-        assertEquals(500, FFTUtils.findFrequencyWithHighestAmplitude(result.getFFTFrames()[0]), result.getFrequencyResolution());
+        final SpectraResult result = new QuiFFT(stereo500Hz3SecsWav).fullFFT();
+        assertEquals(500, FFTUtils.findFrequencyWithHighestAmplitude(result.getSpectra()[0]), result.getFrequencyResolution());
     }
 
     @Test
@@ -199,11 +198,11 @@ class TestQuifft {
 
     @Test
     void testTakeHalfAsMuchTimeBetweenWindowsWith50PercentOverlap() throws IOException, UnsupportedAudioFileException {
-        final FFTResult noOverlap = new QuiFFT(mono600Hz3SecsWav, new FFTConfig().windowOverlap(0D)).fullFFT();
-        final FFTResult overlap = new QuiFFT(mono600Hz3SecsWav, new FFTConfig().windowOverlap(0.5D)).fullFFT();
+        final SpectraResult noOverlap = new QuiFFT(mono600Hz3SecsWav, new FFTConfig().windowOverlap(0D)).fullFFT();
+        final SpectraResult overlap = new QuiFFT(mono600Hz3SecsWav, new FFTConfig().windowOverlap(0.5D)).fullFFT();
 
-        final double noOverlapTime = noOverlap.getFFTFrames()[1].getFrameStartMs() - noOverlap.getFFTFrames()[0].getFrameStartMs();
-        final double overlapTime = overlap.getFFTFrames()[1].getFrameStartMs() - overlap.getFFTFrames()[0].getFrameStartMs();
+        final double noOverlapTime = noOverlap.getSpectra()[1].getFrameStartMs() - noOverlap.getSpectra()[0].getFrameStartMs();
+        final double overlapTime = overlap.getSpectra()[1].getFrameStartMs() - overlap.getSpectra()[0].getFrameStartMs();
 
         assertEquals(overlapTime, noOverlapTime / 2D, 0.001D);
     }

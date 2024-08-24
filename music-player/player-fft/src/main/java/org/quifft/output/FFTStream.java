@@ -12,10 +12,10 @@ import org.quifft.sampling.WindowFunction;
 
 /**
  * FFTStream computes an FFT on an audio file incrementally as opposed to all at once.<br>
- * It exposes an Iterator interface for computing {@link FFTFrame}s one at a time.<br>
- * This can be a useful alternative to {@link FFTResult} if your audio file is large or you are space-constrained.
+ * It exposes an Iterator interface for computing {@link Spectrum}s one at a time.<br>
+ * This can be a useful alternative to {@link SpectraResult} if your audio file is large, or you are space-constrained.
  */
-public class FFTStream extends AbstractFFTObject implements Iterator<FFTFrame> {
+public class FFTStream extends AbstractFFTObject implements Iterator<Spectrum> {
 
     private AudioReader audioReader;
 
@@ -31,7 +31,7 @@ public class FFTStream extends AbstractFFTObject implements Iterator<FFTFrame> {
     }
 
     @Override
-    public FFTFrame next() {
+    public Spectrum next() {
         int[] nextWindow = audioReader.next();
 
         final double startTimeMs = frameCount * getWindowDurationMs() * (1D - getFFTConfig().getWindowOverlap());
@@ -41,18 +41,18 @@ public class FFTStream extends AbstractFFTObject implements Iterator<FFTFrame> {
 
         frameCount++;
 
-        final FFTFrame nextFrame = FFTComputationWrapper.doFFT(nextWindow, startTimeMs, getWindowDurationMs(), getFileDurationMs(), sampleRate, getFFTConfig());
+        final Spectrum nextSpectrum = FFTComputationWrapper.createSpectrum(nextWindow, startTimeMs, getWindowDurationMs(), getFileDurationMs(), sampleRate, getFFTConfig());
 
         if (getFFTConfig().isNormalized()) {
-            maxAmplitude = Math.max(maxAmplitude, FFTUtils.findMaxAmplitude(nextFrame));
-            FFTUtils.normalizeFFTResult(nextFrame, maxAmplitude);
+            maxAmplitude = Math.max(maxAmplitude, FFTUtils.findMaxAmplitude(nextSpectrum));
+            FFTUtils.normalize(nextSpectrum, maxAmplitude);
         }
 
         if (getFFTConfig().isDecibelScale()) {
-            FFTUtils.scaleLogarithmically(nextFrame);
+            FFTUtils.scaleLogarithmically(nextSpectrum);
         }
 
-        return nextFrame;
+        return nextSpectrum;
     }
 
     @Override

@@ -6,12 +6,14 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.WindowConstants;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.freese.player.PlayerSettings;
+import de.freese.player.utils.image.ImageFactory;
 
 /**
  * @author Thomas Freese
@@ -32,7 +34,7 @@ public final class PlayerFrame {
         return frame;
     }
 
-    static void init(final String[] args) {
+    static void init(final String[] args) throws Exception {
         LOGGER.info("initialize application");
 
         final JFrame jFrame = new JFrame();
@@ -40,6 +42,9 @@ public final class PlayerFrame {
         jFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         jFrame.addWindowListener(new MainFrameListener());
         jFrame.setLayout(new BorderLayout());
+
+        jFrame.add(new JLabel(ImageFactory.getIcon("images/media-play-white.svg")), BorderLayout.NORTH);
+        jFrame.add(new JLabel(ImageFactory.getIcon("images/media-play-black.svg")), BorderLayout.SOUTH);
 
         // frame.setSize(800, 600);
         // frame.setSize(1280, 768);
@@ -65,7 +70,7 @@ public final class PlayerFrame {
         PlayerSettings.getExecutorServicePipeReader().close();
 
         frame = null;
-        
+
         System.exit(0);
     }
 

@@ -15,7 +15,7 @@ public enum AudioCodec {
     FLAC("flac"),
     M4A("m4a"),
     M4B("m4b"),
-    MIDI("midi"),
+    // MIDI("midi"),
     MP3("mp3"),
     OGG("ogg"),
     WAVE("wav"),

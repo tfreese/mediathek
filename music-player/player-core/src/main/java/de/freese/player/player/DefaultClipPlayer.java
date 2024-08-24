@@ -1,52 +1,42 @@
 // Created: 14 Juli 2024
 package de.freese.player.player;
 
-import java.util.Objects;
-import java.util.concurrent.Callable;
 import java.util.concurrent.Executor;
 
 import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import de.freese.player.PlayerSettings;
 import de.freese.player.exception.PlayerException;
+import de.freese.player.input.AudioInputStreamFactory;
 
 /**
  * @author Thomas Freese
  */
-class DefaultClipPlayer implements ClipPlayer {
-    private final Callable<AudioInputStream> audioInputStreamCallable;
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+public class DefaultClipPlayer extends AbstractPlayer {
 
-    private AudioInputStream audioInputStream;
     private Clip clip;
     private volatile boolean looping;
     private volatile boolean running;
 
-    DefaultClipPlayer(final Callable<AudioInputStream> audioInputStreamCallable) {
-        super();
+    @Override
+    public void pause() {
+        getLogger().debug("pause: {}", getCurrentAudioSource());
 
-        this.audioInputStreamCallable = Objects.requireNonNull(audioInputStreamCallable, "audioInputStreamCallable required");
+        running = false;
+
+        if (clip == null) {
+            return;
+        }
+
+        clip.stop();
     }
-
-    // public void init(final AudioInputStream audioInputStream) throws Exception {
-    //     this.audioInputStream = Objects.requireNonNull(audioInputStream, "audioInputStream required");
-    //
-    //     getLogger().debug("Play audio format: {}", audioInputStream.getFormat());
-    //
-    //     clip = AudioSystem.getClip();
-    //     clip.open(audioInputStream);
-    // }
 
     // @Override
     // public boolean isResumed() {
-    //     return getClip().getMicrosecondPosition() > 0;
+    //     return clip.getMicrosecondPosition() > 0;
     // }
     //
     // @Override
@@ -56,7 +46,7 @@ class DefaultClipPlayer implements ClipPlayer {
     //     getExecutor().execute(() -> {
     //         getLogger().debug("loop");
     //
-    //         getClip().start();
+    //         clip.start();
     //
     //         while (looping) {
     //             getClip().loop(Clip.LOOP_CONTINUOUSLY);
@@ -65,58 +55,44 @@ class DefaultClipPlayer implements ClipPlayer {
     // }
 
     @Override
-    public void close() throws PlayerException {
+    public void play() {
         try {
-            if (clip != null) {
-                stop();
+            setCurrentAudioSource(getAudioSource(getPlayerIndex()));
+            setAudioInputStream(AudioInputStreamFactory.createAudioInputStream(getCurrentAudioSource()));
 
-                getClip().close();
-                clip = null;
+            final AudioFormat audioFormat = getAudioInputStream().getFormat();
+            getLogger().debug("Play audio format: {}", audioFormat);
 
-                audioInputStream.close();
-            }
+            final DataLine.Info info = new DataLine.Info(Clip.class, audioFormat);
+            clip = (Clip) AudioSystem.getLine(info);
+            // clip = AudioSystem.getClip();
+
+            clip.open(getAudioInputStream());
         }
-        catch (PlayerException ex) {
+        catch (RuntimeException ex) {
             throw ex;
         }
         catch (Exception ex) {
             throw new PlayerException(ex);
         }
-    }
-
-    @Override
-    public void pause() {
-        getLogger().debug("pause");
-
-        running = false;
-
-        if (getClip() == null) {
-            return;
-        }
-
-        getClip().stop();
-    }
-
-    @Override
-    public void play() {
-        checkInitialized();
 
         running = true;
-        getClip().setFramePosition(0);
+        clip.setFramePosition(0);
 
         getExecutor().execute(() -> {
-            getLogger().info("play");
+            getLogger().info("play: {}", getCurrentAudioSource());
 
-            getClip().start();
+            clip.start();
 
             while (true) {
-                if (getClip().getMicrosecondPosition() == getClip().getMicrosecondLength()) {
+                if (clip.getMicrosecondPosition() == clip.getMicrosecondLength()) {
                     running = false;
+                    stop();
                     break;
                 }
 
                 if (!running) {
-                    getLogger().debug("not running");
+                    getLogger().debug("not running: {}", getCurrentAudioSource());
                     break;
                 }
             }
@@ -125,18 +101,21 @@ class DefaultClipPlayer implements ClipPlayer {
 
     @Override
     public void resume() {
-        checkInitialized();
+        if (clip == null) {
+            return;
+        }
 
         running = true;
 
         getExecutor().execute(() -> {
-            getLogger().debug("resume");
+            getLogger().debug("resume: {}", getCurrentAudioSource());
 
-            getClip().start();
+            clip.start();
 
             while (true) {
-                if (getClip().getMicrosecondPosition() == getClip().getMicrosecondLength()) {
+                if (clip.getMicrosecondPosition() == clip.getMicrosecondLength()) {
                     running = false;
+                    stop();
                     break;
                 }
 
@@ -150,41 +129,37 @@ class DefaultClipPlayer implements ClipPlayer {
 
     @Override
     public void stop() {
-        getLogger().debug("stop");
+        getLogger().debug("stop: {}", getCurrentAudioSource());
 
         running = false;
         looping = false;
 
-        if (getClip() == null) {
+        if (clip == null) {
             return;
         }
 
         // Continues data line I/O until its buffer is drained.
         // getClip().drain();
 
-        getClip().stop();
+        clip.stop();
 
-        getClip().setFramePosition(0);
+        clip.setFramePosition(0);
+
+        close();
     }
 
-    protected void checkInitialized() {
-        if (clip != null && audioInputStream != null) {
-            return;
-        }
-
+    protected void close() {
         try {
-            audioInputStream = audioInputStreamCallable.call();
+            if (clip != null) {
+                clip.close();
+                clip = null;
 
-            final AudioFormat audioFormat = audioInputStream.getFormat();
-            getLogger().debug("Play audio format: {}", audioFormat);
-
-            final DataLine.Info info = new DataLine.Info(Clip.class, audioFormat);
-            clip = (Clip) AudioSystem.getLine(info);
-
-            // clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
+                getAudioInputStream().close();
+                setAudioInputStream(null);
+                setCurrentAudioSource(null);
+            }
         }
-        catch (RuntimeException ex) {
+        catch (PlayerException ex) {
             throw ex;
         }
         catch (Exception ex) {
@@ -192,15 +167,7 @@ class DefaultClipPlayer implements ClipPlayer {
         }
     }
 
-    protected Clip getClip() {
-        return clip;
-    }
-
     protected Executor getExecutor() {
         return PlayerSettings.getExecutorService();
-    }
-
-    protected Logger getLogger() {
-        return logger;
     }
 }

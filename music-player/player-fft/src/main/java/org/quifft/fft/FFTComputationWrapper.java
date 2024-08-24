@@ -1,23 +1,34 @@
 package org.quifft.fft;
 
 import org.quifft.config.FFTConfig;
-import org.quifft.output.FFTFrame;
 import org.quifft.output.Frequency;
+import org.quifft.output.Spectrum;
 
 /**
- * Uses Princeton FFT Implementation to compute {@link FFTFrame}s
+ * Uses Princeton FFT Implementation to compute {@link Spectrum}s
  *
  * @see InplaceFFT
  */
 public final class FFTComputationWrapper {
-    public static FFTFrame doFFT(final int[] wave,
-                                 final float audioSampleRate,
-                                 final FFTConfig config) {
-        return doFFT(wave, 0, 0, 0, audioSampleRate, config);
+    /**
+     * Computes an FFT for a windowed time domain signal.
+     *
+     * @param wave sampled values from audio waveform
+     * @param audioSampleRate sample rate of audio file
+     * @param config parameters used for this FFT
+     *
+     * @return a single Spectrum that is the result of an FFT being computed on wave with given parameters
+     */
+    public static Spectrum createSpectrum(final int[] wave,
+                                          final float audioSampleRate,
+                                          final FFTConfig config) {
+        final Frequency[] frequencies = doFFT(wave, audioSampleRate, config);
+
+        return new Spectrum(frequencies, 0, 0);
     }
 
     /**
-     * Computes an FFT for a windowed time domain signal
+     * Computes an FFT for a windowed time domain signal.
      *
      * @param wave sampled values from audio waveform
      * @param startTimeMs timestamp in the original audio file at which this sample window begins
@@ -26,14 +37,34 @@ public final class FFTComputationWrapper {
      * @param audioSampleRate sample rate of audio file
      * @param config parameters used for this FFT
      *
-     * @return a single FFTFrame that is the result of an FFT being computed on wave with given parameters
+     * @return a single Spectrum that is the result of an FFT being computed on wave with given parameters
      */
-    public static FFTFrame doFFT(final int[] wave,
-                                 final double startTimeMs,
-                                 final double windowDurationMs,
-                                 final double fileDurationMs,
-                                 final float audioSampleRate,
-                                 final FFTConfig config) {
+    public static Spectrum createSpectrum(final int[] wave,
+                                          final double startTimeMs,
+                                          final double windowDurationMs,
+                                          final double fileDurationMs,
+                                          final float audioSampleRate,
+                                          final FFTConfig config) {
+        final Frequency[] frequencies = doFFT(wave, audioSampleRate, config);
+
+        // Last window(s) will probably be partial.
+        final double endTimeMs = Math.min(fileDurationMs, startTimeMs + windowDurationMs);
+
+        return new Spectrum(frequencies, startTimeMs, endTimeMs);
+    }
+
+    /**
+     * Computes an FFT for a windowed time domain signal.
+     *
+     * @param wave sampled values from audio waveform
+     * @param audioSampleRate sample rate of audio file
+     * @param config parameters used for this FFT
+     *
+     * @return a single Spectrum that is the result of an FFT being computed on wave with given parameters
+     */
+    private static Frequency[] doFFT(final int[] wave,
+                                     final float audioSampleRate,
+                                     final FFTConfig config) {
         final Complex[] complexWave = Complex.toComplex(wave);
         InplaceFFT.fft(complexWave);
 
@@ -48,10 +79,7 @@ public final class FFTComputationWrapper {
             frequencies[i] = new Frequency(i * frequencyAxisIncrement, scaledAmplitude);
         }
 
-        // Last window(s) will probably be partial.
-        final double endTimeMs = Math.min(fileDurationMs, startTimeMs + windowDurationMs);
-
-        return new FFTFrame(startTimeMs, endTimeMs, frequencies);
+        return frequencies;
     }
 
     private FFTComputationWrapper() {

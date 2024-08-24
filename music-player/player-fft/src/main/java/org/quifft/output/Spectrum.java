@@ -1,10 +1,14 @@
 package org.quifft.output;
 
+import java.util.Arrays;
+import java.util.function.Consumer;
+import java.util.stream.Stream;
+
 /**
  * The result of an FFT being computed for a single sampling window of an audio file.<br>
- * An {@link FFTResult} for a full audio file will contain an array of FFTFrames.
+ * An {@link SpectraResult} for a full audio file will contain an array of {@link Spectrum}.
  */
-public class FFTFrame {
+public class Spectrum {
     /**
      * End time in milliseconds from the original audio file for the sampling window used to compute this frame.
      */
@@ -19,12 +23,22 @@ public class FFTFrame {
      */
     private final Frequency[] frequencies;
 
-    public FFTFrame(final double startMs, final double endMs, final Frequency[] frequencies) {
+    public Spectrum(final Frequency[] frequencies, final double frameStartMs, final double frameEndMs) {
         super();
 
-        this.frameStartMs = startMs;
-        this.frameEndMs = endMs;
         this.frequencies = frequencies;
+        this.frameStartMs = frameStartMs;
+        this.frameEndMs = frameEndMs;
+    }
+
+    public Stream<Frequency> asStream() {
+        return Arrays.stream(frequencies);
+    }
+
+    public void forEach(final Consumer<Frequency> consumer) {
+        for (Frequency frequency : frequencies) {
+            consumer.accept(frequency);
+        }
     }
 
     public double getFrameEndMs() {
@@ -37,5 +51,13 @@ public class FFTFrame {
 
     public Frequency[] getFrequencies() {
         return frequencies;
+    }
+
+    public Frequency getFrequency(final int index) {
+        return frequencies[index];
+    }
+
+    public int length() {
+        return frequencies.length;
     }
 }

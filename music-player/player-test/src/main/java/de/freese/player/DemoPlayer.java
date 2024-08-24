@@ -47,7 +47,7 @@ public final class DemoPlayer {
         final URI uri = Path.of("samples/sample.wav").toUri();
         // final URI uri = Path.of("samples/sample.wma").toUri();
 
-        // try (ClipPlayer player = PlayerFactory.createPlayer(uri)) {
+        // try (Player player = PlayerFactory.createPlayer(uri)) {
         //     // player.play();
         //
         //     TimeUnit.SECONDS.sleep(4);

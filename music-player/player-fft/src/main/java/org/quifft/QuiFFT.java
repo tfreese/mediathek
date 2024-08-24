@@ -9,9 +9,9 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import org.quifft.config.ConfigValidator;
 import org.quifft.config.FFTConfig;
 import org.quifft.fft.FFTComputationWrapper;
-import org.quifft.output.FFTFrame;
-import org.quifft.output.FFTResult;
 import org.quifft.output.FFTStream;
+import org.quifft.output.SpectraResult;
+import org.quifft.output.Spectrum;
 import org.quifft.reader.AudioReader;
 import org.quifft.reader.AudioReaderFactory;
 import org.quifft.sampling.SampleWindowExtractor;
@@ -53,13 +53,13 @@ public final class QuiFFT {
     /**
      * Performs an FFT for the entirety of the audio file
      *
-     * @return an FFT result containing metadata of this FFT and an array of all {@link FFTFrame}s computed
+     * @return an FFT result containing metadata of this FFT and an array of all {@link Spectrum}s computed
      */
-    public FFTResult fullFFT() {
+    public SpectraResult fullFFT() {
         ConfigValidator.validate(fftConfig, false);
 
-        final FFTResult fftResult = new FFTResult();
-        fftResult.setMetadata(audioReader, fftConfig);
+        final SpectraResult result = new SpectraResult();
+        result.setMetadata(audioReader, fftConfig);
 
         final boolean isStereo = audioReader.isStereo();
         final float sampleRate = audioReader.getAudioFormat().getSampleRate();
@@ -68,36 +68,36 @@ public final class QuiFFT {
         final int lengthOfWave = wave.length / (isStereo ? 2 : 1);
         final double frameOverlapMultiplier = 1D / (1D - fftConfig.getWindowOverlap());
         final int numFrames = (int) Math.ceil(((double) lengthOfWave / fftConfig.getWindowSize()) * frameOverlapMultiplier);
-        final FFTFrame[] fftFrames = new FFTFrame[numFrames];
+        final Spectrum[] spectra = new Spectrum[numFrames];
 
         final SampleWindowExtractor windowExtractor = new SampleWindowExtractor(isStereo, fftConfig.getWindowSize(),
                 fftConfig.getWindowFunction(), fftConfig.getWindowOverlap(), fftConfig.zeroPadLength());
         double currentAudioTimeMs = 0D;
 
-        for (int i = 0; i < fftFrames.length; i++) {
+        for (int i = 0; i < spectra.length; i++) {
             // sampleWindow is input to FFT -- may be zero-padded if numPoints > windowSize
             final int[] sampleWindow = windowExtractor.extractWindow(wave, i);
 
             // compute next current FFT frame
-            fftFrames[i] = FFTComputationWrapper.doFFT(sampleWindow, currentAudioTimeMs, fftResult.getWindowDurationMs(),
-                    fftResult.getFileDurationMs(), sampleRate, fftConfig);
+            spectra[i] = FFTComputationWrapper.createSpectrum(sampleWindow, currentAudioTimeMs, result.getWindowDurationMs(),
+                    result.getFileDurationMs(), sampleRate, fftConfig);
 
             // adjust current audio time
-            currentAudioTimeMs += fftResult.getWindowDurationMs() * (1 - fftConfig.getWindowOverlap());
+            currentAudioTimeMs += result.getWindowDurationMs() * (1 - fftConfig.getWindowOverlap());
         }
 
         if (fftConfig.isNormalized()) {
-            final double maxAmplitude = FFTUtils.findMaxAmplitude(fftFrames);
-            FFTUtils.normalizeFFTResult(fftFrames, maxAmplitude);
+            final double maxAmplitude = FFTUtils.findMaxAmplitude(spectra);
+            FFTUtils.normalize(spectra, maxAmplitude);
         }
 
         if (fftConfig.isDecibelScale()) {
-            FFTUtils.scaleLogarithmically(fftFrames);
+            FFTUtils.scaleLogarithmically(spectra);
         }
 
-        fftResult.setFftFrames(fftFrames);
+        result.setSpectra(spectra);
 
-        return fftResult;
+        return result;
     }
 
     public FFTConfig getFFTConfig() {

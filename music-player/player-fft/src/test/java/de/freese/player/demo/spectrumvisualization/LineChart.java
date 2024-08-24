@@ -18,7 +18,7 @@ import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.quifft.output.Frequency;
+import org.quifft.output.Spectrum;
 
 /**
  * @author Thomas Freese
@@ -88,13 +88,13 @@ final class LineChart extends JFrame {
         setVisible(true);
     }
 
-    void updateChartData(final Frequency[] frequencies, final long timestamp) {
+    void updateChartData(final Spectrum spectrum) {
+        final long timestamp = (long) spectrum.getFrameStartMs() / 1000;
+
         chart.setTitle(getMMSSTimestamp(timestamp));
 
         final XYSeries series = data.getSeries("f");
 
-        for (Frequency frequency : frequencies) {
-            series.addOrUpdate(frequency.getFrequency(), frequency.getAmplitude());
-        }
+        spectrum.forEach(frequency -> series.addOrUpdate(frequency.getFrequency(), frequency.getAmplitude()));
     }
 }

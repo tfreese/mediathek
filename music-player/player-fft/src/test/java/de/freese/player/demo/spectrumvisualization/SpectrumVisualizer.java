@@ -4,7 +4,6 @@ package de.freese.player.demo.spectrumvisualization;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.Executors;
@@ -19,9 +18,8 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import org.quifft.QuiFFT;
 import org.quifft.config.FFTConfig;
-import org.quifft.output.FFTFrame;
 import org.quifft.output.FFTStream;
-import org.quifft.output.Frequency;
+import org.quifft.output.Spectrum;
 import org.quifft.sampling.WindowFunction;
 
 /**
@@ -37,7 +35,7 @@ public final class SpectrumVisualizer {
      */
     private static FFTStream fftStream;
 
-    public static void main(final String[] args) throws Exception {
+    public static void main(final String[] args) {
         final SpectrumVisualizer visualizer = new SpectrumVisualizer();
         LINE_CHART.init();
         visualizer.visualizeSpectrum();
@@ -45,12 +43,10 @@ public final class SpectrumVisualizer {
 
     private static void graphThenComputeNextFrame() {
         if (fftStream.hasNext()) {
-            final FFTFrame nextFrame = fftStream.next();
+            final Spectrum nextSpectrum = fftStream.next();
 
             // Graph currently stored frame
-            final Frequency[] frequencies = nextFrame.getFrequencies();
-            final long timestamp = (long) nextFrame.getFrameStartMs() / 1000;
-            LINE_CHART.updateChartData(frequencies, timestamp);
+            LINE_CHART.updateChartData(nextSpectrum);
         }
         else { // otherwise song has ended, so end program
             System.exit(0);
@@ -59,7 +55,7 @@ public final class SpectrumVisualizer {
 
     private final Path song;
 
-    private SpectrumVisualizer() throws URISyntaxException {
+    private SpectrumVisualizer() {
         super();
 
         // final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();

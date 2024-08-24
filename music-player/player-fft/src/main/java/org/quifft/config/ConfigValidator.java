@@ -9,7 +9,7 @@ public final class ConfigValidator {
      * Runs through checklist of parameter validations and throws exception if any issues are identified.
      *
      * @param config parameters of the FFT to be computed
-     * @param isFFTStream true if is FFTStream, false if is FFTResult
+     * @param isFFTStream true if is FFTStream, false if is SpectraResult
      *
      * @throws BadConfigException if there is an invalid parameter
      */

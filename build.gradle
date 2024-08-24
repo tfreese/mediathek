@@ -26,6 +26,12 @@ subprojects {
         }
 
         dependencies {
+            dependencySet(group: "org.apache.xmlgraphics", version: "$version_batik") {
+                entry "batik-codec"
+                entry "batik-swing"
+                entry "batik-transcoder"
+            }
+            
             dependency("org.jfree:jfreechart:$version_jfreechart")
         }
     }

@@ -2,6 +2,7 @@
 package de.freese.player.input;
 
 import java.net.URI;
+import java.nio.file.Path;
 import java.time.Duration;
 
 /**
@@ -46,14 +47,18 @@ public interface AudioSource {
 
     String getTitle();
 
-    String getTrack();
+    Path getTmpFile();
 
-    URI getUri();
+    String getTrack();
 
     // /**
     //  * If 256 no volume change will be performed.
     //  */
     // Integer getVolume();
 
+    URI getUri();
+
     boolean isCompilation();
+
+    void setTmpFile(Path tmpFile);
 }

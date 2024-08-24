@@ -12,7 +12,7 @@ import java.util.Objects;
 
 import de.freese.player.exception.PlayerException;
 import de.freese.player.input.AudioSource;
-import de.freese.player.input.FileAudioSource;
+import de.freese.player.input.DefaultAudioSource;
 
 /**
  * @author Thomas Freese
@@ -56,7 +56,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
             getLogger().debug("info: {}", metaData);
         }
 
-        final FileAudioSource audioFile = parseMetaData(output);
+        final DefaultAudioSource audioFile = parseMetaData(output);
         audioFile.setUri(uri);
         audioFile.setMetaData(metaData);
 
@@ -68,8 +68,8 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
         return super.getVersion();
     }
 
-    private FileAudioSource parseMetaData(final List<String> output) {
-        final FileAudioSource audioSource = new FileAudioSource();
+    private DefaultAudioSource parseMetaData(final List<String> output) {
+        final DefaultAudioSource audioSource = new DefaultAudioSource();
 
         // Format
         final String format = parseMetaDataFormat(output);

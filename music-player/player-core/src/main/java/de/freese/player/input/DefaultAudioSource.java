@@ -8,7 +8,7 @@ import java.time.Duration;
 /**
  * @author Thomas Freese
  */
-public class FileAudioSource implements AudioSource {
+public class DefaultAudioSource implements AudioSource {
     private String album;
     private String artist;
     private int bitRate;
@@ -86,6 +86,7 @@ public class FileAudioSource implements AudioSource {
         return title;
     }
 
+    @Override
     public Path getTmpFile() {
         return tmpFile;
     }
@@ -157,6 +158,7 @@ public class FileAudioSource implements AudioSource {
         this.title = title;
     }
 
+    @Override
     public void setTmpFile(final Path tmpFile) {
         this.tmpFile = tmpFile;
     }
@@ -171,8 +173,9 @@ public class FileAudioSource implements AudioSource {
 
     @Override
     public String toString() {
-        return String.format(
-                "%s format=%s, bitrate=%s, samplingrate=%s, duration=%s, channels=%s",
-                getClass().getName(), format, bitRate, samplingRate, duration, channels);
+        // return String.format(
+        //         "%s format=%s, bitrate=%s, samplingrate=%s, duration=%s, channels=%s",
+        //         getClass().getName(), format, bitRate, samplingRate, duration, channels);
+        return getUri().toString();
     }
 }

@@ -88,7 +88,7 @@ public final class AudioSynth {
         // // AudioSystem.write(audioInputStream, AudioFileFormat.Type.AU, new File(fileName.getText() + ".au"));
         // AudioSystem.write(audioInputStream, AudioFileFormat.Type.WAVE, new File(fileName.getText() + ".wav"));
 
-        // Thread.ofPlatform().daemon().name("player-", 1).start(new ClipPlayer(sourceDataLine));
+        // Thread.ofPlatform().daemon().name("player-", 1).start(new Player(sourceDataLine));
         Thread.ofVirtual().name("player-", 1).start(() -> {
             try (InputStream inputStream = new ByteArrayInputStream(audioData);
                  AudioInputStream audioInputStream = new AudioInputStream(inputStream, audioFormat, audioData.length / audioFormat.getFrameSize())) {
