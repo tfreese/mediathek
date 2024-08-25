@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Iterator;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -16,11 +17,11 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import org.quifft.QuiFFT;
-import org.quifft.config.FFTConfig;
-import org.quifft.output.FFTStream;
-import org.quifft.output.Spectrum;
-import org.quifft.sampling.WindowFunction;
+import de.freese.player.fft.FFTFactory;
+import de.freese.player.fft.config.FFTConfig;
+import de.freese.player.fft.output.Spectrum;
+import de.freese.player.fft.output.SpectrumStream;
+import de.freese.player.fft.sampling.WindowFunction;
 
 /**
  * @author Thomas Freese
@@ -30,10 +31,9 @@ public final class SpectrumVisualizer {
      * Wrapper for JFreeChart line graph
      */
     private static final LineChart LINE_CHART = new LineChart();
-    /**
-     * FFTStream used to compute FFT frames
-     */
-    private static FFTStream fftStream;
+    
+    private static Iterator<Spectrum> spectrumIterator;
+    private static SpectrumStream spectrumStream;
 
     public static void main(final String[] args) {
         final SpectrumVisualizer visualizer = new SpectrumVisualizer();
@@ -42,8 +42,8 @@ public final class SpectrumVisualizer {
     }
 
     private static void graphThenComputeNextFrame() {
-        if (fftStream.hasNext()) {
-            final Spectrum nextSpectrum = fftStream.next();
+        if (spectrumIterator.hasNext()) {
+            final Spectrum nextSpectrum = spectrumIterator.next();
 
             // Graph currently stored frame
             LINE_CHART.updateChartData(nextSpectrum);
@@ -65,23 +65,21 @@ public final class SpectrumVisualizer {
     }
 
     private void visualizeSpectrum() {
-        // Obtain FFTStream for song from QuiFFT
-        QuiFFT quiFFT = null;
-
+        // Obtain SpectrumStream for song.
         try {
-            // quiFFT = new QuiFFT(song, new FFTConfig().windowSize(8192).windowOverlap(0.75D)); // decibelScale
-            quiFFT = new QuiFFT(song, new FFTConfig().windowSize(8192).windowOverlap(0.75D).normalized(true).decibelScale(false).windowFunction(WindowFunction.RECTANGULAR));
-
-            // final AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(Files.newInputStream(song)));
-            // quiFFT = new QuiFFT(new DefaultAudioReader(audioInputStream),
-            //         new FFTConfig().windowSize(8192).windowOverlap(0.75D).normalized(true).decibelScale(false).windowFunction(WindowFunction.RECTANGULAR));
+            spectrumStream = FFTFactory.createStream(song, new FFTConfig()
+                    .windowSize(8192)
+                    .windowOverlap(0.75D)
+                    .normalized(true)
+                    .decibelScale(false)
+                    .windowFunction(WindowFunction.RECTANGULAR));
+            spectrumIterator = spectrumStream.iterator();
         }
         catch (IOException | UnsupportedAudioFileException ex) {
             ex.printStackTrace();
         }
 
-        fftStream = quiFFT.fftStream();
-        System.out.println(fftStream);
+        System.out.println(spectrumStream);
 
         // Start playing audio
         Thread.ofVirtual().start(() -> {
@@ -97,8 +95,8 @@ public final class SpectrumVisualizer {
             }
         });
 
-        // Calculate time between consecutive FFT frames
-        final double msBetweenFFTs = fftStream.getWindowDurationMs() * (1D - fftStream.getFFTConfig().getWindowOverlap());
+        // Calculate time between consecutive FFT frames.
+        final double msBetweenFFTs = spectrumStream.getWindowDurationMs() * (1D - spectrumStream.getFFTConfig().getWindowOverlap());
         final long nanoTimeBetweenFFTs = Math.round(msBetweenFFTs * Math.pow(10D, 6D));
 
         // Begin visualization cycle

@@ -4,9 +4,6 @@ Music Player.
 
 == Link
 
-* https://github.com/mileshenrichs/QuiFFT[QuiFFT,window="_blank"]
-* https://github.com/mileshenrichs/quifft-examples[quifft-examples,window="_blank"]
-
 * https://github.com/JorenSix/TarsosTranscoder[TarsosTranscoder,window="_blank"]
 * https://github.com/bramp/ffmpeg-cli-wrapper[ffmpeg-cli-wrapper,window="_blank"]
 * https://github.com/processing/processing-sound[processing-sound,window="_blank"]

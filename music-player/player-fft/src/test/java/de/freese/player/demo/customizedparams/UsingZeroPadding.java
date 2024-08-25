@@ -6,11 +6,10 @@ import java.nio.file.Path;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import org.quifft.QuiFFT;
-import org.quifft.config.FFTConfig;
-import org.quifft.output.Frequency;
-import org.quifft.output.SpectraResult;
-import org.quifft.output.Spectrum;
+import de.freese.player.fft.FFTFactory;
+import de.freese.player.fft.config.FFTConfig;
+import de.freese.player.fft.output.Frequency;
+import de.freese.player.fft.output.SpectraResult;
 
 /**
  * @author Thomas Freese
@@ -35,32 +34,30 @@ public final class UsingZeroPadding {
         SpectraResult result = null;
 
         try {
-            // create QuiFFT instance with window sizes of 1000 and num points of 1024
+            // create FFT with window sizes of 1000 and num points of 1024
             // (each window will be padded by 1024 - 1000 = 24 zeroes)
-            final QuiFFT quiFFT = new QuiFFT(sineWave600Hz, new FFTConfig().windowSize(1000).numPoints(1024));
-            result = quiFFT.fullFFT();
+            result = FFTFactory.createFull(sineWave600Hz, new FFTConfig().windowSize(1000).numPoints(1024));
         }
         catch (IOException ex) {
-            System.out.println("An I/O exception occurred while QuiFFT was opening an input stream to the audio file");
+            System.out.println("An I/O exception occurred when opening an input stream to the audio file");
         }
         catch (UnsupportedAudioFileException ex) {
-            System.out.println("QuiFFT was given an invalid audio file");
+            System.out.println("Invalid audio file");
         }
 
         // print the SpectraResult to see details about the transformation and the audio file on which it was performed
         System.out.println(result);
 
         // get individual frames (sampling windows) from FFT
-        final Spectrum[] spectra = result.getSpectra();
-        System.out.println("There are " + spectra.length + " spectra in this FFT, each of which was computed from a sampling window that was about "
+        System.out.println("There are " + result.length() + " spectra in this FFT, each of which was computed from a sampling window that was about "
                 + Math.round(result.getWindowDurationMs()) + " milliseconds long.");
 
         // inspect amplitudes of individual frequency in the first Spectrum
-        final Frequency firstFrequency = spectra[0].getFrequency(0);
+        final Frequency firstFrequency = result.getSpectrum(0).getFrequency(0);
         System.out.println("The first Frequency, located at " + Math.round(firstFrequency.getFrequency()) + " Hz, has an amplitude of "
                 + Math.round(firstFrequency.getAmplitude()) + " dB.");
 
-        final Frequency mostPowerfulFrequency = spectra[0].getFrequency(14); // closest to 600 Hz
+        final Frequency mostPowerfulFrequency = result.getSpectrum(0).getFrequency(14); // closest to 600 Hz
         System.out.println("The 14th Frequency, located at " + Math.round(mostPowerfulFrequency.getFrequency()) + " Hz, has an amplitude of "
                 + Math.round(mostPowerfulFrequency.getAmplitude()) + " dB.");
     }

@@ -17,5 +17,4 @@ dependencies {
     implementation("org.apache.xmlgraphics:batik-transcoder")
 
     runtimeOnly("org.slf4j:slf4j-simple")
-
 }

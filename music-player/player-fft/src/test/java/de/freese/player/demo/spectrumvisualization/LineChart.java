@@ -18,7 +18,7 @@ import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.quifft.output.Spectrum;
+import de.freese.player.fft.output.Spectrum;
 
 /**
  * @author Thomas Freese

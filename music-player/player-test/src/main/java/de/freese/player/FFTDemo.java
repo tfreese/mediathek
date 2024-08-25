@@ -4,10 +4,10 @@ package de.freese.player;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.LineUnavailableException;
 
-import org.quifft.config.FFTConfig;
-import org.quifft.fft.FFTComputationWrapper;
-import org.quifft.output.Spectrum;
-
+import de.freese.player.fft.config.FFTConfig;
+import de.freese.player.fft.math.FFTComputationWrapper;
+import de.freese.player.fft.output.Spectrum;
+import de.freese.player.fft.sampling.WindowFunction;
 import de.freese.player.model.Window;
 import de.freese.player.player.SourceDataLinePlayer;
 import de.freese.player.util.PlayerUtils;
@@ -81,12 +81,13 @@ public final class FFTDemo {
         //     System.out.printf("%f + %fi%n", outputReal[c], outputImaginary[c]);
         // }
 
-        final FFTConfig fftConfig = new FFTConfig();
-        fftConfig.windowSize(samples.length);
+        final FFTConfig fftConfig = new FFTConfig()
+                .windowSize(samples.length)
+                .windowFunction(WindowFunction.RECTANGULAR);
 
         final Spectrum spectrum = FFTComputationWrapper.createSpectrum(samples, audioFormat.getSampleRate(), fftConfig);
-        // final double maxAmplitude = FFTUtils.findMaxAmplitude(fftFrame);
-        // FFTUtils.normalize(spectrum, maxAmplitude);
+        // final double maxAmplitude = FFTMath.findMaxAmplitude(fftFrame);
+        // FFTMath.normalize(spectrum, maxAmplitude);
 
         spectrum.forEach(frequency ->
                 System.out.printf("%f + %fi%n", frequency.getFrequency(), frequency.getAmplitude())
