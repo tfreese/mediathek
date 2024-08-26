@@ -38,22 +38,21 @@ public abstract class AbstractFFTObject implements Iterable<Spectrum> {
      */
     private final double windowDurationMs;
 
-    protected AbstractFFTObject(final AudioReader audioReader, final FFTConfig config) {
+    protected AbstractFFTObject(final AudioReader audioReader) {
         super();
 
         Objects.requireNonNull(audioReader, "audioReader required");
-        Objects.requireNonNull(config, "config required");
+
+        this.fftConfig = audioReader.getFFTConfig();
 
         this.fileDurationMs = audioReader.getDurationMs();
 
         final AudioFormat format = audioReader.getAudioFormat();
         this.audioSampleRate = format.getSampleRate();
-        this.frequencyResolution = (double) format.getSampleRate() / config.totalWindowLength();
+        this.frequencyResolution = (double) format.getSampleRate() / fftConfig.totalWindowLength();
 
         final double sampleLengthMs = 1D / format.getSampleRate() * 1000D;
-        this.windowDurationMs = sampleLengthMs * config.getWindowSize();
-
-        this.fftConfig = config;
+        this.windowDurationMs = sampleLengthMs * fftConfig.getWindowSize();
     }
 
     public FFTConfig getFFTConfig() {

@@ -1,52 +1,120 @@
 // Created: 11 Aug. 2024
 package de.freese.player.fft.reader;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UncheckedIOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
+import de.freese.player.fft.config.FFTConfig;
 
 /**
  * @author Thomas Freese
  */
-public final class DefaultAudioReader implements AudioReader {
-    private final AudioInputStream audioInputStream;
-    
-    private int[] lastSamples;
+final class DefaultAudioReader implements AudioReader {
+    /**
+     * Decodes audio reader's input stream to a target format with bit depth of 16.<br>
+     * This is used when the input file is an 8-bit WAV or an MP3.
+     */
+    private static AudioInputStream wrapTo16Bit(final InputStream inputStream) throws IOException, UnsupportedAudioFileException {
+        final AudioInputStream in = AudioSystem.getAudioInputStream(inputStream);
+        final AudioFormat baseFormat = in.getFormat();
+        final AudioFormat decodedFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
+                baseFormat.getSampleRate(),
+                16,
+                baseFormat.getChannels(),
+                baseFormat.getChannels() * 2,
+                baseFormat.getSampleRate(),
+                false);
 
-    public DefaultAudioReader(final AudioInputStream audioInputStream) {
+        return AudioSystem.getAudioInputStream(decodedFormat, in);
+    }
+
+    private final AudioInputStream audioInputStream;
+    private final FFTConfig fftConfig;
+    private final long fileLength;
+
+    /**
+     * Indicates whether all bytes in the input stream have been read yet (for SpectrumStream's hasNext() method).
+     */
+    private boolean areMoreBytesToRead = true;
+    /**
+     * Keep count of how many frames have been read (how many times SpectrumStream's next() has been called).
+     */
+    private int framesReadCount;
+    /**
+     * The number of FFT frames that should be extractable; not known until entire input stream has been read.
+     */
+    private int numExpectedFrames;
+    private int[] sampleBuffer;
+    /**
+     * Keep count of how many samples there are in the full-length waveform as bytes are incrementally read.
+     */
+    private int waveLength;
+
+    DefaultAudioReader(final Path audioFile, final FFTConfig fftConfig) throws UnsupportedAudioFileException, IOException {
+        super();
+
+        Objects.requireNonNull(audioFile, "audioFile required");
+
+        final InputStream inputStream = new BufferedInputStream(Files.newInputStream(audioFile));
+        AudioInputStream ais = AudioSystem.getAudioInputStream(inputStream);
+
+        if (ais.getFormat().getSampleSizeInBits() == 8) {
+            // convert 8-bit audio into 16-bit
+            ais = wrapTo16Bit(inputStream);
+        }
+
+        this.audioInputStream = ais;
+        this.fileLength = Files.size(audioFile);
+        this.fftConfig = Objects.requireNonNull(fftConfig, "fftConfig required");
+    }
+
+    DefaultAudioReader(final AudioInputStream audioInputStream, final FFTConfig fftConfig) throws IOException {
         super();
 
         this.audioInputStream = Objects.requireNonNull(audioInputStream, "audioInputStream required");
+        this.fileLength = audioInputStream.available();
+        this.fftConfig = Objects.requireNonNull(fftConfig, "fftConfig required");
     }
 
     @Override
     public AudioFormat getAudioFormat() {
-        return getAudioInputStream().getFormat();
-    }
-
-    @Override
-    public AudioInputStream getAudioInputStream() {
-        return audioInputStream;
+        return audioInputStream.getFormat();
     }
 
     @Override
     public long getDurationMs() {
-        return 0;
+        final AudioFormat format = getAudioFormat();
+        final int frameSize = format.getFrameSize();
+        final double frameRate = format.getFrameRate();
+
+        return (long) Math.ceil((getLength() / (frameSize * frameRate)) * 1000D);
+    }
+
+    @Override
+    public FFTConfig getFFTConfig() {
+        return fftConfig;
     }
 
     @Override
     public long getLength() {
-        return 0;
+        return fileLength;
     }
 
     @Override
     public int[] getWaveform() {
         try {
-            final byte[] audioBytes = getAudioInputStream().readAllBytes();
+            final byte[] audioBytes = audioInputStream.readAllBytes();
             return convertBytesToSamples(audioBytes);
         }
         catch (IOException ex) {
@@ -56,12 +124,7 @@ public final class DefaultAudioReader implements AudioReader {
 
     @Override
     public boolean hasNext() {
-        try {
-            return getAudioInputStream().available() > 0;
-        }
-        catch (IOException ex) {
-            throw new UncheckedIOException(ex);
-        }
+        return areMoreBytesToRead || framesReadCount < numExpectedFrames;
     }
 
     @Override
@@ -70,19 +133,19 @@ public final class DefaultAudioReader implements AudioReader {
             throw new NoSuchElementException();
         }
 
-        // final int windowSize = fftConfig.getWindowSize() * (isStereo() ? 2 : 1);
-        final int windowSize = 8192 * (isStereo() ? 2 : 1);
-        // final double windowOverlap = fftConfig.getWindowOverlap();
-        final double windowOverlap = 0.75D;
-        final byte[] audioBytes = new byte[windowSize * 2]; // 16-bit audio = 2 bytes per sample
+        final int windowSize = fftConfig.getWindowSize() * (isStereo() ? 2 : 1);
+        final double windowOverlap = fftConfig.getWindowOverlap();
+        final byte[] newBytes;
 
         try {
-            if (lastSamples == null) {
-                getAudioInputStream().read(audioBytes);
+            final int numBytesRead;
 
-                lastSamples = convertBytesToSamples(audioBytes);
+            if (sampleBuffer == null) {
+                newBytes = new byte[windowSize * 2]; // 16-bit audio = 2 bytes per sample
+                numBytesRead = audioInputStream.read(newBytes);
+                // numBytesRead = readBytesToFillArray(newBytes);
 
-                return lastSamples;
+                sampleBuffer = convertBytesToSamples(newBytes);
             }
             else {
                 final int samplesToKeep = (int) Math.round(windowSize * windowOverlap);
@@ -90,21 +153,46 @@ public final class DefaultAudioReader implements AudioReader {
                 final int numMoreBytesToRead = (windowSize - samplesToKeep) * 2;
 
                 final int[] newSampleBuffer = new int[windowSize];
-                System.arraycopy(lastSamples, prevSamplesCopyStartIndex, newSampleBuffer, 0, samplesToKeep);
+                System.arraycopy(sampleBuffer, prevSamplesCopyStartIndex, newSampleBuffer, 0, samplesToKeep);
 
-                final byte[] newBytes = new byte[numMoreBytesToRead];
-                getAudioInputStream().read(newBytes);
-                final int[] newSamples = convertBytesToSamples(newBytes);
-                System.arraycopy(newSamples, 0, newSampleBuffer, samplesToKeep, newSamples.length);
+                if (areMoreBytesToRead) {
+                    newBytes = new byte[numMoreBytesToRead];
+                    numBytesRead = audioInputStream.read(newBytes);
+                    // numBytesRead = readBytesToFillArray(newBytes);
 
-                lastSamples = newSampleBuffer;
+                    final int[] newSamples = convertBytesToSamples(newBytes);
+                    System.arraycopy(newSamples, 0, newSampleBuffer, samplesToKeep, newSamples.length);
+                }
+                else {
+                    newBytes = new byte[0];
+                    numBytesRead = 0;
+                }
 
-                return newSampleBuffer;
+                sampleBuffer = newSampleBuffer;
+            }
+
+            // accumulate length of wave as bytes are read
+            waveLength += numBytesRead / 2;
+
+            // whenever fewer bytes are read than can fit in newBytes, it means we've reached the end of
+            // the input stream.  at this point, we can compute the number of expected FFT frames
+            if (areMoreBytesToRead && numBytesRead < newBytes.length) {
+                areMoreBytesToRead = false;
+
+                // now that we know the length of the entire wave, we can compute how many frames there should be
+                final int lengthOfWave = waveLength / (isStereo() ? 2 : 1);
+                final double frameOverlapMultiplier = 1 / (1 - windowOverlap);
+
+                numExpectedFrames = (int) Math.ceil(((double) lengthOfWave / fftConfig.getWindowSize()) * frameOverlapMultiplier);
             }
         }
         catch (IOException ex) {
             throw new UncheckedIOException(ex);
         }
+
+        framesReadCount++;
+
+        return sampleBuffer;
     }
 
     /**
@@ -129,5 +217,29 @@ public final class DefaultAudioReader implements AudioReader {
         }
 
         return samples;
+    }
+
+    /**
+     * Reads from the input stream until enough bytes have been read to fill given byte array
+     * This method acts as a wrapper for the inputStream.read() method because it doesn't guarantee that it'll
+     * read enough bytes to fill the array.
+     *
+     * @param bytes byte array to fill with read bytes
+     *
+     * @return number of bytes actually read
+     */
+    private int readBytesToFillArray(final byte[] bytes) throws IOException {
+        int numBytesRead = 0;
+        int lastBytesRead = 0;
+
+        while (numBytesRead < bytes.length && lastBytesRead != -1) {
+            lastBytesRead = audioInputStream.read(bytes, numBytesRead, bytes.length - numBytesRead);
+
+            if (lastBytesRead != -1) {
+                numBytesRead += lastBytesRead;
+            }
+        }
+
+        return numBytesRead;
     }
 }

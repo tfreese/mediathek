@@ -14,9 +14,7 @@ import java.util.NoSuchElementException;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import de.freese.player.fft.config.FFTConfig;
@@ -30,11 +28,8 @@ import de.freese.player.fft.sampling.WindowFunction;
  * @author Thomas Freese
  */
 class TestSpectrumStream {
-    private static Path mono500Hz3SecsMP3;
     private static Path mono500Hz3SecsWav;
-    private static Path mono600Hz3SecsMP3;
     private static Path mono600Hz3SecsWav;
-    private static Path stereo500Hz3SecsMP3;
     private static Path stereo500Hz3SecsWav;
     private static Path stereo600Hz500MsWAV;
 
@@ -42,11 +37,8 @@ class TestSpectrumStream {
     public static void createPaths() throws Exception {
         mono600Hz3SecsWav = getPath("600hz-tone-3secs-mono.wav");
         stereo600Hz500MsWAV = getPath("600hz-tone-500ms-stereo.wav");
-        mono600Hz3SecsMP3 = getPath("600hz-tone-3secs-mono.mp3");
         mono500Hz3SecsWav = getPath("500hz-tone-3secs-mono.wav");
         stereo500Hz3SecsWav = getPath("500hz-tone-3secs-stereo.wav");
-        mono500Hz3SecsMP3 = getPath("500hz-tone-3secs-mono.mp3");
-        stereo500Hz3SecsMP3 = getPath("500hz-tone-3secs-stereo.mp3");
     }
 
     private static Path getPath(final String resource) throws URISyntaxException {
@@ -106,39 +98,9 @@ class TestSpectrumStream {
         assertTrue(Math.abs(noOverlapFramesCount - (overlapFramesCount / 2)) <= 1);
     }
 
-    @Disabled("mp3 currently not supported")
-    @Test
-    void testComputePeakAt500HzFor500HzMonoMP3SignalFFTStream() throws IOException, UnsupportedAudioFileException {
-        final SpectrumStream stream = FFTFactory.createStream(mono500Hz3SecsMP3, new FFTConfig().decibelScale(true));
-
-        final Iterator<Spectrum> iterator = stream.iterator();
-
-        // call next() a few times so any issues with window overlap will be caught
-        for (int i = 0; i < 5; i++) {
-            iterator.next();
-        }
-
-        Assertions.assertEquals(500D, FFTMath.findMaxAmplitude(iterator.next()).getFrequency(), stream.getFrequencyResolution());
-    }
-
     @Test
     void testComputePeakAt500HzFor500HzMonoWavSignalFFTStream() throws IOException, UnsupportedAudioFileException {
         final SpectrumStream stream = FFTFactory.createStream(mono500Hz3SecsWav, new FFTConfig().decibelScale(true));
-
-        final Iterator<Spectrum> iterator = stream.iterator();
-
-        // call next() a few times so any issues with window overlap will be caught
-        for (int i = 0; i < 5; i++) {
-            iterator.next();
-        }
-
-        assertEquals(500D, FFTMath.findMaxAmplitude(iterator.next()).getFrequency(), stream.getFrequencyResolution());
-    }
-
-    @Disabled("mp3 currently not supported")
-    @Test
-    void testComputePeakAt500HzFor500HzStereoMP3SignalFFTStream() throws IOException, UnsupportedAudioFileException {
-        final SpectrumStream stream = FFTFactory.createStream(stereo500Hz3SecsMP3, new FFTConfig().decibelScale(true));
 
         final Iterator<Spectrum> iterator = stream.iterator();
 

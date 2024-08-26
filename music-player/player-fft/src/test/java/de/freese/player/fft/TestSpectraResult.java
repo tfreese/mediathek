@@ -1,7 +1,6 @@
 // Created: 08 Aug. 2024
 package de.freese.player.fft;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -13,9 +12,7 @@ import java.nio.file.Path;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import de.freese.player.fft.config.FFTConfig;
@@ -28,11 +25,8 @@ import de.freese.player.fft.sampling.WindowFunction;
  * @author Thomas Freese
  */
 class TestSpectraResult {
-    private static Path mono500Hz3SecsMP3;
     private static Path mono500Hz3SecsWav;
-    private static Path mono600Hz3SecsMP3;
     private static Path mono600Hz3SecsWav;
-    private static Path stereo500Hz3SecsMP3;
     private static Path stereo500Hz3SecsWav;
     private static Path stereo600Hz3SecsWav;
     private static Path stereo600Hz500MsWAV;
@@ -42,11 +36,8 @@ class TestSpectraResult {
         mono600Hz3SecsWav = getPath("600hz-tone-3secs-mono.wav");
         stereo600Hz3SecsWav = getPath("600hz-tone-3secs-stereo.wav");
         stereo600Hz500MsWAV = getPath("600hz-tone-500ms-stereo.wav");
-        mono600Hz3SecsMP3 = getPath("600hz-tone-3secs-mono.mp3");
         mono500Hz3SecsWav = getPath("500hz-tone-3secs-mono.wav");
         stereo500Hz3SecsWav = getPath("500hz-tone-3secs-stereo.wav");
-        mono500Hz3SecsMP3 = getPath("500hz-tone-3secs-mono.mp3");
-        stereo500Hz3SecsMP3 = getPath("500hz-tone-3secs-stereo.mp3");
     }
 
     private static Path getPath(final String resource) throws URISyntaxException {
@@ -96,17 +87,6 @@ class TestSpectraResult {
         assertEquals(10.7, withPaddingResult.getFrequencyResolution(), 0.1D);
     }
 
-    @Disabled("mp3 currently not supported")
-    @Test
-    void testKeepMP3MetadataEqualWhetherStereoOrMono() throws IOException, UnsupportedAudioFileException {
-        final SpectraResult stereoResult = FFTFactory.createFull(stereo500Hz3SecsMP3);
-        final SpectraResult monoResult = FFTFactory.createFull(mono500Hz3SecsMP3);
-
-        assertEquals(stereoResult.getFileDurationMs(), monoResult.getFileDurationMs());
-        assertEquals(stereoResult.length(), monoResult.length());
-        assertEquals(stereoResult.getSpectrum(0).getFrameEndMs(), monoResult.getSpectrum(0).getFrameEndMs(), 0.001D);
-    }
-
     @Test
     void testKeepWavMetadataEqualWhetherStereoOrMono() throws IOException, UnsupportedAudioFileException {
         final SpectraResult stereoResult = FFTFactory.createFull(stereo600Hz3SecsWav);
@@ -129,23 +109,9 @@ class TestSpectraResult {
         assertEquals(overlapResult.getSpectrum(overlapResult.length() - 2).getFrameEndMs(), result.getFileDurationMs(), 0.0001D);
     }
 
-    @Disabled("mp3 currently not supported")
-    @Test
-    void testPeakAt500HzFor500HzMonoMP3Signal() throws IOException, UnsupportedAudioFileException {
-        final SpectraResult result = FFTFactory.createFull(mono500Hz3SecsMP3);
-        Assertions.assertEquals(500, FFTMath.findMaxAmplitude(result.getSpectrum(0)).getFrequency(), result.getFrequencyResolution());
-    }
-
     @Test
     void testPeakAt500HzFor500HzMonoWavSignal() throws IOException, UnsupportedAudioFileException {
         final SpectraResult result = FFTFactory.createFull(mono500Hz3SecsWav);
-        assertEquals(500, FFTMath.findMaxAmplitude(result.getSpectrum(0)).getFrequency(), result.getFrequencyResolution());
-    }
-
-    @Disabled("mp3 currently not supported")
-    @Test
-    void testPeakAt500HzFor500HzStereoMP3Signal() throws IOException, UnsupportedAudioFileException {
-        final SpectraResult result = FFTFactory.createFull(stereo500Hz3SecsMP3);
         assertEquals(500, FFTMath.findMaxAmplitude(result.getSpectrum(0)).getFrequency(), result.getFrequencyResolution());
     }
 
@@ -175,20 +141,6 @@ class TestSpectraResult {
         assertEquals(fftConfig.getNumPoints(), fullFFTConfig.getNumPoints());
         assertEquals(fftConfig.isDecibelScale(), fullFFTConfig.isDecibelScale());
         assertEquals(fftConfig.isNormalized(), fullFFTConfig.isNormalized());
-    }
-
-    @Disabled("Stream of unsupported format")
-    @Test
-    void testSuccessfullyCompleteFftOn8BitAudio() throws Exception {
-        final Path audio = getPath("600hz-tone-3secs-mono-8bit.wav");
-
-        assertDoesNotThrow(() -> FFTFactory.createFull(audio));
-    }
-
-    @Disabled("mp3 currently not supported")
-    @Test
-    void testSuccessfullyInitializeWithMP3File() {
-        assertDoesNotThrow(() -> FFTFactory.createFull(mono600Hz3SecsMP3));
     }
 
     @Test

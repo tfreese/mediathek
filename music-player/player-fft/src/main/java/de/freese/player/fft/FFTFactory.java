@@ -15,7 +15,6 @@ import de.freese.player.fft.output.SpectraResult;
 import de.freese.player.fft.output.Spectrum;
 import de.freese.player.fft.output.SpectrumStream;
 import de.freese.player.fft.reader.AudioReader;
-import de.freese.player.fft.reader.AudioReaderFactory;
 import de.freese.player.fft.sampling.SampleWindowExtractor;
 
 /**
@@ -28,7 +27,7 @@ public final class FFTFactory {
      * @return an FFT result containing metadata of this FFT and an array of all {@link Spectrum}s computed
      */
     public static SpectraResult createFull(final Path path) throws UnsupportedAudioFileException, IOException {
-        return createFull(AudioReaderFactory.of(path), new FFTConfig());
+        return createFull(AudioReader.of(path, new FFTConfig()));
     }
 
     /**
@@ -37,7 +36,7 @@ public final class FFTFactory {
      * @return an FFT result containing metadata of this FFT and an array of all {@link Spectrum}s computed
      */
     public static SpectraResult createFull(final Path path, final FFTConfig fftConfig) throws UnsupportedAudioFileException, IOException {
-        return createFull(AudioReaderFactory.of(path), fftConfig);
+        return createFull(AudioReader.of(path, fftConfig));
     }
 
     /**
@@ -45,8 +44,10 @@ public final class FFTFactory {
      *
      * @return an FFT result containing metadata of this FFT and an array of all {@link Spectrum}s computed
      */
-    public static SpectraResult createFull(final AudioReader audioReader, final FFTConfig fftConfig) {
-        ConfigValidator.validate(fftConfig, false);
+    public static SpectraResult createFull(final AudioReader audioReader) {
+        ConfigValidator.validate(audioReader.getFFTConfig(), false);
+
+        final FFTConfig fftConfig = audioReader.getFFTConfig();
 
         final boolean isStereo = audioReader.isStereo();
         final float sampleRate = audioReader.getAudioFormat().getSampleRate();
@@ -57,7 +58,7 @@ public final class FFTFactory {
         final int numFrames = (int) Math.ceil(((double) lengthOfWave / fftConfig.getWindowSize()) * frameOverlapMultiplier);
         final Spectrum[] spectra = new Spectrum[numFrames];
 
-        final SpectraResult result = new SpectraResult(audioReader, fftConfig, spectra);
+        final SpectraResult result = new SpectraResult(audioReader, spectra);
 
         final SampleWindowExtractor windowExtractor = new SampleWindowExtractor(isStereo, fftConfig.getWindowSize(),
                 fftConfig.getWindowFunction(), fftConfig.getWindowOverlap(), fftConfig.zeroPadLength());
@@ -91,23 +92,23 @@ public final class FFTFactory {
      * Creates a Stream which can be used as an iterator to compute {@link Spectrum}s one by one.
      */
     public static SpectrumStream createStream(final Path path) throws UnsupportedAudioFileException, IOException {
-        return createStream(AudioReaderFactory.of(path), new FFTConfig());
+        return createStream(AudioReader.of(path, new FFTConfig()));
     }
 
     /**
      * Creates a Stream which can be used as an iterator to compute {@link Spectrum}s one by one.
      */
     public static SpectrumStream createStream(final Path path, final FFTConfig fftConfig) throws UnsupportedAudioFileException, IOException {
-        return createStream(AudioReaderFactory.of(path), fftConfig);
+        return createStream(AudioReader.of(path, fftConfig));
     }
 
     /**
      * Creates a Stream which can be used as an iterator to compute {@link Spectrum}s one by one.
      */
-    public static SpectrumStream createStream(final AudioReader audioReader, final FFTConfig fftConfig) {
-        ConfigValidator.validate(fftConfig, true);
+    public static SpectrumStream createStream(final AudioReader audioReader) {
+        ConfigValidator.validate(audioReader.getFFTConfig(), true);
 
-        return new SpectrumStream(audioReader, fftConfig);
+        return new SpectrumStream(audioReader);
     }
 
     private FFTFactory() {

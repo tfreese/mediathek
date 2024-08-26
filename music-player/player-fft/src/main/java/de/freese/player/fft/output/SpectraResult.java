@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-import de.freese.player.fft.config.FFTConfig;
 import de.freese.player.fft.reader.AudioReader;
 
 /**
@@ -16,8 +15,8 @@ public final class SpectraResult extends AbstractFFTObject {
      */
     private final Spectrum[] spectra;
 
-    public SpectraResult(final AudioReader audioReader, final FFTConfig config, final Spectrum[] spectra) {
-        super(audioReader, config);
+    public SpectraResult(final AudioReader audioReader, final Spectrum[] spectra) {
+        super(audioReader);
 
         Objects.requireNonNull(spectra, "spectra required");
 

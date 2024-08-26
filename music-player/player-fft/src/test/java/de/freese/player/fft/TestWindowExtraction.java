@@ -3,17 +3,15 @@ package de.freese.player.fft;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
 import de.freese.player.fft.reader.AudioReader;
-import de.freese.player.fft.reader.AudioReaderFactory;
 import de.freese.player.fft.sampling.SampleWindowExtractor;
 import de.freese.player.fft.sampling.WindowFunction;
 
@@ -146,32 +144,12 @@ class TestWindowExtraction {
         assertArrayEquals(expected2, extractor.extractWindow(wave, 1));
     }
 
-    @Disabled("mp3 currently not supported")
-    @Test
-    void testSameWindowFromMP3StereoSignalAsFromMono() throws Exception {
-        final Path stereoFile = getPath("500hz-tone-3secs-stereo.mp3");
-        final Path monoFile = getPath("500hz-tone-3secs-mono.mp3");
-        final AudioReader audioReaderStereo = AudioReaderFactory.of(stereoFile);
-        final AudioReader audioReaderMono = AudioReaderFactory.of(monoFile);
-
-        final SampleWindowExtractor stereoExtractor = new SampleWindowExtractor(true, 1024, WindowFunction.RECTANGULAR, 0D, 0);
-        final SampleWindowExtractor monoExtractor = new SampleWindowExtractor(false, 1024, WindowFunction.RECTANGULAR, 0D, 0);
-
-        final int[] stereoWindow = stereoExtractor.extractWindow(audioReaderStereo.getWaveform(), 6);
-        final int[] monoWindow = monoExtractor.extractWindow(audioReaderMono.getWaveform(), 6);
-
-        // allow tolerance of 5 (rounding after averaging isn't going to be perfect)
-        for (int i = 0; i < 1024; i++) {
-            assertTrue(Math.abs(stereoWindow[i] - monoWindow[i]) <= 5);
-        }
-    }
-
     @Test
     void testSameWindowFromWavStereoSignalAsFromMono() throws Exception {
         final Path stereoFile = getPath("500hz-tone-3secs-stereo.wav");
         final Path monoFile = getPath("500hz-tone-3secs-mono.wav");
-        final AudioReader audioReaderStereo = AudioReaderFactory.of(stereoFile);
-        final AudioReader audioReaderMono = AudioReaderFactory.of(monoFile);
+        final AudioReader audioReaderStereo = AudioReader.of(stereoFile);
+        final AudioReader audioReaderMono = AudioReader.of(monoFile);
 
         final SampleWindowExtractor stereoExtractor = new SampleWindowExtractor(true, 1024, WindowFunction.RECTANGULAR, 0D, 0);
         final SampleWindowExtractor monoExtractor = new SampleWindowExtractor(false, 1024, WindowFunction.RECTANGULAR, 0D, 0);

@@ -5,7 +5,6 @@ import java.util.Iterator;
 import de.freese.player.fft.config.FFTConfig;
 import de.freese.player.fft.math.FFTComputationWrapper;
 import de.freese.player.fft.math.FFTMath;
-import de.freese.player.fft.reader.AbstractAudioReader;
 import de.freese.player.fft.reader.AudioReader;
 import de.freese.player.fft.sampling.SampleWindowExtractor;
 import de.freese.player.fft.sampling.WindowFunction;
@@ -23,19 +22,16 @@ public final class SpectrumStream extends AbstractFFTObject {
     private int frameCount;
     private double maxAmplitude;
 
-    public SpectrumStream(final AudioReader audioReader, final FFTConfig config) {
-        super(audioReader, config);
+    public SpectrumStream(final AudioReader audioReader) {
+        super(audioReader);
 
         this.audioReader = audioReader;
 
-        if (audioReader instanceof AbstractAudioReader ar) {
-            ar.setFFTConfig(config);
-        }
-
-        final int windowSize = config.getWindowSize();
-        final WindowFunction windowFunction = config.getWindowFunction();
-        final double overlap = config.getWindowOverlap();
-        final int zeroPadLength = config.zeroPadLength();
+        final FFTConfig fftConfig = audioReader.getFFTConfig();
+        final int windowSize = fftConfig.getWindowSize();
+        final WindowFunction windowFunction = fftConfig.getWindowFunction();
+        final double overlap = fftConfig.getWindowOverlap();
+        final int zeroPadLength = fftConfig.zeroPadLength();
 
         windowExtractor = new SampleWindowExtractor(audioReader.isStereo(), windowSize, windowFunction, overlap, zeroPadLength);
     }
