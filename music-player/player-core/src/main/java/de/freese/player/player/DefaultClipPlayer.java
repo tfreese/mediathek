@@ -1,21 +1,18 @@
 // Created: 14 Juli 2024
 package de.freese.player.player;
 
-import java.util.concurrent.Executor;
-
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 
-import de.freese.player.PlayerSettings;
 import de.freese.player.exception.PlayerException;
 import de.freese.player.input.AudioInputStreamFactory;
 
 /**
  * @author Thomas Freese
  */
-public class DefaultClipPlayer extends AbstractPlayer {
+public final class DefaultClipPlayer extends AbstractPlayer {
 
     private Clip clip;
     private volatile boolean looping;
@@ -139,7 +136,7 @@ public class DefaultClipPlayer extends AbstractPlayer {
         }
 
         // Continues data line I/O until its buffer is drained.
-        // getClip().drain();
+        // clip.drain();
 
         clip.stop();
 
@@ -165,9 +162,5 @@ public class DefaultClipPlayer extends AbstractPlayer {
         catch (Exception ex) {
             throw new PlayerException(ex);
         }
-    }
-
-    protected Executor getExecutor() {
-        return PlayerSettings.getExecutorService();
     }
 }

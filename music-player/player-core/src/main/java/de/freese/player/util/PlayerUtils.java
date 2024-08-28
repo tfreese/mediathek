@@ -17,16 +17,18 @@ import de.freese.player.model.Window;
 public final class PlayerUtils {
     public static int[] createSamplesMono(final AudioFormat audioFormat, final byte[] audioBytes) {
         final boolean isBigEndian = audioFormat.isBigEndian();
-        final int[] samples = new int[audioBytes.length / 2];
+        final int bytesPerFrame = audioFormat.getFrameSize();
+
+        final int[] samples = new int[audioBytes.length / bytesPerFrame];
 
         for (int i = 0; i < samples.length; i++) {
             final int sample;
 
             if (isBigEndian) {
-                sample = audioBytes[2 * i + 1] & 0xFF | audioBytes[2 * i] << 8;
+                sample = audioBytes[bytesPerFrame * i + 1] & 0xFF | audioBytes[bytesPerFrame * i] << 8;
             }
             else {
-                sample = audioBytes[2 * i] & 0xFF | audioBytes[2 * i + 1] << 8;
+                sample = audioBytes[bytesPerFrame * i] & 0xFF | audioBytes[bytesPerFrame * i + 1] << 8;
             }
 
             samples[i] = sample;
@@ -41,20 +43,22 @@ public final class PlayerUtils {
      */
     public static int[][] createSamplesStereo(final AudioFormat audioFormat, final byte[] audioBytes) {
         final boolean isBigEndian = audioFormat.isBigEndian();
-        final int[] samplesLeft = new int[audioBytes.length / 2];
-        final int[] samplesRight = new int[audioBytes.length / 2];
+        final int bytesPerFrame = audioFormat.getFrameSize();
+
+        final int[] samplesLeft = new int[audioBytes.length / bytesPerFrame];
+        final int[] samplesRight = new int[audioBytes.length / bytesPerFrame];
 
         for (int i = 0; i < samplesLeft.length; i++) {
             final int sampleLeft;
             final int sampleRight;
 
             if (isBigEndian) {
-                sampleLeft = audioBytes[4 * i + 1] & 0xFF | audioBytes[4 * i] << 8;
-                sampleRight = audioBytes[4 * i + 3] & 0xFF | audioBytes[4 * i + 2] << 8;
+                sampleLeft = audioBytes[bytesPerFrame * i + 1] & 0xFF | audioBytes[bytesPerFrame * i] << 8;
+                sampleRight = audioBytes[bytesPerFrame * i + 3] & 0xFF | audioBytes[bytesPerFrame * i + 2] << 8;
             }
             else {
-                sampleLeft = audioBytes[4 * i] & 0xFF | audioBytes[4 * i + 1] << 8;
-                sampleRight = audioBytes[4 * i + 2] & 0xFF | audioBytes[4 * i + 3] << 8;
+                sampleLeft = audioBytes[bytesPerFrame * i] & 0xFF | audioBytes[bytesPerFrame * i + 1] << 8;
+                sampleRight = audioBytes[bytesPerFrame * i + 2] & 0xFF | audioBytes[bytesPerFrame * i + 3] << 8;
             }
 
             samplesLeft[i] = sampleLeft;

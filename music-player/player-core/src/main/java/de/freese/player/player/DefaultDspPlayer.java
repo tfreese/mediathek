@@ -1,0 +1,162 @@
+// Created: 28 Aug. 2024
+package de.freese.player.player;
+
+import java.io.IOException;
+import java.util.Arrays;
+
+import javax.sound.sampled.AudioFormat;
+
+import de.freese.player.dsp.DspChain;
+import de.freese.player.dsp.DspProcessor;
+import de.freese.player.exception.PlayerException;
+import de.freese.player.input.AudioInputStreamFactory;
+import de.freese.player.model.Window;
+
+/**
+ * @author Thomas Freese
+ */
+public final class DefaultDspPlayer extends AbstractPlayer {
+    private final DspChain dspChain = new DspChain();
+
+    private volatile boolean running;
+
+    private SourceDataLinePlayer sourceDataLinePlayer;
+
+    public void addProcessor(final DspProcessor processor) {
+        dspChain.addProcessor(processor);
+    }
+
+    @Override
+    public void pause() {
+        getLogger().debug("pause: {}", getCurrentAudioSource());
+
+        running = false;
+    }
+
+    @Override
+    public void play() {
+        try {
+            setCurrentAudioSource(getAudioSource(getPlayerIndex()));
+            setAudioInputStream(AudioInputStreamFactory.createAudioInputStream(getCurrentAudioSource()));
+
+            final AudioFormat audioFormat = getAudioInputStream().getFormat();
+            getLogger().debug("Play audio format: {}", audioFormat);
+
+            sourceDataLinePlayer = new SourceDataLinePlayer(audioFormat);
+
+            // final DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
+            //
+            // sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
+            // sourceDataLine.open(audioFormat);
+        }
+        catch (RuntimeException ex) {
+            throw ex;
+        }
+        catch (Exception ex) {
+            throw new PlayerException(ex);
+        }
+
+        running = true;
+
+        getExecutor().execute(() -> {
+            getLogger().info("play: {}", getCurrentAudioSource());
+
+            streamMusic();
+        });
+    }
+
+    @Override
+    public void resume() {
+        if (sourceDataLinePlayer == null) {
+            return;
+        }
+
+        running = true;
+
+        getExecutor().execute(() -> {
+            getLogger().debug("resume: {}", getCurrentAudioSource());
+
+            // clip.start();
+
+            streamMusic();
+        });
+    }
+
+    @Override
+    public void stop() {
+        getLogger().debug("stop: {}", getCurrentAudioSource());
+
+        running = false;
+
+        if (sourceDataLinePlayer == null) {
+            return;
+        }
+
+        // sourceDataLine.drain();
+
+        sourceDataLinePlayer.stop();
+
+        close();
+    }
+
+    @Override
+    protected void close() {
+        try {
+            if (sourceDataLinePlayer != null) {
+                sourceDataLinePlayer.close();
+                sourceDataLinePlayer = null;
+
+                getAudioInputStream().close();
+                setAudioInputStream(null);
+                setCurrentAudioSource(null);
+            }
+        }
+        catch (PlayerException ex) {
+            throw ex;
+        }
+        catch (Exception ex) {
+            throw new PlayerException(ex);
+        }
+    }
+
+    private void streamMusic() {
+        final AudioFormat audioFormat = getAudioInputStream().getFormat();
+
+        // sourceDataLine.start();
+
+        while (true) {
+            try {
+                // final int bytesPerFrame = audioFormat.getChannels() == 1 ? 2 : 4;
+                final int bytesPerFrame = audioFormat.getFrameSize();
+                final int framesToRead = 1000;
+
+                final byte[] audioBytes = new byte[bytesPerFrame * framesToRead * audioFormat.getChannels()];
+                final int bytesRead = getAudioInputStream().read(audioBytes);
+                final Window window;
+
+                if (bytesRead == audioBytes.length) {
+                    window = new Window(audioFormat, audioBytes);
+                }
+                else {
+                    window = new Window(audioFormat, Arrays.copyOf(audioBytes, bytesRead));
+                    running = false;
+                }
+
+                dspChain.process(window);
+
+                sourceDataLinePlayer.play(window);
+            }
+            catch (IOException ex) {
+                // throw new PlayerException(ex);
+                getLogger().error(ex.getMessage(), ex);
+                running = false;
+            }
+
+            if (!running) {
+                getLogger().debug("not running: {}", getCurrentAudioSource());
+                stop();
+                break;
+            }
+        }
+    }
+}

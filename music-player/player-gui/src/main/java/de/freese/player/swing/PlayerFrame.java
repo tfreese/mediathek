@@ -4,15 +4,18 @@ package de.freese.player.swing;
 import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.nio.file.Path;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.WindowConstants;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.freese.player.PlayerSettings;
+import de.freese.player.player.DefaultDspPlayer;
+import de.freese.player.player.Player;
 import de.freese.player.utils.image.ImageFactory;
 
 /**
@@ -43,8 +46,16 @@ public final class PlayerFrame {
         jFrame.addWindowListener(new MainFrameListener());
         jFrame.setLayout(new BorderLayout());
 
-        jFrame.add(new JLabel(ImageFactory.getIcon("images/media-play-white.svg")), BorderLayout.NORTH);
-        jFrame.add(new JLabel(ImageFactory.getIcon("images/media-play-black.svg")), BorderLayout.SOUTH);
+        // jFrame.add(new JLabel(ImageFactory.getIcon("images/media-play-white.svg")), BorderLayout.NORTH);
+        // jFrame.add(new JLabel(ImageFactory.getIcon("images/media-play-black.svg")), BorderLayout.SOUTH);
+
+        final Player player = new DefaultDspPlayer().addAudioSource(Path.of("samples/sample.wav").toUri());
+
+        final JButton buttonPlay = new JButton(ImageFactory.getIcon("images/media-play-white.svg"));
+        buttonPlay.setToolTipText("Play");
+        buttonPlay.addActionListener(event -> player.play());
+
+        jFrame.add(buttonPlay, BorderLayout.CENTER);
 
         // frame.setSize(800, 600);
         // frame.setSize(1280, 768);

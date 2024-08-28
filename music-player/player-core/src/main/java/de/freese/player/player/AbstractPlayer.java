@@ -3,12 +3,14 @@ package de.freese.player.player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
 
 import javax.sound.sampled.AudioInputStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.freese.player.PlayerSettings;
 import de.freese.player.input.AudioSource;
 
 /**
@@ -79,6 +81,10 @@ public abstract class AbstractPlayer implements Player {
 
     protected AudioSource getCurrentAudioSource() {
         return currentAudioSource;
+    }
+
+    protected Executor getExecutor() {
+        return PlayerSettings.getExecutorService();
     }
 
     protected Logger getLogger() {

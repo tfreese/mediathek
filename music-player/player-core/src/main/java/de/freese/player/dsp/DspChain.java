@@ -15,8 +15,6 @@ import de.freese.player.model.Window;
 public final class DspChain implements DspProcessor {
     private final List<DspProcessor> processors = new ArrayList<>();
 
-    private DspProcessor player;
-
     public void addProcessor(final DspProcessor processor) {
         Objects.requireNonNull(processor, "processor required");
 
@@ -42,11 +40,5 @@ public final class DspChain implements DspProcessor {
 
             processor.process(window);
         }
-
-        player.process(window);
-    }
-
-    public void setPlayer(final DspProcessor player) {
-        this.player = Objects.requireNonNull(player, "player required");
     }
 }

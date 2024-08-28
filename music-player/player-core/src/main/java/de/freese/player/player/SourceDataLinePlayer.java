@@ -37,7 +37,9 @@ public final class SourceDataLinePlayer implements DspProcessor {
     }
 
     public void close() {
-        sourceDataLine.drain();
+        // Continues data line I/O until its buffer is drained.
+        // sourceDataLine.drain();
+
         sourceDataLine.stop();
         sourceDataLine.close();
     }
@@ -118,7 +120,9 @@ public final class SourceDataLinePlayer implements DspProcessor {
     }
 
     public void stop() {
-        sourceDataLine.drain();
+        // Continues data line I/O until its buffer is drained.
+        // sourceDataLine.drain();
+
         sourceDataLine.stop();
     }
 
