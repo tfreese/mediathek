@@ -22,11 +22,6 @@ public final class DspChain implements DspProcessor {
     }
 
     @Override
-    public String getName() {
-        return getClass().getSimpleName();
-    }
-
-    @Override
     public boolean isEnabled() {
         return true;
     }

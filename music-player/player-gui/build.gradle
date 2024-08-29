@@ -8,6 +8,8 @@ dependencies {
     implementation(project(":music-player:player-equalizer"))
     implementation(project(":music-player:player-fft"))
 
+    implementation("org.jfree:jfreechart")
+
     javafx {
         version = "$version_javafx"
         modules = ["javafx.controls"]

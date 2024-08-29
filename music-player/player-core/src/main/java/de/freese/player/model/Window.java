@@ -14,6 +14,7 @@ import de.freese.player.util.PlayerUtils;
  */
 public final class Window {
     private final byte[] audioBytes;
+    private final AudioFormat audioFormat;
     private final int[] samplesLeft;
     private final int[] samplesRight;
 
@@ -26,6 +27,7 @@ public final class Window {
             throw new IllegalArgumentException("audioBytes length is not a power of 2: " + audioBytes.length);
         }
 
+        this.audioFormat = Objects.requireNonNull(audioFormat, "audioFormat required");
         this.audioBytes = audioBytes;
 
         if (audioFormat.getChannels() == 1) {
@@ -75,6 +77,10 @@ public final class Window {
 
     public byte[] getAudioBytes() {
         return audioBytes;
+    }
+
+    public AudioFormat getAudioFormat() {
+        return audioFormat;
     }
 
     public int[] getMergedSamples() {

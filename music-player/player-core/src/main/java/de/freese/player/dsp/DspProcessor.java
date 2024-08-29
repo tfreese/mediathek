@@ -9,7 +9,9 @@ import de.freese.player.model.Window;
  * @author Thomas Freese
  */
 public interface DspProcessor {
-    String getName();
+    default String getName() {
+        return getClass().getSimpleName();
+    }
 
     boolean isEnabled();
 

@@ -84,7 +84,7 @@ public enum WindowFunction {
             final double[] w = new double[length];
 
             for (int n = 0; n < length; n++) {
-                // w[n] = 0.5D * (1D - Math.cos(2D * Math.PI * (n / (N - 1.0D))));
+                // w[n] = 0.5D * (1D - Math.cos(2D * Math.PI * (n / (length - 1.0D))));
                 w[n] = 0.5D * (1D - Math.cos(Math.TAU * (n / (length - 1.0D))));
             }
 
@@ -103,7 +103,7 @@ public enum WindowFunction {
             final double[] w = new double[length];
 
             for (int n = 0; n < length; n++) {
-                // w[n] = 0.54D - 0.46D * Math.cos(2D * Math.PI * (n / (N - 1.0D)));
+                // w[n] = 0.54D - 0.46D * Math.cos(2D * Math.PI * (n / (length - 1.0D)));
                 w[n] = 0.54D - 0.46D * Math.cos(Math.TAU * (n / (length - 1.0D)));
             }
 
@@ -122,7 +122,7 @@ public enum WindowFunction {
             final double[] w = new double[length];
 
             for (int n = 0; n < length; n++) {
-                // w[n] = 0.42D - 0.5D * Math.cos((2D * Math.PI * n) / (N - 1)) + 0.08D * Math.cos((4D * Math.PI * n) / (N - 1));
+                // w[n] = 0.42D - 0.5D * Math.cos((2D * Math.PI * n) / (length - 1)) + 0.08D * Math.cos((4D * Math.PI * n) / (length - 1));
                 w[n] = 0.42D - 0.5D * Math.cos((Math.TAU * n) / (length - 1)) + 0.08D * Math.cos((4D * Math.PI * n) / (length - 1));
             }
 

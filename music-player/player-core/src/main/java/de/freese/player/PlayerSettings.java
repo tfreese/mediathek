@@ -8,7 +8,7 @@ import java.util.concurrent.Executors;
  * @author Thomas Freese
  */
 public final class PlayerSettings {
-    private static final ExecutorService EXECUTOR_SERVICE = Executors.newFixedThreadPool(3, Thread.ofPlatform().daemon().name("player-", 1).factory());
+    private static final ExecutorService EXECUTOR_SERVICE = Executors.newFixedThreadPool(5, Thread.ofPlatform().daemon().name("player-", 1).factory());
     private static final ExecutorService EXECUTOR_SERVICE_PIPE_READER = Executors.newFixedThreadPool(3, Thread.ofPlatform().daemon().name("pipe-reader-", 1).factory());
 
     public static ExecutorService getExecutorService() {

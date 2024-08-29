@@ -15,13 +15,14 @@ import de.freese.player.model.Window;
 /**
  * @author Thomas Freese
  */
-public final class DefaultDspPlayer extends AbstractPlayer {
+public final class DefaultDspPlayer extends AbstractPlayer implements DspPlayer {
     private final DspChain dspChain = new DspChain();
 
     private volatile boolean running;
 
     private SourceDataLinePlayer sourceDataLinePlayer;
 
+    @Override
     public void addProcessor(final DspProcessor processor) {
         dspChain.addProcessor(processor);
     }
@@ -43,11 +44,6 @@ public final class DefaultDspPlayer extends AbstractPlayer {
             getLogger().debug("Play audio format: {}", audioFormat);
 
             sourceDataLinePlayer = new SourceDataLinePlayer(audioFormat);
-
-            // final DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
-            //
-            // sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
-            // sourceDataLine.open(audioFormat);
         }
         catch (RuntimeException ex) {
             throw ex;
@@ -76,8 +72,6 @@ public final class DefaultDspPlayer extends AbstractPlayer {
         getExecutor().execute(() -> {
             getLogger().debug("resume: {}", getCurrentAudioSource());
 
-            // clip.start();
-
             streamMusic();
         });
     }
@@ -91,8 +85,6 @@ public final class DefaultDspPlayer extends AbstractPlayer {
         if (sourceDataLinePlayer == null) {
             return;
         }
-
-        // sourceDataLine.drain();
 
         sourceDataLinePlayer.stop();
 
@@ -121,8 +113,7 @@ public final class DefaultDspPlayer extends AbstractPlayer {
 
     private void streamMusic() {
         final AudioFormat audioFormat = getAudioInputStream().getFormat();
-
-        // sourceDataLine.start();
+        boolean doStop = false;
 
         while (true) {
             try {
@@ -138,8 +129,9 @@ public final class DefaultDspPlayer extends AbstractPlayer {
                     window = new Window(audioFormat, audioBytes);
                 }
                 else {
+                    // End of Song.
                     window = new Window(audioFormat, Arrays.copyOf(audioBytes, bytesRead));
-                    running = false;
+                    doStop = true;
                 }
 
                 dspChain.process(window);
@@ -152,9 +144,14 @@ public final class DefaultDspPlayer extends AbstractPlayer {
                 running = false;
             }
 
-            if (!running) {
+            if (doStop) {
                 getLogger().debug("not running: {}", getCurrentAudioSource());
                 stop();
+                break;
+            }
+
+            if (!running) {
+                getLogger().debug("not running: {}", getCurrentAudioSource());
                 break;
             }
         }

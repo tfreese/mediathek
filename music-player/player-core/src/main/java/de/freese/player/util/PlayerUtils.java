@@ -17,7 +17,7 @@ import de.freese.player.model.Window;
 public final class PlayerUtils {
     public static int[] createSamplesMono(final AudioFormat audioFormat, final byte[] audioBytes) {
         final boolean isBigEndian = audioFormat.isBigEndian();
-        final int bytesPerFrame = audioFormat.getFrameSize();
+        final int bytesPerFrame = 2;
 
         final int[] samples = new int[audioBytes.length / bytesPerFrame];
 
@@ -43,7 +43,7 @@ public final class PlayerUtils {
      */
     public static int[][] createSamplesStereo(final AudioFormat audioFormat, final byte[] audioBytes) {
         final boolean isBigEndian = audioFormat.isBigEndian();
-        final int bytesPerFrame = audioFormat.getFrameSize();
+        final int bytesPerFrame = 4;
 
         final int[] samplesLeft = new int[audioBytes.length / bytesPerFrame];
         final int[] samplesRight = new int[audioBytes.length / bytesPerFrame];
