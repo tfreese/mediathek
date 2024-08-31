@@ -49,7 +49,7 @@ public final class FFTMath {
 
         return Arrays.stream(spectra)
                 .parallel()
-                .flatMap(Spectrum::asStream)
+                .flatMap(Spectrum::stream)
                 .max(Comparator.comparing(Frequency::getAmplitude))
                 .orElse(null);
     }
@@ -70,7 +70,7 @@ public final class FFTMath {
 
         Arrays.stream(spectra)
                 .parallel()
-                .flatMap(Spectrum::asStream)
+                .flatMap(Spectrum::stream)
                 .forEach(frequency -> frequency.setAmplitude(frequency.getAmplitude() / maxAmp));
     }
 
@@ -96,7 +96,7 @@ public final class FFTMath {
 
         Arrays.stream(spectra)
                 .parallel()
-                .flatMap(Spectrum::asStream)
+                .flatMap(Spectrum::stream)
                 .forEach(frequency -> {
                     frequency.setAmplitude(10D * Math.log10(frequency.getAmplitude() / MAX_AMPLITUDE_INTENSITY));
 

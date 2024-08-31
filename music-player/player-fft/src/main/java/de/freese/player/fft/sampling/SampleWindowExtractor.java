@@ -118,10 +118,11 @@ public final class SampleWindowExtractor {
             return;
         }
 
-        final double[] coefficients = windowFunction.generateWindow(windowSize);
-
-        for (int i = 0; i < windowSize; i++) {
-            window[i] = (int) Math.round(window[i] * coefficients[i]);
-        }
+        windowFunction.generateWindow(windowSize, (index, coefficient) -> window[index] = (int) Math.round(window[index] * coefficient));
+        // final double[] coefficients = windowFunction.generateWindow(windowSize);
+        //
+        // for (int i = 0; i < windowSize; i++) {
+        //     window[i] = (int) Math.round(window[i] * coefficients[i]);
+        // }
     }
 }

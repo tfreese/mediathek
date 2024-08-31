@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.freese.player.PlayerSettings;
+import de.freese.player.input.AudioSourceFactory;
 import de.freese.player.model.AudioCodec;
 import de.freese.player.player.DefaultClipPlayer;
 import de.freese.player.player.Player;
@@ -127,7 +128,9 @@ public final class MusicPlayer {
                 gbc.gridx = 0;
                 gbc.gridy = row;
                 gbc.fill = GridBagConstraints.BOTH;
-                frame.add(createPlayerPanel(audioCodec, new DefaultClipPlayer().addAudioSource(Path.of("samples/sample." + audioCodec.getFileExtension()).toUri())), gbc);
+
+                final Player player = new DefaultClipPlayer(AudioSourceFactory.createAudioSource(Path.of("samples/sample." + audioCodec.getFileExtension())));
+                frame.add(createPlayerPanel(audioCodec, player), gbc);
             }
             catch (Exception ex) {
                 LOGGER.error(ex.getMessage(), ex);

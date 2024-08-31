@@ -50,13 +50,12 @@ final class DefaultFFmpeg extends AbstractFF implements FFmpeg {
         // Overwrite existing
         addArgument("-y");
 
+        // final Path tmpDir = Files.createTempDirectory("musicPlayer");
         final Path tmpDir = Path.of(System.getProperty("java.io.tmpdir"), "musicPlayer");
 
         if (!Files.exists(tmpDir)) {
             Files.createDirectories(tmpDir);
         }
-
-        // final Path tmpDir = Files.createTempDirectory("musicPlayer");
 
         final Path tmpFile = Files.createTempFile(tmpDir, null, ".wav");
         tmpFile.toFile().deleteOnExit();
@@ -100,8 +99,6 @@ final class DefaultFFmpeg extends AbstractFF implements FFmpeg {
 
         getLogger().debug("execute: {}", command);
 
-        final AudioFormat audioFormatTarget = getTargetAudioFormat(audioSource);
-
         final Process process = processBuilder.start();
 
         // buffer = 1/4 second of audio.
@@ -141,6 +138,8 @@ final class DefaultFFmpeg extends AbstractFF implements FFmpeg {
             }
         });
 
+        final AudioFormat audioFormatTarget = getTargetAudioFormat(audioSource);
+
         return new AudioInputStream(inputStream, audioFormatTarget, AudioSystem.NOT_SPECIFIED);
     }
 
@@ -150,8 +149,7 @@ final class DefaultFFmpeg extends AbstractFF implements FFmpeg {
 
         addArgument("-hide_banner");
         addArgument("-i");
-        addArgument(audioSource.getUri().getPath());
-        // addArgument(audioSource.getUri().toString()); // Create white noise
+        addArgument(toFileName(audioSource.getUri()));
 
         // final Integer seekTime = attributes.getSeekTime();
         // if (seekTime != null) {

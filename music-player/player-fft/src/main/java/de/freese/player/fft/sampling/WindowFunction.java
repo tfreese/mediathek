@@ -1,5 +1,7 @@
 package de.freese.player.fft.sampling;
 
+import java.util.function.BiConsumer;
+
 /**
  * The type of window function to be applied to each section of waveform before computing its FFT
  */
@@ -12,6 +14,11 @@ public enum WindowFunction {
         public double[] generateWindow(final int length) {
             throw new UnsupportedOperationException("windowing for RECTANGULAR is not supported");
         }
+
+        @Override
+        public void generateWindow(final int length, final BiConsumer<Integer, Double> consumer) {
+            throw new UnsupportedOperationException("windowing for RECTANGULAR is not supported");
+        }
     },
 
     /**
@@ -21,31 +28,31 @@ public enum WindowFunction {
      */
     TRIANGULAR("Triangular") {
         @Override
-        public double[] generateWindow(final int length) {
-            final double[] w = new double[length];
-
-            int n = 0;
+        public void generateWindow(final int length, final BiConsumer<Integer, Double> consumer) {
+            int i = 0;
 
             if (length % 2 == 1) {
-                for (; n < (length + 1) / 2; n++) {
-                    w[n] = (2.0D * (n + 1)) / (length + 1);
+                for (; i < (length + 1) / 2; i++) {
+                    final double coefficient = (2.0D * (i + 1D)) / (length + 1);
+                    consumer.accept(i, coefficient);
                 }
 
-                for (; n < length; n++) {
-                    w[n] = 2D - ((2.0D * (n + 1)) / (length + 1));
+                for (; i < length; i++) {
+                    final double coefficient = 2D - ((2.0D * (i + 1D)) / (length + 1));
+                    consumer.accept(i, coefficient);
                 }
             }
             else {
-                for (; n < (length / 2); n++) {
-                    w[n] = (2.0D * (n + 1) - 1) / length;
+                for (; i < (length / 2); i++) {
+                    final double coefficient = (2.0D * (i + 1D) - 1D) / length;
+                    consumer.accept(i, coefficient);
                 }
 
-                for (; n < length; n++) {
-                    w[n] = 2D - ((2.0D * (n + 1) - 1) / length);
+                for (; i < length; i++) {
+                    final double coefficient = 2D - ((2.0D * (i + 1D) - 1D) / length);
+                    consumer.accept(i, coefficient);
                 }
             }
-
-            return w;
         }
     },
 
@@ -56,20 +63,20 @@ public enum WindowFunction {
      */
     BARTLETT("Bartlett") {
         @Override
-        public double[] generateWindow(final int length) {
-            final double[] w = new double[length];
+        public void generateWindow(final int length, final BiConsumer<Integer, Double> consumer) {
+            int i = 0;
 
-            int n = 0;
+            for (; i <= (length - 1) / 2; i++) {
+                final double coefficient = (2.0D * i) / (length - 1);
 
-            for (; n <= (length - 1) / 2; n++) {
-                w[n] = (2.0 * n) / (length - 1);
+                consumer.accept(i, coefficient);
             }
 
-            for (; n < length; n++) {
-                w[n] = 2 - (2.0 * n) / (length - 1);
-            }
+            for (; i < length; i++) {
+                final double coefficient = 2D - (2.0D * i) / (length - 1);
 
-            return w;
+                consumer.accept(i, coefficient);
+            }
         }
     },
 
@@ -80,15 +87,13 @@ public enum WindowFunction {
      */
     HANNING("Hanning") {
         @Override
-        public double[] generateWindow(final int length) {
-            final double[] w = new double[length];
+        public void generateWindow(final int length, final BiConsumer<Integer, Double> consumer) {
+            for (int i = 0; i < length; i++) {
+                // w[n] = 0.5D * (1D - Math.cos(2D * Math.PI * (i / (length - 1.0D))));
+                final double coefficient = 0.5D * (1D - Math.cos(Math.TAU * (i / (length - 1.0D))));
 
-            for (int n = 0; n < length; n++) {
-                // w[n] = 0.5D * (1D - Math.cos(2D * Math.PI * (n / (length - 1.0D))));
-                w[n] = 0.5D * (1D - Math.cos(Math.TAU * (n / (length - 1.0D))));
+                consumer.accept(i, coefficient);
             }
-
-            return w;
         }
     },
 
@@ -99,15 +104,13 @@ public enum WindowFunction {
      */
     HAMMING("Hamming") {
         @Override
-        public double[] generateWindow(final int length) {
-            final double[] w = new double[length];
+        public void generateWindow(final int length, final BiConsumer<Integer, Double> consumer) {
+            for (int i = 0; i < length; i++) {
+                // final double coefficient = 0.54D - 0.46D * Math.cos(2D * Math.PI * (i / (length - 1.0D)));
+                final double coefficient = 0.54D - 0.46D * Math.cos(Math.TAU * (i / (length - 1.0D)));
 
-            for (int n = 0; n < length; n++) {
-                // w[n] = 0.54D - 0.46D * Math.cos(2D * Math.PI * (n / (length - 1.0D)));
-                w[n] = 0.54D - 0.46D * Math.cos(Math.TAU * (n / (length - 1.0D)));
+                consumer.accept(i, coefficient);
             }
-
-            return w;
         }
     },
 
@@ -118,15 +121,13 @@ public enum WindowFunction {
      */
     BLACKMAN("Blackman") {
         @Override
-        public double[] generateWindow(final int length) {
-            final double[] w = new double[length];
+        public void generateWindow(final int length, final BiConsumer<Integer, Double> consumer) {
+            for (int i = 0; i < length; i++) {
+                // final double coefficient = 0.42D - 0.5D * Math.cos((2D * Math.PI * i) / (length - 1)) + 0.08D * Math.cos((4D * Math.PI * i) / (length - 1));
+                final double coefficient = 0.42D - 0.5D * Math.cos((Math.TAU * i) / (length - 1)) + 0.08D * Math.cos((4D * Math.PI * i) / (length - 1));
 
-            for (int n = 0; n < length; n++) {
-                // w[n] = 0.42D - 0.5D * Math.cos((2D * Math.PI * n) / (length - 1)) + 0.08D * Math.cos((4D * Math.PI * n) / (length - 1));
-                w[n] = 0.42D - 0.5D * Math.cos((Math.TAU * n) / (length - 1)) + 0.08D * Math.cos((4D * Math.PI * n) / (length - 1));
+                consumer.accept(i, coefficient);
             }
-
-            return w;
         }
     };
 
@@ -137,13 +138,27 @@ public enum WindowFunction {
     }
 
     /**
-     * Generates coefficients for a window of specified length and type
+     * Generates coefficients for a window of specified length and type.
      *
      * @param length length of window (should be equal to number of samples taken from waveform)
      *
      * @return coefficients for window of specified length and type
      */
-    public abstract double[] generateWindow(int length);
+    public double[] generateWindow(final int length) {
+        final double[] coefficients = new double[length];
+
+        generateWindow(length, (index, coefficient) -> coefficients[index] = coefficient);
+
+        return coefficients;
+    }
+
+    /**
+     * Generates coefficients for a window of specified length and type.
+     *
+     * @param length length of window (should be equal to number of samples taken from waveform)
+     * @param consumer with Index and the coefficient
+     */
+    public abstract void generateWindow(int length, BiConsumer<Integer, Double> consumer);
 
     @Override
     public String toString() {

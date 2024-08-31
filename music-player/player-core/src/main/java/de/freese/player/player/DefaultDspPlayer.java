@@ -2,6 +2,7 @@
 package de.freese.player.player;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Arrays;
 
 import javax.sound.sampled.AudioFormat;
@@ -29,7 +30,7 @@ public final class DefaultDspPlayer extends AbstractPlayer implements DspPlayer 
 
     @Override
     public void pause() {
-        getLogger().debug("pause: {}", getCurrentAudioSource());
+        getLogger().debug("pause: {}", getAudioSource());
 
         running = false;
     }
@@ -37,8 +38,7 @@ public final class DefaultDspPlayer extends AbstractPlayer implements DspPlayer 
     @Override
     public void play() {
         try {
-            setCurrentAudioSource(getAudioSource(getPlayerIndex()));
-            setAudioInputStream(AudioInputStreamFactory.createAudioInputStream(getCurrentAudioSource()));
+            setAudioInputStream(AudioInputStreamFactory.createAudioInputStream(getAudioSource()));
 
             final AudioFormat audioFormat = getAudioInputStream().getFormat();
             getLogger().debug("Play audio format: {}", audioFormat);
@@ -55,7 +55,7 @@ public final class DefaultDspPlayer extends AbstractPlayer implements DspPlayer 
         running = true;
 
         getExecutor().execute(() -> {
-            getLogger().info("play: {}", getCurrentAudioSource());
+            getLogger().info("play: {}", getAudioSource());
 
             streamMusic();
         });
@@ -70,7 +70,7 @@ public final class DefaultDspPlayer extends AbstractPlayer implements DspPlayer 
         running = true;
 
         getExecutor().execute(() -> {
-            getLogger().debug("resume: {}", getCurrentAudioSource());
+            getLogger().debug("resume: {}", getAudioSource());
 
             streamMusic();
         });
@@ -78,7 +78,7 @@ public final class DefaultDspPlayer extends AbstractPlayer implements DspPlayer 
 
     @Override
     public void stop() {
-        getLogger().debug("stop: {}", getCurrentAudioSource());
+        getLogger().debug("stop: {}", getAudioSource());
 
         running = false;
 
@@ -87,6 +87,9 @@ public final class DefaultDspPlayer extends AbstractPlayer implements DspPlayer 
         }
 
         sourceDataLinePlayer.stop();
+
+        // Finish Flag.
+        dspChain.process(null);
 
         close();
     }
@@ -100,7 +103,10 @@ public final class DefaultDspPlayer extends AbstractPlayer implements DspPlayer 
 
                 getAudioInputStream().close();
                 setAudioInputStream(null);
-                setCurrentAudioSource(null);
+
+                if (getAudioSource().getTmpFile() != null) {
+                    Files.delete(getAudioSource().getTmpFile());
+                }
             }
         }
         catch (PlayerException ex) {
@@ -145,13 +151,13 @@ public final class DefaultDspPlayer extends AbstractPlayer implements DspPlayer 
             }
 
             if (doStop) {
-                getLogger().debug("not running: {}", getCurrentAudioSource());
+                getLogger().debug("not running: {}", getAudioSource());
                 stop();
                 break;
             }
 
             if (!running) {
-                getLogger().debug("not running: {}", getCurrentAudioSource());
+                getLogger().debug("not running: {}", getAudioSource());
                 break;
             }
         }

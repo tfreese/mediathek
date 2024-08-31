@@ -28,7 +28,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
         addArgument("-hide_banner");
         addArgument("-select_streams a");
         addArgument("-i");
-        addArgument(uri.toString());
+        addArgument(toFileName(uri));
 
         final String command = createCommand();
 
@@ -56,11 +56,11 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
             getLogger().debug("info: {}", metaData);
         }
 
-        final DefaultAudioSource audioFile = parseMetaData(output);
-        audioFile.setUri(uri);
-        audioFile.setMetaData(metaData);
+        final DefaultAudioSource audioSource = parseMetaData(output);
+        audioSource.setUri(uri);
+        audioSource.setMetaData(metaData);
 
-        return audioFile;
+        return audioSource;
     }
 
     @Override

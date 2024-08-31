@@ -39,10 +39,6 @@ public final class Spectrum implements Iterable<Frequency> {
         this.frameEndMs = frameEndMs;
     }
 
-    public Stream<Frequency> asStream() {
-        return Arrays.stream(frequencies);
-    }
-
     public double getFrameEndMs() {
         return frameEndMs;
     }
@@ -81,5 +77,9 @@ public final class Spectrum implements Iterable<Frequency> {
 
     public int length() {
         return frequencies.length;
+    }
+
+    public Stream<Frequency> stream() {
+        return Arrays.stream(frequencies);
     }
 }

@@ -8,6 +8,7 @@ import javax.sound.sampled.DataLine;
 
 import de.freese.player.exception.PlayerException;
 import de.freese.player.input.AudioInputStreamFactory;
+import de.freese.player.input.AudioSource;
 
 /**
  * @author Thomas Freese
@@ -18,9 +19,19 @@ public final class DefaultClipPlayer extends AbstractPlayer {
     private volatile boolean looping;
     private volatile boolean running;
 
+    public DefaultClipPlayer() {
+        super();
+    }
+
+    public DefaultClipPlayer(final AudioSource audioSource) {
+        super();
+
+        setAudioSource(audioSource);
+    }
+
     @Override
     public void pause() {
-        getLogger().debug("pause: {}", getCurrentAudioSource());
+        getLogger().debug("pause: {}", getAudioSource());
 
         running = false;
 
@@ -54,8 +65,7 @@ public final class DefaultClipPlayer extends AbstractPlayer {
     @Override
     public void play() {
         try {
-            setCurrentAudioSource(getAudioSource(getPlayerIndex()));
-            setAudioInputStream(AudioInputStreamFactory.createAudioInputStream(getCurrentAudioSource()));
+            setAudioInputStream(AudioInputStreamFactory.createAudioInputStream(getAudioSource()));
 
             final AudioFormat audioFormat = getAudioInputStream().getFormat();
             getLogger().debug("Play audio format: {}", audioFormat);
@@ -77,7 +87,7 @@ public final class DefaultClipPlayer extends AbstractPlayer {
         clip.setFramePosition(0);
 
         getExecutor().execute(() -> {
-            getLogger().info("play: {}", getCurrentAudioSource());
+            getLogger().info("play: {}", getAudioSource());
 
             clip.start();
 
@@ -89,7 +99,7 @@ public final class DefaultClipPlayer extends AbstractPlayer {
                 }
 
                 if (!running) {
-                    getLogger().debug("not running: {}", getCurrentAudioSource());
+                    getLogger().debug("not running: {}", getAudioSource());
                     break;
                 }
             }
@@ -105,7 +115,7 @@ public final class DefaultClipPlayer extends AbstractPlayer {
         running = true;
 
         getExecutor().execute(() -> {
-            getLogger().debug("resume: {}", getCurrentAudioSource());
+            getLogger().debug("resume: {}", getAudioSource());
 
             clip.start();
 
@@ -126,7 +136,7 @@ public final class DefaultClipPlayer extends AbstractPlayer {
 
     @Override
     public void stop() {
-        getLogger().debug("stop: {}", getCurrentAudioSource());
+        getLogger().debug("stop: {}", getAudioSource());
 
         running = false;
         looping = false;
@@ -153,7 +163,6 @@ public final class DefaultClipPlayer extends AbstractPlayer {
 
                 getAudioInputStream().close();
                 setAudioInputStream(null);
-                setCurrentAudioSource(null);
             }
         }
         catch (PlayerException ex) {

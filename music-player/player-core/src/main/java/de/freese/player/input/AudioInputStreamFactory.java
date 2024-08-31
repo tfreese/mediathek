@@ -39,7 +39,16 @@ public final class AudioInputStreamFactory {
         if (SUPPORTED_AUDIO_CODECS.contains(audioCodec)) {
             return AudioSystem.getAudioInputStream(new BufferedInputStream(audioSource.getUri().toURL().openStream()));
         }
-        else if (AudioCodec.M4B.equals(audioCodec) || AudioCodec.OGG.equals(audioCodec)) {
+        // else if (AudioCodec.M4B.equals(audioCodec) || AudioCodec.OGG.equals(audioCodec)) {
+        //     if (audioSource.getTmpFile() == null) {
+        //         final Path tmpFile = FFLocator.createFFmpeg().encodeToWav(audioSource);
+        //
+        //         audioSource.setTmpFile(tmpFile);
+        //     }
+        //
+        //     audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(Files.newInputStream(audioSource.getTmpFile())));
+        // }
+        else {
             if (audioSource.getTmpFile() == null) {
                 final Path tmpFile = FFLocator.createFFmpeg().encodeToWav(audioSource);
 
@@ -47,9 +56,9 @@ public final class AudioInputStreamFactory {
             }
 
             audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(Files.newInputStream(audioSource.getTmpFile())));
-        }
-        else {
-            audioInputStream = FFLocator.createFFmpeg().toAudioStreamWav(audioSource);
+
+            // Results in Clicker-Sounds during playing.
+            // audioInputStream = FFLocator.createFFmpeg().toAudioStreamWav(audioSource);
         }
 
         if (audioInputStream == null) {

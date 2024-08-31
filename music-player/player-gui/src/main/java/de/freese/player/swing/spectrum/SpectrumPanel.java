@@ -3,13 +3,11 @@ package de.freese.player.swing.spectrum;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.io.Serial;
-
-import javax.swing.JPanel;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.NumberTickUnitSource;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
@@ -22,11 +20,12 @@ import de.freese.player.fft.output.Spectrum;
 /**
  * @author Thomas Freese
  */
-public final class SpectrumPanel extends JPanel {
-    @Serial
-    private static final long serialVersionUID = -1L;
+public final class SpectrumPanel {
+    // @Serial
+    // private static final long serialVersionUID = -1L;
 
     private final XYSeriesCollection data = new XYSeriesCollection();
+    private final ChartPanel panel;
 
     public SpectrumPanel() {
         super();
@@ -34,11 +33,12 @@ public final class SpectrumPanel extends JPanel {
         data.addSeries(new XYSeries("f", true, false));
 
         // DomainAxis
-        // NumberAxis xAxis = new LogarithmicAxis("Frequency (Hz)");
+        // NumberAxis xAxis = new LogarithmicAxis("Frequency (kHz)");
         final NumberAxis xAxis = new NumberAxis("Frequency (kHz)");
         xAxis.setAutoRangeIncludesZero(false);
-        // xAxis.setRange(0D, 23_000D);
-        xAxis.setRange(0D, 23D);
+        // xAxis.setRange(0D, 22_000D);
+        xAxis.setRange(0D, 22D);
+        xAxis.setStandardTickUnits(new NumberTickUnitSource(true));
         // xAxis.setNumberFormatOverride(new DecimalFormat("0 k"));
 
         // RangeAxis
@@ -59,13 +59,21 @@ public final class SpectrumPanel extends JPanel {
         // final XYPlot plot = (XYPlot) chart.getPlot();
 
         // Create panel
-        final ChartPanel panel = new ChartPanel(chart);
-        add(panel);
+        panel = new ChartPanel(chart);
+    }
+
+    public ChartPanel getPanel() {
+        return panel;
     }
 
     public void updateChartData(final Spectrum spectrum) {
         final XYSeries series = data.getSeries("f");
 
-        spectrum.forEach(frequency -> series.addOrUpdate(frequency.getFrequency() / 1000D, frequency.getAmplitude()));
+        if (spectrum == null) {
+            series.clear();
+        }
+        else {
+            spectrum.forEach(frequency -> series.addOrUpdate(frequency.getFrequency() / 1000D, frequency.getAmplitude()));
+        }
     }
 }

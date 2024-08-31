@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import de.freese.player.PlayerSettings;
 import de.freese.player.player.DefaultDspPlayer;
 import de.freese.player.player.DspPlayer;
+import de.freese.player.player.PlayList;
 import de.freese.player.swing.spectrum.SpectrumDspProcessor;
 import de.freese.player.swing.spectrum.SpectrumPanel;
 import de.freese.player.utils.image.ImageFactory;
@@ -41,7 +42,7 @@ public final class PlayerFrame {
         return frame;
     }
 
-    static void init(final String[] args) throws Exception {
+    static void init() throws Exception {
         LOGGER.info("initialize application");
 
         final JFrame jFrame = new JFrame();
@@ -53,10 +54,15 @@ public final class PlayerFrame {
         // jFrame.add(new JLabel(ImageFactory.getIcon("images/media-play-white.svg")), BorderLayout.NORTH);
         // jFrame.add(new JLabel(ImageFactory.getIcon("images/media-play-black.svg")), BorderLayout.SOUTH);
 
-        // final DspPlayer player = (DspPlayer) new DefaultDspPlayer().addAudioSource(Path.of("samples/sample.aif").toUri());
-        // final DspPlayer player = (DspPlayer) new DefaultDspPlayer().addAudioSource(Path.of("samples/sample.au").toUri());
-        // final DspPlayer player = (DspPlayer) new DefaultDspPlayer().addAudioSource(Path.of("samples/sample.flac").toUri());
-        final DspPlayer player = (DspPlayer) new DefaultDspPlayer().addAudioSource(Path.of("samples/sample.wav").toUri());
+        final PlayList playList = new PlayList()
+                .addAudioSource(Path.of("samples/sample.wav").toUri())
+                .addAudioSource(Path.of("samples/sample.flac").toUri())
+                // .addAudioSource(Path.of("samples/sample.aif").toUri())
+                // .addAudioSource(Path.of("samples/sample.au").toUri())
+                ;
+
+        final DspPlayer player = new DefaultDspPlayer();
+        player.setAudioSource(playList.next());
 
         final JButton buttonPlay = new JButton(ImageFactory.getIcon("images/media-play-white.svg"));
         buttonPlay.setToolTipText("Play");
@@ -83,7 +89,7 @@ public final class PlayerFrame {
 
         final SpectrumPanel spectrumPanel = new SpectrumPanel();
         player.addProcessor(new SpectrumDspProcessor(spectrumPanel::updateChartData));
-        jFrame.add(spectrumPanel, BorderLayout.SOUTH);
+        jFrame.add(spectrumPanel.getPanel(), BorderLayout.SOUTH);
 
         // frame.setSize(800, 600);
         // frame.setSize(1280, 768);
