@@ -37,11 +37,15 @@ public final class PlayList {
     }
 
     public AudioSource currentAudioSource() {
-        return audioSources.get(currentIndex);
+        return getAudioSource(currentIndex);
     }
 
     public int currentIndex() {
         return currentIndex;
+    }
+
+    public AudioSource getAudioSource(final int index) {
+        return audioSources.get(index);
     }
 
     public boolean hasNext() {
@@ -52,6 +56,10 @@ public final class PlayList {
         return currentIndex > 0;
     }
 
+    public int indexOf(final AudioSource audioSource) {
+        return audioSources.indexOf(audioSource);
+    }
+
     /**
      * @return null if no more available
      */
@@ -60,7 +68,7 @@ public final class PlayList {
             return null;
         }
 
-        final AudioSource audioSource = audioSources.get(currentIndex);
+        final AudioSource audioSource = getAudioSource(currentIndex);
         currentIndex++;
 
         return audioSource;
@@ -74,7 +82,7 @@ public final class PlayList {
             return null;
         }
 
-        final AudioSource audioSource = audioSources.get(currentIndex);
+        final AudioSource audioSource = getAudioSource(currentIndex);
         currentIndex--;
 
         return audioSource;

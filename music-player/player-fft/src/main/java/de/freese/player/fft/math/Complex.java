@@ -14,7 +14,13 @@ public final class Complex {
      * The imaginary component always 0.
      */
     static Complex[] toComplex(final int[] values) {
-        final Complex[] complexes = new Complex[values.length];
+        int length = values.length;
+
+        if (length % 2 != 0) {
+            length--;
+        }
+
+        final Complex[] complexes = new Complex[length];
 
         for (int i = 0; i < complexes.length; i++) {
             complexes[i] = new Complex(values[i], 0D);

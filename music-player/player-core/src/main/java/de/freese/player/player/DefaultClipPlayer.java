@@ -86,6 +86,8 @@ public final class DefaultClipPlayer extends AbstractPlayer {
         running = true;
         clip.setFramePosition(0);
 
+        firePlay();
+
         getExecutor().execute(() -> {
             getLogger().info("play: {}", getAudioSource());
 
@@ -152,10 +154,14 @@ public final class DefaultClipPlayer extends AbstractPlayer {
 
         clip.setFramePosition(0);
 
+        fireStop();
+
         close();
     }
 
     protected void close() {
+        getLogger().debug("close: {}", getAudioSource());
+
         try {
             if (clip != null) {
                 clip.close();

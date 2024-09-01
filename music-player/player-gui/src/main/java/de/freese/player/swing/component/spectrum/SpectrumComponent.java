@@ -1,13 +1,16 @@
 // Created: 29 Aug. 2024
-package de.freese.player.swing.spectrum;
+package de.freese.player.swing.component.spectrum;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.text.DecimalFormat;
+
+import javax.swing.JComponent;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.NumberTickUnitSource;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
@@ -20,31 +23,38 @@ import de.freese.player.fft.output.Spectrum;
 /**
  * @author Thomas Freese
  */
-public final class SpectrumPanel {
+public final class SpectrumComponent {
     // @Serial
     // private static final long serialVersionUID = -1L;
 
     private final XYSeriesCollection data = new XYSeriesCollection();
     private final ChartPanel panel;
 
-    public SpectrumPanel() {
+    public SpectrumComponent() {
         super();
 
         data.addSeries(new XYSeries("f", true, false));
 
+        // final TickUnits tickUnits = new TickUnits();
+        // IntStream.rangeClosed(1, 23).forEach(i -> tickUnits.add(new NumberTickUnit(i)));
+
         // DomainAxis
         // NumberAxis xAxis = new LogarithmicAxis("Frequency (kHz)");
-        final NumberAxis xAxis = new NumberAxis("Frequency (kHz)");
-        xAxis.setAutoRangeIncludesZero(false);
-        // xAxis.setRange(0D, 22_000D);
+        // final NumberAxis xAxis = new NumberAxis("Frequency (kHz)");
+        final NumberAxis xAxis = new NumberAxis();
+        // xAxis.setAutoRange(false);
+        // xAxis.setAutoRangeIncludesZero(false);
+        // xAxis.setStandardTickUnits(tickUnits);
+        // xAxis.setStandardTickUnits(new NumberTickUnitSource(true));
+        xAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         xAxis.setRange(0D, 22D);
-        xAxis.setStandardTickUnits(new NumberTickUnitSource(true));
-        // xAxis.setNumberFormatOverride(new DecimalFormat("0 k"));
+        xAxis.setNumberFormatOverride(new DecimalFormat("# kHz"));
 
         // RangeAxis
-        final NumberAxis yAxis = new NumberAxis("Amplitude");
+        // final NumberAxis yAxis = new NumberAxis("Amplitude");
+        final NumberAxis yAxis = new NumberAxis();
         yAxis.setRange(0D, 1D);
-        // yAxis.setRange(-80D, 0D);
+        yAxis.setTickLabelsVisible(false);
 
         final XYItemRenderer renderer = new XYLineAndShapeRenderer(true, false);
         renderer.setSeriesPaint(0, new Color(0, 128, 0));
@@ -60,9 +70,10 @@ public final class SpectrumPanel {
 
         // Create panel
         panel = new ChartPanel(chart);
+        panel.setPreferredSize(new Dimension(1000, 150));
     }
 
-    public ChartPanel getPanel() {
+    public JComponent getComponent() {
         return panel;
     }
 

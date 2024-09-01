@@ -2,14 +2,14 @@
 package de.freese.player.swing;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.nio.file.Path;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.UIDefaults;
+import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
 import org.slf4j.Logger;
@@ -19,9 +19,10 @@ import de.freese.player.PlayerSettings;
 import de.freese.player.player.DefaultDspPlayer;
 import de.freese.player.player.DspPlayer;
 import de.freese.player.player.PlayList;
-import de.freese.player.swing.spectrum.SpectrumDspProcessor;
-import de.freese.player.swing.spectrum.SpectrumPanel;
-import de.freese.player.utils.image.ImageFactory;
+import de.freese.player.swing.component.PlayListComponent;
+import de.freese.player.swing.component.PlayerControlComponent;
+import de.freese.player.swing.component.spectrum.SpectrumComponent;
+import de.freese.player.swing.component.spectrum.SpectrumDspProcessor;
 
 /**
  * @author Thomas Freese
@@ -30,6 +31,8 @@ public final class PlayerFrame {
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayerFrame.class);
 
     private static JFrame frame;
+    private static PlayList playList;
+    private static DspPlayer player;
 
     private static final class MainFrameListener extends WindowAdapter {
         @Override
@@ -45,51 +48,45 @@ public final class PlayerFrame {
     static void init() throws Exception {
         LOGGER.info("initialize application");
 
+        // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+
+        final UIDefaults defaults = UIManager.getLookAndFeelDefaults();
+        // defaults.get("Table.alternateRowColor");
+        defaults.putIfAbsent("Table.alternateRowColor", Color.LIGHT_GRAY);
+
         final JFrame jFrame = new JFrame();
         jFrame.setTitle("Music-Player");
         jFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         jFrame.addWindowListener(new MainFrameListener());
         jFrame.setLayout(new BorderLayout());
 
-        // jFrame.add(new JLabel(ImageFactory.getIcon("images/media-play-white.svg")), BorderLayout.NORTH);
-        // jFrame.add(new JLabel(ImageFactory.getIcon("images/media-play-black.svg")), BorderLayout.SOUTH);
+        player = new DefaultDspPlayer();
 
-        final PlayList playList = new PlayList()
-                .addAudioSource(Path.of("samples/sample.wav").toUri())
-                .addAudioSource(Path.of("samples/sample.flac").toUri())
-                // .addAudioSource(Path.of("samples/sample.aif").toUri())
-                // .addAudioSource(Path.of("samples/sample.au").toUri())
-                ;
+        final PlayerControlComponent playerControlComponent = new PlayerControlComponent(player);
+        jFrame.add(playerControlComponent.getComponent(), BorderLayout.NORTH);
 
-        final DspPlayer player = new DefaultDspPlayer();
-        player.setAudioSource(playList.next());
+        playList = new PlayList();
+        final PlayListComponent playListComponent = new PlayListComponent(playList);
+        playListComponent.setPlayListSelectionListener(audioSource -> {
+            player.stop();
+            playerControlComponent.onStop();
 
-        final JButton buttonPlay = new JButton(ImageFactory.getIcon("images/media-play-white.svg"));
-        buttonPlay.setToolTipText("Play");
-        buttonPlay.addActionListener(event -> player.play());
+            player.setAudioSource(audioSource);
 
-        final JButton buttonPause = new JButton(ImageFactory.getIcon("images/media-pause-white.svg"));
-        buttonPause.setToolTipText("Pause");
-        buttonPause.addActionListener(event -> player.pause());
+            player.play();
+            playerControlComponent.onPlay();
+        });
+        player.addPlayListener(playListComponent::selectAudioSource);
+        jFrame.add(playListComponent.getComponent(), BorderLayout.CENTER);
 
-        final JButton buttonResume = new JButton("Resume");
-        buttonResume.setToolTipText("Resume");
-        buttonResume.addActionListener(event -> player.resume());
-
-        final JButton buttonStop = new JButton(ImageFactory.getIcon("images/media-stop-white.svg"));
-        buttonStop.setToolTipText("Stop");
-        buttonStop.addActionListener(event -> player.stop());
-
-        final JPanel playerControls = new JPanel(new FlowLayout());
-        playerControls.add(buttonPlay);
-        playerControls.add(buttonPause);
-        playerControls.add(buttonResume);
-        playerControls.add(buttonStop);
-        jFrame.add(playerControls, BorderLayout.CENTER);
-
-        final SpectrumPanel spectrumPanel = new SpectrumPanel();
-        player.addProcessor(new SpectrumDspProcessor(spectrumPanel::updateChartData));
-        jFrame.add(spectrumPanel.getPanel(), BorderLayout.SOUTH);
+        final SpectrumComponent spectrumComponent = new SpectrumComponent();
+        final SpectrumDspProcessor spectrumDspProcessor = new SpectrumDspProcessor(spectrumComponent::updateChartData);
+        player.addProcessor(spectrumDspProcessor);
+        player.addStopListener(audioSource -> {
+            spectrumDspProcessor.reset();
+            spectrumComponent.updateChartData(null);
+        });
+        jFrame.add(spectrumComponent.getComponent(), BorderLayout.SOUTH);
 
         // frame.setSize(800, 600);
         // frame.setSize(1280, 768);
@@ -102,8 +99,17 @@ public final class PlayerFrame {
         frame = jFrame;
     }
 
-    static void start() {
+    static void start() throws Exception {
         LOGGER.info("starting application");
+
+        playList
+                .addAudioSource(Path.of("samples/sample.wav").toUri())
+                .addAudioSource(Path.of("samples/sample.flac").toUri())
+                .addAudioSource(Path.of("samples/sample.aif").toUri())
+                .addAudioSource(Path.of("samples/sample.au").toUri())
+        ;
+
+        player.setAudioSource(playList.next());
 
         frame.setVisible(true);
     }

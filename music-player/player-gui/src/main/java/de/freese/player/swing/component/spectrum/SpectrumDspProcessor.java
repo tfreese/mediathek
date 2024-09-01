@@ -1,5 +1,5 @@
 // Created: 29 Aug. 2024
-package de.freese.player.swing.spectrum;
+package de.freese.player.swing.component.spectrum;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -42,15 +42,13 @@ public class SpectrumDspProcessor implements DspProcessor {
 
     @Override
     public void process(final Window window) {
-        if (window == null) {
-            // Finish Flag.
-            spectrumConsumer.accept(null);
-            return;
-        }
-
         // Thread.startVirtualThread(() -> doFFT(window));
         // PlayerSettings.getExecutorService().execute(() -> doFFT(window));
         doFFT(window);
+    }
+
+    public void reset() {
+        maxAmp = 0D;
     }
 
     private void doFFT(final Window window) {
@@ -96,7 +94,7 @@ public class SpectrumDspProcessor implements DspProcessor {
         maxAmp = Math.max(maxAmp, frequency.getAmplitude());
         FFTMath.normalize(spectrum, maxAmp);
 
-        LOGGER.debug("maxAmp = {}", maxAmp);
+        LOGGER.trace("maxAmp = {}", maxAmp);
 
         SwingUtilities.invokeLater(() -> spectrumConsumer.accept(spectrum));
     }

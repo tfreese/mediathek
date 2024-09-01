@@ -1,11 +1,11 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="PlayerLauncher" type="Application" factoryName="Application" nameIsGenerated="true">
+  <configuration default="false" name="PlayerLauncher" type="Application" factoryName="Application" singleton="false" nameIsGenerated="true">
     <option name="MAIN_CLASS_NAME" value="de.freese.player.swing.PlayerLauncher" />
     <module name="mediathek.music-player.player-gui.main" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/music-player" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="de.freese.player.swing.*" />
+        <option name="PATTERN" value="de.freese.player.swing.component.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>

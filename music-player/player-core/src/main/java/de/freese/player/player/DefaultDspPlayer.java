@@ -54,6 +54,8 @@ public final class DefaultDspPlayer extends AbstractPlayer implements DspPlayer 
 
         running = true;
 
+        firePlay();
+
         getExecutor().execute(() -> {
             getLogger().info("play: {}", getAudioSource());
 
@@ -88,14 +90,15 @@ public final class DefaultDspPlayer extends AbstractPlayer implements DspPlayer 
 
         sourceDataLinePlayer.stop();
 
-        // Finish Flag.
-        dspChain.process(null);
+        fireStop();
 
         close();
     }
 
     @Override
     protected void close() {
+        getLogger().debug("close: {}", getAudioSource());
+
         try {
             if (sourceDataLinePlayer != null) {
                 sourceDataLinePlayer.close();
@@ -106,6 +109,7 @@ public final class DefaultDspPlayer extends AbstractPlayer implements DspPlayer 
 
                 if (getAudioSource().getTmpFile() != null) {
                     Files.delete(getAudioSource().getTmpFile());
+                    getAudioSource().setTmpFile(null);
                 }
             }
         }

@@ -36,7 +36,8 @@ public final class AudioInputStreamFactory {
         final AudioCodec audioCodec = AudioCodec.getByExtension(fileExtension);
         final AudioInputStream audioInputStream;
 
-        if (SUPPORTED_AUDIO_CODECS.contains(audioCodec)) {
+        // if (SUPPORTED_AUDIO_CODECS.contains(audioCodec)) {
+        if (AudioCodec.WAVE.equals(audioCodec)) {
             return AudioSystem.getAudioInputStream(new BufferedInputStream(audioSource.getUri().toURL().openStream()));
         }
         // else if (AudioCodec.M4B.equals(audioCodec) || AudioCodec.OGG.equals(audioCodec)) {
