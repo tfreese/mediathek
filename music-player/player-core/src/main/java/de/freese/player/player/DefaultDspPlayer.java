@@ -2,7 +2,6 @@
 package de.freese.player.player;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.Arrays;
 
 import javax.sound.sampled.AudioFormat;
@@ -108,7 +107,10 @@ public final class DefaultDspPlayer extends AbstractPlayer implements DspPlayer 
                 setAudioInputStream(null);
 
                 if (getAudioSource().getTmpFile() != null) {
-                    Files.delete(getAudioSource().getTmpFile());
+                    if (getLogger().isInfoEnabled()) {
+                        // Files.delete(getAudioSource().getTmpFile());
+                    }
+
                     getAudioSource().setTmpFile(null);
                 }
             }

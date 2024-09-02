@@ -8,6 +8,8 @@ import javax.sound.sampled.AudioInputStream;
 import de.freese.player.input.AudioSource;
 
 /**
+ * ffmpeg -formats | grep PCM
+ *
  * @author Thomas Freese
  */
 public interface FFmpeg {
