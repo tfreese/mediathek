@@ -70,7 +70,7 @@ public final class SpectrumComponent {
 
         // Create panel
         panel = new ChartPanel(chart);
-        panel.setPreferredSize(new Dimension(1000, 150));
+        panel.setPreferredSize(new Dimension(1, 150));
     }
 
     public JComponent getComponent() {

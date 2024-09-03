@@ -1,7 +1,6 @@
 // Created: 18 Aug. 2024
 package de.freese.player.swing;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -21,6 +20,7 @@ import de.freese.player.player.DspPlayer;
 import de.freese.player.player.PlayList;
 import de.freese.player.swing.component.PlayListComponent;
 import de.freese.player.swing.component.PlayerControlComponent;
+import de.freese.player.swing.component.PlayerPanel;
 import de.freese.player.swing.component.spectrum.SpectrumComponent;
 import de.freese.player.swing.component.spectrum.SpectrumDspProcessor;
 
@@ -58,14 +58,18 @@ public final class PlayerFrame {
         jFrame.setTitle("Music-Player");
         jFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         jFrame.addWindowListener(new MainFrameListener());
-        jFrame.setLayout(new BorderLayout());
-
-        player = new DefaultDspPlayer();
-
-        final PlayerControlComponent playerControlComponent = new PlayerControlComponent(player);
-        jFrame.add(playerControlComponent.getComponent(), BorderLayout.NORTH);
+        // jFrame.setLayout(new BorderLayout());
 
         playList = new PlayList();
+        player = new DefaultDspPlayer();
+
+        final PlayerPanel playerPanel = new PlayerPanel();
+        playerPanel.init(playList);
+        jFrame.setContentPane(playerPanel.getComponent());
+
+        final PlayerControlComponent playerControlComponent = new PlayerControlComponent(player);
+        // jFrame.add(playerControlComponent.getComponent(), BorderLayout.NORTH);
+
         final PlayListComponent playListComponent = new PlayListComponent(playList);
         playListComponent.setPlayListSelectionListener(audioSource -> {
             player.stop();
@@ -77,7 +81,7 @@ public final class PlayerFrame {
             playerControlComponent.onPlay();
         });
         player.addPlayListener(playListComponent::selectAudioSource);
-        jFrame.add(playListComponent.getComponent(), BorderLayout.CENTER);
+        // jFrame.add(playListComponent.getComponent(), BorderLayout.CENTER);
 
         final SpectrumComponent spectrumComponent = new SpectrumComponent();
         final SpectrumDspProcessor spectrumDspProcessor = new SpectrumDspProcessor(spectrumComponent::updateChartData);
@@ -86,7 +90,7 @@ public final class PlayerFrame {
             spectrumDspProcessor.reset();
             spectrumComponent.updateChartData(null);
         });
-        jFrame.add(spectrumComponent.getComponent(), BorderLayout.SOUTH);
+        // jFrame.add(spectrumComponent.getComponent(), BorderLayout.SOUTH);
 
         // frame.setSize(800, 600);
         // frame.setSize(1280, 768);
