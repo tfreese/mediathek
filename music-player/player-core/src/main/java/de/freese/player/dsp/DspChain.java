@@ -36,4 +36,9 @@ public final class DspChain implements DspProcessor {
             processor.process(window);
         }
     }
+
+    @Override
+    public void reset() {
+        this.processors.forEach(DspProcessor::reset);
+    }
 }

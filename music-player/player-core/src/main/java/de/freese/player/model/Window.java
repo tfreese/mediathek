@@ -43,26 +43,6 @@ public final class Window {
         }
     }
 
-    // public Window(final int[] samples) {
-    //     super();
-    //
-    //     this.audioBytes = null;
-    //     this.samplesLeft = Objects.requireNonNull(samples, "samples required");
-    //     this.samplesRight = null;
-    // }
-    //
-    // public Window(final int[] samplesLeft, final int[] samplesRight) {
-    //     super();
-    //
-    //     this.audioBytes = null;
-    //     this.samplesLeft = Objects.requireNonNull(samplesRight, "samplesLeft required");
-    //     this.samplesRight = Objects.requireNonNull(samplesRight, "samplesRight required");
-    //
-    //     if (samplesLeft.length != samplesRight.length) {
-    //         throw new IllegalArgumentException("stereo samples must have the same length: " + samplesLeft.length + " != " + samplesRight.length);
-    //     }
-    // }
-
     public void forEachMono(final IntConsumer consumer) {
         for (int sample : getSamplesLeft()) {
             consumer.accept(sample);

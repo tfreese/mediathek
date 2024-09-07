@@ -24,6 +24,14 @@ import de.freese.player.model.Window;
 public class SpectrumDspProcessor implements DspProcessor {
     private static final Logger LOGGER = LoggerFactory.getLogger(SpectrumDspProcessor.class);
 
+    /**
+     * Smoothing
+     */
+    private static void doSmoothing(final int length, final int[] window) {
+        WindowFunction.HANNING.generateWindow(length, (index, coefficient) -> window[index] = (int) Math.round(window[index] * coefficient));
+    }
+
+    private final FFTConfig fftConfig = new FFTConfig().windowOverlap(0.5D);
     private final Consumer<Spectrum> spectrumConsumer;
 
     private int[] lastSamples;
@@ -42,11 +50,12 @@ public class SpectrumDspProcessor implements DspProcessor {
 
     @Override
     public void process(final Window window) {
-        // Thread.startVirtualThread(() -> doFFT(window));
+        Thread.startVirtualThread(() -> doFFT(window));
         // PlayerSettings.getExecutorService().execute(() -> doFFT(window));
-        doFFT(window);
+        // doFFT(window);
     }
 
+    @Override
     public void reset() {
         maxAmp = 0D;
     }
@@ -54,14 +63,10 @@ public class SpectrumDspProcessor implements DspProcessor {
     private void doFFT(final Window window) {
         final int[] mergedSamples = window.getMergedSamples();
 
-        FFTConfig fftConfig = new FFTConfig().windowOverlap(0.5D);
-
-        final int[] samples;
+        final int[] fftSamples;
 
         if (lastSamples == null) {
-            samples = mergedSamples;
-
-            doSmoothing(samples.length, samples);
+            fftSamples = mergedSamples;
         }
         else {
             final int samplesToKeep = (int) (lastSamples.length * fftConfig.getWindowOverlap());
@@ -75,18 +80,18 @@ public class SpectrumDspProcessor implements DspProcessor {
                 samplesToRead = mergedSamples.length - samplesToKeep;
             }
 
-            doSmoothing(samplesToRead, mergedSamples);
-
-            samples = new int[samplesToKeep + samplesToRead];
-            System.arraycopy(lastSamples, lastSamples.length - samplesToKeep, samples, 0, samplesToKeep);
-            System.arraycopy(mergedSamples, 0, samples, samplesToKeep, samplesToRead);
+            fftSamples = new int[samplesToKeep + samplesToRead];
+            System.arraycopy(lastSamples, lastSamples.length - samplesToKeep, fftSamples, 0, samplesToKeep);
+            System.arraycopy(mergedSamples, 0, fftSamples, samplesToKeep, samplesToRead);
         }
 
-        lastSamples = samples;
+        lastSamples = mergedSamples;
 
-        fftConfig = fftConfig.windowSize(samples.length);
+        doSmoothing(fftSamples.length, fftSamples);
 
-        final Spectrum spectrum = FFTComputationWrapper.createSpectrum(samples, window.getAudioFormat().getSampleRate(), fftConfig);
+        fftConfig.windowSize(fftSamples.length);
+
+        final Spectrum spectrum = FFTComputationWrapper.createSpectrum(fftSamples, window.getAudioFormat().getSampleRate(), fftConfig);
 
         final Frequency frequency = FFTMath.findMaxAmplitude(spectrum);
         // FFTMath.normalize(spectrum, frequency.getAmplitude());
@@ -97,12 +102,5 @@ public class SpectrumDspProcessor implements DspProcessor {
         LOGGER.trace("maxAmp = {}", maxAmp);
 
         SwingUtilities.invokeLater(() -> spectrumConsumer.accept(spectrum));
-    }
-
-    /**
-     * Smoothing
-     */
-    private void doSmoothing(final int length, final int[] window) {
-        WindowFunction.HANNING.generateWindow(length, (index, coefficient) -> window[index] = (int) Math.round(window[index] * coefficient));
     }
 }

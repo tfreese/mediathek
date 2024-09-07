@@ -4,9 +4,6 @@ package de.freese.player.input;
 import java.io.BufferedInputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -19,36 +16,18 @@ import de.freese.player.model.AudioCodec;
  */
 public final class AudioInputStreamFactory {
     // au -> AU;  wav -> WAVE; aif -> AIFF
-    private static final Set<AudioCodec> SUPPORTED_AUDIO_CODECS = Arrays.stream(AudioSystem.getAudioFileTypes())
-            .filter(type -> !"aif".equals(type.getExtension())) // Stream of unsupported format !?
-            .map(type -> AudioCodec.valueOf(type.toString()))
-            .collect(Collectors.toUnmodifiableSet());
+    // private static final Set<AudioCodec> SUPPORTED_AUDIO_CODECS = Arrays.stream(AudioSystem.getAudioFileTypes())
+    //         .filter(type -> !"aif".equals(type.getExtension())) // Stream of unsupported format !?
+    //         .map(type -> AudioCodec.valueOf(type.toString()))
+    //         .collect(Collectors.toUnmodifiableSet());
 
     public static AudioInputStream createAudioInputStream(final AudioSource audioSource) throws Exception {
-        // PathMatcher pathMatcher = FileSystems.getDefault().getPathMatcher("glob:*.java");
-        //
-        // if (pathMatcher.matches(file.getFileName())) {
-        //     System.out.println(file);
-        // }
-
-        final String fileName = audioSource.getUri().toString();
-        final String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
-        final AudioCodec audioCodec = AudioCodec.getByExtension(fileExtension);
+        final AudioCodec audioCodec = audioSource.getAudioCodec();
         final AudioInputStream audioInputStream;
 
-        // if (SUPPORTED_AUDIO_CODECS.contains(audioCodec)) {
         if (AudioCodec.WAVE.equals(audioCodec)) {
             return AudioSystem.getAudioInputStream(new BufferedInputStream(audioSource.getUri().toURL().openStream()));
         }
-        // else if (AudioCodec.M4B.equals(audioCodec) || AudioCodec.OGG.equals(audioCodec)) {
-        //     if (audioSource.getTmpFile() == null) {
-        //         final Path tmpFile = FFLocator.createFFmpeg().encodeToWav(audioSource);
-        //
-        //         audioSource.setTmpFile(tmpFile);
-        //     }
-        //
-        //     audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(Files.newInputStream(audioSource.getTmpFile())));
-        // }
         else {
             if (audioSource.getTmpFile() == null) {
                 final Path tmpFile = FFLocator.createFFmpeg().encodeToWav(audioSource);
@@ -67,6 +46,20 @@ public final class AudioInputStreamFactory {
         }
 
         return audioInputStream;
+    }
+
+    public static void encodeToWav(final AudioSource audioSource) throws Exception {
+        final AudioCodec audioCodec = audioSource.getAudioCodec();
+
+        if (AudioCodec.WAVE.equals(audioCodec)) {
+            return;
+        }
+
+        if (audioSource.getTmpFile() == null) {
+            final Path tmpFile = FFLocator.createFFmpeg().encodeToWav(audioSource);
+
+            audioSource.setTmpFile(tmpFile);
+        }
     }
 
     private AudioInputStreamFactory() {

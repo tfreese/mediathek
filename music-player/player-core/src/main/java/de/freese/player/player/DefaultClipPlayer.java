@@ -86,8 +86,6 @@ public final class DefaultClipPlayer extends AbstractPlayer {
         running = true;
         clip.setFramePosition(0);
 
-        firePlay();
-
         getExecutor().execute(() -> {
             getLogger().info("play: {}", getAudioSource());
 
@@ -125,6 +123,7 @@ public final class DefaultClipPlayer extends AbstractPlayer {
                 if (clip.getMicrosecondPosition() == clip.getMicrosecondLength()) {
                     running = false;
                     stop();
+                    fireSongFinished();
                     break;
                 }
 
@@ -153,8 +152,6 @@ public final class DefaultClipPlayer extends AbstractPlayer {
         clip.stop();
 
         clip.setFramePosition(0);
-
-        fireStop();
 
         close();
     }

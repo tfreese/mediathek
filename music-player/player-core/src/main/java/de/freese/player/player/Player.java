@@ -10,9 +10,7 @@ import de.freese.player.input.AudioSource;
  */
 // extends AutoCloseable
 public interface Player {
-    void addPlayListener(Consumer<AudioSource> consumer);
-
-    void addStopListener(Consumer<AudioSource> consumer);
+    void addSongFinishedListener(Consumer<AudioSource> consumer);
 
     boolean isPlaying();
 

@@ -10,13 +10,12 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
-import de.freese.player.dsp.DspProcessor;
 import de.freese.player.model.Window;
 
 /**
  * @author Thomas Freese
  */
-public final class SourceDataLinePlayer implements DspProcessor {
+public final class SourceDataLinePlayer {
     /**
      * short: -32768 to 32767
      */
@@ -42,16 +41,6 @@ public final class SourceDataLinePlayer implements DspProcessor {
 
         sourceDataLine.stop();
         sourceDataLine.close();
-    }
-
-    @Override
-    public String getName() {
-        return getClass().getSimpleName();
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
     }
 
     /**
@@ -112,11 +101,6 @@ public final class SourceDataLinePlayer implements DspProcessor {
 
     public void play(final byte[] audioData, final int length) {
         sourceDataLine.write(audioData, 0, length);
-    }
-
-    @Override
-    public void process(final Window window) {
-        play(window);
     }
 
     public void stop() {

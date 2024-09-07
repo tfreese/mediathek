@@ -64,14 +64,13 @@ public final class PlayList {
      * @return null if no more available
      */
     public AudioSource next() {
-        if (currentIndex >= size()) {
+        if (currentIndex >= size() - 1) {
             return null;
         }
 
-        final AudioSource audioSource = getAudioSource(currentIndex);
         currentIndex++;
 
-        return audioSource;
+        return getAudioSource(currentIndex);
     }
 
     /**
@@ -82,10 +81,9 @@ public final class PlayList {
             return null;
         }
 
-        final AudioSource audioSource = getAudioSource(currentIndex);
         currentIndex--;
 
-        return audioSource;
+        return getAudioSource(currentIndex);
     }
 
     public int size() {

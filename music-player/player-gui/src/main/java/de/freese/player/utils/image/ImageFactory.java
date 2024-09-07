@@ -24,7 +24,7 @@ public final class ImageFactory {
     private static final Map<String, Image> CACHE = new ConcurrentHashMap<>();
 
     public static Icon getIcon(final String resource) {
-        return getIcon(resource, 64, 64);
+        return getIcon(resource, 32, 32);
     }
 
     public static Icon getIcon(final String resource, final int width, final int height) {

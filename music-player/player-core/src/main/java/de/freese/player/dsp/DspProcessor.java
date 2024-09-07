@@ -16,4 +16,6 @@ public interface DspProcessor {
     boolean isEnabled();
 
     void process(Window window);
+
+    void reset();
 }

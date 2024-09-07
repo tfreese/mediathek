@@ -18,11 +18,7 @@ import de.freese.player.PlayerSettings;
 import de.freese.player.player.DefaultDspPlayer;
 import de.freese.player.player.DspPlayer;
 import de.freese.player.player.PlayList;
-import de.freese.player.swing.component.PlayListComponent;
-import de.freese.player.swing.component.PlayerControlComponent;
 import de.freese.player.swing.component.PlayerPanel;
-import de.freese.player.swing.component.spectrum.SpectrumComponent;
-import de.freese.player.swing.component.spectrum.SpectrumDspProcessor;
 
 /**
  * @author Thomas Freese
@@ -64,33 +60,8 @@ public final class PlayerFrame {
         player = new DefaultDspPlayer();
 
         final PlayerPanel playerPanel = new PlayerPanel();
-        playerPanel.init(playList);
+        playerPanel.init(playList, player);
         jFrame.setContentPane(playerPanel.getComponent());
-
-        final PlayerControlComponent playerControlComponent = new PlayerControlComponent(player);
-        // jFrame.add(playerControlComponent.getComponent(), BorderLayout.NORTH);
-
-        final PlayListComponent playListComponent = new PlayListComponent(playList);
-        playListComponent.setPlayListSelectionListener(audioSource -> {
-            player.stop();
-            playerControlComponent.onStop();
-
-            player.setAudioSource(audioSource);
-
-            player.play();
-            playerControlComponent.onPlay();
-        });
-        player.addPlayListener(playListComponent::selectAudioSource);
-        // jFrame.add(playListComponent.getComponent(), BorderLayout.CENTER);
-
-        final SpectrumComponent spectrumComponent = new SpectrumComponent();
-        final SpectrumDspProcessor spectrumDspProcessor = new SpectrumDspProcessor(spectrumComponent::updateChartData);
-        player.addProcessor(spectrumDspProcessor);
-        player.addStopListener(audioSource -> {
-            spectrumDspProcessor.reset();
-            spectrumComponent.updateChartData(null);
-        });
-        // jFrame.add(spectrumComponent.getComponent(), BorderLayout.SOUTH);
 
         // frame.setSize(800, 600);
         // frame.setSize(1280, 768);
@@ -113,13 +84,15 @@ public final class PlayerFrame {
                 .addAudioSource(Path.of("samples/sample.au").toUri())
         ;
 
-        player.setAudioSource(playList.next());
-
         frame.setVisible(true);
     }
 
     static void stop() {
         LOGGER.info("stopping application");
+
+        if (player.isPlaying()) {
+            player.stop();
+        }
 
         PlayerSettings.getExecutorService().close();
         PlayerSettings.getExecutorServicePipeReader().close();

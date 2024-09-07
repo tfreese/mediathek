@@ -5,6 +5,8 @@ import java.net.URI;
 import java.nio.file.Path;
 import java.time.Duration;
 
+import de.freese.player.model.AudioCodec;
+
 /**
  * @author Thomas Freese
  */
@@ -12,6 +14,13 @@ public interface AudioSource {
     String getAlbum();
 
     String getArtist();
+
+    default AudioCodec getAudioCodec() {
+        final String fileName = getUri().toString();
+        final String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
+
+        return AudioCodec.getByExtension(fileExtension);
+    }
 
     /**
      * kb/s

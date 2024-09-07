@@ -21,8 +21,7 @@ import de.freese.player.input.AudioSource;
  */
 public abstract class AbstractPlayer implements Player {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private final List<Consumer<AudioSource>> playListener = new ArrayList<>();
-    private final List<Consumer<AudioSource>> stopListener = new ArrayList<>();
+    private final List<Consumer<AudioSource>> songFinishedListener = new ArrayList<>();
 
     private AudioInputStream audioInputStream;
     private AudioSource audioSource;
@@ -32,13 +31,8 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
-    public void addPlayListener(final Consumer<AudioSource> listener) {
-        playListener.add(Objects.requireNonNull(listener, "listener required"));
-    }
-
-    @Override
-    public void addStopListener(final Consumer<AudioSource> listener) {
-        stopListener.add(Objects.requireNonNull(listener, "listener required"));
+    public void addSongFinishedListener(final Consumer<AudioSource> listener) {
+        songFinishedListener.add(Objects.requireNonNull(listener, "listener required"));
     }
 
     @Override
@@ -57,12 +51,8 @@ public abstract class AbstractPlayer implements Player {
 
     protected abstract void close();
 
-    protected void firePlay() {
-        playListener.forEach(consumer -> consumer.accept(getAudioSource()));
-    }
-
-    protected void fireStop() {
-        stopListener.forEach(consumer -> consumer.accept(getAudioSource()));
+    protected void fireSongFinished() {
+        songFinishedListener.forEach(consumer -> consumer.accept(getAudioSource()));
     }
 
     protected AudioInputStream getAudioInputStream() {

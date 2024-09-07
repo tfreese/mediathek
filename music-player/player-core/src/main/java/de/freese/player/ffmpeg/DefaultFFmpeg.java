@@ -102,9 +102,9 @@ final class DefaultFFmpeg extends AbstractFF implements FFmpeg {
         final Process process = processBuilder.start();
 
         // buffer = 1/4 second of audio.
-        // final int bufferSize = sourceAttributes.getSamplingRate() / 4;
-        // final InputStream inputStream = new BufferedInputStream(process.getInputStream(), bufferSize);
-        final InputStream inputStream = new BufferedInputStream(process.getInputStream());
+        final int bufferSize = audioSource.getSamplingRate() / 4;
+        final InputStream inputStream = new BufferedInputStream(process.getInputStream(), bufferSize);
+        // final InputStream inputStream = new BufferedInputStream(process.getInputStream());
 
         // Read and ignore the WAV header, only pipe the PCM samples to the AudioInputStream.
         final long bytesRead = inputStream.skip(44L);

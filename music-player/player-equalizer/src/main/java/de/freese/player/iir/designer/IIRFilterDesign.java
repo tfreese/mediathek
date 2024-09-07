@@ -22,6 +22,7 @@ import java.io.Serial;
 
 import javax.swing.JFrame;
 
+@SuppressWarnings("serial")
 public final class IIRFilterDesign extends JFrame {
     @Serial
     private static final long serialVersionUID = 1L;
