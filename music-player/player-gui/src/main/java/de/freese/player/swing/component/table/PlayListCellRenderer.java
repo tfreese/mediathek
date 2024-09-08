@@ -20,7 +20,7 @@ public class PlayListCellRenderer extends DefaultTableCellRenderer {
     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
         super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-        if (column == 1 || column == 5) {
+        if (value instanceof Number) {
             setHorizontalAlignment(SwingConstants.RIGHT);
         }
         else {

@@ -45,6 +45,8 @@ public interface AudioSource {
      */
     String getMetaData();
 
+    int getPlayCount();
+
     String getReleaseDate();
 
     /**

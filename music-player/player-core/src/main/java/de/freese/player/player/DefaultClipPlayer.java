@@ -1,6 +1,9 @@
 // Created: 14 Juli 2024
 package de.freese.player.player;
 
+import java.nio.file.Path;
+import java.util.concurrent.Executor;
+
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -8,7 +11,6 @@ import javax.sound.sampled.DataLine;
 
 import de.freese.player.exception.PlayerException;
 import de.freese.player.input.AudioInputStreamFactory;
-import de.freese.player.input.AudioSource;
 
 /**
  * @author Thomas Freese
@@ -19,14 +21,8 @@ public final class DefaultClipPlayer extends AbstractPlayer {
     private volatile boolean looping;
     private volatile boolean running;
 
-    public DefaultClipPlayer() {
-        super();
-    }
-
-    public DefaultClipPlayer(final AudioSource audioSource) {
-        super();
-
-        setAudioSource(audioSource);
+    public DefaultClipPlayer(final Executor executor, final Path tempDir) {
+        super(executor, tempDir);
     }
 
     @Override
@@ -65,7 +61,7 @@ public final class DefaultClipPlayer extends AbstractPlayer {
     @Override
     public void play() {
         try {
-            setAudioInputStream(AudioInputStreamFactory.createAudioInputStream(getAudioSource()));
+            setAudioInputStream(AudioInputStreamFactory.createAudioInputStream(getAudioSource(), getExecutor(), getTempDir()));
 
             final AudioFormat audioFormat = getAudioInputStream().getFormat();
             getLogger().debug("Play audio format: {}", audioFormat);

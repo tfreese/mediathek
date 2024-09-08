@@ -16,13 +16,15 @@ import javax.swing.JTable;
 import javax.swing.JToggleButton;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
+import javax.swing.event.TableModelEvent;
+import javax.swing.table.TableModel;
 
+import de.freese.player.ApplicationContext;
 import de.freese.player.player.DspPlayer;
 import de.freese.player.player.PlayList;
 import de.freese.player.spectrum.SpectrumDspProcessor;
 import de.freese.player.swing.component.spectrum.SpectrumComponent;
 import de.freese.player.swing.component.table.PlayListCellRenderer;
-import de.freese.player.swing.component.table.PlayListTableModel;
 import de.freese.player.utils.image.ImageFactory;
 
 /**
@@ -55,12 +57,12 @@ public final class PlayerPanel {
         return panel;
     }
 
-    public void init(final PlayList playList, final DspPlayer player) {
+    public void init() {
         initPlayerControl();
 
-        final JScrollPane scrollPanePlayList = initTablePlayList(playList);
+        final JScrollPane scrollPanePlayList = initTablePlayList();
 
-        initSpectrum(player);
+        initSpectrum();
 
         // buttonPlayPause.setBorder(LineBorder.createBlackLineBorder());
         // buttonForward.setBorder(LineBorder.createBlackLineBorder());
@@ -73,10 +75,13 @@ public final class PlayerPanel {
         panel.add(buttonForward, GbcBuilder.of(3, 1).insets(0, 0, 0, 0));
         panel.add(spectrumComponent.getComponent(), GbcBuilder.of(4, 1).gridwidth(2).fillHorizontal().insets(0, 0, 0, 5));
 
-        initListener(playList, player);
+        initListener();
     }
 
-    private void initListener(final PlayList playList, final DspPlayer player) {
+    private void initListener() {
+        final PlayList playList = ApplicationContext.getPlayList();
+        final DspPlayer player = ApplicationContext.getPlayer();
+
         player.addSongFinishedListener(audioSource ->
                 SwingUtilities.invokeLater(() -> {
                     buttonPlayPause.setSelected(false);
@@ -191,23 +196,37 @@ public final class PlayerPanel {
         buttonBackward = new JButton(ImageFactory.getIcon("images/media-backward-white.svg"));
     }
 
-    private void initSpectrum(final DspPlayer player) {
+    private void initSpectrum() {
         spectrumComponent = new SpectrumComponent();
 
         final SpectrumDspProcessor spectrumDspProcessor = new SpectrumDspProcessor(spectrumComponent::updateChartData);
-        player.addProcessor(spectrumDspProcessor);
+        ApplicationContext.getPlayer().addProcessor(spectrumDspProcessor);
 
         spectrumComponent.getComponent().setMinimumSize(new Dimension(1, 75));
         spectrumComponent.getComponent().setPreferredSize(new Dimension(1, 75));
     }
 
-    private JScrollPane initTablePlayList(final PlayList playList) {
-        final PlayListTableModel tableModel = new PlayListTableModel(playList);
-        tablePlayList = new JTable(tableModel);
+    private JScrollPane initTablePlayList() {
+        final PlayList playList = ApplicationContext.getPlayList();
+
+        if (!(playList instanceof TableModel)) {
+            throw new IllegalArgumentException("PlayList must be instanceof TableModel");
+        }
+
+        tablePlayList = new JTable((TableModel) playList) {
+            @Override
+            public void tableChanged(final TableModelEvent event) {
+                super.tableChanged(event);
+
+                if (event.getType() == TableModelEvent.INSERT) {
+                    scrollRectToVisible(getCellRect(getRowCount() - 1, 0, true));
+                }
+            }
+        };
         tablePlayList.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tablePlayList.setDefaultRenderer(Object.class, new PlayListCellRenderer());
         tablePlayList.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-        tablePlayList.getColumnModel().getColumn(0).setMinWidth(250);
+        tablePlayList.getColumnModel().getColumn(0).setMinWidth(350);
 
         final JScrollPane scrollPanePlayList = new JScrollPane();
         scrollPanePlayList.setViewportView(tablePlayList);

@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.freese.player.PlayerSettings;
+import de.freese.player.ApplicationContext;
 
 /**
  * @author Thomas Freese
@@ -46,8 +46,7 @@ public final class PlayerApplication extends Application {
     public void stop() throws Exception {
         LOGGER.info("stopping application");
 
-        PlayerSettings.getExecutorService().close();
-        PlayerSettings.getExecutorServicePipeReader().close();
+        ApplicationContext.stop();
 
         Platform.exit();
     }

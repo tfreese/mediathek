@@ -2,8 +2,9 @@
 package de.freese.player.player;
 
 import java.io.IOException;
-import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.concurrent.Executor;
 
 import javax.sound.sampled.AudioFormat;
 
@@ -23,6 +24,10 @@ public final class DefaultDspPlayer extends AbstractPlayer implements DspPlayer 
 
     private SourceDataLinePlayer sourceDataLinePlayer;
 
+    public DefaultDspPlayer(final Executor executor, final Path tempDir) {
+        super(executor, tempDir);
+    }
+
     @Override
     public void addProcessor(final DspProcessor processor) {
         dspChain.addProcessor(processor);
@@ -38,7 +43,7 @@ public final class DefaultDspPlayer extends AbstractPlayer implements DspPlayer 
     @Override
     public void play() {
         try {
-            setAudioInputStream(AudioInputStreamFactory.createAudioInputStream(getAudioSource()));
+            setAudioInputStream(AudioInputStreamFactory.createAudioInputStream(getAudioSource(), getExecutor(), getTempDir()));
 
             final AudioFormat audioFormat = getAudioInputStream().getFormat();
             getLogger().debug("Play audio format: {}", audioFormat);
@@ -104,13 +109,6 @@ public final class DefaultDspPlayer extends AbstractPlayer implements DspPlayer 
                 setAudioInputStream(null);
 
                 dspChain.reset();
-
-                if (getAudioSource().getTmpFile() != null) {
-                    if (!getLogger().isDebugEnabled()) {
-                        Files.delete(getAudioSource().getTmpFile());
-                        // getAudioSource().setTmpFile(null);
-                    }
-                }
             }
         }
         catch (PlayerException ex) {

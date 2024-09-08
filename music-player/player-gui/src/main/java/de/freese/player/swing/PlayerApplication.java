@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.nio.file.Path;
+import java.util.Set;
 
 import javax.swing.JFrame;
 import javax.swing.UIDefaults;
@@ -14,22 +15,18 @@ import javax.swing.WindowConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.freese.player.PlayerSettings;
-import de.freese.player.player.DefaultDspPlayer;
-import de.freese.player.player.DefaultPlayList;
-import de.freese.player.player.DspPlayer;
-import de.freese.player.player.PlayList;
+import de.freese.player.ApplicationContext;
+import de.freese.player.library.LibraryRepository;
+import de.freese.player.library.LibraryScanner;
 import de.freese.player.swing.component.PlayerPanel;
 
 /**
  * @author Thomas Freese
  */
-public final class PlayerFrame {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PlayerFrame.class);
+public final class PlayerApplication {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PlayerApplication.class);
 
     private static JFrame frame;
-    private static PlayList playList;
-    private static DspPlayer player;
 
     private static final class MainFrameListener extends WindowAdapter {
         @Override
@@ -42,7 +39,7 @@ public final class PlayerFrame {
         return frame;
     }
 
-    static void init() throws Exception {
+    public static void init() throws Exception {
         LOGGER.info("initialize application");
 
         // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -57,11 +54,8 @@ public final class PlayerFrame {
         jFrame.addWindowListener(new MainFrameListener());
         // jFrame.setLayout(new BorderLayout());
 
-        playList = new DefaultPlayList();
-        player = new DefaultDspPlayer();
-
         final PlayerPanel playerPanel = new PlayerPanel();
-        playerPanel.init(playList, player);
+        playerPanel.init();
         jFrame.setContentPane(playerPanel.getComponent());
 
         // frame.setSize(800, 600);
@@ -75,35 +69,50 @@ public final class PlayerFrame {
         frame = jFrame;
     }
 
-    static void start() throws Exception {
+    public static void start() throws Exception {
         LOGGER.info("starting application");
 
-        ((DefaultPlayList) playList)
-                .addAudioSource(Path.of("samples/sample.wav").toUri())
-                .addAudioSource(Path.of("samples/sample.flac").toUri())
-                .addAudioSource(Path.of("samples/sample.aif").toUri())
-                .addAudioSource(Path.of("samples/sample.au").toUri())
-        ;
+        ApplicationContext.getExecutorService().execute(() -> {
+            // try {
+            //     TimeUnit.SECONDS.sleep(3);
+            // }
+            // catch (InterruptedException ex) {
+            //     // Restore interrupted state.
+            //     Thread.currentThread().interrupt();
+            // }
+
+            final LibraryRepository libraryRepository = ApplicationContext.getLibraryRepository();
+            final LibraryScanner libraryScanner = new LibraryScanner(libraryRepository);
+            libraryScanner.scan(Set.of(Path.of("samples")));
+
+            // libraryRepository.load(ApplicationContext.getPlayList()::addAudioSource);
+            libraryRepository.load(audioSource -> {
+                // try {
+                //     TimeUnit.SECONDS.sleep(1);
+                // }
+                // catch (InterruptedException ex) {
+                //     // Restore interrupted state.
+                //     Thread.currentThread().interrupt();
+                // }
+
+                ApplicationContext.getPlayList().addAudioSource(audioSource);
+            });
+        });
 
         frame.setVisible(true);
     }
 
-    static void stop() {
+    private static void stop() {
         LOGGER.info("stopping application");
 
-        if (player.isPlaying()) {
-            player.stop();
-        }
-
-        PlayerSettings.getExecutorService().close();
-        PlayerSettings.getExecutorServicePipeReader().close();
+        ApplicationContext.stop();
 
         frame = null;
 
         System.exit(0);
     }
 
-    private PlayerFrame() {
+    private PlayerApplication() {
         super();
     }
 }

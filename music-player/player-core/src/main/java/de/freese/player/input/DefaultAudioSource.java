@@ -19,6 +19,7 @@ public class DefaultAudioSource implements AudioSource {
     private String format;
     private String genre;
     private String metaData;
+    private int playCount;
     private String releaseDate;
     private int samplingRate;
     private String title;
@@ -69,6 +70,11 @@ public class DefaultAudioSource implements AudioSource {
     @Override
     public String getMetaData() {
         return metaData;
+    }
+
+    @Override
+    public int getPlayCount() {
+        return playCount;
     }
 
     @Override
@@ -144,6 +150,10 @@ public class DefaultAudioSource implements AudioSource {
 
     public void setMetaData(final String metaData) {
         this.metaData = metaData;
+    }
+
+    public void setPlayCount(final int playCount) {
+        this.playCount = playCount;
     }
 
     public void setReleaseDate(final String releaseDate) {

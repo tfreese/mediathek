@@ -7,6 +7,8 @@ import java.awt.Insets;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.nio.file.Path;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,7 +20,6 @@ import javax.swing.WindowConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.freese.player.PlayerSettings;
 import de.freese.player.input.AudioSourceFactory;
 import de.freese.player.model.AudioCodec;
 import de.freese.player.player.DefaultClipPlayer;
@@ -29,15 +30,6 @@ import de.freese.player.player.Player;
  */
 public final class MusicPlayer {
     private static final Logger LOGGER = LoggerFactory.getLogger(MusicPlayer.class);
-
-    private static final class MainFrameListener extends WindowAdapter {
-        @Override
-        public void windowClosing(final WindowEvent event) {
-            PlayerSettings.getExecutorService().shutdownNow();
-            PlayerSettings.getExecutorServicePipeReader().shutdownNow();
-            System.exit(0);
-        }
-    }
 
     public static void main(final String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -54,6 +46,8 @@ public final class MusicPlayer {
             }
         });
     }
+
+    private final ExecutorService executorService = Executors.newVirtualThreadPerTaskExecutor();
 
     private MusicPlayer() {
         super();
@@ -108,7 +102,12 @@ public final class MusicPlayer {
     private void init(final String[] args) throws Exception {
         final JFrame frame = new JFrame("Music Player");
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        frame.addWindowListener(new MainFrameListener());
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(final WindowEvent event) {
+                executorService.close();
+            }
+        });
         frame.setLayout(new GridBagLayout());
 
         frame.setSize(800, 600);
@@ -129,7 +128,8 @@ public final class MusicPlayer {
                 gbc.gridy = row;
                 gbc.fill = GridBagConstraints.BOTH;
 
-                final Player player = new DefaultClipPlayer(AudioSourceFactory.createAudioSource(Path.of("samples/sample." + audioCodec.getFileExtension())));
+                final Player player = new DefaultClipPlayer(executorService, Path.of(System.getProperty("java.io.tmpdir"), "musicPlayer"));
+                player.setAudioSource(AudioSourceFactory.createAudioSource(Path.of("samples/sample." + audioCodec.getFileExtension())));
                 frame.add(createPlayerPanel(audioCodec, player), gbc);
             }
             catch (Exception ex) {

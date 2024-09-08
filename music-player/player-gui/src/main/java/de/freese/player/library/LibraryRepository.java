@@ -1,6 +1,7 @@
 // Created: 08 Sept. 2024
 package de.freese.player.library;
 
+import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -9,7 +10,10 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -56,13 +60,28 @@ public final class LibraryRepository {
 
     private final DataSource dataSource;
 
+    private List<AudioSource> audioSources = new ArrayList<>();
+
     public LibraryRepository(final DataSource dataSource) {
         super();
 
         this.dataSource = Objects.requireNonNull(dataSource, "dataSource required");
     }
 
-    public void save(final AudioSource audioSource) {
+    public void delete(final URI uri) {
         // TODO
+        audioSources = audioSources.stream().filter(as -> !as.getUri().equals(uri)).collect(Collectors.toList());
+    }
+
+    public void load(final Consumer<AudioSource> consumer) {
+        // TODO
+        audioSources.forEach(consumer);
+    }
+
+    public void saveOrUpdate(final AudioSource audioSource) {
+        // TODO
+        LOGGER.info("saveOrUpdate audioSource: {}", audioSource);
+
+        audioSources.add(audioSource);
     }
 }

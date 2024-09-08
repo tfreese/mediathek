@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
 
 import de.freese.player.input.AudioSource;
@@ -26,14 +27,19 @@ public final class TablePlayList extends AbstractTableModel implements PlayList 
     public TablePlayList() {
         super();
 
-        columnNames = List.of("URL", "BitRate", "Channels", "Duration", "Format", "SamplingRate");
+        columnNames = List.of("URL", "BitRate", "Channels", "Duration", "Format", "SamplingRate", "Artist", "Album", "Title", "PlayCount");
     }
 
     @Override
     public PlayList addAudioSource(final AudioSource audioSource) {
         audioSources.add(audioSource);
 
-        fireTableRowsInserted(getRowCount(), getRowCount());
+        if (SwingUtilities.isEventDispatchThread()) {
+            fireTableRowsInserted(getRowCount(), getRowCount());
+        }
+        else {
+            SwingUtilities.invokeLater(() -> fireTableRowsInserted(getRowCount(), getRowCount()));
+        }
 
         return this;
     }
@@ -74,6 +80,10 @@ public final class TablePlayList extends AbstractTableModel implements PlayList 
             case 3 -> audioSource.getDuration();
             case 4 -> audioSource.getFormat();
             case 5 -> audioSource.getSamplingRate();
+            case 6 -> audioSource.getArtist();
+            case 7 -> audioSource.getAlbum();
+            case 8 -> audioSource.getTitle();
+            case 9 -> audioSource.getPlayCount();
             default -> throw new UnsupportedOperationException("Unsupported columnIndex:" + columnIndex);
         };
     }

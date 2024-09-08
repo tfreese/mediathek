@@ -2,17 +2,19 @@
 package de.freese.player.ffmpeg;
 
 import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.UncheckedIOException;
 import java.nio.ByteOrder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
+import java.util.concurrent.Executor;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 
-import de.freese.player.PlayerSettings;
 import de.freese.player.exception.PlayerException;
 import de.freese.player.input.AudioSource;
 
@@ -39,8 +41,23 @@ final class DefaultFFmpeg extends AbstractFF implements FFmpeg {
         // );
     }
 
-    DefaultFFmpeg(final String ffmpegExecutable) {
+    private final Executor executor;
+    private final Path tempDir;
+
+    DefaultFFmpeg(final String ffmpegExecutable, final Executor executor, final Path tempDir) {
         super(ffmpegExecutable);
+
+        this.executor = Objects.requireNonNull(executor, "executor required");
+        this.tempDir = Objects.requireNonNull(tempDir, "tempDir required");
+
+        if (!Files.exists(this.tempDir)) {
+            try {
+                Files.createDirectories(this.tempDir);
+            }
+            catch (IOException ex) {
+                throw new UncheckedIOException(ex);
+            }
+        }
     }
 
     @Override
@@ -50,14 +67,7 @@ final class DefaultFFmpeg extends AbstractFF implements FFmpeg {
         // Overwrite existing
         addArgument("-y");
 
-        // final Path tmpDir = Files.createTempDirectory("musicPlayer");
-        final Path tmpDir = Path.of(System.getProperty("java.io.tmpdir"), "musicPlayer");
-
-        if (!Files.exists(tmpDir)) {
-            Files.createDirectories(tmpDir);
-        }
-
-        final Path tmpFile = Files.createTempFile(tmpDir, null, ".wav");
+        final Path tmpFile = Files.createTempFile(tempDir, null, ".wav");
         tmpFile.toFile().deleteOnExit();
 
         addArgument(tmpFile.toAbsolutePath().toString());
@@ -119,7 +129,7 @@ final class DefaultFFmpeg extends AbstractFF implements FFmpeg {
         //     debugWavHeader(header);
         // }
 
-        PlayerSettings.getExecutorServicePipeReader().execute(() -> {
+        executor.execute(() -> {
             try {
                 final int exitValue = process.waitFor();
 

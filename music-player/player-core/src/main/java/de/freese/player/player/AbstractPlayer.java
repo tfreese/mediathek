@@ -1,6 +1,7 @@
 // Created: 24 Aug. 2024
 package de.freese.player.player;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -12,7 +13,6 @@ import javax.sound.sampled.AudioInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.freese.player.PlayerSettings;
 import de.freese.player.exception.PlayerException;
 import de.freese.player.input.AudioSource;
 
@@ -20,14 +20,18 @@ import de.freese.player.input.AudioSource;
  * @author Thomas Freese
  */
 public abstract class AbstractPlayer implements Player {
+    private final Executor executor;
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final List<Consumer<AudioSource>> songFinishedListener = new ArrayList<>();
-
+    private final Path tempDir;
     private AudioInputStream audioInputStream;
     private AudioSource audioSource;
 
-    protected AbstractPlayer() {
+    protected AbstractPlayer(final Executor executor, final Path tempDir) {
         super();
+
+        this.executor = Objects.requireNonNull(executor, "executor required");
+        this.tempDir = Objects.requireNonNull(tempDir, "tempDir required");
     }
 
     @Override
@@ -64,11 +68,15 @@ public abstract class AbstractPlayer implements Player {
     }
 
     protected Executor getExecutor() {
-        return PlayerSettings.getExecutorService();
+        return executor;
     }
 
     protected Logger getLogger() {
         return logger;
+    }
+
+    protected Path getTempDir() {
+        return tempDir;
     }
 
     protected void setAudioInputStream(final AudioInputStream audioInputStream) {
