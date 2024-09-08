@@ -25,6 +25,7 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import de.freese.player.fft.output.Spectrum;
+import de.freese.player.spectrum.SpectrumRenderer;
 
 /**
  * @author Thomas Freese

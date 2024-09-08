@@ -32,8 +32,6 @@ public interface AudioSource {
      */
     int getChannels();
 
-    String getDate();
-
     String getDisc();
 
     Duration getDuration();
@@ -46,6 +44,8 @@ public interface AudioSource {
      * varchar(2000), 8000 max.
      */
     String getMetaData();
+
+    String getReleaseDate();
 
     /**
      * Hz

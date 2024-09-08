@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import de.freese.player.PlayerSettings;
 import de.freese.player.player.DefaultDspPlayer;
+import de.freese.player.player.DefaultPlayList;
 import de.freese.player.player.DspPlayer;
 import de.freese.player.player.PlayList;
 import de.freese.player.swing.component.PlayerPanel;
@@ -56,7 +57,7 @@ public final class PlayerFrame {
         jFrame.addWindowListener(new MainFrameListener());
         // jFrame.setLayout(new BorderLayout());
 
-        playList = new PlayList();
+        playList = new DefaultPlayList();
         player = new DefaultDspPlayer();
 
         final PlayerPanel playerPanel = new PlayerPanel();
@@ -77,7 +78,7 @@ public final class PlayerFrame {
     static void start() throws Exception {
         LOGGER.info("starting application");
 
-        playList
+        ((DefaultPlayList) playList)
                 .addAudioSource(Path.of("samples/sample.wav").toUri())
                 .addAudioSource(Path.of("samples/sample.flac").toUri())
                 .addAudioSource(Path.of("samples/sample.aif").toUri())

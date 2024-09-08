@@ -19,8 +19,8 @@ import javax.swing.SwingUtilities;
 
 import de.freese.player.player.DspPlayer;
 import de.freese.player.player.PlayList;
+import de.freese.player.spectrum.SpectrumDspProcessor;
 import de.freese.player.swing.component.spectrum.SpectrumComponent;
-import de.freese.player.swing.component.spectrum.SpectrumDspProcessor;
 import de.freese.player.swing.component.table.PlayListCellRenderer;
 import de.freese.player.swing.component.table.PlayListTableModel;
 import de.freese.player.utils.image.ImageFactory;
@@ -197,7 +197,7 @@ public final class PlayerPanel {
         final SpectrumDspProcessor spectrumDspProcessor = new SpectrumDspProcessor(spectrumComponent::updateChartData);
         player.addProcessor(spectrumDspProcessor);
 
-        // spectrumComponent.getComponent().setMinimumSize(new Dimension(1, 75));
+        spectrumComponent.getComponent().setMinimumSize(new Dimension(1, 75));
         spectrumComponent.getComponent().setPreferredSize(new Dimension(1, 75));
     }
 

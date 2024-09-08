@@ -19,56 +19,7 @@ import de.freese.player.input.DefaultAudioSource;
  */
 final class DefaultFFprobe extends AbstractFF implements FFprobe {
 
-    DefaultFFprobe(final String ffprobeExecutable) {
-        super(ffprobeExecutable);
-    }
-
-    @Override
-    public AudioSource getMetaData(final URI uri) throws Exception {
-        addArgument("-hide_banner");
-        addArgument("-select_streams a");
-        addArgument("-i");
-        addArgument(toFileName(uri));
-
-        final String command = createCommand();
-
-        getLogger().debug("execute: {}", command);
-
-        final ProcessBuilder processBuilder = createProcessBuilder(command);
-        processBuilder.redirectErrorStream(true);
-
-        final Process process = processBuilder.start();
-
-        final List<String> output;
-
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) {
-            output = br.lines().toList();
-        }
-
-        final int exitValue = process.waitFor();
-        final String metaData = String.join(System.lineSeparator(), output);
-
-        if (exitValue != 0) {
-            throw new IOException("command: " + command + System.lineSeparator() + metaData);
-        }
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("info: {}", metaData);
-        }
-
-        final DefaultAudioSource audioSource = parseMetaData(output);
-        audioSource.setUri(uri);
-        audioSource.setMetaData(metaData);
-
-        return audioSource;
-    }
-
-    @Override
-    public String getVersion() throws Exception {
-        return super.getVersion();
-    }
-
-    private DefaultAudioSource parseMetaData(final List<String> output) {
+    private static DefaultAudioSource parseMetaData(final List<String> output) {
         final DefaultAudioSource audioSource = new DefaultAudioSource();
 
         // Format
@@ -125,7 +76,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
         audioSource.setArtist(parseMetaDataArtist(output));
         audioSource.setTitle(parseMetaDataTitle(output));
         audioSource.setGenre(parseMetaDataGenre(output));
-        audioSource.setDate(parseMetaDataDate(output));
+        audioSource.setReleaseDate(parseMetaDataDate(output));
         audioSource.setDisc(parseMetaDataDisk(output));
         audioSource.setTrack(parseMetaDataTrack(output));
         audioSource.setCompilation(parseMetaDataCompilation(output));
@@ -133,7 +84,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
         return audioSource;
     }
 
-    private String parseMetaDataAlbum(final List<String> output) {
+    private static String parseMetaDataAlbum(final List<String> output) {
         final String line = output.stream().filter(l -> l.contains("album ")).findFirst().orElse(null);
 
         if (line == null || line.isBlank()) {
@@ -145,7 +96,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
         return splits[1].strip();
     }
 
-    private String parseMetaDataArtist(final List<String> output) {
+    private static String parseMetaDataArtist(final List<String> output) {
         String line = output.stream().filter(l -> l.contains("artist")).findFirst().orElse(null);
 
         if (line == null || line.isBlank()) {
@@ -166,7 +117,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
         return splits[1].strip();
     }
 
-    private int parseMetaDataBitRate(final List<String> output) {
+    private static int parseMetaDataBitRate(final List<String> output) {
         String line = output.stream().filter(l -> l.contains("Stream #") && l.contains("Audio:")).findFirst().orElse("");
 
         if (line.contains("kb/s")) {
@@ -186,7 +137,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
         return Integer.parseInt(splits[1].strip());
     }
 
-    private int parseMetaDataChannels(final List<String> output) {
+    private static int parseMetaDataChannels(final List<String> output) {
         String line = output.stream().filter(l -> l.contains("Stream #") && l.contains("Audio:")).findFirst().orElse("");
         line = line.substring(line.indexOf("Hz,"));
 
@@ -212,7 +163,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
         return -1;
     }
 
-    private boolean parseMetaDataCompilation(final List<String> output) {
+    private static boolean parseMetaDataCompilation(final List<String> output) {
         final String line = output.stream().filter(l -> l.contains("compilation")).findFirst().orElse(null);
 
         if (line == null || line.isBlank()) {
@@ -232,7 +183,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
         return Boolean.parseBoolean(value);
     }
 
-    private String parseMetaDataDate(final List<String> output) {
+    private static String parseMetaDataDate(final List<String> output) {
         final String line = output.stream().filter(l -> l.contains("date")).findFirst().orElse(null);
 
         if (line == null || line.isBlank()) {
@@ -244,7 +195,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
         return splits[1].strip();
     }
 
-    private String parseMetaDataDisk(final List<String> output) {
+    private static String parseMetaDataDisk(final List<String> output) {
         final String line = output.stream().filter(l -> l.contains("disc")).findFirst().orElse(null);
 
         if (line == null || line.isBlank()) {
@@ -256,7 +207,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
         return splits[1].strip();
     }
 
-    private Duration parseMetaDataDuration(final List<String> output) {
+    private static Duration parseMetaDataDuration(final List<String> output) {
         String line = output.stream().filter(l -> l.contains("Duration:")).findFirst().orElse("");
         line = line.replace("Duration:", "");
         line = line.substring(0, line.indexOf(','));
@@ -270,7 +221,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
                 .plusMillis(Long.parseLong(splits[3]) * 10);
     }
 
-    private String parseMetaDataFormat(final List<String> output) {
+    private static String parseMetaDataFormat(final List<String> output) {
         String line = output.stream().filter(l -> l.contains("Input #0,")).findFirst().orElse("");
         String[] splits = PATTERN_COMMA.split(line);
 
@@ -289,7 +240,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
         return String.join("/", formatInput, formatStream);
     }
 
-    private String parseMetaDataGenre(final List<String> output) {
+    private static String parseMetaDataGenre(final List<String> output) {
         final String line = output.stream().filter(l -> l.contains("genre")).findFirst().orElse(null);
 
         if (line == null || line.isBlank()) {
@@ -301,7 +252,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
         return splits[1].strip();
     }
 
-    private int parseMetaDataSamplingRate(final List<String> output) {
+    private static int parseMetaDataSamplingRate(final List<String> output) {
         String line = output.stream().filter(l -> l.contains("Stream #") && l.contains("Audio:")).findFirst().orElse("");
 
         line = line.substring(0, line.indexOf("Hz"));
@@ -311,7 +262,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
         return Integer.parseInt(line.strip());
     }
 
-    private String parseMetaDataTitle(final List<String> output) {
+    private static String parseMetaDataTitle(final List<String> output) {
         final String line = output.stream().filter(l -> l.contains("title")).findFirst().orElse(null);
 
         if (line == null || line.isBlank()) {
@@ -323,7 +274,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
         return splits[1].strip();
     }
 
-    private String parseMetaDataTrack(final List<String> output) {
+    private static String parseMetaDataTrack(final List<String> output) {
         final String line = output.stream().filter(l -> l.contains("track")).findFirst().orElse(null);
 
         if (line == null || line.isBlank()) {
@@ -333,5 +284,54 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
         final String[] splits = PATTERN_DOUBLE_DOT.split(line);
 
         return splits[1].strip();
+    }
+
+    DefaultFFprobe(final String ffprobeExecutable) {
+        super(ffprobeExecutable);
+    }
+
+    @Override
+    public AudioSource getMetaData(final URI uri) throws Exception {
+        addArgument("-hide_banner");
+        addArgument("-select_streams a");
+        addArgument("-i");
+        addArgument(toFileName(uri));
+
+        final String command = createCommand();
+
+        getLogger().debug("execute: {}", command);
+
+        final ProcessBuilder processBuilder = createProcessBuilder(command);
+        processBuilder.redirectErrorStream(true);
+
+        final Process process = processBuilder.start();
+
+        final List<String> output;
+
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) {
+            output = br.lines().toList();
+        }
+
+        final int exitValue = process.waitFor();
+        final String metaData = String.join(System.lineSeparator(), output);
+
+        if (exitValue != 0) {
+            throw new IOException("command: " + command + System.lineSeparator() + metaData);
+        }
+
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("info: {}", metaData);
+        }
+
+        final DefaultAudioSource audioSource = parseMetaData(output);
+        audioSource.setUri(uri);
+        audioSource.setMetaData(metaData);
+
+        return audioSource;
+    }
+
+    @Override
+    public String getVersion() throws Exception {
+        return super.getVersion();
     }
 }

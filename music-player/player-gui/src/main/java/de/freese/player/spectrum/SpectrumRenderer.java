@@ -1,5 +1,5 @@
 // Created: 07 Sept. 2024
-package de.freese.player.swing.component.spectrum;
+package de.freese.player.spectrum;
 
 import javax.swing.JComponent;
 
@@ -11,5 +11,5 @@ import de.freese.player.fft.output.Spectrum;
 public interface SpectrumRenderer {
     JComponent getComponent();
 
-    void updateChartData(final Spectrum spectrum);
+    void updateChartData(Spectrum spectrum);
 }

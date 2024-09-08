@@ -1,5 +1,5 @@
 // Created: 29 Aug. 2024
-package de.freese.player.swing.component.spectrum;
+package de.freese.player.spectrum;
 
 import java.util.Objects;
 import java.util.function.Consumer;

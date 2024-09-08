@@ -14,12 +14,12 @@ public class DefaultAudioSource implements AudioSource {
     private int bitRate;
     private int channels;
     private boolean compilation;
-    private String date;
     private String disc;
     private Duration duration;
     private String format;
     private String genre;
     private String metaData;
+    private String releaseDate;
     private int samplingRate;
     private String title;
     private transient Path tmpFile;
@@ -47,11 +47,6 @@ public class DefaultAudioSource implements AudioSource {
     }
 
     @Override
-    public String getDate() {
-        return date;
-    }
-
-    @Override
     public String getDisc() {
         return disc;
     }
@@ -74,6 +69,11 @@ public class DefaultAudioSource implements AudioSource {
     @Override
     public String getMetaData() {
         return metaData;
+    }
+
+    @Override
+    public String getReleaseDate() {
+        return releaseDate;
     }
 
     @Override
@@ -126,10 +126,6 @@ public class DefaultAudioSource implements AudioSource {
         this.compilation = compilation;
     }
 
-    public void setDate(final String date) {
-        this.date = date;
-    }
-
     public void setDisc(final String disc) {
         this.disc = disc;
     }
@@ -148,6 +144,10 @@ public class DefaultAudioSource implements AudioSource {
 
     public void setMetaData(final String metaData) {
         this.metaData = metaData;
+    }
+
+    public void setReleaseDate(final String releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
     public void setSamplingRate(final int samplingRate) {

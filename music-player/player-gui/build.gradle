@@ -8,15 +8,16 @@ dependencies {
     implementation(project(":music-player:player-equalizer"))
     implementation(project(":music-player:player-fft"))
 
-    implementation("org.jfree:jfreechart")
-
     javafx {
         version = "$version_javafx"
         modules = ["javafx.controls"]
         configuration = "implementation"
     }
 
+    implementation("com.zaxxer:HikariCP")
     implementation("org.apache.xmlgraphics:batik-transcoder")
+    implementation("org.jfree:jfreechart")
 
+    runtimeOnly("com.h2database:h2")
     runtimeOnly("org.slf4j:slf4j-simple")
 }
