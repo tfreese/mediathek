@@ -87,8 +87,10 @@ abstract class AbstractFF {
     protected String toFileName(final URI uri) {
         String fileName = uri.getPath();
 
-        // Escape Spaces
+        // Escape special Characters.
         fileName = fileName.replace(" ", "\\ ");
+        fileName = fileName.replace("(", "\\(");
+        fileName = fileName.replace(")", "\\)");
 
         return fileName;
     }

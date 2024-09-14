@@ -6,13 +6,12 @@ import java.nio.file.FileVisitResult;
 import java.nio.file.FileVisitor;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 import de.freese.player.model.AudioCodec;
+import de.freese.player.util.PlayerUtils;
 
 /**
  * @author Thomas Freese
@@ -27,7 +26,7 @@ public class LibraryFileVisitor implements FileVisitor<Path> {
 
         this.consumer = Objects.requireNonNull(consumer, "consumer required");
 
-        supportedAudioFiles = Arrays.stream(AudioCodec.values()).map(AudioCodec::getFileExtension).collect(Collectors.toSet());
+        supportedAudioFiles = AudioCodec.getSupportedFileExtensions();
     }
 
     @Override
@@ -42,8 +41,7 @@ public class LibraryFileVisitor implements FileVisitor<Path> {
 
     @Override
     public FileVisitResult visitFile(final Path file, final BasicFileAttributes attrs) throws IOException {
-        final String fileName = file.getFileName().toString();
-        final String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
+        final String fileExtension = PlayerUtils.getFileExtension(file);
 
         if (supportedAudioFiles.contains(fileExtension)) {
             consumer.accept(file);

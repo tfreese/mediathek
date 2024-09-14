@@ -12,14 +12,14 @@ import de.freese.player.spectrum.SpectrumRenderer;
 /**
  * @author Thomas Freese
  */
-public final class SpectrumComponent {
+public final class SpectrumView {
     // @Serial
     // private static final long serialVersionUID = -1L;
 
     private final JPanel panel = new JPanel(new BorderLayout());
     private final SpectrumRenderer spectrumRenderer;
 
-    public SpectrumComponent() {
+    public SpectrumView() {
         super();
 
         spectrumRenderer = new JFreeChartRenderer();

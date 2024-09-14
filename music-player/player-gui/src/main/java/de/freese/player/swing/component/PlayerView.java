@@ -23,14 +23,14 @@ import de.freese.player.ApplicationContext;
 import de.freese.player.player.DspPlayer;
 import de.freese.player.player.PlayList;
 import de.freese.player.spectrum.SpectrumDspProcessor;
-import de.freese.player.swing.component.spectrum.SpectrumComponent;
+import de.freese.player.swing.component.spectrum.SpectrumView;
 import de.freese.player.swing.component.table.PlayListCellRenderer;
 import de.freese.player.utils.image.ImageFactory;
 
 /**
  * @author Thomas Freese
  */
-public final class PlayerPanel {
+public final class PlayerView {
     // @Serial
     // private static final long serialVersionUID = -1L;
 
@@ -44,10 +44,10 @@ public final class PlayerPanel {
     private JButton buttonForward;
     private JToggleButton buttonPlayPause;
     private JButton buttonStop;
-    private SpectrumComponent spectrumComponent;
+    private SpectrumView spectrumView;
     private JTable tablePlayList;
 
-    public PlayerPanel() {
+    public PlayerView() {
         super();
 
         panel = new JPanel(new GridBagLayout());
@@ -73,7 +73,7 @@ public final class PlayerPanel {
         panel.add(buttonPlayPause, GbcBuilder.of(1, 1).insets(0, 0, 0, 0));
         panel.add(buttonStop, GbcBuilder.of(2, 1).insets(0, 0, 0, 0));
         panel.add(buttonForward, GbcBuilder.of(3, 1).insets(0, 0, 0, 0));
-        panel.add(spectrumComponent.getComponent(), GbcBuilder.of(4, 1).gridwidth(2).fillHorizontal().insets(0, 0, 0, 5));
+        panel.add(spectrumView.getComponent(), GbcBuilder.of(4, 1).gridwidth(2).fillHorizontal().insets(0, 0, 0, 5));
 
         initListener();
     }
@@ -94,7 +94,7 @@ public final class PlayerPanel {
                         buttonPlayPause.setSelected(true);
                         buttonPlayPause.setIcon(ICON_PAUSE);
 
-                        tablePlayList.getSelectionModel().setSelectionInterval(playList.currentIndex(), playList.currentIndex());
+                        tablePlayList.getSelectionModel().setSelectionInterval(playList.getCurrentIndex(), playList.getCurrentIndex());
                     }
                 })
         );
@@ -104,9 +104,9 @@ public final class PlayerPanel {
                 buttonPlayPause.setIcon(ICON_PAUSE);
 
                 if (!player.isPlaying()) {
-                    player.setAudioSource(playList.currentAudioSource());
+                    player.setAudioSource(playList.getCurrentAudioSource());
                     player.play();
-                    tablePlayList.getSelectionModel().setSelectionInterval(playList.currentIndex(), playList.currentIndex());
+                    tablePlayList.getSelectionModel().setSelectionInterval(playList.getCurrentIndex(), playList.getCurrentIndex());
                 }
                 else {
                     player.resume();
@@ -143,7 +143,7 @@ public final class PlayerPanel {
                 buttonPlayPause.setSelected(true);
                 buttonPlayPause.setIcon(ICON_PAUSE);
 
-                tablePlayList.getSelectionModel().setSelectionInterval(playList.currentIndex(), playList.currentIndex());
+                tablePlayList.getSelectionModel().setSelectionInterval(playList.getCurrentIndex(), playList.getCurrentIndex());
             }
         });
 
@@ -161,7 +161,7 @@ public final class PlayerPanel {
                 buttonPlayPause.setSelected(true);
                 buttonPlayPause.setIcon(ICON_PAUSE);
 
-                tablePlayList.getSelectionModel().setSelectionInterval(playList.currentIndex(), playList.currentIndex());
+                tablePlayList.getSelectionModel().setSelectionInterval(playList.getCurrentIndex(), playList.getCurrentIndex());
             }
         });
 
@@ -180,7 +180,8 @@ public final class PlayerPanel {
                 buttonPlayPause.setSelected(false);
                 buttonPlayPause.setIcon(ICON_PLAY);
 
-                player.setAudioSource(playList.getAudioSource(selectedRow));
+                playList.setCurrentIndex(selectedRow);
+                player.setAudioSource(playList.getCurrentAudioSource());
 
                 player.play();
                 buttonPlayPause.setSelected(true);
@@ -197,13 +198,13 @@ public final class PlayerPanel {
     }
 
     private void initSpectrum() {
-        spectrumComponent = new SpectrumComponent();
+        spectrumView = new SpectrumView();
 
-        final SpectrumDspProcessor spectrumDspProcessor = new SpectrumDspProcessor(spectrumComponent::updateChartData);
+        final SpectrumDspProcessor spectrumDspProcessor = new SpectrumDspProcessor(spectrumView::updateChartData);
         ApplicationContext.getPlayer().addProcessor(spectrumDspProcessor);
 
-        spectrumComponent.getComponent().setMinimumSize(new Dimension(1, 75));
-        spectrumComponent.getComponent().setPreferredSize(new Dimension(1, 75));
+        spectrumView.getComponent().setMinimumSize(new Dimension(1, 75));
+        spectrumView.getComponent().setPreferredSize(new Dimension(1, 75));
     }
 
     private JScrollPane initTablePlayList() {

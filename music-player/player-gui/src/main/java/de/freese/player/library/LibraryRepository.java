@@ -8,8 +8,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -23,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.freese.player.input.AudioSource;
+import de.freese.player.input.DefaultAudioSource;
 
 /**
  * @author Thomas Freese
@@ -58,9 +62,8 @@ public final class LibraryRepository {
         }
     }
 
+    private final List<AudioSource> audioSources = new ArrayList<>();
     private final DataSource dataSource;
-
-    private List<AudioSource> audioSources = new ArrayList<>();
 
     public LibraryRepository(final DataSource dataSource) {
         super();
@@ -70,18 +73,97 @@ public final class LibraryRepository {
 
     public void delete(final URI uri) {
         // TODO
-        audioSources = audioSources.stream().filter(as -> !as.getUri().equals(uri)).collect(Collectors.toList());
+        // audioSources = audioSources.stream().filter(as -> !as.getUri().equals(uri)).collect(Collectors.toList());
+        audioSources.clear();
     }
 
     public void load(final Consumer<AudioSource> consumer) {
-        // TODO
         audioSources.forEach(consumer);
+
+        final String sql = """
+                select * from library
+                order by play_count desc
+                """;
+
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+            while (resultSet.next()) {
+                final DefaultAudioSource audioSource = new DefaultAudioSource();
+                audioSource.setUri(URI.create(resultSet.getString("uri")));
+                audioSource.setBitRate(resultSet.getInt("bit_rate"));
+                audioSource.setChannels(resultSet.getInt("channels"));
+                audioSource.setDuration(Duration.parse(resultSet.getString("duration")));
+                audioSource.setFormat(resultSet.getString("format"));
+                audioSource.setSamplingRate(resultSet.getInt("sampling_rate"));
+                audioSource.setArtist(resultSet.getString("artist"));
+                audioSource.setAlbum(resultSet.getString("album"));
+                audioSource.setTitle(resultSet.getString("title"));
+                audioSource.setGenre(resultSet.getString("genre"));
+                audioSource.setReleaseDate(resultSet.getString("release_date"));
+                audioSource.setDisc(resultSet.getInt("disc"));
+                audioSource.setTrack(resultSet.getInt("track"));
+                audioSource.setCompilation(resultSet.getInt("is_compilation") == 1);
+                audioSource.setPlayCount(resultSet.getInt("play_count"));
+                audioSource.setMetaData(resultSet.getString("meta_data"));
+
+                consumer.accept(audioSource);
+            }
+        }
+        catch (SQLException ex) {
+            LOGGER.error(ex.getMessage());
+        }
     }
 
     public void saveOrUpdate(final AudioSource audioSource) {
-        // TODO
-        LOGGER.info("saveOrUpdate audioSource: {}", audioSource);
+        LOGGER.debug("saveOrUpdate audioSource: {}", audioSource);
 
-        audioSources.add(audioSource);
+        // audioSources.add(audioSource);
+
+        final String sql = """
+                merge into library
+                (
+                uri, bit_rate, channels, duration,
+                format, sampling_rate, artist, album,
+                title, genre, release_date, disc,
+                track, is_compilation, meta_data
+                )
+                key (uri)
+                values
+                (
+                ?, ?, ?, ?,
+                ?, ?, ?, ?,
+                ?, ?, ?, ?,
+                ?, ?, ?
+                )
+                """;
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, audioSource.getUri().toString());
+            preparedStatement.setInt(2, audioSource.getBitRate());
+            preparedStatement.setInt(3, audioSource.getChannels());
+            preparedStatement.setString(4, audioSource.getDuration().toString());
+            preparedStatement.setString(5, audioSource.getFormat());
+            preparedStatement.setInt(6, audioSource.getSamplingRate());
+            preparedStatement.setString(7, audioSource.getArtist());
+            preparedStatement.setString(8, audioSource.getAlbum());
+            preparedStatement.setString(9, audioSource.getTitle());
+            preparedStatement.setString(10, audioSource.getGenre());
+            preparedStatement.setString(11, audioSource.getReleaseDate());
+            preparedStatement.setInt(12, audioSource.getDisc());
+            preparedStatement.setInt(13, audioSource.getTrack());
+            preparedStatement.setInt(14, audioSource.isCompilation() ? 1 : 0);
+            preparedStatement.setString(15, audioSource.getMetaData());
+
+            preparedStatement.execute();
+        }
+        catch (SQLException ex) {
+            LOGGER.error(ex.getMessage());
+        }
+    }
+
+    public void update(final URI uri, final int playCount) {
+        // TODO
     }
 }

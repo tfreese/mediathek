@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.time.Duration;
 
 import de.freese.player.model.AudioCodec;
+import de.freese.player.util.PlayerUtils;
 
 /**
  * @author Thomas Freese
@@ -16,8 +17,7 @@ public interface AudioSource {
     String getArtist();
 
     default AudioCodec getAudioCodec() {
-        final String fileName = getUri().toString();
-        final String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
+        final String fileExtension = PlayerUtils.getFileExtension(getUri());
 
         return AudioCodec.getByExtension(fileExtension);
     }
@@ -32,7 +32,7 @@ public interface AudioSource {
      */
     int getChannels();
 
-    String getDisc();
+    int getDisc();
 
     Duration getDuration();
 
@@ -60,7 +60,7 @@ public interface AudioSource {
 
     Path getTmpFile();
 
-    String getTrack();
+    int getTrack();
 
     // /**
     //  * If 256 no volume change will be performed.

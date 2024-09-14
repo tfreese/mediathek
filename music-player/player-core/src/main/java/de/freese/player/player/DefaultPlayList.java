@@ -4,6 +4,7 @@ package de.freese.player.player;
 import java.net.URI;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -34,13 +35,26 @@ public final class DefaultPlayList implements PlayList {
     }
 
     @Override
-    public int currentIndex() {
-        return currentIndex;
+    public PlayList addAudioSources(final Collection<AudioSource> audioSources) {
+        this.audioSources.addAll(audioSources);
+
+        return this;
+    }
+
+    @Override
+    public void clear() {
+        audioSources.clear();
+        currentIndex = 0;
     }
 
     @Override
     public AudioSource getAudioSource(final int index) {
         return audioSources.get(index);
+    }
+
+    @Override
+    public int getCurrentIndex() {
+        return currentIndex;
     }
 
     @Override
@@ -74,6 +88,11 @@ public final class DefaultPlayList implements PlayList {
         currentIndex--;
 
         return getAudioSource(currentIndex);
+    }
+
+    @Override
+    public void setCurrentIndex(final int index) {
+        currentIndex = index;
     }
 
     @Override

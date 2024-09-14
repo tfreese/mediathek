@@ -1,7 +1,10 @@
 // Created: 14 Juli 2024
 package de.freese.player.model;
 
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.sound.sampled.AudioFileFormat;
 
@@ -37,6 +40,9 @@ public enum AudioCodec {
         throw new IllegalArgumentException("unsupported extension: " + fileExtension);
     }
 
+    public static Set<String> getSupportedFileExtensions() {
+        return Arrays.stream(values()).map(AudioCodec::getFileExtension).collect(Collectors.toSet());
+    }
     private final String fileExtension;
 
     AudioCodec(final String fileExtension) {

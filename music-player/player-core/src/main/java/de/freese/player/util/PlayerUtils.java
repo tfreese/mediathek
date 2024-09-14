@@ -1,8 +1,11 @@
 // Created: 17 Juli 2024
 package de.freese.player.util;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.nio.file.Path;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -81,6 +84,22 @@ public final class PlayerUtils {
         System.arraycopy(audioBytes, 0, bytes, 0, bytes.length);
 
         return new Window(audioFormat, bytes);
+    }
+
+    public static String getFileExtension(final String fileName) {
+        return fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
+    }
+
+    public static String getFileExtension(final File file) {
+        return getFileExtension(file.getName());
+    }
+
+    public static String getFileExtension(final URI uri) {
+        return getFileExtension(uri.toString());
+    }
+
+    public static String getFileExtension(final Path path) {
+        return getFileExtension(path.toUri());
     }
 
     // private static int[] convertBytesToSamples(final byte[] bytes) {

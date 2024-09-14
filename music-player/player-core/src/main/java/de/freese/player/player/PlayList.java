@@ -1,6 +1,7 @@
 // Created: 08 Sept. 2024
 package de.freese.player.player;
 
+import java.util.Collection;
 import java.util.stream.Stream;
 
 import de.freese.player.input.AudioSource;
@@ -11,20 +12,24 @@ import de.freese.player.input.AudioSource;
 public interface PlayList {
     PlayList addAudioSource(AudioSource audioSource);
 
-    default AudioSource currentAudioSource() {
-        return getAudioSource(currentIndex());
-    }
+    PlayList addAudioSources(Collection<AudioSource> audioSources);
 
-    int currentIndex();
+    void clear();
 
     AudioSource getAudioSource(int index);
 
+    default AudioSource getCurrentAudioSource() {
+        return getAudioSource(getCurrentIndex());
+    }
+
+    int getCurrentIndex();
+
     default boolean hasNext() {
-        return currentIndex() < size() - 1;
+        return getCurrentIndex() < size() - 1;
     }
 
     default boolean hasPrevious() {
-        return currentIndex() > 0;
+        return getCurrentIndex() > 0;
     }
 
     int indexOf(AudioSource audioSource);
@@ -32,6 +37,8 @@ public interface PlayList {
     AudioSource next();
 
     AudioSource previous();
+
+    void setCurrentIndex(int index);
 
     int size();
 

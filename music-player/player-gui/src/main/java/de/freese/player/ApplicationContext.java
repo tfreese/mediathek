@@ -34,6 +34,7 @@ public final class ApplicationContext {
     private static PlayList playList;
     private static DspPlayer player;
     private static Path tempDir;
+    private static Path workingDir;
 
     public static ExecutorService getExecutorService() {
         return executorService;
@@ -51,8 +52,13 @@ public final class ApplicationContext {
         return player;
     }
 
+    public static Path getWorkingDir() {
+        return workingDir;
+    }
+
     public static void start() {
-        tempDir = Path.of(System.getProperty("java.io.tmpdir"), "musicPlayer");
+        tempDir = Path.of(System.getProperty("java.io.tmpdir"), ".musicPlayer");
+        workingDir = Path.of(System.getProperty("user.home"), ".musicPlayer");
 
         if (!Files.exists(tempDir)) {
             try {
@@ -63,11 +69,21 @@ public final class ApplicationContext {
             }
         }
 
+        if (!Files.exists(workingDir)) {
+            try {
+                Files.createDirectories(workingDir);
+            }
+            catch (IOException ex) {
+                throw new UncheckedIOException(ex);
+            }
+        }
+
         executorService = Executors.newFixedThreadPool(8, Thread.ofPlatform().daemon().name("player-", 1).factory());
 
         final HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setDriverClassName("org.h2.Driver");
-        hikariConfig.setJdbcUrl("jdbc:h2:file:/opt/jvmapps/musicplayer/h2");
+        // hikariConfig.setJdbcUrl("jdbc:h2:file:/opt/jvmapps/musicplayer/h2");
+        hikariConfig.setJdbcUrl("jdbc:h2:file:" + workingDir.resolve("h2"));
         hikariConfig.setUsername("sa");
         hikariConfig.setPassword(null);
         hikariConfig.setMinimumIdle(1);

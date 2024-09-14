@@ -4,10 +4,14 @@ package de.freese.player.swing;
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.nio.file.Path;
-import java.util.Set;
+import java.util.List;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.SwingWorker;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
@@ -16,9 +20,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.freese.player.ApplicationContext;
-import de.freese.player.library.LibraryRepository;
-import de.freese.player.library.LibraryScanner;
-import de.freese.player.swing.component.PlayerPanel;
+import de.freese.player.input.AudioSource;
+import de.freese.player.swing.component.PlayerView;
+import de.freese.player.swing.component.library.LibraryView;
 
 /**
  * @author Thomas Freese
@@ -26,7 +30,7 @@ import de.freese.player.swing.component.PlayerPanel;
 public final class PlayerApplication {
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayerApplication.class);
 
-    private static JFrame frame;
+    private static JFrame mainFrame;
 
     private static final class MainFrameListener extends WindowAdapter {
         @Override
@@ -35,8 +39,8 @@ public final class PlayerApplication {
         }
     }
 
-    public static JFrame getFrame() {
-        return frame;
+    public static JFrame getMainFrame() {
+        return mainFrame;
     }
 
     public static void init() throws Exception {
@@ -54,9 +58,11 @@ public final class PlayerApplication {
         jFrame.addWindowListener(new MainFrameListener());
         // jFrame.setLayout(new BorderLayout());
 
-        final PlayerPanel playerPanel = new PlayerPanel();
-        playerPanel.init();
-        jFrame.setContentPane(playerPanel.getComponent());
+        final PlayerView playerView = new PlayerView();
+        playerView.init();
+        jFrame.setContentPane(playerView.getComponent());
+
+        initMenu(jFrame);
 
         // frame.setSize(800, 600);
         // frame.setSize(1280, 768);
@@ -66,40 +72,49 @@ public final class PlayerApplication {
         // jFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
         jFrame.setLocationRelativeTo(null);
 
-        frame = jFrame;
+        mainFrame = jFrame;
+
+        // Runtime.getRuntime().addShutdownHook(new Thread(PlayerApplication::stop, "Shutdown"));
     }
 
     public static void start() throws Exception {
         LOGGER.info("starting application");
 
-        ApplicationContext.getExecutorService().execute(() -> {
-            // try {
-            //     TimeUnit.SECONDS.sleep(3);
-            // }
-            // catch (InterruptedException ex) {
-            //     // Restore interrupted state.
-            //     Thread.currentThread().interrupt();
-            // }
+        mainFrame.setVisible(true);
 
-            final LibraryRepository libraryRepository = ApplicationContext.getLibraryRepository();
-            final LibraryScanner libraryScanner = new LibraryScanner(libraryRepository);
-            libraryScanner.scan(Set.of(Path.of("samples")));
+        final SwingWorker<Void, AudioSource> swingWorker = new SwingWorker<>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                ApplicationContext.getLibraryRepository().load(this::publish);
 
-            // libraryRepository.load(ApplicationContext.getPlayList()::addAudioSource);
-            libraryRepository.load(audioSource -> {
-                // try {
-                //     TimeUnit.SECONDS.sleep(1);
-                // }
-                // catch (InterruptedException ex) {
-                //     // Restore interrupted state.
-                //     Thread.currentThread().interrupt();
-                // }
+                return null;
+            }
 
-                ApplicationContext.getPlayList().addAudioSource(audioSource);
-            });
+            @Override
+            protected void process(final List<AudioSource> chunks) {
+                ApplicationContext.getPlayList().addAudioSources(chunks);
+            }
+        };
+        ApplicationContext.getExecutorService().execute(swingWorker);
+    }
+
+    private static void initMenu(final JFrame frame) {
+        final JMenuItem jMenuItemLibrary = new JMenuItem("Edit");
+        jMenuItemLibrary.addActionListener(event -> {
+            final JDialog jDialog = new JDialog(getMainFrame(), "Library", true);
+            jDialog.setContentPane(new LibraryView().getComponent());
+            jDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            jDialog.pack();
+            jDialog.setLocationRelativeTo(null);
+            jDialog.setVisible(true);
         });
 
-        frame.setVisible(true);
+        final JMenu jMenuLibrary = new JMenu("Library");
+        jMenuLibrary.add(jMenuItemLibrary);
+
+        final JMenuBar jMenuBar = new JMenuBar();
+        jMenuBar.add(jMenuLibrary);
+        frame.setJMenuBar(jMenuBar);
     }
 
     private static void stop() {
@@ -107,7 +122,7 @@ public final class PlayerApplication {
 
         ApplicationContext.stop();
 
-        frame = null;
+        mainFrame = null;
 
         System.exit(0);
     }

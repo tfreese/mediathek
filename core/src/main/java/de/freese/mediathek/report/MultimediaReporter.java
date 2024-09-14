@@ -97,7 +97,7 @@ public final class MultimediaReporter {
         //      ResultSet resultSet = statement.executeQuery("select url from songs")) {
         //     while (resultSet.next()) {
         //         final String url = resultSet.getString("URL");
-        //         extensions.add(url.substring(url.lastIndexOf(".") + 1).toLowerCase());
+        //         extensions.add(PlayerUtils.getFileExtension(url));
         //     }
         // }
         //

@@ -77,8 +77,19 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
         audioSource.setTitle(parseMetaDataTitle(output));
         audioSource.setGenre(parseMetaDataGenre(output));
         audioSource.setReleaseDate(parseMetaDataDate(output));
-        audioSource.setDisc(parseMetaDataDisk(output));
-        audioSource.setTrack(parseMetaDataTrack(output));
+
+        final String disk = parseMetaDataDisk(output);
+
+        if (disk != null && !disk.isBlank()) {
+            audioSource.setDisc(Integer.parseInt(disk));
+        }
+
+        final String track = parseMetaDataTrack(output);
+
+        if (track != null && !track.isBlank()) {
+            audioSource.setTrack(Integer.parseInt(track));
+        }
+
         audioSource.setCompilation(parseMetaDataCompilation(output));
 
         return audioSource;

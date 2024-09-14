@@ -7,12 +7,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.CompletionService;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorCompletionService;
 import java.util.concurrent.Future;
+import java.util.function.Consumer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,15 +29,7 @@ public final class LibraryScanner {
     private static final FileVisitOption[] FILEVISITOPTION_WITH_SYMLINKS = {FileVisitOption.FOLLOW_LINKS};
     private static final Logger LOGGER = LoggerFactory.getLogger(LibraryScanner.class);
 
-    private final LibraryRepository repository;
-
-    public LibraryScanner(final LibraryRepository repository) {
-        super();
-
-        this.repository = Objects.requireNonNull(repository, "repository required");
-    }
-
-    public void scan(final Set<Path> paths) {
+    public void scan(final Set<Path> paths, final Consumer<AudioSource> audioSourceConsumer) {
         final List<Path> files = new ArrayList<>();
 
         for (Path path : paths) {
@@ -56,7 +48,7 @@ public final class LibraryScanner {
             final Future<Void> future = completionService.submit(() -> {
                 try {
                     final AudioSource audioSource = AudioSourceFactory.createAudioSource(path);
-                    repository.saveOrUpdate(audioSource);
+                    audioSourceConsumer.accept(audioSource);
                 }
                 catch (Exception ex) {
                     LOGGER.error(ex.getMessage());

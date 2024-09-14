@@ -3,6 +3,7 @@ package de.freese.player.swing.component.table;
 
 import java.io.Serial;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -45,8 +46,27 @@ public final class TablePlayList extends AbstractTableModel implements PlayList 
     }
 
     @Override
-    public int currentIndex() {
-        return currentIndex;
+    public PlayList addAudioSources(final Collection<AudioSource> audioSources) {
+        final int firstRow = getRowCount();
+
+        this.audioSources.addAll(audioSources);
+
+        if (SwingUtilities.isEventDispatchThread()) {
+            fireTableRowsInserted(firstRow, getRowCount());
+        }
+        else {
+            SwingUtilities.invokeLater(() -> fireTableRowsInserted(firstRow, getRowCount()));
+        }
+
+        return this;
+    }
+
+    @Override
+    public void clear() {
+        audioSources.clear();
+        currentIndex = 0;
+
+        fireTableDataChanged();
     }
 
     @Override
@@ -62,6 +82,11 @@ public final class TablePlayList extends AbstractTableModel implements PlayList 
     @Override
     public String getColumnName(final int column) {
         return columnNames.get(column);
+    }
+
+    @Override
+    public int getCurrentIndex() {
+        return currentIndex;
     }
 
     @Override
@@ -113,6 +138,11 @@ public final class TablePlayList extends AbstractTableModel implements PlayList 
         currentIndex--;
 
         return getAudioSource(currentIndex);
+    }
+
+    @Override
+    public void setCurrentIndex(final int index) {
+        currentIndex = index;
     }
 
     @Override
