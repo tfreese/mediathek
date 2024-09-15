@@ -13,8 +13,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -25,6 +23,7 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.freese.player.exception.PlayerException;
 import de.freese.player.input.AudioSource;
 import de.freese.player.input.DefaultAudioSource;
 
@@ -62,7 +61,6 @@ public final class LibraryRepository {
         }
     }
 
-    private final List<AudioSource> audioSources = new ArrayList<>();
     private final DataSource dataSource;
 
     public LibraryRepository(final DataSource dataSource) {
@@ -74,15 +72,12 @@ public final class LibraryRepository {
     public void delete(final URI uri) {
         // TODO
         // audioSources = audioSources.stream().filter(as -> !as.getUri().equals(uri)).collect(Collectors.toList());
-        audioSources.clear();
     }
 
     public void load(final Consumer<AudioSource> consumer) {
-        audioSources.forEach(consumer);
-
         final String sql = """
                 select * from library
-                order by play_count desc
+                order by play_count desc, artist asc
                 """;
 
         try (Connection connection = dataSource.getConnection();
@@ -111,14 +106,12 @@ public final class LibraryRepository {
             }
         }
         catch (SQLException ex) {
-            LOGGER.error(ex.getMessage());
+            throw new PlayerException(ex);
         }
     }
 
     public void saveOrUpdate(final AudioSource audioSource) {
         LOGGER.debug("saveOrUpdate audioSource: {}", audioSource);
-
-        // audioSources.add(audioSource);
 
         final String sql = """
                 merge into library
@@ -159,7 +152,7 @@ public final class LibraryRepository {
             preparedStatement.execute();
         }
         catch (SQLException ex) {
-            LOGGER.error(ex.getMessage());
+            throw new PlayerException(ex);
         }
     }
 

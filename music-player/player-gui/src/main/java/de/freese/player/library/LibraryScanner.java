@@ -51,7 +51,7 @@ public final class LibraryScanner {
                     audioSourceConsumer.accept(audioSource);
                 }
                 catch (Exception ex) {
-                    LOGGER.error(ex.getMessage());
+                    LOGGER.error("{}: {}", path, ex.getMessage());
                 }
 
                 return null;

@@ -21,6 +21,9 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileFilter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.freese.player.ApplicationContext;
 import de.freese.player.input.AudioSource;
 import de.freese.player.library.LibraryRepository;
@@ -32,6 +35,8 @@ import de.freese.player.swing.component.GbcBuilder;
  * @author Thomas Freese
  */
 public final class LibraryView {
+    private static final Logger LOGGER = LoggerFactory.getLogger(LibraryView.class);
+
     private final JList<Path> jList;
     private final JPanel panel = new JPanel(new GridBagLayout());
 
@@ -134,11 +139,10 @@ public final class LibraryView {
 
         final SwingWorker<Void, AudioSource> swingWorker = new SwingWorker<>() {
             @Override
-            protected Void doInBackground() throws Exception {
+            protected Void doInBackground() {
                 final LibraryRepository libraryRepository = ApplicationContext.getLibraryRepository();
-                libraryRepository.delete(null);
-
                 final LibraryScanner libraryScanner = new LibraryScanner();
+
                 libraryScanner.scan(paths, audioSource -> {
                     libraryRepository.saveOrUpdate(audioSource);
 
@@ -154,6 +158,33 @@ public final class LibraryView {
                 });
 
                 return null;
+            }
+
+            @Override
+            protected void done() {
+                try {
+                    get();
+
+                    playList.clear();
+
+                    final SwingWorker<Void, AudioSource> swingWorker = new SwingWorker<>() {
+                        @Override
+                        protected Void doInBackground() {
+                            ApplicationContext.getLibraryRepository().load(this::publish);
+
+                            return null;
+                        }
+
+                        @Override
+                        protected void process(final List<AudioSource> chunks) {
+                            ApplicationContext.getPlayList().addAudioSources(chunks);
+                        }
+                    };
+                    ApplicationContext.getExecutorService().execute(swingWorker);
+                }
+                catch (Exception ex) {
+                    LOGGER.error(ex.getMessage(), ex);
+                }
             }
 
             @Override

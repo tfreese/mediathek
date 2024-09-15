@@ -83,7 +83,7 @@ public final class ApplicationContext {
         final HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setDriverClassName("org.h2.Driver");
         // hikariConfig.setJdbcUrl("jdbc:h2:file:/opt/jvmapps/musicplayer/h2");
-        hikariConfig.setJdbcUrl("jdbc:h2:file:" + workingDir.resolve("h2"));
+        hikariConfig.setJdbcUrl("jdbc:h2:file:" + workingDir.resolve("h2") + ";;DB_CLOSE_ON_EXIT=true");
         hikariConfig.setUsername("sa");
         hikariConfig.setPassword(null);
         hikariConfig.setMinimumIdle(1);
@@ -120,6 +120,14 @@ public final class ApplicationContext {
         }
 
         executorService.close();
+
+        // try (Connection connection = dataSource.getConnection();
+        //      Statement statement = connection.createStatement()) {
+        //     statement.execute("SHUTDOWN COMPACT");
+        // }
+        // catch (Exception ex) {
+        //     LOGGER.error(ex.getMessage());
+        // }
 
         if (dataSource instanceof Closeable closeable) {
             try {

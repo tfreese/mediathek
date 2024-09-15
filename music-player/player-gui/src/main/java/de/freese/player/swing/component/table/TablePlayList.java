@@ -110,7 +110,7 @@ public final class TablePlayList extends AbstractTableModel implements PlayList 
         final AudioSource audioSource = getAudioSource(rowIndex);
 
         return switch (columnIndex) {
-            case 0 -> audioSource.getArtist();
+            case 0 -> audioSource.getArtist() == null ? audioSource.getUri().getPath() : audioSource.getArtist();
             case 1 -> audioSource.getAlbum();
             case 2 -> audioSource.getTitle();
             case 3 -> audioSource.getDuration();

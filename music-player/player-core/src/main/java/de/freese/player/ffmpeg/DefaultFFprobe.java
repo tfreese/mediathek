@@ -19,7 +19,6 @@ import de.freese.player.util.PlayerUtils;
  * @author Thomas Freese
  */
 final class DefaultFFprobe extends AbstractFF implements FFprobe {
-
     private static DefaultAudioSource parseMetaData(final List<String> output) {
         final DefaultAudioSource audioSource = new DefaultAudioSource();
 
@@ -86,7 +85,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
     }
 
     private static String parseMetaDataAlbum(final List<String> output) {
-        final String line = output.stream().filter(l -> l.contains("album ")).findFirst().orElse(null);
+        final String line = output.stream().filter(l -> l.startsWith("album ")).findFirst().orElse(null);
 
         if (line == null || line.isBlank()) {
             return null;
@@ -98,15 +97,15 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
     }
 
     private static String parseMetaDataArtist(final List<String> output) {
-        String line = output.stream().filter(l -> l.contains("artist")).findFirst().orElse(null);
+        String line = output.stream().filter(l -> l.startsWith("artist")).findFirst().orElse(null);
 
         if (line == null || line.isBlank()) {
-            line = output.stream().filter(l -> l.contains("artist-sort")).findFirst().orElse(null);
+            line = output.stream().filter(l -> l.startsWith("artist-sort")).findFirst().orElse(null);
         }
 
         if (line == null || line.isBlank()) {
             // Compilation
-            line = output.stream().filter(l -> l.contains("album_artist")).findFirst().orElse(null);
+            line = output.stream().filter(l -> l.startsWith("album_artist")).findFirst().orElse(null);
         }
 
         if (line == null || line.isBlank()) {
@@ -165,7 +164,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
     }
 
     private static boolean parseMetaDataCompilation(final List<String> output) {
-        final String line = output.stream().filter(l -> l.contains("compilation")).findFirst().orElse(null);
+        final String line = output.stream().filter(l -> l.startsWith("compilation ")).findFirst().orElse(null);
 
         if (line == null || line.isBlank()) {
             return false;
@@ -185,7 +184,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
     }
 
     private static String parseMetaDataDate(final List<String> output) {
-        final String line = output.stream().filter(l -> l.contains("date")).findFirst().orElse(null);
+        final String line = output.stream().filter(l -> l.startsWith("date ")).findFirst().orElse(null);
 
         if (line == null || line.isBlank()) {
             return null;
@@ -197,7 +196,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
     }
 
     private static String parseMetaDataDisk(final List<String> output) {
-        final String line = output.stream().filter(l -> l.contains("disc")).findFirst().orElse(null);
+        final String line = output.stream().filter(l -> l.startsWith("disc ")).findFirst().orElse(null);
 
         if (line == null || line.isBlank()) {
             return null;
@@ -242,7 +241,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
     }
 
     private static String parseMetaDataGenre(final List<String> output) {
-        final String line = output.stream().filter(l -> l.contains("genre")).findFirst().orElse(null);
+        final String line = output.stream().filter(l -> l.startsWith("genre ")).findFirst().orElse(null);
 
         if (line == null || line.isBlank()) {
             return null;
@@ -264,7 +263,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
     }
 
     private static String parseMetaDataTitle(final List<String> output) {
-        final String line = output.stream().filter(l -> l.contains("title")).findFirst().orElse(null);
+        final String line = output.stream().filter(l -> l.startsWith("title ")).findFirst().orElse(null);
 
         if (line == null || line.isBlank()) {
             return null;
@@ -276,7 +275,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
     }
 
     private static String parseMetaDataTrack(final List<String> output) {
-        final String line = output.stream().filter(l -> l.contains("track")).findFirst().orElse(null);
+        final String line = output.stream().filter(l -> l.startsWith("track ")).findFirst().orElse(null);
 
         if (line == null || line.isBlank()) {
             return null;
@@ -324,7 +323,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
             getLogger().debug("{}", metaData);
         }
 
-        final DefaultAudioSource audioSource = parseMetaData(output);
+        final DefaultAudioSource audioSource = parseMetaData(output.stream().map(l -> PATTERN_SPACES.matcher(l).replaceAll(" ")).map(String::strip).toList());
         audioSource.setUri(uri);
         audioSource.setMetaData(metaData);
 

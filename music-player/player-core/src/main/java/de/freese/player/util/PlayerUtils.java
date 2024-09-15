@@ -113,6 +113,7 @@ public final class PlayerUtils {
         fileName = fileName.replace("'", "\\'");
         fileName = fileName.replace("&", "\\&");
         fileName = fileName.replace("$", "\\$");
+        fileName = fileName.replace(";", "\\;");
 
         return fileName;
     }

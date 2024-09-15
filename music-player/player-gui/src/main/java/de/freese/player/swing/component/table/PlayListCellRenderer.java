@@ -24,7 +24,7 @@ public class PlayListCellRenderer extends DefaultTableCellRenderer {
         super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
         final AudioSource audioSource = ApplicationContext.getPlayList().getAudioSource(row);
-        setToolTipText(audioSource.getUri().toString());
+        setToolTipText(audioSource.getUri().getPath());
 
         if (value instanceof Number) {
             setHorizontalAlignment(SwingConstants.RIGHT);

@@ -18,6 +18,7 @@ import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+
 import de.freese.player.fft.output.Spectrum;
 
 /**
@@ -55,7 +56,7 @@ final class LineChart extends JFrame {
         data.addSeries(new XYSeries("f", true, false));
 
         // DomainAxis
-        // NumberAxis xAxis = new LogarithmicAxis("Frequency (Hz)");
+        // final NumberAxis xAxis = new LogarithmicAxis("Frequency (Hz)");
         final NumberAxis xAxis = new NumberAxis("Frequency (Hz)");
         xAxis.setAutoRangeIncludesZero(false);
         xAxis.setRange(0D, 23_000D);

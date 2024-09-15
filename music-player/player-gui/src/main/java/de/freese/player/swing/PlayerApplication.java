@@ -77,14 +77,14 @@ public final class PlayerApplication {
         // Runtime.getRuntime().addShutdownHook(new Thread(PlayerApplication::stop, "Shutdown"));
     }
 
-    public static void start() throws Exception {
+    public static void start() {
         LOGGER.info("starting application");
 
         mainFrame.setVisible(true);
 
         final SwingWorker<Void, AudioSource> swingWorker = new SwingWorker<>() {
             @Override
-            protected Void doInBackground() throws Exception {
+            protected Void doInBackground() {
                 ApplicationContext.getLibraryRepository().load(this::publish);
 
                 return null;
