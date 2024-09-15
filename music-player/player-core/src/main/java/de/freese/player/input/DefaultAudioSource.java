@@ -14,7 +14,7 @@ public class DefaultAudioSource implements AudioSource {
     private int bitRate;
     private int channels;
     private boolean compilation;
-    private int disc;
+    private String disc;
     private Duration duration;
     private String format;
     private String genre;
@@ -24,7 +24,7 @@ public class DefaultAudioSource implements AudioSource {
     private int samplingRate;
     private String title;
     private transient Path tmpFile;
-    private int track;
+    private String track;
     private URI uri;
 
     @Override
@@ -48,7 +48,7 @@ public class DefaultAudioSource implements AudioSource {
     }
 
     @Override
-    public int getDisc() {
+    public String getDisc() {
         return disc;
     }
 
@@ -98,7 +98,7 @@ public class DefaultAudioSource implements AudioSource {
     }
 
     @Override
-    public int getTrack() {
+    public String getTrack() {
         return track;
     }
 
@@ -132,7 +132,7 @@ public class DefaultAudioSource implements AudioSource {
         this.compilation = compilation;
     }
 
-    public void setDisc(final int disc) {
+    public void setDisc(final String disc) {
         this.disc = disc;
     }
 
@@ -173,7 +173,7 @@ public class DefaultAudioSource implements AudioSource {
         this.tmpFile = tmpFile;
     }
 
-    public void setTrack(final int track) {
+    public void setTrack(final String track) {
         this.track = track;
     }
 

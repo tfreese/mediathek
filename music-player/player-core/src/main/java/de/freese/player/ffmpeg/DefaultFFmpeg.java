@@ -17,6 +17,7 @@ import javax.sound.sampled.AudioSystem;
 
 import de.freese.player.exception.PlayerException;
 import de.freese.player.input.AudioSource;
+import de.freese.player.util.PlayerUtils;
 
 /**
  * @author Thomas Freese
@@ -159,7 +160,7 @@ final class DefaultFFmpeg extends AbstractFF implements FFmpeg {
 
         addArgument("-hide_banner");
         addArgument("-i");
-        addArgument(toFileName(audioSource.getUri()));
+        addArgument(PlayerUtils.toFileName(audioSource.getUri()));
 
         // final Integer seekTime = attributes.getSeekTime();
         // if (seekTime != null) {

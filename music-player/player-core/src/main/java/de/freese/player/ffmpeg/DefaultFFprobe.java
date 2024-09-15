@@ -13,6 +13,7 @@ import java.util.Objects;
 import de.freese.player.exception.PlayerException;
 import de.freese.player.input.AudioSource;
 import de.freese.player.input.DefaultAudioSource;
+import de.freese.player.util.PlayerUtils;
 
 /**
  * @author Thomas Freese
@@ -77,19 +78,8 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
         audioSource.setTitle(parseMetaDataTitle(output));
         audioSource.setGenre(parseMetaDataGenre(output));
         audioSource.setReleaseDate(parseMetaDataDate(output));
-
-        final String disk = parseMetaDataDisk(output);
-
-        if (disk != null && !disk.isBlank()) {
-            audioSource.setDisc(Integer.parseInt(disk));
-        }
-
-        final String track = parseMetaDataTrack(output);
-
-        if (track != null && !track.isBlank()) {
-            audioSource.setTrack(Integer.parseInt(track));
-        }
-
+        audioSource.setDisc(parseMetaDataDisk(output));
+        audioSource.setTrack(parseMetaDataTrack(output));
         audioSource.setCompilation(parseMetaDataCompilation(output));
 
         return audioSource;
@@ -306,7 +296,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
         addArgument("-hide_banner");
         addArgument("-select_streams a");
         addArgument("-i");
-        addArgument(toFileName(uri));
+        addArgument(PlayerUtils.toFileName(uri));
 
         final String command = createCommand();
 
@@ -331,7 +321,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
         }
 
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("info: {}", metaData);
+            getLogger().debug("{}", metaData);
         }
 
         final DefaultAudioSource audioSource = parseMetaData(output);

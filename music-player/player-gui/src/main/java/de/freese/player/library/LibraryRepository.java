@@ -101,8 +101,8 @@ public final class LibraryRepository {
                 audioSource.setTitle(resultSet.getString("title"));
                 audioSource.setGenre(resultSet.getString("genre"));
                 audioSource.setReleaseDate(resultSet.getString("release_date"));
-                audioSource.setDisc(resultSet.getInt("disc"));
-                audioSource.setTrack(resultSet.getInt("track"));
+                audioSource.setDisc(resultSet.getString("disc"));
+                audioSource.setTrack(resultSet.getString("track"));
                 audioSource.setCompilation(resultSet.getInt("is_compilation") == 1);
                 audioSource.setPlayCount(resultSet.getInt("play_count"));
                 audioSource.setMetaData(resultSet.getString("meta_data"));
@@ -151,8 +151,8 @@ public final class LibraryRepository {
             preparedStatement.setString(9, audioSource.getTitle());
             preparedStatement.setString(10, audioSource.getGenre());
             preparedStatement.setString(11, audioSource.getReleaseDate());
-            preparedStatement.setInt(12, audioSource.getDisc());
-            preparedStatement.setInt(13, audioSource.getTrack());
+            preparedStatement.setString(12, audioSource.getDisc());
+            preparedStatement.setString(13, audioSource.getTrack());
             preparedStatement.setInt(14, audioSource.isCompilation() ? 1 : 0);
             preparedStatement.setString(15, audioSource.getMetaData());
 

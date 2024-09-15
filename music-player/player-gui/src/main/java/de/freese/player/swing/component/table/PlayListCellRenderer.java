@@ -9,6 +9,9 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import de.freese.player.ApplicationContext;
+import de.freese.player.input.AudioSource;
+
 /**
  * @author Thomas Freese
  */
@@ -19,6 +22,9 @@ public class PlayListCellRenderer extends DefaultTableCellRenderer {
     @Override
     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
         super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+        final AudioSource audioSource = ApplicationContext.getPlayList().getAudioSource(row);
+        setToolTipText(audioSource.getUri().toString());
 
         if (value instanceof Number) {
             setHorizontalAlignment(SwingConstants.RIGHT);

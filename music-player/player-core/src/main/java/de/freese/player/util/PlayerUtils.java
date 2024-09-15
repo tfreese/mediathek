@@ -18,6 +18,7 @@ import de.freese.player.model.Window;
  * @author Thomas Freese
  */
 public final class PlayerUtils {
+
     public static int[] createSamplesMono(final AudioFormat audioFormat, final byte[] audioBytes) {
         final boolean isBigEndian = audioFormat.isBigEndian();
         final int bytesPerFrame = 2;
@@ -100,6 +101,20 @@ public final class PlayerUtils {
 
     public static String getFileExtension(final Path path) {
         return getFileExtension(path.toUri());
+    }
+
+    public static String toFileName(final URI uri) {
+        String fileName = uri.getPath();
+
+        // Escape special Characters.
+        fileName = fileName.replace(" ", "\\ ");
+        fileName = fileName.replace("(", "\\(");
+        fileName = fileName.replace(")", "\\)");
+        fileName = fileName.replace("'", "\\'");
+        fileName = fileName.replace("&", "\\&");
+        fileName = fileName.replace("$", "\\$");
+
+        return fileName;
     }
 
     // private static int[] convertBytesToSamples(final byte[] bytes) {

@@ -4,7 +4,6 @@ package de.freese.player.ffmpeg;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -84,14 +83,4 @@ abstract class AbstractFF {
         return output.getFirst();
     }
 
-    protected String toFileName(final URI uri) {
-        String fileName = uri.getPath();
-
-        // Escape special Characters.
-        fileName = fileName.replace(" ", "\\ ");
-        fileName = fileName.replace("(", "\\(");
-        fileName = fileName.replace(")", "\\)");
-
-        return fileName;
-    }
 }

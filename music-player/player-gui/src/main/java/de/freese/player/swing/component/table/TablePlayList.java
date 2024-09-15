@@ -28,7 +28,18 @@ public final class TablePlayList extends AbstractTableModel implements PlayList 
     public TablePlayList() {
         super();
 
-        columnNames = List.of("URL", "BitRate", "Channels", "Duration", "Format", "SamplingRate", "Artist", "Album", "Title", "PlayCount");
+        columnNames = List.of(
+                "Artist",
+                "Album",
+                "Title",
+                "Duration",
+                "SamplingRate",
+                "BitRate",
+                "Channels",
+                "Format",
+                "Disc",
+                "Track",
+                "PlayCount");
     }
 
     @Override
@@ -99,16 +110,17 @@ public final class TablePlayList extends AbstractTableModel implements PlayList 
         final AudioSource audioSource = getAudioSource(rowIndex);
 
         return switch (columnIndex) {
-            case 0 -> audioSource.getUri();
-            case 1 -> audioSource.getBitRate();
-            case 2 -> audioSource.getChannels();
+            case 0 -> audioSource.getArtist();
+            case 1 -> audioSource.getAlbum();
+            case 2 -> audioSource.getTitle();
             case 3 -> audioSource.getDuration();
-            case 4 -> audioSource.getFormat();
-            case 5 -> audioSource.getSamplingRate();
-            case 6 -> audioSource.getArtist();
-            case 7 -> audioSource.getAlbum();
-            case 8 -> audioSource.getTitle();
-            case 9 -> audioSource.getPlayCount();
+            case 4 -> audioSource.getSamplingRate();
+            case 5 -> audioSource.getBitRate();
+            case 6 -> audioSource.getChannels();
+            case 7 -> audioSource.getFormat();
+            case 8 -> audioSource.getDisc();
+            case 9 -> audioSource.getTrack();
+            case 10 -> audioSource.getPlayCount();
             default -> throw new UnsupportedOperationException("Unsupported columnIndex:" + columnIndex);
         };
     }

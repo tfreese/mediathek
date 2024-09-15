@@ -16,6 +16,14 @@ import de.freese.player.input.AudioSource;
  */
 class TestFFprobe {
     @Test
+    void testMetaData() throws Exception {
+        final Path path = Path.of("/mnt/mediathek/musik/100% Rock/100% Rock 1/Bachman-Turner Overdrive (100% Rock 1) - 2 - 04 - You Ain't Seen Nothing Yet.mp3");
+        final AudioSource audioSource = FFLocator.createFFprobe().getMetaData(path.toUri());
+
+        assertNotNull(audioSource);
+    }
+
+    @Test
     void testMetaDataAif() throws Exception {
         final AudioSource audioSource = FFLocator.createFFprobe().getMetaData(Path.of("..", "samples", "sample.aif").toUri());
 

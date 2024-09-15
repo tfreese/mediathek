@@ -227,7 +227,7 @@ public final class PlayerView {
         tablePlayList.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tablePlayList.setDefaultRenderer(Object.class, new PlayListCellRenderer());
         tablePlayList.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-        tablePlayList.getColumnModel().getColumn(0).setMinWidth(350);
+        // tablePlayList.getColumnModel().getColumn(0).setMinWidth(350);
 
         final JScrollPane scrollPanePlayList = new JScrollPane();
         scrollPanePlayList.setViewportView(tablePlayList);

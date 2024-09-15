@@ -32,7 +32,7 @@ public interface AudioSource {
      */
     int getChannels();
 
-    int getDisc();
+    String getDisc();
 
     Duration getDuration();
 
@@ -60,7 +60,7 @@ public interface AudioSource {
 
     Path getTmpFile();
 
-    int getTrack();
+    String getTrack();
 
     // /**
     //  * If 256 no volume change will be performed.
