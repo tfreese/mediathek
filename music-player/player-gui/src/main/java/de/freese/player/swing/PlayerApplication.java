@@ -122,14 +122,14 @@ public final class PlayerApplication {
         final SwingWorker<Void, AudioSource> swingWorker = new SwingWorker<>() {
             @Override
             protected Void doInBackground() {
-                ApplicationContext.getLibraryRepository().load(this::publish);
+                ApplicationContext.getRepository().loadSongs(this::publish);
 
                 return null;
             }
 
             @Override
             protected void process(final List<AudioSource> chunks) {
-                ApplicationContext.getPlayList().addAudioSources(chunks);
+                ApplicationContext.getSongCollection().addAudioSources(chunks);
             }
         };
         ApplicationContext.getExecutorService().execute(swingWorker);

@@ -1,4 +1,4 @@
-CREATE TABLE library
+CREATE TABLE song
 (
 	uri    	        VARCHAR (400) NOT NULL PRIMARY KEY,
 	bit_rate		SMALLINT NOT NULL,
@@ -17,3 +17,15 @@ CREATE TABLE library
 	play_count      TINYINT DEFAULT 0,
 	meta_data	    VARCHAR(4000) NOT NULL
 );
+
+CREATE TABLE playlist
+(
+    name            VARCHAR(100) NOT NULL PRIMARY KEY,
+    where_clause    VARCHAR(4000)
+);
+
+CREATE TABLE config
+(
+    name     VARCHAR(100) NOT NULL PRIMARY KEY,
+    content  VARCHAR(200)
+)

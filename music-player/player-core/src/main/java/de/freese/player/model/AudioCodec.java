@@ -43,6 +43,7 @@ public enum AudioCodec {
     public static Set<String> getSupportedFileExtensions() {
         return Arrays.stream(values()).map(AudioCodec::getFileExtension).collect(Collectors.toSet());
     }
+    
     private final String fileExtension;
 
     AudioCodec(final String fileExtension) {

@@ -19,11 +19,10 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.freese.player.library.LibraryRepository;
 import de.freese.player.player.DefaultDspPlayer;
 import de.freese.player.player.DspPlayer;
-import de.freese.player.player.PlayList;
-import de.freese.player.swing.component.table.TablePlayList;
+import de.freese.player.player.SongCollection;
+import de.freese.player.swing.component.table.TableModelSongCollection;
 
 /**
  * @author Thomas Freese
@@ -33,9 +32,9 @@ public final class ApplicationContext {
 
     private static DataSource dataSource;
     private static ExecutorService executorService;
-    private static LibraryRepository libraryRepository;
-    private static PlayList playList;
     private static DspPlayer player;
+    private static MusicPlayerRepository repository;
+    private static SongCollection songCollection;
     private static Path tempDir;
     private static Path workingDir;
 
@@ -43,16 +42,16 @@ public final class ApplicationContext {
         return executorService;
     }
 
-    public static LibraryRepository getLibraryRepository() {
-        return libraryRepository;
-    }
-
-    public static PlayList getPlayList() {
-        return playList;
-    }
-
     public static DspPlayer getPlayer() {
         return player;
+    }
+
+    public static MusicPlayerRepository getRepository() {
+        return repository;
+    }
+
+    public static SongCollection getSongCollection() {
+        return songCollection;
     }
 
     public static Path getWorkingDir() {
@@ -60,8 +59,8 @@ public final class ApplicationContext {
     }
 
     public static void start() {
-        tempDir = Path.of(System.getProperty("java.io.tmpdir"), ".musicPlayer");
-        workingDir = Path.of(System.getProperty("user.home"), ".musicPlayer");
+        tempDir = Path.of(System.getProperty("java.io.tmpdir"), ".music-player");
+        workingDir = Path.of(System.getProperty("user.home"), ".music-player");
 
         if (!Files.exists(tempDir)) {
             try {
@@ -103,9 +102,9 @@ public final class ApplicationContext {
                 resultSet.next();
             }
 
-            LibraryRepository.createTableIfNotExist(dataSource);
+            MusicPlayerRepository.createDatabaseIfNotExist(dataSource);
 
-            libraryRepository = new LibraryRepository(dataSource);
+            repository = new MusicPlayerRepository(dataSource);
         }
         catch (Exception ex) {
             LOGGER.error(ex.getMessage(), ex);
@@ -120,7 +119,7 @@ public final class ApplicationContext {
             }
         }
 
-        playList = new TablePlayList();
+        songCollection = new TableModelSongCollection();
         player = new DefaultDspPlayer(executorService, tempDir);
     }
 

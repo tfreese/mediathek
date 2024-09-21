@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.nio.file.Path;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -116,6 +119,36 @@ public final class PlayerUtils {
         fileName = fileName.replace(";", "\\;");
 
         return fileName;
+    }
+
+    public static String toString(final Duration duration) {
+        final long days = duration.toDaysPart();
+        final int hours = duration.toHoursPart();
+        final int minutes = duration.toMinutesPart();
+        final int seconds = duration.toSecondsPart();
+        final int millies = duration.toMillisPart();
+
+        if (days != 0) {
+            return "%02d Days %02d:%02d.%03d".formatted(days, hours, minutes, seconds, millies);
+        }
+        else if (hours != 0) {
+            return "%d:%02d:%02d.%03d".formatted(hours, minutes, seconds, millies);
+        }
+        else if (minutes != 0) {
+            return "%d:%02d.%03d".formatted(minutes, seconds, millies);
+        }
+
+        return "%d.%03d".formatted(seconds, millies);
+    }
+
+    public static String toStringForTable(final URI uri) {
+        final List<String> splits = new ArrayList<>(List.of(uri.getPath().split("/")));
+
+        while (splits.size() > 3) {
+            splits.removeFirst();
+        }
+
+        return String.join("/", splits);
     }
 
     // private static int[] convertBytesToSamples(final byte[] bytes) {

@@ -25,10 +25,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.freese.player.ApplicationContext;
+import de.freese.player.MusicPlayerRepository;
 import de.freese.player.input.AudioSource;
-import de.freese.player.library.LibraryRepository;
 import de.freese.player.library.LibraryScanner;
-import de.freese.player.player.PlayList;
+import de.freese.player.player.SongCollection;
 import de.freese.player.swing.component.GbcBuilder;
 
 /**
@@ -56,8 +56,11 @@ public final class LibraryView {
         jButtonRemove.addActionListener(event -> removePath());
         panel.add(jButtonRemove, GbcBuilder.of(4, 0).fillNone().anchorEast());
 
-        jList = new JList<>(new DefaultListModel<>());
+        final DefaultListModel<Path> listModel = new DefaultListModel<>();
+        jList = new JList<>(listModel);
         jList.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        listModel.addAll(ApplicationContext.getRepository().getLibraryPaths());
 
         final JScrollPane jScrollPane = new JScrollPane();
         jScrollPane.setViewportView(jList);
@@ -99,8 +102,10 @@ public final class LibraryView {
         }
 
         final File selectedFile = jFileChooser.getSelectedFile();
+        final Path selectedPath = selectedFile.toPath();
 
-        ((DefaultListModel<Path>) jList.getModel()).addElement(selectedFile.toPath());
+        ((DefaultListModel<Path>) jList.getModel()).addElement(selectedPath);
+        ApplicationContext.getRepository().saveLibraryPath(selectedPath);
 
         // final Set<String> supportedAudioFiles = AudioCodec.getSupportedFileExtensions();
         //
@@ -126,7 +131,8 @@ public final class LibraryView {
     private void removePath() {
         final int selectedIndex = jList.getSelectedIndex();
 
-        ((DefaultListModel<Path>) jList.getModel()).remove(selectedIndex);
+        final Path path = ((DefaultListModel<Path>) jList.getModel()).remove(selectedIndex);
+        ApplicationContext.getRepository().deleteLibraryPath(path);
     }
 
     private void scan() {
@@ -136,18 +142,18 @@ public final class LibraryView {
             paths.add(jList.getModel().getElementAt(i));
         }
 
-        final PlayList playList = ApplicationContext.getPlayList();
+        final SongCollection songCollection = ApplicationContext.getSongCollection();
 
-        playList.clear();
+        songCollection.clear();
 
         final SwingWorker<Void, AudioSource> swingWorker = new SwingWorker<>() {
             @Override
             protected Void doInBackground() {
-                final LibraryRepository libraryRepository = ApplicationContext.getLibraryRepository();
+                final MusicPlayerRepository repository = ApplicationContext.getRepository();
                 final LibraryScanner libraryScanner = new LibraryScanner();
 
                 libraryScanner.scan(paths, audioSource -> {
-                    libraryRepository.saveOrUpdate(audioSource);
+                    repository.saveOrUpdateSong(audioSource);
 
                     // try {
                     //     TimeUnit.SECONDS.sleep(1);
@@ -168,19 +174,19 @@ public final class LibraryView {
                 try {
                     get();
 
-                    playList.clear();
+                    songCollection.clear();
 
                     final SwingWorker<Void, AudioSource> swingWorker = new SwingWorker<>() {
                         @Override
                         protected Void doInBackground() {
-                            ApplicationContext.getLibraryRepository().load(this::publish);
+                            ApplicationContext.getRepository().loadSongs(this::publish);
 
                             return null;
                         }
 
                         @Override
                         protected void process(final List<AudioSource> chunks) {
-                            ApplicationContext.getPlayList().addAudioSources(chunks);
+                            songCollection.addAudioSources(chunks);
                         }
                     };
                     ApplicationContext.getExecutorService().execute(swingWorker);
@@ -192,7 +198,7 @@ public final class LibraryView {
 
             @Override
             protected void process(final List<AudioSource> chunks) {
-                playList.addAudioSources(chunks);
+                songCollection.addAudioSources(chunks);
             }
         };
         ApplicationContext.getExecutorService().execute(swingWorker);

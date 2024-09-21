@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -21,10 +22,12 @@ import javax.swing.table.TableModel;
 
 import de.freese.player.ApplicationContext;
 import de.freese.player.player.DspPlayer;
-import de.freese.player.player.PlayList;
+import de.freese.player.player.SongCollection;
 import de.freese.player.spectrum.SpectrumDspProcessor;
 import de.freese.player.swing.component.spectrum.SpectrumView;
 import de.freese.player.swing.component.table.PlayListCellRenderer;
+import de.freese.player.swing.component.table.TableModelSongCollection;
+import de.freese.player.util.PlayerUtils;
 import de.freese.player.utils.image.ImageFactory;
 
 /**
@@ -38,6 +41,7 @@ public final class PlayerView {
     private static final Icon ICON_PLAY = ImageFactory.getIcon("images/media-play-white.svg");
     private static final Icon ICON_STOP = ImageFactory.getIcon("images/media-stop-white.svg");
 
+    private final JLabel labelSongsTotal = new JLabel();
     private final JPanel panel;
 
     private JButton buttonBackward;
@@ -45,7 +49,7 @@ public final class PlayerView {
     private JToggleButton buttonPlayPause;
     private JButton buttonStop;
     private SpectrumView spectrumView;
-    private JTable tablePlayList;
+    private JTable tableSongSollection;
 
     public PlayerView() {
         super();
@@ -75,11 +79,13 @@ public final class PlayerView {
         panel.add(buttonForward, GbcBuilder.of(3, 1).insets(0, 0, 0, 0));
         panel.add(spectrumView.getComponent(), GbcBuilder.of(4, 1).gridwidth(2).fillHorizontal().insets(0, 0, 0, 5));
 
+        panel.add(labelSongsTotal, GbcBuilder.of(0, 2).anchorCenter().gridwidth(4).insets(5, 0, 0, 0));
+
         initListener();
     }
 
     private void initListener() {
-        final PlayList playList = ApplicationContext.getPlayList();
+        final SongCollection songCollection = ApplicationContext.getSongCollection();
         final DspPlayer player = ApplicationContext.getPlayer();
 
         player.addSongFinishedListener(audioSource ->
@@ -87,14 +93,14 @@ public final class PlayerView {
                     buttonPlayPause.setSelected(false);
                     buttonPlayPause.setIcon(ICON_PLAY);
 
-                    if (playList.hasNext()) {
-                        player.setAudioSource(playList.next());
+                    if (songCollection.hasNext()) {
+                        player.setAudioSource(songCollection.next());
 
                         player.play();
                         buttonPlayPause.setSelected(true);
                         buttonPlayPause.setIcon(ICON_PAUSE);
 
-                        tablePlayList.getSelectionModel().setSelectionInterval(playList.getCurrentIndex(), playList.getCurrentIndex());
+                        tableSongSollection.getSelectionModel().setSelectionInterval(songCollection.getCurrentIndex(), songCollection.getCurrentIndex());
                     }
                 })
         );
@@ -104,9 +110,9 @@ public final class PlayerView {
                 buttonPlayPause.setIcon(ICON_PAUSE);
 
                 if (!player.isPlaying()) {
-                    player.setAudioSource(playList.getCurrentAudioSource());
+                    player.setAudioSource(songCollection.getCurrentAudioSource());
                     player.play();
-                    tablePlayList.getSelectionModel().setSelectionInterval(playList.getCurrentIndex(), playList.getCurrentIndex());
+                    tableSongSollection.getSelectionModel().setSelectionInterval(songCollection.getCurrentIndex(), songCollection.getCurrentIndex());
                 }
                 else {
                     player.resume();
@@ -130,42 +136,42 @@ public final class PlayerView {
         });
 
         buttonBackward.addActionListener(event -> {
-            if (playList.hasPrevious()) {
+            if (songCollection.hasPrevious()) {
                 if (player.isPlaying()) {
                     player.stop();
                     buttonPlayPause.setSelected(false);
                     buttonPlayPause.setIcon(ICON_PLAY);
                 }
 
-                player.setAudioSource(playList.previous());
+                player.setAudioSource(songCollection.previous());
 
                 player.play();
                 buttonPlayPause.setSelected(true);
                 buttonPlayPause.setIcon(ICON_PAUSE);
 
-                tablePlayList.getSelectionModel().setSelectionInterval(playList.getCurrentIndex(), playList.getCurrentIndex());
+                tableSongSollection.getSelectionModel().setSelectionInterval(songCollection.getCurrentIndex(), songCollection.getCurrentIndex());
             }
         });
 
         buttonForward.addActionListener(event -> {
-            if (playList.hasNext()) {
+            if (songCollection.hasNext()) {
                 if (player.isPlaying()) {
                     player.stop();
                     buttonPlayPause.setSelected(false);
                     buttonPlayPause.setIcon(ICON_PLAY);
                 }
 
-                player.setAudioSource(playList.next());
+                player.setAudioSource(songCollection.next());
 
                 player.play();
                 buttonPlayPause.setSelected(true);
                 buttonPlayPause.setIcon(ICON_PAUSE);
 
-                tablePlayList.getSelectionModel().setSelectionInterval(playList.getCurrentIndex(), playList.getCurrentIndex());
+                tableSongSollection.getSelectionModel().setSelectionInterval(songCollection.getCurrentIndex(), songCollection.getCurrentIndex());
             }
         });
 
-        tablePlayList.addMouseListener(new MouseAdapter() {
+        tableSongSollection.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(final MouseEvent event) {
                 if (event.getClickCount() != 2) {
@@ -173,15 +179,15 @@ public final class PlayerView {
                 }
 
                 final Point point = event.getPoint();
-                final int row = tablePlayList.rowAtPoint(point);
-                final int selectedRow = tablePlayList.convertRowIndexToModel(row);
+                final int row = tableSongSollection.rowAtPoint(point);
+                final int selectedRow = tableSongSollection.convertRowIndexToModel(row);
 
                 player.stop();
                 buttonPlayPause.setSelected(false);
                 buttonPlayPause.setIcon(ICON_PLAY);
 
-                playList.setCurrentIndex(selectedRow);
-                player.setAudioSource(playList.getCurrentAudioSource());
+                songCollection.setCurrentIndex(selectedRow);
+                player.setAudioSource(songCollection.getCurrentAudioSource());
 
                 player.play();
                 buttonPlayPause.setSelected(true);
@@ -193,19 +199,15 @@ public final class PlayerView {
     private void initPlayerControl() {
         buttonPlayPause = new JToggleButton(ICON_PLAY);
         buttonPlayPause.setFocusable(false);
-        // buttonPlayPause.setFocusPainted(true);
 
         buttonStop = new JButton(ICON_STOP);
         buttonStop.setFocusable(false);
-        // buttonStop.setFocusPainted(false);
 
         buttonForward = new JButton(ImageFactory.getIcon("images/media-forward-white.svg"));
         buttonForward.setFocusable(false);
-        // buttonForward.setFocusPainted(false);
 
         buttonBackward = new JButton(ImageFactory.getIcon("images/media-backward-white.svg"));
         buttonBackward.setFocusable(false);
-        // buttonBackward.setFocusPainted(false);
     }
 
     private void initSpectrum() {
@@ -219,13 +221,15 @@ public final class PlayerView {
     }
 
     private JScrollPane initTablePlayList() {
-        final PlayList playList = ApplicationContext.getPlayList();
+        final SongCollection songCollection = ApplicationContext.getSongCollection();
 
-        if (!(playList instanceof TableModel)) {
-            throw new IllegalArgumentException("PlayList must be instanceof TableModel");
+        if (!(songCollection instanceof TableModel)) {
+            throw new IllegalArgumentException("SongCollection must be instanceof TableModel");
         }
 
-        tablePlayList = new JTable((TableModel) playList) {
+        final TableModelSongCollection tableModelSongCollection = (TableModelSongCollection) songCollection;
+
+        tableSongSollection = new JTable(tableModelSongCollection) {
             @Override
             public void tableChanged(final TableModelEvent event) {
                 super.tableChanged(event);
@@ -235,15 +239,21 @@ public final class PlayerView {
                 }
             }
         };
-        tablePlayList.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tablePlayList.setDefaultRenderer(Object.class, new PlayListCellRenderer());
-        tablePlayList.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-        // tablePlayList.getColumnModel().getColumn(0).setMinWidth(350);
+        tableSongSollection.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tableSongSollection.setDefaultRenderer(Object.class, new PlayListCellRenderer());
+        tableSongSollection.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+        tableSongSollection.getColumnModel().getColumn(0).setMinWidth(250);
 
-        tablePlayList.getTableHeader().setReorderingAllowed(false);
+        tableSongSollection.getTableHeader().setReorderingAllowed(false);
+
+        tableModelSongCollection.addTableModelListener(event -> {
+            final String duration = PlayerUtils.toString(songCollection.getDurationTotal());
+
+            labelSongsTotal.setText("%d Songs, %s".formatted(songCollection.size(), duration));
+        });
 
         final JScrollPane scrollPanePlayList = new JScrollPane();
-        scrollPanePlayList.setViewportView(tablePlayList);
+        scrollPanePlayList.setViewportView(tableSongSollection);
 
         return scrollPanePlayList;
     }

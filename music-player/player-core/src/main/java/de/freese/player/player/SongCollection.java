@@ -10,10 +10,10 @@ import de.freese.player.input.AudioSource;
 /**
  * @author Thomas Freese
  */
-public interface PlayList {
-    PlayList addAudioSource(AudioSource audioSource);
+public interface SongCollection {
+    SongCollection addAudioSource(AudioSource audioSource);
 
-    PlayList addAudioSources(Collection<AudioSource> audioSources);
+    SongCollection addAudioSources(Collection<AudioSource> audioSources);
 
     void clear();
 

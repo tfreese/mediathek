@@ -12,12 +12,13 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
 
 import de.freese.player.input.AudioSource;
-import de.freese.player.player.PlayList;
+import de.freese.player.player.SongCollection;
+import de.freese.player.util.PlayerUtils;
 
 /**
  * @author Thomas Freese
  */
-public final class TablePlayList extends AbstractTableModel implements PlayList {
+public final class TableModelSongCollection extends AbstractTableModel implements SongCollection {
     @Serial
     private static final long serialVersionUID = -2452262087762037947L;
 
@@ -25,8 +26,9 @@ public final class TablePlayList extends AbstractTableModel implements PlayList 
     private final transient List<String> columnNames;
 
     private int currentIndex;
+    private Duration durationTotal = Duration.ZERO;
 
-    public TablePlayList() {
+    public TableModelSongCollection() {
         super();
 
         columnNames = List.of(
@@ -44,8 +46,10 @@ public final class TablePlayList extends AbstractTableModel implements PlayList 
     }
 
     @Override
-    public PlayList addAudioSource(final AudioSource audioSource) {
+    public SongCollection addAudioSource(final AudioSource audioSource) {
         audioSources.add(audioSource);
+
+        durationTotal = durationTotal.plus(audioSource.getDuration());
 
         if (SwingUtilities.isEventDispatchThread()) {
             fireTableRowsInserted(getRowCount(), getRowCount());
@@ -58,10 +62,14 @@ public final class TablePlayList extends AbstractTableModel implements PlayList 
     }
 
     @Override
-    public PlayList addAudioSources(final Collection<AudioSource> audioSources) {
+    public SongCollection addAudioSources(final Collection<AudioSource> audioSources) {
         final int firstRow = getRowCount();
 
         this.audioSources.addAll(audioSources);
+
+        audioSources.forEach(as ->
+                durationTotal = durationTotal.plus(as.getDuration())
+        );
 
         if (SwingUtilities.isEventDispatchThread()) {
             fireTableRowsInserted(firstRow, getRowCount());
@@ -77,6 +85,7 @@ public final class TablePlayList extends AbstractTableModel implements PlayList 
     public void clear() {
         audioSources.clear();
         currentIndex = 0;
+        durationTotal = Duration.ZERO;
 
         fireTableDataChanged();
     }
@@ -103,7 +112,7 @@ public final class TablePlayList extends AbstractTableModel implements PlayList 
 
     @Override
     public Duration getDurationTotal() {
-        return null;
+        return durationTotal;
     }
 
     @Override
@@ -116,7 +125,7 @@ public final class TablePlayList extends AbstractTableModel implements PlayList 
         final AudioSource audioSource = getAudioSource(rowIndex);
 
         return switch (columnIndex) {
-            case 0 -> audioSource.getArtist() == null ? audioSource.getUri().getPath() : audioSource.getArtist();
+            case 0 -> audioSource.getArtist() == null ? PlayerUtils.toStringForTable(audioSource.getUri()) : audioSource.getArtist();
             case 1 -> audioSource.getAlbum();
             case 2 -> audioSource.getTitle();
             case 3 -> audioSource.getDuration();

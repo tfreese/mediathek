@@ -1,5 +1,5 @@
 // Created: 08 Sept. 2024
-package de.freese.player.library;
+package de.freese.player;
 
 import java.net.URI;
 import java.net.URL;
@@ -13,6 +13,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -30,11 +32,11 @@ import de.freese.player.input.DefaultAudioSource;
 /**
  * @author Thomas Freese
  */
-public final class LibraryRepository {
-    private static final Logger LOGGER = LoggerFactory.getLogger(LibraryRepository.class);
+public final class MusicPlayerRepository {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MusicPlayerRepository.class);
 
-    public static void createTableIfNotExist(final DataSource dataSource) throws Exception {
-        final String tableName = "LIBRARY";
+    public static void createDatabaseIfNotExist(final DataSource dataSource) throws Exception {
+        final String tableName = "SONG";
 
         try (Connection connection = dataSource.getConnection()) {
             final DatabaseMetaData metaData = connection.getMetaData();
@@ -49,7 +51,7 @@ public final class LibraryRepository {
             if (!tableExist) {
                 LOGGER.info("Create table: {}", tableName);
 
-                final URL url = Thread.currentThread().getContextClassLoader().getResource("library.sql");
+                final URL url = Thread.currentThread().getContextClassLoader().getResource("music-player.sql");
                 assert url != null;
 
                 try (Stream<String> stream = Files.lines(Path.of(url.toURI()), StandardCharsets.UTF_8);
@@ -63,20 +65,73 @@ public final class LibraryRepository {
 
     private final DataSource dataSource;
 
-    public LibraryRepository(final DataSource dataSource) {
+    public MusicPlayerRepository(final DataSource dataSource) {
         super();
 
         this.dataSource = Objects.requireNonNull(dataSource, "dataSource required");
     }
 
-    public void delete(final URI uri) {
-        // TODO
-        // audioSources = audioSources.stream().filter(as -> !as.getUri().equals(uri)).collect(Collectors.toList());
+    public void deleteLibraryPath(final Path path) {
+        final String sql = """
+                delete from config
+                where
+                    content = ?
+                """;
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, path.toUri().toString());
+            preparedStatement.executeUpdate();
+        }
+        catch (SQLException ex) {
+            throw new PlayerException(ex);
+        }
     }
 
-    public void load(final Consumer<AudioSource> consumer) {
+    public void deleteSong(final URI uri) {
         final String sql = """
-                select * from library
+                delete from song
+                where uri = ?
+                """;
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, uri.toString());
+
+            preparedStatement.execute();
+        }
+        catch (SQLException ex) {
+            throw new PlayerException(ex);
+        }
+    }
+
+    public List<Path> getLibraryPaths() {
+        final String sql = """
+                select content from config
+                where
+                    name like 'library_path_%'
+                """;
+
+        final List<Path> uris = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+            while (resultSet.next()) {
+                final URI uri = URI.create(resultSet.getString("content"));
+                uris.add(Path.of(uri));
+            }
+        }
+        catch (SQLException ex) {
+            throw new PlayerException(ex);
+        }
+
+        return uris;
+    }
+
+    public void loadSongs(final Consumer<AudioSource> consumer) {
+        final String sql = """
+                select * from song
                 order by play_count desc, artist asc
                 """;
 
@@ -110,11 +165,48 @@ public final class LibraryRepository {
         }
     }
 
-    public void saveOrUpdate(final AudioSource audioSource) {
+    public void saveLibraryPath(final Path path) {
+        String sql = """
+                select count(*) from config
+                where
+                    name like 'library_path_%'
+                """;
+
+        final int pathCount;
+
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+            resultSet.next();
+            pathCount = resultSet.getInt(1);
+        }
+        catch (SQLException ex) {
+            throw new PlayerException(ex);
+        }
+
+        sql = """
+                insert into config
+                (name, content)
+                values (?, ?)
+                """;
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, "library_path_" + (pathCount + 1));
+            preparedStatement.setString(2, path.toUri().toString());
+
+            preparedStatement.execute();
+        }
+        catch (SQLException ex) {
+            throw new PlayerException(ex);
+        }
+    }
+
+    public void saveOrUpdateSong(final AudioSource audioSource) {
         LOGGER.debug("saveOrUpdate audioSource: {}", audioSource);
 
         final String sql = """
-                merge into library
+                merge into song
                 (
                 uri, bit_rate, channels, duration,
                 format, sampling_rate, artist, album,
@@ -156,7 +248,7 @@ public final class LibraryRepository {
         }
     }
 
-    public void update(final URI uri, final int playCount) {
+    public void updateSong(final URI uri, final int playCount) {
         // TODO
     }
 }

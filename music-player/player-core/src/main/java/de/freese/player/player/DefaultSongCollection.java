@@ -15,29 +15,32 @@ import de.freese.player.input.AudioSourceFactory;
 /**
  * @author Thomas Freese
  */
-public final class DefaultPlayList implements PlayList {
+public final class DefaultSongCollection implements SongCollection {
     private final List<AudioSource> audioSources = new ArrayList<>(1024);
 
     private int currentIndex;
+    private Duration durationTotal = Duration.ZERO;
 
-    public DefaultPlayList addAudioSource(final URI uri) throws Exception {
+    public DefaultSongCollection addAudioSource(final URI uri) throws Exception {
         return addAudioSource(AudioSourceFactory.createAudioSource(uri));
     }
 
-    public DefaultPlayList addAudioSource(final Path path) throws Exception {
+    public DefaultSongCollection addAudioSource(final Path path) throws Exception {
         return addAudioSource(AudioSourceFactory.createAudioSource(path));
     }
 
     @Override
-    public DefaultPlayList addAudioSource(final AudioSource audioSource) {
+    public DefaultSongCollection addAudioSource(final AudioSource audioSource) {
         audioSources.add(audioSource);
+
+        durationTotal = durationTotal.plus(audioSource.getDuration());
 
         return this;
     }
 
     @Override
-    public PlayList addAudioSources(final Collection<AudioSource> audioSources) {
-        this.audioSources.addAll(audioSources);
+    public SongCollection addAudioSources(final Collection<AudioSource> audioSources) {
+        audioSources.forEach(this::addAudioSource);
 
         return this;
     }
@@ -46,6 +49,7 @@ public final class DefaultPlayList implements PlayList {
     public void clear() {
         audioSources.clear();
         currentIndex = 0;
+        durationTotal = Duration.ZERO;
     }
 
     @Override
@@ -60,7 +64,7 @@ public final class DefaultPlayList implements PlayList {
 
     @Override
     public Duration getDurationTotal() {
-        return null;
+        return durationTotal;
     }
 
     @Override
