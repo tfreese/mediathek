@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -93,6 +96,13 @@ public final class ApplicationContext {
         dataSource = new HikariDataSource(hikariConfig);
 
         try {
+            // Check
+            try (Connection connection = dataSource.getConnection();
+                 Statement statement = connection.createStatement();
+                 ResultSet resultSet = statement.executeQuery("select 1")) {
+                resultSet.next();
+            }
+
             LibraryRepository.createTableIfNotExist(dataSource);
 
             libraryRepository = new LibraryRepository(dataSource);

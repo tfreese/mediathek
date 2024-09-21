@@ -8,11 +8,12 @@ import java.util.List;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.SwingWorker;
-import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
@@ -46,11 +47,47 @@ public final class PlayerApplication {
     public static void init() throws Exception {
         LOGGER.info("initialize application");
 
-        // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
-        final UIDefaults defaults = UIManager.getLookAndFeelDefaults();
-        // defaults.get("Table.alternateRowColor");
-        defaults.putIfAbsent("Table.alternateRowColor", Color.LIGHT_GRAY);
+        // final UIDefaults defaults = UIManager.getLookAndFeelDefaults();
+
+        final Color defaultBackground = new Color(55, 55, 55);
+        // final Color defaultForeground = new Color(235, 235, 235);
+
+        UIManager.put("FileChooser.useSystemIcons", Boolean.TRUE);
+
+        // UIManager.put("Button.background", defaultBackground);
+        // UIManager.put("Button.foreground", defaultForeground);
+        // UIManager.put("ToggleButton.background", defaultBackground);
+        // UIManager.put("ToggleButton.foreground", defaultForeground);
+        //
+        // UIManager.put("Label.foreground", defaultForeground);
+        // UIManager.put("List.background", defaultBackground);
+        // UIManager.put("List.foreground", defaultForeground);
+        //
+        // UIManager.put("MenuBar.background", defaultBackground);
+        // UIManager.put("Menu.background", defaultBackground);
+        // UIManager.put("Menu.foreground", defaultForeground);
+        // UIManager.put("MenuItem.background", defaultBackground);
+        // UIManager.put("MenuItem.foreground", defaultForeground);
+        //
+        // UIManager.put("Panel.background", defaultBackground);
+        //
+        // UIManager.put("ScrollBar.background", defaultBackground);
+        // // UIManager.put("ScrollBar.thumb", new ColorUIResource(defaultBackground));
+        // UIManager.put("ScrollPane.background", defaultBackground);
+
+        UIManager.put("Table.alternateRowColor", defaultBackground);
+        // UIManager.put("Table.alternateRowColor", UIManager.getColor("TableHeader.background"));
+        // UIManager.put("Table.background", new ColorUIResource(defaultBackground));
+        // UIManager.put("Table.foreground", defaultForeground);
+        // UIManager.put("TableHeader.background", defaultBackground);
+        // UIManager.put("TableHeader.foreground", defaultForeground);
+
+        // UIManager.put("ToolTip.background", UIManager.getColor("Label.background"));
+        // UIManager.put("ToolTip.foreground", UIManager.getColor("Label.foreground"));
+
+        // UIManager.put("Viewport.background", defaultBackground);
 
         final JFrame jFrame = new JFrame();
         jFrame.setTitle("Music-Player");
@@ -99,8 +136,14 @@ public final class PlayerApplication {
     }
 
     private static void initMenu(final JFrame frame) {
-        final JMenuItem jMenuItemLibrary = new JMenuItem("Edit");
-        jMenuItemLibrary.addActionListener(event -> {
+        final JMenuItem jMenuItemFileExit = new JMenuItem("Exit");
+        jMenuItemFileExit.addActionListener(event -> stop());
+
+        final JMenu jMenuFile = new JMenu("File");
+        jMenuFile.add(jMenuItemFileExit);
+
+        final JMenuItem jMenuItemToolsLibrary = new JMenuItem("Library");
+        jMenuItemToolsLibrary.addActionListener(event -> {
             final JDialog jDialog = new JDialog(getMainFrame(), "Library", true);
             jDialog.setContentPane(new LibraryView().getComponent());
             jDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -109,11 +152,25 @@ public final class PlayerApplication {
             jDialog.setVisible(true);
         });
 
-        final JMenu jMenuLibrary = new JMenu("Library");
-        jMenuLibrary.add(jMenuItemLibrary);
+        final JMenuItem jMenuItemToolsEqualizer = new JMenuItem("Equalizer");
+        jMenuItemToolsEqualizer.addActionListener(event -> {
+            final JDialog jDialog = new JDialog(getMainFrame(), "Equalizer", true);
+            final JPanel jPanel = new JPanel();
+            jPanel.add(new JLabel("TODO"));
+            jDialog.setContentPane(jPanel);
+            jDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            jDialog.setSize(500, 200);
+            jDialog.setLocationRelativeTo(null);
+            jDialog.setVisible(true);
+        });
+
+        final JMenu jMenuTools = new JMenu("Tools");
+        jMenuTools.add(jMenuItemToolsLibrary);
+        jMenuTools.add(jMenuItemToolsEqualizer);
 
         final JMenuBar jMenuBar = new JMenuBar();
-        jMenuBar.add(jMenuLibrary);
+        jMenuBar.add(jMenuFile);
+        jMenuBar.add(jMenuTools);
         frame.setJMenuBar(jMenuBar);
     }
 

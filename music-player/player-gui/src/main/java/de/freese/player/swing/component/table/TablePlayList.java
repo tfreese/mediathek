@@ -2,6 +2,7 @@
 package de.freese.player.swing.component.table;
 
 import java.io.Serial;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -98,6 +99,11 @@ public final class TablePlayList extends AbstractTableModel implements PlayList 
     @Override
     public int getCurrentIndex() {
         return currentIndex;
+    }
+
+    @Override
+    public Duration getDurationTotal() {
+        return null;
     }
 
     @Override

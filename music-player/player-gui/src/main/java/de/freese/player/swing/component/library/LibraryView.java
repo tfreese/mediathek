@@ -47,10 +47,12 @@ public final class LibraryView {
         panel.add(jLabel, GbcBuilder.of(0, 0).gridwidth(3).fillHorizontal().anchorWest());
 
         final JButton jButtonAdd = new JButton("Add");
+        jButtonAdd.setFocusable(false);
         jButtonAdd.addActionListener(event -> addPath());
         panel.add(jButtonAdd, GbcBuilder.of(3, 0).fillNone().anchorEast());
 
         final JButton jButtonRemove = new JButton("Remove");
+        jButtonRemove.setFocusable(false);
         jButtonRemove.addActionListener(event -> removePath());
         panel.add(jButtonRemove, GbcBuilder.of(4, 0).fillNone().anchorEast());
 
@@ -63,6 +65,7 @@ public final class LibraryView {
         panel.add(jScrollPane, GbcBuilder.of(0, 1).gridwidth(5).fillBoth());
 
         final JButton jButtonScan = new JButton("Scan");
+        jButtonScan.setFocusable(false);
         jButtonScan.addActionListener(event -> scan());
         panel.add(jButtonScan, GbcBuilder.of(0, 2).gridwidth(5).anchorCenter());
     }

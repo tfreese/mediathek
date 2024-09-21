@@ -1,6 +1,7 @@
 // Created: 08 Sept. 2024
 package de.freese.player.player;
 
+import java.time.Duration;
 import java.util.Collection;
 import java.util.stream.Stream;
 
@@ -23,6 +24,8 @@ public interface PlayList {
     }
 
     int getCurrentIndex();
+
+    Duration getDurationTotal();
 
     default boolean hasNext() {
         return getCurrentIndex() < size() - 1;

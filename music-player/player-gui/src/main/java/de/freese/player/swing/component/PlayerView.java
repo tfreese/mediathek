@@ -192,9 +192,20 @@ public final class PlayerView {
 
     private void initPlayerControl() {
         buttonPlayPause = new JToggleButton(ICON_PLAY);
+        buttonPlayPause.setFocusable(false);
+        // buttonPlayPause.setFocusPainted(true);
+
         buttonStop = new JButton(ICON_STOP);
+        buttonStop.setFocusable(false);
+        // buttonStop.setFocusPainted(false);
+
         buttonForward = new JButton(ImageFactory.getIcon("images/media-forward-white.svg"));
+        buttonForward.setFocusable(false);
+        // buttonForward.setFocusPainted(false);
+
         buttonBackward = new JButton(ImageFactory.getIcon("images/media-backward-white.svg"));
+        buttonBackward.setFocusable(false);
+        // buttonBackward.setFocusPainted(false);
     }
 
     private void initSpectrum() {
@@ -228,6 +239,8 @@ public final class PlayerView {
         tablePlayList.setDefaultRenderer(Object.class, new PlayListCellRenderer());
         tablePlayList.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
         // tablePlayList.getColumnModel().getColumn(0).setMinWidth(350);
+
+        tablePlayList.getTableHeader().setReorderingAllowed(false);
 
         final JScrollPane scrollPanePlayList = new JScrollPane();
         scrollPanePlayList.setViewportView(tablePlayList);

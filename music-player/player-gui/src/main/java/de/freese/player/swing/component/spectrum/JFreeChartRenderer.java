@@ -10,6 +10,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.swing.JComponent;
+import javax.swing.UIManager;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -83,6 +84,8 @@ public final class JFreeChartRenderer implements SpectrumRenderer {
 
         // final JFreeChart chart = ChartFactory.createXYLineChart("", "Frequency", "Amplitude", data, PlotOrientation.VERTICAL, false, true, false);
         // final XYPlot plot = (XYPlot) chart.getPlot();
+
+        plot.setBackgroundPaint(UIManager.getColor("Panel.background"));
 
         panel = new ChartPanel(chart);
     }

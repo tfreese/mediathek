@@ -21,7 +21,7 @@ import de.freese.player.model.Window;
 /**
  * @author Thomas Freese
  */
-public class SpectrumDspProcessor implements DspProcessor {
+public final class SpectrumDspProcessor implements DspProcessor {
     private static final Logger LOGGER = LoggerFactory.getLogger(SpectrumDspProcessor.class);
 
     /**
@@ -97,9 +97,10 @@ public class SpectrumDspProcessor implements DspProcessor {
         // FFTMath.normalize(spectrum, frequency.getAmplitude());
 
         maxAmp = Math.max(maxAmp, frequency.getAmplitude());
-        FFTMath.normalize(spectrum, maxAmp);
-
+        // maxAmp = (maxAmp + frequency.getAmplitude()) / 2D;
         LOGGER.trace("maxAmp = {}", maxAmp);
+
+        FFTMath.normalize(spectrum, frequency.getAmplitude());
 
         SwingUtilities.invokeLater(() -> spectrumConsumer.accept(spectrum));
     }

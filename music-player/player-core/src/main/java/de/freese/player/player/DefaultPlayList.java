@@ -3,6 +3,7 @@ package de.freese.player.player;
 
 import java.net.URI;
 import java.nio.file.Path;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -55,6 +56,11 @@ public final class DefaultPlayList implements PlayList {
     @Override
     public int getCurrentIndex() {
         return currentIndex;
+    }
+
+    @Override
+    public Duration getDurationTotal() {
+        return null;
     }
 
     @Override

@@ -30,16 +30,13 @@ public class IIRControls {
      * Values should be between -0.2 and 1.0
      */
     private final float[][] bands;
+
     /**
      * Volume gain.
      * Values should be between 0.0 and 1.0
      */
     private final float[] preamp;
 
-    /**
-     * @param bandsNum is the number of bands
-     * @param channels is the number of channels
-     */
     public IIRControls(final int bandsNum, final int channels) {
         super();
 
@@ -56,112 +53,84 @@ public class IIRControls {
     }
 
     /**
-     * Returns value of control for given band and channel
-     *
-     * @param band is the index of band
-     * @param channel is the index of channel
+     * Returns value of control for given band and channel.
      */
     public float getBandValue(final int band, final int channel) {
         return bands[band][channel];
     }
 
     /**
-     * Returns the maximum value for band control (in Db)
-     *
-     * @return the maximum value for band control
+     * Returns the maximum value for band control (in Db).
      */
     public float getMaximumBandDbValue() {
         return 12F;
     }
 
     /**
-     * Returns the maximum value for band control
-     *
-     * @return the maximum value for band control
+     * Returns the maximum value for band control.
      */
     public float getMaximumBandValue() {
         return 1.0F;
     }
 
     /**
-     * Returns the maximum value for preamp control (in Db)
-     *
-     * @return the maximum value for preamp control
+     * Returns the maximum value for preamp control (in Db).
      */
     public float getMaximumPreampDbValue() {
         return 12F;
     }
 
     /**
-     * Returns the maximum value for preamp control
-     *
-     * @return the maximum value for preamp control
+     * Returns the maximum value for preamp control.
      */
     public float getMaximumPreampValue() {
         return 1.0F;
     }
 
     /**
-     * Returns the minimum value for band control (in Db)
-     *
-     * @return the minimum value for band control
+     * Returns the minimum value for band control (in Db).
      */
     public float getMinimumBandDbValue() {
         return -12F;
     }
 
     /**
-     * Returns the minimum value for band control
-     *
-     * @return the minimum value for band control
+     * Returns the minimum value for band control.
      */
     public float getMinimumBandValue() {
         return -0.2F;
     }
 
     /**
-     * Returns the minimum value for preamp control (in Db)
-     *
-     * @return the minimum value for preamp control
+     * Returns the minimum value for preamp control (in Db).
      */
     public float getMinimumPreampDbValue() {
         return -12F;
     }
 
     /**
-     * Returns the minimum value for preamp control
-     *
-     * @return the minimum value for preamp control
+     * Returns the minimum value for preamp control.
      */
     public float getMinimumPreampValue() {
         return 0F;
     }
 
     /**
-     * Returns value of preamp control for given channel
-     *
-     * @param channel is the index of channel
+     * Returns value of preamp control for given channel.
      */
     public float getPreampValue(final int channel) {
         return preamp[channel];
     }
 
     /**
-     * Setter for value of control for given band and channel
-     *
-     * @param band is the index of band
-     * @param channel is the index of channel
-     * @param value is the new value
+     * Setter for value of control for given band and channel.
      */
     public void setBandValue(final int band, final int channel, final float value) {
         bands[band][channel] = value;
     }
 
     /**
-     * Setter for value of preamp control for given channel (in Db)
-     *
-     * @param channel is the index of channel
-     * @param value is the new value
+     * Setter for value of preamp control for given channel (in Db).
      */
     public void setPreampDbValue(final int channel, final float value) {
         // -12dB .. 12dB mapping
@@ -169,39 +138,22 @@ public class IIRControls {
     }
 
     /**
-     * Setter for value of preamp control for given channel
-     *
-     * @param channel is the index of channel
-     * @param value is the new value
+     * Setter for value of preamp control for given channel.
      */
     public void setPreampValue(final int channel, final float value) {
         preamp[channel] = value;
     }
 
-    /**
-     * Returns bands array
-     *
-     * @return bands array
-     */
     float[][] getBands() {
         return bands;
     }
 
-    /**
-     * Returns preamp array
-     *
-     * @return preamp array
-     */
     float[] getPreamp() {
         return preamp;
     }
 
     /**
-     * Setter for value of control for given band and channel (in Db)
-     *
-     * @param band is the index of band
-     * @param channel is the index of channel
-     * @param value is the new value
+     * Setter for value of control for given band and channel (in Db).
      */
     void setBandDbValue(final int band, final int channel, final float value) {
         // Map the gain and preamp values.
