@@ -88,7 +88,6 @@ public class KodiAudioReporter extends AbstractMediaReporter {
     public void writeReport(final DataSource dataSource, final Path path) throws Exception {
         writeMusic(dataSource, path);
 
-        // Playlisten
         // Nur mit expliziter Tabelle möglich: tommy.playlist_music_artist
         // writeMusicPlaylistM3U(dataSource, path.resolve("Musik.m3u"));
         // writeMusicPlaylistXSP(dataSource, path.resolve("Musik.xsp"));
