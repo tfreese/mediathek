@@ -88,21 +88,24 @@ public final class PlayerView {
         final SongCollection songCollection = ApplicationContext.getSongCollection();
         final DspPlayer player = ApplicationContext.getPlayer();
 
-        player.addSongFinishedListener(audioSource ->
-                SwingUtilities.invokeLater(() -> {
-                    buttonPlayPause.setSelected(false);
-                    buttonPlayPause.setIcon(ICON_PLAY);
+        player.addSongFinishedListener(audioSource -> {
+                    ApplicationContext.getRepository().updateSongPlayCount(audioSource.getUri(), audioSource.getPlayCount() + 1);
 
-                    if (songCollection.hasNext()) {
-                        player.setAudioSource(songCollection.next());
+                    SwingUtilities.invokeLater(() -> {
+                        buttonPlayPause.setSelected(false);
+                        buttonPlayPause.setIcon(ICON_PLAY);
 
-                        player.play();
-                        buttonPlayPause.setSelected(true);
-                        buttonPlayPause.setIcon(ICON_PAUSE);
+                        if (songCollection.hasNext()) {
+                            player.setAudioSource(songCollection.next());
 
-                        tableSongSollection.getSelectionModel().setSelectionInterval(songCollection.getCurrentIndex(), songCollection.getCurrentIndex());
-                    }
-                })
+                            player.play();
+                            buttonPlayPause.setSelected(true);
+                            buttonPlayPause.setIcon(ICON_PAUSE);
+
+                            tableSongSollection.getSelectionModel().setSelectionInterval(songCollection.getCurrentIndex(), songCollection.getCurrentIndex());
+                        }
+                    });
+                }
         );
 
         buttonPlayPause.addActionListener(event -> {

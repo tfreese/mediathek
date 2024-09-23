@@ -19,6 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingWorker;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
 import javax.swing.filechooser.FileFilter;
 
 import org.slf4j.Logger;
@@ -54,14 +56,13 @@ public final class LibraryView {
 
         final JButton jButtonRemove = new JButton("Remove");
         jButtonRemove.setFocusable(false);
+        jButtonRemove.setEnabled(false);
         jButtonRemove.addActionListener(event -> removePath());
         panel.add(jButtonRemove, GbcBuilder.of(4, 0).fillNone().anchorEast());
 
         final DefaultListModel<Path> listModel = new DefaultListModel<>();
         jList = new JList<>(listModel);
         jList.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-        listModel.addAll(ApplicationContext.getRepository().getLibraryPaths());
 
         final JScrollPane jScrollPane = new JScrollPane();
         jScrollPane.setViewportView(jList);
@@ -70,8 +71,28 @@ public final class LibraryView {
 
         final JButton jButtonScan = new JButton("Scan");
         jButtonScan.setFocusable(false);
+        jButtonScan.setEnabled(false);
         jButtonScan.addActionListener(event -> scan());
         panel.add(jButtonScan, GbcBuilder.of(0, 2).gridwidth(5).anchorCenter());
+
+        jList.addListSelectionListener(event -> jButtonRemove.setEnabled(jList.getSelectedValue() != null));
+        listModel.addListDataListener(new ListDataListener() {
+            @Override
+            public void contentsChanged(final ListDataEvent e) {
+                jButtonScan.setEnabled(listModel.getSize() > 0);
+            }
+
+            @Override
+            public void intervalAdded(final ListDataEvent e) {
+                contentsChanged(null);
+            }
+
+            @Override
+            public void intervalRemoved(final ListDataEvent e) {
+                contentsChanged(null);
+            }
+        });
+        listModel.addAll(ApplicationContext.getRepository().getLibraryPaths());
     }
 
     public JComponent getComponent() {
@@ -130,13 +151,20 @@ public final class LibraryView {
     }
 
     private void removePath() {
-        final int selectedIndex = jList.getSelectedIndex();
+        final Path path = jList.getSelectedValue();
 
-        final Path path = ((DefaultListModel<Path>) jList.getModel()).remove(selectedIndex);
+        if (path == null) {
+            return;
+        }
+
         ApplicationContext.getRepository().deleteLibraryPath(path);
     }
 
     private void scan() {
+        if (jList.getModel().getSize() == 0) {
+            return;
+        }
+
         final Set<Path> paths = new HashSet<>();
 
         for (int i = 0; i < jList.getModel().getSize(); i++) {
@@ -182,7 +210,7 @@ public final class LibraryView {
                     final SwingWorker<Void, AudioSource> swingWorker = new SwingWorker<>() {
                         @Override
                         protected Void doInBackground() {
-                            ApplicationContext.getRepository().loadSongs(currentPlayList, this::publish);
+                            ApplicationContext.getRepository().getSongs(currentPlayList, this::publish);
 
                             return null;
                         }

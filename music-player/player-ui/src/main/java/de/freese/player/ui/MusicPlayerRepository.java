@@ -119,6 +119,24 @@ public final class MusicPlayerRepository {
         deleteSongs(urisExisting);
     }
 
+    public void deletePlayList(final String name) {
+        final String sql = """
+                delete from playlist
+                where
+                    name = ?
+                """;
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, name);
+
+            preparedStatement.executeUpdate();
+        }
+        catch (SQLException ex) {
+            throw new PlayerException(ex);
+        }
+    }
+
     public void deleteSong(final URI uri) {
         if (uri == null) {
             return;
@@ -178,30 +196,66 @@ public final class MusicPlayerRepository {
                     name like 'library_path_%'
                 """;
 
-        final List<Path> uris = new ArrayList<>();
+        final List<Path> result = new ArrayList<>();
 
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
                 final URI uri = URI.create(resultSet.getString("content"));
-                uris.add(Path.of(uri));
+                result.add(Path.of(uri));
             }
         }
         catch (SQLException ex) {
             throw new PlayerException(ex);
         }
 
-        return uris;
+        return result;
     }
 
-    public void loadSongs(final PlayList playList, final Consumer<AudioSource> consumer) {
+    public List<PlayList> getPlayLists() {
+        final String sql = """
+                select
+                    name,
+                    where_clause
+                from playlist
+                order by
+                    name asc
+                """;
+
+        final List<PlayList> result = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+            while (resultSet.next()) {
+                final PlayList playList = new PlayList();
+                playList.setName(resultSet.getString("name"));
+                playList.setWhereClause(resultSet.getString("where_clause"));
+
+                result.add(playList);
+            }
+        }
+        catch (SQLException ex) {
+            throw new PlayerException(ex);
+        }
+
+        return result;
+    }
+
+    public void getSongs(final PlayList playList, final Consumer<AudioSource> consumer) {
+        String whereClause = playList.getWhereClause();
+
+        if (whereClause == null || whereClause.isBlank()) {
+            whereClause = "1 = 1";
+        }
+
         final String sql = """
                 select * from song
                 where
                  %s
                 order by play_count desc, artist asc
-                """.formatted(playList.getWhereClause());
+                """.formatted(whereClause);
 
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement();
@@ -274,6 +328,27 @@ public final class MusicPlayerRepository {
         }
     }
 
+    public void saveOrUpdatePlayList(final PlayList playList) {
+        if (playList == null) {
+            return;
+        }
+
+        // TODO
+        final String sql = """
+                """;
+
+        // try (Connection connection = dataSource.getConnection();
+        //      PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        //     preparedStatement.setString(1, playList.getName());
+        //     preparedStatement.setString(2, playList.getWhereClause());
+        //
+        //     preparedStatement.executeUpdate();
+        // }
+        // catch (SQLException ex) {
+        //     throw new PlayerException(ex);
+        // }
+    }
+
     public void saveOrUpdateSong(final AudioSource audioSource) {
         if (audioSource == null) {
             return;
@@ -324,7 +399,7 @@ public final class MusicPlayerRepository {
         }
     }
 
-    public void updateSong(final URI uri, final int playCount) {
+    public void updateSongPlayCount(final URI uri, final int playCount) {
         if (uri == null) {
             return;
         }

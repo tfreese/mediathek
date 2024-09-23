@@ -25,6 +25,7 @@ import de.freese.player.ui.ApplicationContext;
 import de.freese.player.ui.model.PlayList;
 import de.freese.player.ui.swing.component.PlayerView;
 import de.freese.player.ui.swing.component.library.LibraryView;
+import de.freese.player.ui.swing.component.playlist.PlayListView;
 
 /**
  * @author Thomas Freese
@@ -125,7 +126,7 @@ public final class PlayerApplication {
         final SwingWorker<Void, AudioSource> swingWorker = new SwingWorker<>() {
             @Override
             protected Void doInBackground() {
-                ApplicationContext.getRepository().loadSongs(currentPlayList, this::publish);
+                ApplicationContext.getRepository().getSongs(currentPlayList, this::publish);
 
                 return null;
             }
@@ -155,6 +156,16 @@ public final class PlayerApplication {
             jDialog.setVisible(true);
         });
 
+        final JMenuItem jMenuItemToolsPlayList = new JMenuItem("PlayList");
+        jMenuItemToolsPlayList.addActionListener(event -> {
+            final JDialog jDialog = new JDialog(getMainFrame(), "PlayList", true);
+            jDialog.setContentPane(new PlayListView().getComponent());
+            jDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            jDialog.pack();
+            jDialog.setLocationRelativeTo(null);
+            jDialog.setVisible(true);
+        });
+
         final JMenuItem jMenuItemToolsEqualizer = new JMenuItem("Equalizer");
         jMenuItemToolsEqualizer.addActionListener(event -> {
             final JDialog jDialog = new JDialog(getMainFrame(), "Equalizer", true);
@@ -169,6 +180,7 @@ public final class PlayerApplication {
 
         final JMenu jMenuTools = new JMenu("Tools");
         jMenuTools.add(jMenuItemToolsLibrary);
+        jMenuTools.add(jMenuItemToolsPlayList);
         jMenuTools.add(jMenuItemToolsEqualizer);
 
         final JMenuBar jMenuBar = new JMenuBar();
