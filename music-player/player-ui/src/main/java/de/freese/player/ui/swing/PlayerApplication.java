@@ -14,6 +14,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.SwingWorker;
+import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
@@ -48,6 +49,9 @@ public final class PlayerApplication {
 
     public static void init() throws Exception {
         LOGGER.info("initialize application");
+
+        ToolTipManager.sharedInstance().setInitialDelay(0);
+        ToolTipManager.sharedInstance().setDismissDelay(Integer.MAX_VALUE);
 
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
@@ -86,8 +90,8 @@ public final class PlayerApplication {
         // UIManager.put("TableHeader.background", defaultBackground);
         // UIManager.put("TableHeader.foreground", defaultForeground);
 
-        // UIManager.put("ToolTip.background", UIManager.getColor("Label.background"));
-        // UIManager.put("ToolTip.foreground", UIManager.getColor("Label.foreground"));
+        UIManager.put("ToolTip.background", UIManager.getColor("Label.background").darker());
+        UIManager.put("ToolTip.foreground", UIManager.getColor("Label.foreground"));
 
         // UIManager.put("Viewport.background", defaultBackground);
 

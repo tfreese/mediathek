@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 import de.freese.player.core.input.AudioSource;
 import de.freese.player.core.player.SongCollection;
 import de.freese.player.ui.ApplicationContext;
-import de.freese.player.ui.MusicPlayerRepository;
+import de.freese.player.ui.PlayerRepository;
 import de.freese.player.ui.library.LibraryScanner;
 import de.freese.player.ui.model.PlayList;
 import de.freese.player.ui.swing.component.GbcBuilder;
@@ -178,7 +178,7 @@ public final class LibraryView {
         final SwingWorker<Void, AudioSource> swingWorker = new SwingWorker<>() {
             @Override
             protected Void doInBackground() {
-                final MusicPlayerRepository repository = ApplicationContext.getRepository();
+                final PlayerRepository repository = ApplicationContext.getRepository();
                 final LibraryScanner libraryScanner = new LibraryScanner();
 
                 libraryScanner.scan(paths, audioSource -> {

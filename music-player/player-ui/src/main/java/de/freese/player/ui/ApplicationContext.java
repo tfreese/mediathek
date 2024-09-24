@@ -33,7 +33,7 @@ public final class ApplicationContext {
     private static DataSource dataSource;
     private static ExecutorService executorService;
     private static DspPlayer player;
-    private static MusicPlayerRepository repository;
+    private static PlayerRepository repository;
     private static SongCollection songCollection;
     private static Path tempDir;
     private static Path workingDir;
@@ -46,7 +46,7 @@ public final class ApplicationContext {
         return player;
     }
 
-    public static MusicPlayerRepository getRepository() {
+    public static PlayerRepository getRepository() {
         return repository;
     }
 
@@ -102,9 +102,9 @@ public final class ApplicationContext {
                 resultSet.next();
             }
 
-            MusicPlayerRepository.createDatabaseIfNotExist(dataSource);
+            PlayerRepository.createDatabaseIfNotExist(dataSource);
 
-            repository = new MusicPlayerRepository(dataSource);
+            repository = new PlayerRepository(dataSource);
         }
         catch (Exception ex) {
             LOGGER.error(ex.getMessage(), ex);

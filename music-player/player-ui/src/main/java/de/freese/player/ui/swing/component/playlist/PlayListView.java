@@ -1,10 +1,16 @@
 // Created: 14 Sept. 2024
 package de.freese.player.ui.swing.component.playlist;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -17,13 +23,16 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.freese.player.core.exception.PlayerException;
 import de.freese.player.ui.ApplicationContext;
 import de.freese.player.ui.model.PlayList;
 import de.freese.player.ui.swing.component.GbcBuilder;
+import de.freese.player.ui.utils.image.ImageFactory;
 
 /**
  * @author Thomas Freese
@@ -40,7 +49,29 @@ public final class PlayListView {
         super();
 
         final JLabel jLabel = new JLabel("PlayList");
+        jLabel.setIcon(ImageFactory.getIcon("images/info-white.svg"));
+        jLabel.setHorizontalTextPosition(SwingConstants.LEFT);
         panel.add(jLabel, GbcBuilder.of(0, 0).gridwidth(3).fillHorizontal().anchorWest());
+
+        try {
+            final URL url = Thread.currentThread().getContextClassLoader().getResource("music-player.sql");
+            final String tooltip;
+
+            final Color labelForeground = jLabel.getForeground();
+            final String foregroundStyle = "rgb(%d,%d,%d)".formatted(labelForeground.getRed(), labelForeground.getGreen(), labelForeground.getBlue());
+
+            try (Stream<String> stream = Files.lines(Path.of(url.toURI()))) {
+                tooltip = stream.takeWhile(line -> !line.isBlank()).collect(Collectors.joining("<br>", "<html><body style=\"color:" + foregroundStyle + ";\">", "</body></html"));
+            }
+
+            jLabel.setToolTipText(tooltip);
+        }
+        catch (Exception ex) {
+            throw new PlayerException(ex);
+        }
+
+        // jLabel = new JLabel(ImageFactory.getIcon("images/info-white.svg"));
+        // panel.add(jLabel, GbcBuilder.of(1, 0).anchorWest());
 
         final JButton jButtonAdd = new JButton("Add");
         jButtonAdd.setFocusable(false);

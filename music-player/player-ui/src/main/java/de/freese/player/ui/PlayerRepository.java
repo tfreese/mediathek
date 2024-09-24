@@ -35,8 +35,8 @@ import de.freese.player.ui.model.PlayList;
 /**
  * @author Thomas Freese
  */
-public final class MusicPlayerRepository {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MusicPlayerRepository.class);
+public final class PlayerRepository {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PlayerRepository.class);
 
     public static void createDatabaseIfNotExist(final DataSource dataSource) throws Exception {
         final String tableName = "SONG";
@@ -68,7 +68,7 @@ public final class MusicPlayerRepository {
 
     private final DataSource dataSource;
 
-    public MusicPlayerRepository(final DataSource dataSource) {
+    public PlayerRepository(final DataSource dataSource) {
         super();
 
         this.dataSource = Objects.requireNonNull(dataSource, "dataSource required");
@@ -333,20 +333,28 @@ public final class MusicPlayerRepository {
             return;
         }
 
-        // TODO
         final String sql = """
+                merge into playlist
+                (
+                name, where_clause
+                )
+                key (name)
+                values
+                (
+                ?, ?
+                )
                 """;
 
-        // try (Connection connection = dataSource.getConnection();
-        //      PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-        //     preparedStatement.setString(1, playList.getName());
-        //     preparedStatement.setString(2, playList.getWhereClause());
-        //
-        //     preparedStatement.executeUpdate();
-        // }
-        // catch (SQLException ex) {
-        //     throw new PlayerException(ex);
-        // }
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, playList.getName());
+            preparedStatement.setString(2, playList.getWhereClause());
+
+            preparedStatement.executeUpdate();
+        }
+        catch (SQLException ex) {
+            throw new PlayerException(ex);
+        }
     }
 
     public void saveOrUpdateSong(final AudioSource audioSource) {
