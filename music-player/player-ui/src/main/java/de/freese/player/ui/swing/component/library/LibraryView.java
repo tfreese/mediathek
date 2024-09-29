@@ -16,8 +16,10 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
@@ -41,6 +43,7 @@ public final class LibraryView {
     private static final Logger LOGGER = LoggerFactory.getLogger(LibraryView.class);
 
     private final JList<Path> jList;
+    private final JProgressBar jProgressBar;
     private final JPanel panel = new JPanel(new GridBagLayout());
 
     public LibraryView() {
@@ -74,6 +77,11 @@ public final class LibraryView {
         jButtonScan.setEnabled(false);
         jButtonScan.addActionListener(event -> scan());
         panel.add(jButtonScan, GbcBuilder.of(0, 2).gridwidth(5).anchorCenter());
+
+        jProgressBar = new JProgressBar();
+        jProgressBar.setEnabled(false);
+        jProgressBar.setMinimum(0);
+        panel.add(jProgressBar, GbcBuilder.of(0, 3).gridwidth(5).fillHorizontal());
 
         jList.addListSelectionListener(event -> jButtonRemove.setEnabled(jList.getSelectedValue() != null));
         listModel.addListDataListener(new ListDataListener() {
@@ -158,6 +166,8 @@ public final class LibraryView {
         }
 
         ApplicationContext.getRepository().deleteLibraryPath(path);
+
+        ((DefaultListModel<Path>) jList.getModel()).removeElement(path);
     }
 
     private void scan() {
@@ -181,19 +191,27 @@ public final class LibraryView {
                 final PlayerRepository repository = ApplicationContext.getRepository();
                 final LibraryScanner libraryScanner = new LibraryScanner();
 
-                libraryScanner.scan(paths, audioSource -> {
-                    repository.saveOrUpdateSong(audioSource);
+                libraryScanner.scan(paths,
+                        size -> SwingUtilities.invokeLater(() -> {
+                            jProgressBar.setEnabled(true);
+                            jProgressBar.setString(null);
+                            jProgressBar.setStringPainted(true);
+                            jProgressBar.setValue(0);
+                            jProgressBar.setMaximum(size);
+                        }),
+                        audioSource -> {
+                            repository.saveOrUpdateSong(audioSource);
 
-                    // try {
-                    //     TimeUnit.SECONDS.sleep(1);
-                    // }
-                    // catch (InterruptedException ex) {
-                    //     // Restore interrupted state.
-                    //     Thread.currentThread().interrupt();
-                    // }
+                            // try {
+                            //     TimeUnit.SECONDS.sleep(1);
+                            // }
+                            // catch (InterruptedException ex) {
+                            //     // Restore interrupted state.
+                            //     Thread.currentThread().interrupt();
+                            // }
 
-                    publish(audioSource);
-                });
+                            publish(audioSource);
+                        });
 
                 return null;
             }
@@ -202,6 +220,11 @@ public final class LibraryView {
             protected void done() {
                 try {
                     get();
+
+                    jProgressBar.setString(null);
+                    jProgressBar.setStringPainted(false);
+                    jProgressBar.setValue(0);
+                    jProgressBar.setMaximum(0);
 
                     final SwingWorker<Void, AudioSource> swingWorker = new ReloadPlayListSwingWorker();
                     ApplicationContext.getExecutorService().execute(swingWorker);
@@ -213,6 +236,11 @@ public final class LibraryView {
 
             @Override
             protected void process(final List<AudioSource> chunks) {
+                jProgressBar.setValue(jProgressBar.getValue() + chunks.size());
+
+                final int value = jProgressBar.getValue();
+                final int maxValue = jProgressBar.getMaximum();
+                jProgressBar.setString("%d / %d   (%.2f %%)".formatted(value, maxValue, ((double) value / (double) maxValue) * 100D));
                 songCollection.addAudioSources(chunks);
             }
         };

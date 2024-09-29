@@ -5,8 +5,13 @@ package de.freese.player.ui.model;
  * @author Thomas Freese
  */
 public final class PlayList {
+    private long id;
     private String name;
     private String whereClause;
+
+    public long getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
@@ -14,6 +19,10 @@ public final class PlayList {
 
     public String getWhereClause() {
         return whereClause;
+    }
+
+    public void setId(final long id) {
+        this.id = id;
     }
 
     public void setName(final String name) {

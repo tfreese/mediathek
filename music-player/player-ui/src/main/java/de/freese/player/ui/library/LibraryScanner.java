@@ -14,6 +14,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorCompletionService;
 import java.util.concurrent.Future;
 import java.util.function.Consumer;
+import java.util.function.IntConsumer;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -31,7 +32,7 @@ public final class LibraryScanner {
     private static final FileVisitOption[] FILEVISITOPTION_WITH_SYMLINKS = {FileVisitOption.FOLLOW_LINKS};
     private static final Logger LOGGER = LoggerFactory.getLogger(LibraryScanner.class);
 
-    public void scan(final Set<Path> paths, final Consumer<AudioSource> audioSourceConsumer) {
+    public void scan(final Set<Path> paths, final IntConsumer sizeConsumer, final Consumer<AudioSource> audioSourceConsumer) {
         final List<Path> files = new ArrayList<>();
 
         for (Path path : paths) {
@@ -42,6 +43,8 @@ public final class LibraryScanner {
                 LOGGER.error(ex.getMessage());
             }
         }
+
+        sizeConsumer.accept(files.size());
 
         // Delete Orphan Songs.
         final Set<URI> uris = files.stream().map(Path::toUri).collect(Collectors.toSet());

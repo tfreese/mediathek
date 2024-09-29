@@ -181,15 +181,9 @@ public final class PlayerRepository {
     }
 
     public PlayList getCurrentPlayList() {
-        // TODO
-        // final PlayList playList = new PlayList();
-        // playList.setName("DEFAULT");
-        // playList.setWhereClause("1 = 1");
-
-        // return playList;
-
         final String sql = """
                 select
+                    pl.id,
                     pl.name,
                     pl.where_clause
                 from playlist pl
@@ -206,11 +200,12 @@ public final class PlayerRepository {
             result = new PlayList();
 
             if (resultSet.next()) {
+                result.setId(resultSet.getLong("id"));
                 result.setName(resultSet.getString("name"));
                 result.setWhereClause(resultSet.getString("where_clause"));
             }
             else {
-                result.setName("DEFAULT");
+                result.setName("Play all");
                 result.setWhereClause("1 = 1");
             }
         }
@@ -248,6 +243,7 @@ public final class PlayerRepository {
     public List<PlayList> getPlayLists() {
         final String sql = """
                 select
+                    id,
                     name,
                     where_clause
                 from playlist
@@ -262,6 +258,7 @@ public final class PlayerRepository {
              ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
                 final PlayList playList = new PlayList();
+                playList.setId(resultSet.getLong("id"));
                 playList.setName(resultSet.getString("name"));
                 playList.setWhereClause(resultSet.getString("where_clause"));
 
@@ -285,8 +282,13 @@ public final class PlayerRepository {
         final String sql = """
                 select * from song
                 where
-                 %s
-                order by play_count desc, artist asc
+                    %s
+                order by
+                    play_count desc,
+                    artist asc,
+                    album asc,
+                    disc asc,
+                    track asc
                 """.formatted(whereClause);
 
         try (Connection connection = dataSource.getConnection();
@@ -395,22 +397,31 @@ public final class PlayerRepository {
 
         final String sql = """
                 merge into playlist
-                (
-                    name, where_clause
-                )
-                key (name)
-                values
-                (
-                    ?, ?
-                )
+                    using DUAL
+                on id = ?
+                when matched then
+                    update set
+                        name = ?,
+                        where_clause = ?
+                when not matched then
+                    insert (name, where_clause) values (?, ?)
                 """;
 
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, playList.getName());
-            preparedStatement.setString(2, playList.getWhereClause());
+             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setLong(1, playList.getId());
+            preparedStatement.setString(2, playList.getName());
+            preparedStatement.setString(3, playList.getWhereClause());
+            preparedStatement.setString(4, playList.getName());
+            preparedStatement.setString(5, playList.getWhereClause());
 
             preparedStatement.executeUpdate();
+
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    playList.setId(resultSet.getLong("id"));
+                }
+            }
         }
         catch (SQLException ex) {
             throw new PlayerException(ex);

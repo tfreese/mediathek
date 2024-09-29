@@ -20,7 +20,8 @@ CREATE TABLE song
 
 CREATE TABLE playlist
 (
-    name            VARCHAR(100) NOT NULL PRIMARY KEY,
+    id              BIGINT GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) NOT NULL PRIMARY KEY,
+    name            VARCHAR(100) NOT NULL,
     where_clause    VARCHAR(4000)
 );
 

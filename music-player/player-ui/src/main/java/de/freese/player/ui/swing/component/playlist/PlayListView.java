@@ -46,10 +46,11 @@ public final class PlayListView {
     public PlayListView() {
         super();
 
+        int row = 0;
         final JLabel jLabel = new JLabel("PlayList");
         jLabel.setIcon(ImageFactory.getIcon("images/info-white.svg"));
         jLabel.setHorizontalTextPosition(SwingConstants.LEFT);
-        panel.add(jLabel, GbcBuilder.of(0, 0).gridwidth(3).fillHorizontal().anchorWest());
+        panel.add(jLabel, GbcBuilder.of(0, row).gridwidth(3).fillHorizontal().anchorWest());
 
         try {
             final URL url = Thread.currentThread().getContextClassLoader().getResource("music-player.sql");
@@ -74,14 +75,21 @@ public final class PlayListView {
         final JButton jButtonAdd = new JButton("Add");
         jButtonAdd.setFocusable(false);
         jButtonAdd.addActionListener(event -> addPlayList());
-        panel.add(jButtonAdd, GbcBuilder.of(3, 0).fillNone().anchorEast());
+        panel.add(jButtonAdd, GbcBuilder.of(3, row).fillNone().anchorEast());
 
         final JButton jButtonRemove = new JButton("Remove");
         jButtonRemove.setFocusable(false);
         jButtonRemove.setEnabled(false);
         jButtonRemove.addActionListener(event -> removePlayList());
-        panel.add(jButtonRemove, GbcBuilder.of(4, 0).fillNone().anchorEast());
+        panel.add(jButtonRemove, GbcBuilder.of(4, row).fillNone().anchorEast());
 
+        row++;
+        final JButton jButtonSetAsCurrent = new JButton("Set as current PlayList");
+        jButtonSetAsCurrent.setFocusable(false);
+        jButtonSetAsCurrent.setEnabled(false);
+        panel.add(jButtonSetAsCurrent, GbcBuilder.of(0, row).gridwidth(5).fillBoth());
+
+        row++;
         final DefaultListModel<PlayList> listModel = new DefaultListModel<>();
         jList = new JList<>(listModel);
         jList.setCellRenderer(new PlayListListCellRenderer());
@@ -90,7 +98,7 @@ public final class PlayListView {
         final JScrollPane jScrollPane = new JScrollPane();
         jScrollPane.setViewportView(jList);
         jScrollPane.setPreferredSize(new Dimension(500, 100));
-        panel.add(jScrollPane, GbcBuilder.of(0, 1).gridwidth(5).fillBoth());
+        panel.add(jScrollPane, GbcBuilder.of(0, row).gridwidth(5).fillBoth());
 
         jTextFieldName = new JTextField();
         jTextFieldName.setEnabled(false);
@@ -110,7 +118,19 @@ public final class PlayListView {
         //         jList.repaint();
         //     }
         // });
-        panel.add(jTextFieldName, GbcBuilder.of(0, 2).gridwidth(5).fillBoth());
+
+        jButtonSetAsCurrent.addActionListener(event -> {
+            final PlayList playList = jList.getSelectedValue();
+
+            if (playList == null) {
+                return;
+            }
+
+            ApplicationContext.getRepository().saveCurrentPlayList(playList.getName());
+        });
+
+        row++;
+        panel.add(jTextFieldName, GbcBuilder.of(0, row).gridwidth(5).fillBoth());
 
         jTextAreaWhereClause = new JTextArea();
         jTextAreaWhereClause.setEnabled(false);
@@ -130,13 +150,16 @@ public final class PlayListView {
         //         playList.setWhereClause(jTextAreaWhereClause.getText());
         //     }
         // });
-        panel.add(jTextAreaWhereClause, GbcBuilder.of(0, 3).gridwidth(5).fillBoth());
 
+        row++;
+        panel.add(jTextAreaWhereClause, GbcBuilder.of(0, row).gridwidth(5).fillBoth());
+
+        row++;
         final JButton jButtonSave = new JButton("Save");
         jButtonSave.setFocusable(false);
         jButtonSave.setEnabled(false);
         jButtonSave.addActionListener(event -> save());
-        panel.add(jButtonSave, GbcBuilder.of(0, 4).gridwidth(5).anchorCenter());
+        panel.add(jButtonSave, GbcBuilder.of(0, row).gridwidth(5).anchorCenter());
 
         jList.addListSelectionListener(event -> {
             if (event.getValueIsAdjusting()) {
@@ -147,6 +170,7 @@ public final class PlayListView {
 
             jButtonRemove.setEnabled(playList != null);
             jButtonSave.setEnabled(playList != null);
+            jButtonSetAsCurrent.setEnabled(playList != null);
             jTextFieldName.setEnabled(playList != null);
             jTextAreaWhereClause.setEnabled(playList != null);
 
@@ -215,9 +239,10 @@ public final class PlayListView {
         playList.setName(jTextFieldName.getText());
         playList.setWhereClause(jTextAreaWhereClause.getText());
 
+        ((DefaultListModel<PlayList>) jList.getModel()).set(jList.getSelectedIndex(), playList);
+
         LOGGER.debug("save PlayList: {} - {}", playList.getName(), playList.getWhereClause());
 
         ApplicationContext.getRepository().saveOrUpdatePlayList(playList);
-        ApplicationContext.getRepository().saveCurrentPlayList(playList.getName());
     }
 }
