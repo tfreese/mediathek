@@ -4,7 +4,6 @@ package de.freese.player.ui.swing;
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.List;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -23,10 +22,10 @@ import org.slf4j.LoggerFactory;
 
 import de.freese.player.core.input.AudioSource;
 import de.freese.player.ui.ApplicationContext;
-import de.freese.player.ui.model.PlayList;
 import de.freese.player.ui.swing.component.PlayerView;
 import de.freese.player.ui.swing.component.library.LibraryView;
 import de.freese.player.ui.swing.component.playlist.PlayListView;
+import de.freese.player.ui.swing.component.playlist.ReloadPlayListSwingWorker;
 
 /**
  * @author Thomas Freese
@@ -125,21 +124,7 @@ public final class PlayerApplication {
 
         mainFrame.setVisible(true);
 
-        final PlayList currentPlayList = ApplicationContext.getRepository().getCurrentPlayList();
-
-        final SwingWorker<Void, AudioSource> swingWorker = new SwingWorker<>() {
-            @Override
-            protected Void doInBackground() {
-                ApplicationContext.getRepository().getSongs(currentPlayList, this::publish);
-
-                return null;
-            }
-
-            @Override
-            protected void process(final List<AudioSource> chunks) {
-                ApplicationContext.getSongCollection().addAudioSources(chunks);
-            }
-        };
+        final SwingWorker<Void, AudioSource> swingWorker = new ReloadPlayListSwingWorker();
         ApplicationContext.getExecutorService().execute(swingWorker);
     }
 
@@ -167,6 +152,13 @@ public final class PlayerApplication {
             jDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             jDialog.pack();
             jDialog.setLocationRelativeTo(null);
+            jDialog.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(final WindowEvent e) {
+                    final SwingWorker<Void, AudioSource> swingWorker = new ReloadPlayListSwingWorker();
+                    ApplicationContext.getExecutorService().execute(swingWorker);
+                }
+            });
             jDialog.setVisible(true);
         });
 

@@ -84,7 +84,8 @@ public final class ApplicationContext {
 
         final HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setDriverClassName("org.h2.Driver");
-        hikariConfig.setJdbcUrl("jdbc:h2:file:" + workingDir.resolve("h2") + ";DB_CLOSE_ON_EXIT=true");
+        // hikariConfig.setJdbcUrl("jdbc:h2:file:" + workingDir.resolve("h2") + ";DB_CLOSE_ON_EXIT=true");
+        hikariConfig.setJdbcUrl("jdbc:h2:file:" + workingDir.resolve("h2") + ";DB_CLOSE_ON_EXIT=true;AUTO_SERVER=TRUE");
         // hikariConfig.setJdbcUrl("jdbc:h2:file:" + workingDir.resolve("h2"));
         hikariConfig.setUsername("sa");
         hikariConfig.setPassword(null);

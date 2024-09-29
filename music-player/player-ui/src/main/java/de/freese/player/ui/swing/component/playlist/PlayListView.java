@@ -4,8 +4,6 @@ package de.freese.player.ui.swing.component.playlist;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -97,25 +95,41 @@ public final class PlayListView {
         jTextFieldName = new JTextField();
         jTextFieldName.setEnabled(false);
         jTextFieldName.setBorder(BorderFactory.createTitledBorder("Name"));
-        jTextFieldName.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(final FocusEvent event) {
-                jList.getSelectedValue().setName(jTextFieldName.getText());
-                jList.repaint();
-            }
-        });
+        // jTextFieldName.addFocusListener(new FocusAdapter() {
+        //     @Override
+        //     public void focusLost(final FocusEvent event) {
+        //         final PlayList playList = jList.getSelectedValue();
+        //
+        //         if (playList == null) {
+        //             return;
+        //         }
+        //
+        //         LOGGER.debug("update PlayList: {}", playList.getName());
+        //
+        //         playList.setName(jTextFieldName.getText());
+        //         jList.repaint();
+        //     }
+        // });
         panel.add(jTextFieldName, GbcBuilder.of(0, 2).gridwidth(5).fillBoth());
 
         jTextAreaWhereClause = new JTextArea();
         jTextAreaWhereClause.setEnabled(false);
         jTextAreaWhereClause.setBorder(BorderFactory.createTitledBorder("Where Clause"));
         jTextAreaWhereClause.setPreferredSize(new Dimension(500, 200));
-        jTextAreaWhereClause.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(final FocusEvent event) {
-                jList.getSelectedValue().setWhereClause(jTextAreaWhereClause.getText());
-            }
-        });
+        // jTextAreaWhereClause.addFocusListener(new FocusAdapter() {
+        //     @Override
+        //     public void focusLost(final FocusEvent event) {
+        //         final PlayList playList = jList.getSelectedValue();
+        //
+        //         if (playList == null) {
+        //             return;
+        //         }
+        //
+        //         LOGGER.debug("update PlayList: {}", playList.getName());
+        //
+        //         playList.setWhereClause(jTextAreaWhereClause.getText());
+        //     }
+        // });
         panel.add(jTextAreaWhereClause, GbcBuilder.of(0, 3).gridwidth(5).fillBoth());
 
         final JButton jButtonSave = new JButton("Save");
@@ -141,6 +155,8 @@ public final class PlayListView {
                 jTextAreaWhereClause.setText(null);
                 return;
             }
+
+            LOGGER.debug("selected PlayList: {} - {}", playList.getName(), playList.getWhereClause());
 
             jTextFieldName.setText(playList.getName());
             jTextAreaWhereClause.setText(playList.getWhereClause());
@@ -196,6 +212,12 @@ public final class PlayListView {
             return;
         }
 
+        playList.setName(jTextFieldName.getText());
+        playList.setWhereClause(jTextAreaWhereClause.getText());
+
+        LOGGER.debug("save PlayList: {} - {}", playList.getName(), playList.getWhereClause());
+
         ApplicationContext.getRepository().saveOrUpdatePlayList(playList);
+        ApplicationContext.getRepository().saveCurrentPlayList(playList.getName());
     }
 }

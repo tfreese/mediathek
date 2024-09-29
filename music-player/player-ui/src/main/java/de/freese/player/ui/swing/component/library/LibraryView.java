@@ -31,8 +31,8 @@ import de.freese.player.core.player.SongCollection;
 import de.freese.player.ui.ApplicationContext;
 import de.freese.player.ui.PlayerRepository;
 import de.freese.player.ui.library.LibraryScanner;
-import de.freese.player.ui.model.PlayList;
 import de.freese.player.ui.swing.component.GbcBuilder;
+import de.freese.player.ui.swing.component.playlist.ReloadPlayListSwingWorker;
 
 /**
  * @author Thomas Freese
@@ -203,23 +203,7 @@ public final class LibraryView {
                 try {
                     get();
 
-                    songCollection.clear();
-
-                    final PlayList currentPlayList = ApplicationContext.getRepository().getCurrentPlayList();
-
-                    final SwingWorker<Void, AudioSource> swingWorker = new SwingWorker<>() {
-                        @Override
-                        protected Void doInBackground() {
-                            ApplicationContext.getRepository().getSongs(currentPlayList, this::publish);
-
-                            return null;
-                        }
-
-                        @Override
-                        protected void process(final List<AudioSource> chunks) {
-                            songCollection.addAudioSources(chunks);
-                        }
-                    };
+                    final SwingWorker<Void, AudioSource> swingWorker = new ReloadPlayListSwingWorker();
                     ApplicationContext.getExecutorService().execute(swingWorker);
                 }
                 catch (Exception ex) {

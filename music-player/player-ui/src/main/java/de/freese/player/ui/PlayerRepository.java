@@ -182,11 +182,43 @@ public final class PlayerRepository {
 
     public PlayList getCurrentPlayList() {
         // TODO
-        final PlayList playList = new PlayList();
-        playList.setName("DEFAULT");
-        playList.setWhereClause("1 = 1");
+        // final PlayList playList = new PlayList();
+        // playList.setName("DEFAULT");
+        // playList.setWhereClause("1 = 1");
 
-        return playList;
+        // return playList;
+
+        final String sql = """
+                select
+                    pl.name,
+                    pl.where_clause
+                from playlist pl
+                inner join config c on c.content = pl.name
+                where
+                    c.name = 'currentPlayList'
+                """;
+
+        final PlayList result;
+
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+            result = new PlayList();
+
+            if (resultSet.next()) {
+                result.setName(resultSet.getString("name"));
+                result.setWhereClause(resultSet.getString("where_clause"));
+            }
+            else {
+                result.setName("DEFAULT");
+                result.setWhereClause("1 = 1");
+            }
+        }
+        catch (SQLException ex) {
+            throw new PlayerException(ex);
+        }
+
+        return result;
     }
 
     public List<Path> getLibraryPaths() {
@@ -287,6 +319,34 @@ public final class PlayerRepository {
         }
     }
 
+    public void saveCurrentPlayList(final String name) {
+        if (name == null || name.isBlank()) {
+            return;
+        }
+
+        final String sql = """
+                merge into config
+                (
+                    name, content
+                )
+                key (name)
+                values
+                (
+                    ?, ?
+                )
+                """;
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, "currentPlayList");
+            preparedStatement.setString(2, name);
+            preparedStatement.executeUpdate();
+        }
+        catch (SQLException ex) {
+            throw new PlayerException(ex);
+        }
+    }
+
     public void saveLibraryPath(final Path path) {
         if (path == null) {
             return;
@@ -336,12 +396,12 @@ public final class PlayerRepository {
         final String sql = """
                 merge into playlist
                 (
-                name, where_clause
+                    name, where_clause
                 )
                 key (name)
                 values
                 (
-                ?, ?
+                    ?, ?
                 )
                 """;
 
