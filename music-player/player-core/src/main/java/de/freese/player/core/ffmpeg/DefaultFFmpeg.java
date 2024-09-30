@@ -119,16 +119,10 @@ final class DefaultFFmpeg extends AbstractFF implements FFmpeg {
 
         // Read and ignore the WAV header, only pipe the PCM samples to the AudioInputStream.
         final long bytesRead = inputStream.skip(44L);
-        // final byte[] header = new byte[44];
-        // final int bytesRead = inputStream.read(header);
 
         if (bytesRead != 44L) {
             throw new PlayerException("Could not read complete WAV-header from pipe. This could result in mis-aligned frames!");
         }
-
-        // if (getLogger().isDebugEnabled()) {
-        //     debugWavHeader(header);
-        // }
 
         executor.execute(() -> {
             try {
@@ -217,31 +211,4 @@ final class DefaultFFmpeg extends AbstractFF implements FFmpeg {
         // Output-Format.
         addArgument("-f wav");
     }
-
-    // private void debugWavHeader(final byte[] header) {
-    //     getLogger().debug("TYPE: {}", new String(Arrays.copyOfRange(header, 0, 4)));
-    //     getLogger().debug("FileSize[b]: {}", toInt(Arrays.copyOfRange(header, 4, 8)));
-    //     getLogger().debug("WAVE: {}", new String(Arrays.copyOfRange(header, 8, 12)));
-    //     getLogger().debug("FMT: {}", new String(Arrays.copyOfRange(header, 12, 16)));
-    //     getLogger().debug("FMT-Length: {}", new String(Arrays.copyOfRange(header, 16, 20)));
-    //     getLogger().debug("FORMAT: {}", toShort(Arrays.copyOfRange(header, 20, 22)));
-    //     getLogger().debug("Channels: {}", toShort(Arrays.copyOfRange(header, 22, 24)));
-    //     getLogger().debug("SampleRate: {}", toInt(Arrays.copyOfRange(header, 24, 28)));
-    //     getLogger().debug("Bytes/Second: {}", toInt(Arrays.copyOfRange(header, 28, 32)));
-    //     getLogger().debug("FrameSize: {}", toShort(Arrays.copyOfRange(header, 32, 34)));
-    //     getLogger().debug("Bits/Sample: {}", toShort(Arrays.copyOfRange(header, 34, 36)));
-    //     getLogger().debug("Signature: {}", toInt(Arrays.copyOfRange(header, 36, 40)));
-    //     getLogger().debug("Data-Length: {}", toInt(Arrays.copyOfRange(header, 40, 44)));
-    // }
-    //
-    // private int toInt(final byte[] value) {
-    //     return ((value[0] & 0xFF) << 24)
-    //             + ((value[1] & 0xFF) << 16)
-    //             + ((value[2] & 0xFF) << 8)
-    //             + (value[3] & 0xFF);
-    // }
-    //
-    // public short toShort(final byte[] value) {
-    //     return (short) (((value[0] & 0xFF) << 8) + (value[1] & 0xFF));
-    // }
 }
