@@ -5,6 +5,7 @@ import java.awt.GridBagLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.Serial;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -141,7 +142,7 @@ public class GenreDialog extends JDialog {
 
     public List<Genre> getSelectedGenres() {
         if (hasBeenCanceled()) {
-            return null;
+            return Collections.emptyList();
         }
 
         final DefaultListListModel<Genre> defaultListListModel = (DefaultListListModel<Genre>) this.listRechts.getModel();

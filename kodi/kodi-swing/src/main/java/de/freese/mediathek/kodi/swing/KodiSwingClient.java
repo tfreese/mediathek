@@ -53,7 +53,7 @@ public class KodiSwingClient {
         return frame;
     }
 
-    public static void main(final String[] args) throws Exception {
+    public static void main(final String[] args) {
         // To avoid Comparator Errors.
         // System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
 
@@ -89,6 +89,10 @@ public class KodiSwingClient {
         // Thread thread = new Thread(threadGroup, task, "JSyncJavaFx-Startup");
         // // thread.setDaemon(false);
         // thread.start();
+    }
+
+    private static void setFrame(final Frame frame) {
+        KodiSwingClient.frame = frame;
     }
 
     private void init(final String[] args) {
@@ -140,7 +144,7 @@ public class KodiSwingClient {
         // jFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
         jFrame.setLocationRelativeTo(null);
         jFrame.setVisible(true);
-        KodiSwingClient.frame = jFrame;
+        setFrame(jFrame);
     }
 
     private void initUIDefaults() {

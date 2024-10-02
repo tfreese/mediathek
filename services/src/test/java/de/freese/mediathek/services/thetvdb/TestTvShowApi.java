@@ -27,7 +27,7 @@ class TestTvShowApi {
 
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_TV_DB_API_KEY, matches = ".*")
-    void testDetails() throws Exception {
+    void testDetails() {
         final TVShow show = service.getDetails(TvShowApiDebug.TEST_SHOW_ID);
 
         assertNotNull(show);
@@ -53,7 +53,7 @@ class TestTvShowApi {
 
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_TV_DB_API_KEY, matches = ".*")
-    void testDetailsAll() throws Exception {
+    void testDetailsAll() {
         final TVShow show = service.getDetailsAll(TvShowApiDebug.TEST_SHOW_ID);
 
         assertNotNull(show);
@@ -97,7 +97,7 @@ class TestTvShowApi {
 
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_TV_DB_API_KEY, matches = ".*")
-    void testSearch() throws Exception {
+    void testSearch() {
         final List<TVShow> result = service.search(TvShowApiDebug.TEST_SHOW);
 
         assertNotNull(result);

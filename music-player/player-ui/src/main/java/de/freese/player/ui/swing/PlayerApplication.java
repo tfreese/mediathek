@@ -82,6 +82,8 @@ public final class PlayerApplication {
         // // UIManager.put("ScrollBar.thumb", new ColorUIResource(defaultBackground));
         // UIManager.put("ScrollPane.background", defaultBackground);
 
+        UIManager.put("Slider.paintValue", false);
+
         UIManager.put("Table.alternateRowColor", defaultBackground);
         // UIManager.put("Table.alternateRowColor", UIManager.getColor("TableHeader.background"));
         // UIManager.put("Table.background", new ColorUIResource(defaultBackground));

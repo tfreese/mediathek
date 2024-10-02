@@ -23,7 +23,7 @@ public class DefaultAudioSource implements AudioSource {
     private String releaseDate;
     private int samplingRate;
     private String title;
-    private transient Path tmpFile;
+    private Path tmpFile;
     private String track;
     private URI uri;
 

@@ -2,6 +2,7 @@
 package de.freese.mediathek.services.themoviedb;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -44,7 +45,7 @@ class TestMovieApi {
 
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
-    void testCasts() throws Exception {
+    void testCasts() {
         final Casts casts = movieService.casts(Settings.TEST_MOVIE_ID);
 
         assertNotNull(casts);
@@ -55,12 +56,12 @@ class TestMovieApi {
 
         final List<Crew> directors = casts.getDirectors();
         assertNotNull(directors);
-        assertTrue(directors.size() >= 1);
+        assertFalse(directors.isEmpty());
     }
 
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
-    void testConfiguration() throws Exception {
+    void testConfiguration() {
         final Configuration configuration = accountService.getConfiguration();
 
         assertNotNull(configuration);
@@ -68,18 +69,18 @@ class TestMovieApi {
         // assertNotNull(configuration.getChangeKeys());
         // assertTrue(configuration.getChangeKeys().size() > 0);
         assertNotNull(configuration.getBackdropSizes());
-        assertTrue(configuration.getBackdropSizes().size() >= 1);
+        assertFalse(configuration.getBackdropSizes().isEmpty());
         assertNotNull(configuration.getPosterSizes());
-        assertTrue(configuration.getPosterSizes().size() >= 1);
+        assertFalse(configuration.getPosterSizes().isEmpty());
         assertNotNull(configuration.getLogoSizes());
-        assertTrue(configuration.getLogoSizes().size() >= 1);
+        assertFalse(configuration.getLogoSizes().isEmpty());
         assertNotNull(configuration.getProfileSizes());
-        assertTrue(configuration.getProfileSizes().size() >= 1);
+        assertFalse(configuration.getProfileSizes().isEmpty());
     }
 
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
-    void testDetails() throws Exception {
+    void testDetails() {
         final MovieDetails details = movieService.details(Settings.TEST_MOVIE_ID);
 
         assertNotNull(details);
@@ -94,18 +95,17 @@ class TestMovieApi {
         assertTrue(details.getVoteAverage() > 0.0f);
         assertTrue(details.getVoteCount() > 0);
         assertNotNull(details.getGenres());
-        assertTrue(details.getGenres().size() >= 1);
+        assertFalse(details.getGenres().isEmpty());
         assertNotNull(details.getStudios());
-        assertTrue(details.getStudios().size() >= 1);
+        assertFalse(details.getStudios().isEmpty());
         assertNotNull(details.getLanguages());
-        assertTrue(details.getLanguages().size() >= 1);
+        assertFalse(details.getLanguages().isEmpty());
         assertNotNull(details.getCountries());
-        assertTrue(details.getCountries().size() >= 1);
+        assertFalse(details.getCountries().isEmpty());
     }
 
     // @Test
-    // void testPoster() throws Exception
-    // {
+    // void testPoster() throws Exception {
     // List<Image> poster = movieService.getPoster(Configuration.TEST_MOVIE_ID);
     //
     // assertNotNull(poster);
@@ -114,23 +114,23 @@ class TestMovieApi {
 
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
-    void testImages() throws Exception {
+    void testImages() {
         final Images images = movieService.images(Settings.TEST_MOVIE_ID);
 
         assertNotNull(images);
         assertNotNull(images.getBackdrops());
-        assertTrue(images.getBackdrops().size() >= 1);
+        assertFalse(images.getBackdrops().isEmpty());
         assertNotNull(images.getPosters());
-        assertTrue(images.getPosters().size() >= 1);
+        assertFalse(images.getPosters().isEmpty());
     }
 
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
-    void testSearch() throws Exception {
+    void testSearch() {
         final Search result = movieService.search(Settings.TEST_MOVIE);
 
         assertNotNull(result.getResults());
-        assertTrue(result.getResults().size() >= 1);
+        assertFalse(result.getResults().isEmpty());
 
         for (Movie mov : result.getResults()) {
             assertNotNull(mov);
@@ -147,7 +147,7 @@ class TestMovieApi {
 
     @Test
     @EnabledIfSystemProperty(named = Settings.PROPERTY_MOVIE_DB_API_KEY, matches = ".*")
-    void testSearchYear() throws Exception {
+    void testSearchYear() {
         final Search result = movieService.search(Settings.TEST_MOVIE, Settings.TEST_MOVIE_YEAR);
 
         assertNotNull(result.getResults());

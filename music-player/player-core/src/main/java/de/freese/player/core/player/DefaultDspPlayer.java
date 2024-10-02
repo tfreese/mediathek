@@ -123,13 +123,14 @@ public final class DefaultDspPlayer extends AbstractPlayer implements DspPlayer 
         final AudioFormat audioFormat = getAudioInputStream().getFormat();
         boolean doStop = false;
 
+        // final int bytesPerFrame = audioFormat.getChannels() == 1 ? 2 : 4;
+        final int bytesPerFrame = audioFormat.getFrameSize();
+        final int framesToRead = 1000;
+        final int byteLength = bytesPerFrame * framesToRead * audioFormat.getChannels();
+
         while (true) {
             try {
-                // final int bytesPerFrame = audioFormat.getChannels() == 1 ? 2 : 4;
-                final int bytesPerFrame = audioFormat.getFrameSize();
-                final int framesToRead = 1000;
-
-                final byte[] audioBytes = new byte[bytesPerFrame * framesToRead * audioFormat.getChannels()];
+                final byte[] audioBytes = new byte[byteLength];
                 final int bytesRead = getAudioInputStream().read(audioBytes);
                 final Window window;
 

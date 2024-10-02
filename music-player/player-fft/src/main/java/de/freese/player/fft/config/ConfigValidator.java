@@ -9,9 +9,15 @@ public final class ConfigValidator {
      * Runs through checklist of parameter validations and throws exception if any issues are identified.
      *
      * @param config parameters of the FFT to be computed
-     * @param isFFTStream true if is SpectrumStream, false if is SpectraResult
      *
      * @throws BadConfigException if there is an invalid parameter
+     */
+    public static void validate(final FFTConfig config) {
+        validate(config, false);
+    }
+
+    /**
+     * @param isFFTStream true if is SpectrumStream, false if is SpectraResult
      */
     public static void validate(final FFTConfig config, final boolean isFFTStream) {
         // window size must be > 0
@@ -54,12 +60,12 @@ public final class ConfigValidator {
         }
 
         // // normalization without dB scale can't be on for an SpectrumStream
-        // if (isFFTStream && !config.isDecibelScale() && config.isNormalized()) {
-        //     throw new BadConfigException("Normalization can't be used without also using dB scale for an SpectrumStream "
-        //             + "because it doesn't make any sense -- normalization relies on knowing the maximum amplitude across "
-        //             + "any frequency in the entire file, and SpectrumStream only knows the maximum frequency of one window "
-        //             + "at a time. If you'd like to use normalization with an SpectrumStream, it's recommended that you implement this yourself");
-        // }
+        if (isFFTStream && !config.isDecibelScale() && config.isNormalized()) {
+            throw new BadConfigException("Normalization can't be used without also using dB scale for an SpectrumStream "
+                    + "because it doesn't make any sense -- normalization relies on knowing the maximum amplitude across "
+                    + "any frequency in the entire file, and SpectrumStream only knows the maximum frequency of one window "
+                    + "at a time. If you'd like to use normalization with an SpectrumStream, it's recommended that you implement this yourself");
+        }
     }
 
     private static boolean isPow2(final int n) {

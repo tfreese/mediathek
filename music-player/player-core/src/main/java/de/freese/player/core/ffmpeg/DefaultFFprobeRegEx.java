@@ -146,9 +146,7 @@ final class DefaultFFprobeRegEx extends AbstractFF implements FFprobe {
                 final Matcher m2 = PATTERN_BIT_RATE.matcher(value);
 
                 if (m2.find()) {
-                    final int bitRate = Integer.parseInt(m2.group(1));
-
-                    return bitRate;
+                    return Integer.parseInt(m2.group(1));
                 }
             }
         }
@@ -161,9 +159,7 @@ final class DefaultFFprobeRegEx extends AbstractFF implements FFprobe {
             final String[] splits = PATTERN_SPACES.split(durationLine);
 
             if ("kb/s".equals(splits[splits.length - 1])) {
-                final int bitRate = Integer.parseInt(splits[splits.length - 2]);
-
-                return bitRate;
+                return Integer.parseInt(splits[splits.length - 2]);
             }
         }
 
@@ -203,12 +199,10 @@ final class DefaultFFprobeRegEx extends AbstractFF implements FFprobe {
         final Matcher matcher = PATTERN_DURATION.matcher(content);
 
         if (matcher.find()) {
-            final Duration duration = Duration.ofHours(Long.parseLong(matcher.group(1)))
+            return Duration.ofHours(Long.parseLong(matcher.group(1)))
                     .plusMinutes(Long.parseLong(matcher.group(2)))
                     .plusSeconds(Long.parseLong(matcher.group(3)))
                     .plusMillis(Long.parseLong(matcher.group(4)) * 10);
-
-            return duration;
         }
 
         return null;
@@ -261,9 +255,7 @@ final class DefaultFFprobeRegEx extends AbstractFF implements FFprobe {
                 final Matcher m2 = PATTERN_SAMPLING_RATE.matcher(specs);
 
                 if (m2.find()) {
-                    final int samplingRate = Integer.parseInt(m2.group(1));
-
-                    return samplingRate;
+                    return Integer.parseInt(m2.group(1));
                 }
             }
         }

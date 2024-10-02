@@ -12,7 +12,7 @@ import java.util.Set;
  * @author Thomas Freese
  */
 public abstract class AbstractMapResourceBundle extends ResourceBundle {
-    private volatile Map<String, Object> lookup;
+    private Map<String, Object> lookup;
 
     @Override
     public Enumeration<String> getKeys() {

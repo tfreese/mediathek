@@ -82,12 +82,10 @@ public class MovieApiDebug {
             System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json));
         }
 
-        // try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream())))
-        // {
+        // try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
         // String line = reader.readLine();
         //
-        // while (line != null)
-        // {
+        // while (line != null) {
         // LOGGER.info(line);
         // line = reader.readLine();
         // }
@@ -112,12 +110,15 @@ public class MovieApiDebug {
         // String result =
         // template.getForObject("https://api.themoviedb.org/3/search/tv?api_key={api_key}&language={lang}&query={query}", String.class, getApiKey(),
         // getLocale().getLanguage(), "stargate"); // 4629
+
         // String result =
         // template.getForObject("https://api.themoviedb.org/3/tv/{id}?api_key={api_key}&language={lang}", String.class, "4629", getApiKey(), getLocale()
         // .getLanguage());
+
         // String result =
         // template.getForObject("https://api.themoviedb.org/3/tv/{id}/season/1?api_key={api_key}&language={lang}", String.class, "4629", getApiKey(),
         // getLocale().getLanguage());
+        
         // String result =
         // template.getForObject("https://api.themoviedb.org/3/movie/{id}/keywords?api_key={api_key}", String.class, TEST_MOVIE_ID, getApiKey(),
         // getLocale().getLanguage());

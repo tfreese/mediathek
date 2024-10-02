@@ -13,6 +13,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSlider;
 import javax.swing.JTable;
 import javax.swing.JToggleButton;
 import javax.swing.ListSelectionModel;
@@ -48,6 +49,7 @@ public final class PlayerView {
     private JButton buttonForward;
     private JToggleButton buttonPlayPause;
     private JButton buttonStop;
+    private JSlider jSlider;
     private SpectrumView spectrumView;
     private JTable tableSongSollection;
 
@@ -80,6 +82,14 @@ public final class PlayerView {
         panel.add(spectrumView.getComponent(), GbcBuilder.of(4, 1).gridwidth(2).fillHorizontal().insets(0, 0, 0, 5));
 
         panel.add(labelSongsTotal, GbcBuilder.of(0, 2).anchorCenter().gridwidth(4).insets(5, 0, 0, 0));
+
+        jSlider = new JSlider(0, 100);
+        jSlider.setSnapToTicks(false);
+        jSlider.setMinorTickSpacing(5);
+        // jSlider.setLabelTable(jSlider.createStandardLabels(100));
+        // jSlider.setPaintLabels(false);
+        // jSlider.setPaintTicks(false);
+        panel.add(jSlider, GbcBuilder.of(5, 2).anchorCenter().gridwidth(2).fillHorizontal().insets(5, 0, 0, 0));
 
         initListener();
     }

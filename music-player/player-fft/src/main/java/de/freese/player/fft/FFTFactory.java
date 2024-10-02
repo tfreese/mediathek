@@ -45,7 +45,8 @@ public final class FFTFactory {
      * @return an FFT result containing metadata of this FFT and an array of all {@link Spectrum}s computed
      */
     public static SpectraResult createFull(final AudioReader audioReader) {
-        ConfigValidator.validate(audioReader.getFFTConfig(), false);
+        // ConfigValidator.validate(audioReader.getFFTConfig(), false);
+        ConfigValidator.validate(audioReader.getFFTConfig());
 
         final FFTConfig fftConfig = audioReader.getFFTConfig();
 
@@ -106,7 +107,8 @@ public final class FFTFactory {
      * Creates a Stream which can be used as an iterator to compute {@link Spectrum}s one by one.
      */
     public static SpectrumStream createStream(final AudioReader audioReader) {
-        ConfigValidator.validate(audioReader.getFFTConfig(), true);
+        // ConfigValidator.validate(audioReader.getFFTConfig(), true);
+        ConfigValidator.validate(audioReader.getFFTConfig());
 
         return new SpectrumStream(audioReader);
     }
