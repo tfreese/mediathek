@@ -31,7 +31,7 @@ import de.freese.player.ui.spectrum.SpectrumRenderer;
 /**
  * @author Thomas Freese
  */
-@SuppressWarnings("serial")
+// @SuppressWarnings("serial")
 public final class JFreeChartRenderer implements SpectrumRenderer {
     private final XYSeriesCollection data = new XYSeriesCollection();
     private final ChartPanel panel;

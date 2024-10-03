@@ -1,10 +1,12 @@
 // Created: 17 Juli 2024
 package de.freese.player.core.util;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -87,7 +89,20 @@ public final class PlayerUtils {
         final byte[] bytes = new byte[windowSize * 2];
         System.arraycopy(audioBytes, 0, bytes, 0, bytes.length);
 
-        return new Window(audioFormat, bytes);
+        return new Window(audioFormat, bytes, 0, 0);
+    }
+
+    public static Duration getDuration(final Path file) throws Exception {
+        try (AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(Files.newInputStream(file)))) {
+            return getDuration(file, audioInputStream.getFormat());
+        }
+    }
+
+    public static Duration getDuration(final Path file, final AudioFormat audioFormat) throws IOException {
+        final long audioFileLength = Files.size(file);
+        final double durationInSeconds = (audioFileLength / ((double) audioFormat.getFrameSize() * audioFormat.getFrameRate()));
+
+        return Duration.ofSeconds((long) durationInSeconds);
     }
 
     public static String getFileExtension(final String fileName) {
@@ -104,6 +119,18 @@ public final class PlayerUtils {
 
     public static String getFileExtension(final Path path) {
         return getFileExtension(path.toUri());
+    }
+
+    public static double getMilliesPerSample(final AudioFormat audioFormat) {
+        return 1D / audioFormat.getFrameRate();
+    }
+
+    public static double getMilliesPerSample(final Path file) throws Exception {
+        try (AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(Files.newInputStream(file)))) {
+            final Duration duration = getDuration(file, audioInputStream.getFormat());
+
+            return (double) duration.toMillis() / (double) audioInputStream.getFrameLength();
+        }
     }
 
     public static String toFileName(final URI uri) {
@@ -126,21 +153,20 @@ public final class PlayerUtils {
         final int hours = duration.toHoursPart();
         final int minutes = duration.toMinutesPart();
         final int seconds = duration.toSecondsPart();
-        final int millies = duration.toMillisPart();
 
         final String value;
 
         if (days != 0) {
-            value = "%d Days %02d:%02d:%02d.%03d".formatted(days, hours, minutes, seconds, millies);
+            value = "%d Days %02d:%02d:%02d".formatted(days, hours, minutes, seconds);
         }
         else if (hours != 0) {
-            value = "%d:%02d:%02d.%03d".formatted(hours, minutes, seconds, millies);
+            value = "%d:%02d:%02d".formatted(hours, minutes, seconds);
         }
         else if (minutes != 0) {
-            value = "%d:%02d.%03d".formatted(minutes, seconds, millies);
+            value = "%d:%02d".formatted(minutes, seconds);
         }
         else {
-            value = "%d.%03d".formatted(seconds, millies);
+            value = "0:%02d".formatted(seconds);
         }
 
         return value;

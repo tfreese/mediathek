@@ -108,6 +108,11 @@ public class DefaultAudioSource implements AudioSource {
     }
 
     @Override
+    public void incrementPlayCount() {
+        playCount++;
+    }
+
+    @Override
     public boolean isCompilation() {
         return compilation;
     }

@@ -9,8 +9,10 @@ import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Stream;
 
 import javax.sql.DataSource;
 
@@ -149,6 +151,17 @@ public final class ApplicationContext {
             catch (IOException ex) {
                 LOGGER.error(ex.getMessage(), ex);
             }
+        }
+
+        try (Stream<Path> stream = Files.find(tempDir, 1, (path, attr) -> attr.isRegularFile())) {
+            final List<Path> list = stream.toList();
+
+            for (Path path : list) {
+                Files.delete(path);
+            }
+        }
+        catch (IOException ex) {
+            throw new UncheckedIOException(ex);
         }
     }
 

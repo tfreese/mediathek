@@ -54,20 +54,22 @@ public interface AudioSource {
      */
     int getSamplingRate();
 
-    // Integer getSeekTime();
-
     String getTitle();
+
+    // Integer getSeekTime();
 
     Path getTmpFile();
 
     String getTrack();
+
+    URI getUri();
 
     // /**
     //  * If 256 no volume change will be performed.
     //  */
     // Integer getVolume();
 
-    URI getUri();
+    void incrementPlayCount();
 
     boolean isCompilation();
 

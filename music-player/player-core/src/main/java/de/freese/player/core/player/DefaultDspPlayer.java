@@ -2,7 +2,9 @@
 package de.freese.player.core.player;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.concurrent.Executor;
 
@@ -19,9 +21,8 @@ import de.freese.player.core.model.Window;
  */
 public final class DefaultDspPlayer extends AbstractPlayer implements DspPlayer {
     private final DspChain dspChain = new DspChain();
-
+    private long framesRead;
     private volatile boolean running;
-
     private SourceDataLinePlayer sourceDataLinePlayer;
 
     public DefaultDspPlayer(final Executor executor, final Path tempDir) {
@@ -31,6 +32,30 @@ public final class DefaultDspPlayer extends AbstractPlayer implements DspPlayer 
     @Override
     public void addProcessor(final DspProcessor processor) {
         dspChain.addProcessor(processor);
+    }
+
+    @Override
+    public void jumpTo(final Duration duration) {
+        if (!isPlaying() || duration == null) {
+            return;
+        }
+
+        try {
+            final double percent = (double) duration.toMillis() / (double) getAudioSource().getDuration().toMillis();
+            final long byteIndex = (long) (Files.size(getAudioSource().getTmpFile()) / percent);
+
+            getAudioInputStream().reset();
+            getAudioInputStream().skip(byteIndex);
+
+            // audioInputStream.getFrameLength()
+            // float durationInSeconds = (audioFileLength / (format.getFrameSize() * format.getFrameRate()));
+        }
+        catch (RuntimeException ex) {
+            throw ex;
+        }
+        catch (Exception ex) {
+            throw new PlayerException(ex);
+        }
     }
 
     @Override
@@ -86,6 +111,7 @@ public final class DefaultDspPlayer extends AbstractPlayer implements DspPlayer 
         getLogger().debug("stop: {}", getAudioSource());
 
         running = false;
+        framesRead = 0;
 
         if (sourceDataLinePlayer == null) {
             return;
@@ -110,6 +136,11 @@ public final class DefaultDspPlayer extends AbstractPlayer implements DspPlayer 
 
                 dspChain.reset();
             }
+
+            if (getAudioSource().getTmpFile() != null) {
+                Files.delete(getAudioSource().getTmpFile());
+                getAudioSource().setTmpFile(null);
+            }
         }
         catch (PlayerException ex) {
             throw ex;
@@ -125,27 +156,34 @@ public final class DefaultDspPlayer extends AbstractPlayer implements DspPlayer 
 
         // final int bytesPerFrame = audioFormat.getChannels() == 1 ? 2 : 4;
         final int bytesPerFrame = audioFormat.getFrameSize();
-        final int framesToRead = 1000;
-        final int byteLength = bytesPerFrame * framesToRead * audioFormat.getChannels();
+        final int framesToRead = (int) (audioFormat.getSampleRate() / 20F);
+        final int byteLength = bytesPerFrame * audioFormat.getChannels() * framesToRead;
 
         while (true) {
             try {
+                framesRead += (long) framesToRead * audioFormat.getChannels();
+
                 final byte[] audioBytes = new byte[byteLength];
                 final int bytesRead = getAudioInputStream().read(audioBytes);
-                final Window window;
+                Window window = null;
 
                 if (bytesRead == audioBytes.length) {
-                    window = new Window(audioFormat, audioBytes);
+                    window = new Window(audioFormat, audioBytes, framesRead, getAudioInputStream().getFrameLength());
+                }
+                else if (bytesRead > -1) {
+                    // End of Song.
+                    window = new Window(audioFormat, Arrays.copyOf(audioBytes, bytesRead), framesRead, getAudioInputStream().getFrameLength());
+                    doStop = true;
                 }
                 else {
-                    // End of Song.
-                    window = new Window(audioFormat, Arrays.copyOf(audioBytes, bytesRead));
                     doStop = true;
                 }
 
-                dspChain.process(window);
+                if (window != null) {
+                    dspChain.process(window);
 
-                sourceDataLinePlayer.play(window);
+                    sourceDataLinePlayer.play(window);
+                }
             }
             catch (IOException ex) {
                 // throw new PlayerException(ex);

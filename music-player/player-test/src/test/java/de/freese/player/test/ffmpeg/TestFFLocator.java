@@ -17,7 +17,7 @@ import de.freese.player.core.ffmpeg.FFLocator;
 class TestFFLocator {
     @Test
     void testFFmepgVersion() throws Exception {
-        final String version = FFLocator.createFFmpeg(Executors.newVirtualThreadPerTaskExecutor(), Path.of(System.getProperty("java.io.tmpdir"), "musicPlayer")).getVersion();
+        final String version = FFLocator.createFFmpeg(Executors.newVirtualThreadPerTaskExecutor(), Path.of(System.getProperty("java.io.tmpdir"), ".music-player")).getVersion();
 
         assertNotNull(version);
         assertFalse(version.isBlank());

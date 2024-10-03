@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.Duration;
 
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -17,10 +18,13 @@ import javax.swing.JSlider;
 import javax.swing.JTable;
 import javax.swing.JToggleButton;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.event.TableModelEvent;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
+import de.freese.player.core.input.AudioSource;
 import de.freese.player.core.player.DspPlayer;
 import de.freese.player.core.player.SongCollection;
 import de.freese.player.core.util.PlayerUtils;
@@ -29,6 +33,7 @@ import de.freese.player.ui.spectrum.SpectrumDspProcessor;
 import de.freese.player.ui.swing.component.spectrum.SpectrumView;
 import de.freese.player.ui.swing.component.table.TableCellRendererSongCollection;
 import de.freese.player.ui.swing.component.table.TableModelSongCollection;
+import de.freese.player.ui.swing.component.timeline.TimeLineDspProcessor;
 import de.freese.player.ui.utils.image.ImageFactory;
 
 /**
@@ -49,7 +54,9 @@ public final class PlayerView {
     private JButton buttonForward;
     private JToggleButton buttonPlayPause;
     private JButton buttonStop;
-    private JSlider jSlider;
+    private JLabel labelSongTimePlayed;
+    private JLabel labelSongTimeTotal;
+    private JSlider sliderTimeLine;
     private SpectrumView spectrumView;
     private JTable tableSongSollection;
 
@@ -69,6 +76,7 @@ public final class PlayerView {
         final JScrollPane scrollPaneSongCollection = initTableSongCollection();
 
         initSpectrum();
+        initTimeLine();
 
         // buttonPlayPause.setBorder(LineBorder.createBlackLineBorder());
         // buttonForward.setBorder(LineBorder.createBlackLineBorder());
@@ -79,17 +87,13 @@ public final class PlayerView {
         panel.add(buttonPlayPause, GbcBuilder.of(1, 1).insets(0, 0, 0, 0));
         panel.add(buttonStop, GbcBuilder.of(2, 1).insets(0, 0, 0, 0));
         panel.add(buttonForward, GbcBuilder.of(3, 1).insets(0, 0, 0, 0));
-        panel.add(spectrumView.getComponent(), GbcBuilder.of(4, 1).gridwidth(2).fillHorizontal().insets(0, 0, 0, 5));
+        panel.add(spectrumView.getComponent(), GbcBuilder.of(4, 1).gridwidth(6).fillHorizontal().insets(0, 0, 0, 5));
 
         panel.add(labelSongsTotal, GbcBuilder.of(0, 2).anchorCenter().gridwidth(4).insets(5, 0, 0, 0));
 
-        jSlider = new JSlider(0, 100);
-        jSlider.setSnapToTicks(false);
-        jSlider.setMinorTickSpacing(5);
-        // jSlider.setLabelTable(jSlider.createStandardLabels(100));
-        // jSlider.setPaintLabels(false);
-        // jSlider.setPaintTicks(false);
-        panel.add(jSlider, GbcBuilder.of(5, 2).anchorCenter().gridwidth(2).fillHorizontal().insets(5, 0, 0, 0));
+        panel.add(labelSongTimePlayed, GbcBuilder.of(4, 2).anchorEast().insets(5, 5, 0, 0));
+        panel.add(sliderTimeLine, GbcBuilder.of(5, 2).anchorCenter().gridwidth(4).fillHorizontal().insets(5, 0, 0, 0));
+        panel.add(labelSongTimeTotal, GbcBuilder.of(9, 2).anchorWest().insets(5, 0, 0, 0));
 
         initListener();
     }
@@ -104,6 +108,8 @@ public final class PlayerView {
                     SwingUtilities.invokeLater(() -> {
                         buttonPlayPause.setSelected(false);
                         buttonPlayPause.setIcon(ICON_PLAY);
+                        labelSongTimePlayed.setText(null);
+                        labelSongTimeTotal.setText(null);
 
                         if (songCollection.hasNext()) {
                             player.setAudioSource(songCollection.next());
@@ -113,6 +119,7 @@ public final class PlayerView {
                             buttonPlayPause.setIcon(ICON_PAUSE);
 
                             tableSongSollection.getSelectionModel().setSelectionInterval(songCollection.getCurrentIndex(), songCollection.getCurrentIndex());
+                            labelSongTimeTotal.setText(PlayerUtils.toString(songCollection.getCurrentAudioSource().getDuration()));
                         }
                     });
                 }
@@ -123,9 +130,15 @@ public final class PlayerView {
                 buttonPlayPause.setIcon(ICON_PAUSE);
 
                 if (!player.isPlaying()) {
+                    if (tableSongSollection.getSelectedRow() > -1) {
+                        songCollection.setCurrentIndex(tableSongSollection.getSelectedRow());
+                    }
+
                     player.setAudioSource(songCollection.getCurrentAudioSource());
                     player.play();
                     tableSongSollection.getSelectionModel().setSelectionInterval(songCollection.getCurrentIndex(), songCollection.getCurrentIndex());
+
+                    labelSongTimeTotal.setText(PlayerUtils.toString(songCollection.getCurrentAudioSource().getDuration()));
                 }
                 else {
                     player.resume();
@@ -146,6 +159,9 @@ public final class PlayerView {
 
             buttonPlayPause.setSelected(false);
             buttonPlayPause.setIcon(ICON_PLAY);
+
+            labelSongTimePlayed.setText(null);
+            labelSongTimeTotal.setText(null);
         });
 
         buttonBackward.addActionListener(event -> {
@@ -163,6 +179,7 @@ public final class PlayerView {
                 buttonPlayPause.setIcon(ICON_PAUSE);
 
                 tableSongSollection.getSelectionModel().setSelectionInterval(songCollection.getCurrentIndex(), songCollection.getCurrentIndex());
+                labelSongTimeTotal.setText(PlayerUtils.toString(songCollection.getCurrentAudioSource().getDuration()));
             }
         });
 
@@ -181,6 +198,7 @@ public final class PlayerView {
                 buttonPlayPause.setIcon(ICON_PAUSE);
 
                 tableSongSollection.getSelectionModel().setSelectionInterval(songCollection.getCurrentIndex(), songCollection.getCurrentIndex());
+                labelSongTimeTotal.setText(PlayerUtils.toString(songCollection.getCurrentAudioSource().getDuration()));
             }
         });
 
@@ -205,6 +223,8 @@ public final class PlayerView {
                 player.play();
                 buttonPlayPause.setSelected(true);
                 buttonPlayPause.setIcon(ICON_PAUSE);
+
+                labelSongTimeTotal.setText(PlayerUtils.toString(songCollection.getCurrentAudioSource().getDuration()));
             }
         });
     }
@@ -229,7 +249,6 @@ public final class PlayerView {
         final SpectrumDspProcessor spectrumDspProcessor = new SpectrumDspProcessor(spectrumView::updateChartData);
         ApplicationContext.getPlayer().addProcessor(spectrumDspProcessor);
 
-        spectrumView.getComponent().setMinimumSize(new Dimension(1, 75));
         spectrumView.getComponent().setPreferredSize(new Dimension(1, 75));
     }
 
@@ -257,6 +276,10 @@ public final class PlayerView {
         tableSongSollection.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
         tableSongSollection.getColumnModel().getColumn(0).setMinWidth(250);
 
+        // Duration
+        tableSongSollection.getColumnModel().getColumn(3).setMinWidth(85);
+        tableSongSollection.getColumnModel().getColumn(3).setMaxWidth(85);
+
         tableSongSollection.getTableHeader().setReorderingAllowed(false);
 
         tableModelSongCollection.addTableModelListener(event -> {
@@ -269,5 +292,61 @@ public final class PlayerView {
         scrollPaneSongCollection.setViewportView(tableSongSollection);
 
         return scrollPaneSongCollection;
+    }
+
+    private void initTimeLine() {
+        sliderTimeLine = new JSlider(0, 100);
+        sliderTimeLine.setEnabled(false);
+        sliderTimeLine.setSnapToTicks(false);
+        sliderTimeLine.setMinorTickSpacing(5);
+        // sliderTimeLine.setLabelTable(jSlider.createStandardLabels(100));
+        // sliderTimeLine.setPaintLabels(false);
+        // sliderTimeLine.setPaintTicks(false);
+        sliderTimeLine.setValueIsAdjusting(true);
+        // sliderTimeLine.addChangeListener(event -> {
+        //             // Runs every time the Knob moves. :-/
+        //             final AudioSource audioSource = ApplicationContext.getSongCollection().getCurrentAudioSource();
+        //             final Duration timeTotal = audioSource.getDuration();
+        //             final Duration timeTarget = Duration.ofMillis(timeTotal.toMillis() * (sliderTimeLine.getValue() / 100));
+        //
+        //             ApplicationContext.getPlayer().jumpTo(timeTarget);
+        //         }
+        // );        // sliderTimeLine.addChangeListener(event -> {
+        //             // Runs every time the Knob moves. :-/
+        //             final AudioSource audioSource = ApplicationContext.getSongCollection().getCurrentAudioSource();
+        //             final Duration timeTotal = audioSource.getDuration();
+        //             final Duration timeTarget = Duration.ofMillis(timeTotal.toMillis() * (sliderTimeLine.getValue() / 100));
+        //
+        //             ApplicationContext.getPlayer().jumpTo(timeTarget);
+        //         }
+        // );
+
+        labelSongTimePlayed = new JLabel();
+        labelSongTimePlayed.setHorizontalAlignment(SwingConstants.RIGHT);
+        labelSongTimePlayed.setPreferredSize(new Dimension(65, 25));
+
+        labelSongTimeTotal = new JLabel();
+        labelSongTimeTotal.setPreferredSize(new Dimension(65, 25));
+
+        final TimeLineDspProcessor timeLineDspProcessor = new TimeLineDspProcessor(progress -> {
+            sliderTimeLine.setValue((int) Math.round(progress * 100D));
+
+            final AudioSource audioSource = ApplicationContext.getSongCollection().getCurrentAudioSource();
+            final Duration timeTotal = audioSource.getDuration();
+            final Duration timePlayed = Duration.ofMillis((long) (timeTotal.toMillis() * progress));
+            labelSongTimePlayed.setText(PlayerUtils.toString(timePlayed));
+
+            if (progress > 0.9D && Boolean.FALSE.equals(labelSongTimePlayed.getClientProperty("playCount"))) {
+                labelSongTimePlayed.putClientProperty("playCount", Boolean.TRUE);
+
+                ApplicationContext.getRepository().updateSongPlayCount(audioSource.getUri(), audioSource.getPlayCount() + 1);
+                audioSource.incrementPlayCount();
+                ((AbstractTableModel) tableSongSollection.getModel()).fireTableCellUpdated(tableSongSollection.getSelectedRow(), 10);
+            }
+            else if (progress < 0.9D) {
+                labelSongTimePlayed.putClientProperty("playCount", Boolean.FALSE);
+            }
+        });
+        ApplicationContext.getPlayer().addProcessor(timeLineDspProcessor);
     }
 }

@@ -15,10 +15,12 @@ import de.freese.player.core.util.PlayerUtils;
 public final class Window {
     private final byte[] audioBytes;
     private final AudioFormat audioFormat;
+    private final long framesRead;
+    private final long framesTotal;
     private final int[] samplesLeft;
     private final int[] samplesRight;
 
-    public Window(final AudioFormat audioFormat, final byte[] audioBytes) {
+    public Window(final AudioFormat audioFormat, final byte[] audioBytes, final long framesRead, final long framesTotal) {
         super();
 
         Objects.requireNonNull(audioBytes, "audioBytes required");
@@ -41,6 +43,9 @@ public final class Window {
             this.samplesLeft = samples[0];
             this.samplesRight = samples[1];
         }
+
+        this.framesRead = framesRead;
+        this.framesTotal = framesTotal;
     }
 
     public void forEachMono(final IntConsumer consumer) {
@@ -61,6 +66,14 @@ public final class Window {
 
     public AudioFormat getAudioFormat() {
         return audioFormat;
+    }
+
+    public long getFramesRead() {
+        return framesRead;
+    }
+
+    public long getFramesTotal() {
+        return framesTotal;
     }
 
     public int[] getMergedSamples() {

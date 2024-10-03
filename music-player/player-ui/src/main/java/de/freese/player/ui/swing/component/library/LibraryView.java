@@ -229,6 +229,12 @@ public final class LibraryView {
                     final SwingWorker<Void, AudioSource> swingWorker = new ReloadPlayListSwingWorker();
                     ApplicationContext.getExecutorService().execute(swingWorker);
                 }
+                catch (InterruptedException ex) {
+                    // Restore interrupted state.
+                    Thread.currentThread().interrupt();
+                    
+                    LOGGER.error(ex.getMessage(), ex);
+                }
                 catch (Exception ex) {
                     LOGGER.error(ex.getMessage(), ex);
                 }

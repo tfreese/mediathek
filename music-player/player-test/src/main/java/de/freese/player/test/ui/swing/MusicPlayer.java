@@ -128,7 +128,7 @@ public final class MusicPlayer {
                 gbc.gridy = row;
                 gbc.fill = GridBagConstraints.BOTH;
 
-                final Player player = new DefaultClipPlayer(executorService, Path.of(System.getProperty("java.io.tmpdir"), "musicPlayer"));
+                final Player player = new DefaultClipPlayer(executorService, Path.of(System.getProperty("java.io.tmpdir"), ".music-player"));
                 player.setAudioSource(AudioSourceFactory.createAudioSource(Path.of("samples/sample." + audioCodec.getFileExtension())));
                 frame.add(createPlayerPanel(audioCodec, player), gbc);
             }

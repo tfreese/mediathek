@@ -58,6 +58,7 @@ public final class SpectrumDspProcessor implements DspProcessor {
     @Override
     public void reset() {
         maxAmp = 0D;
+        spectrumConsumer.accept(null);
     }
 
     private void doFFT(final Window window) {
@@ -102,6 +103,11 @@ public final class SpectrumDspProcessor implements DspProcessor {
 
         FFTMath.normalize(spectrum, frequency.getAmplitude());
 
-        SwingUtilities.invokeLater(() -> spectrumConsumer.accept(spectrum));
+        if (SwingUtilities.isEventDispatchThread()) {
+            spectrumConsumer.accept(spectrum);
+        }
+        else {
+            SwingUtilities.invokeLater(() -> spectrumConsumer.accept(spectrum));
+        }
     }
 }
