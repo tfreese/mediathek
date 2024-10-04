@@ -21,7 +21,7 @@ public class DefaultAudioSource implements AudioSource {
     private String metaData;
     private int playCount;
     private String releaseDate;
-    private int samplingRate;
+    private int sampleRate;
     private String title;
     private Path tmpFile;
     private String track;
@@ -83,8 +83,8 @@ public class DefaultAudioSource implements AudioSource {
     }
 
     @Override
-    public int getSamplingRate() {
-        return samplingRate;
+    public int getSampleRate() {
+        return sampleRate;
     }
 
     @Override
@@ -165,8 +165,8 @@ public class DefaultAudioSource implements AudioSource {
         this.releaseDate = releaseDate;
     }
 
-    public void setSamplingRate(final int samplingRate) {
-        this.samplingRate = samplingRate;
+    public void setSampleRate(final int sampleRate) {
+        this.sampleRate = sampleRate;
     }
 
     public void setTitle(final String title) {

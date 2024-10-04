@@ -4,8 +4,6 @@ package de.freese.player.test;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -18,13 +16,13 @@ import de.freese.player.core.player.SourceDataLinePlayer;
  */
 public final class Analysis {
     public static void main(final String[] args) throws Exception {
-        final Path path = Path.of("samples/sample.wav");
+        final Path path = Path.of("music-player/samples/sample.wav");
 
         try (InputStream inputStream = path.toUri().toURL().openStream();
              AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(inputStream)) {
             final AudioFormat audioFormat = audioInputStream.getFormat();
 
-            final float frameRate = audioFormat.getFrameRate();
+            final double frameRate = audioFormat.getFrameRate();
             System.out.printf("Frame Rate, Frames/Second: %f%n", frameRate);
 
             int frameSize = audioFormat.getFrameSize();
@@ -37,7 +35,7 @@ public final class Analysis {
 
             System.out.printf("Frame Size in Bytes: %d%n", frameSize);
 
-            final float sampleRate = audioFormat.getSampleRate();
+            final double sampleRate = audioFormat.getSampleRate();
             System.out.printf("Sample Rate: %f%n", sampleRate);
 
             final int sampleSize = audioFormat.getSampleSizeInBits();
@@ -46,11 +44,11 @@ public final class Analysis {
             final int channels = audioFormat.getChannels();
             System.out.printf("Channels: %d%n", channels);
 
-            final float length = audioInputStream.getFrameLength() / frameRate;
+            final double length = audioInputStream.getFrameLength() / frameRate;
             System.out.printf("Length1 in seconds: %f%n", length);
 
             // 44: WAV Header in Bytes
-            final float length2 = (Files.size(path) - 44) / (frameRate * frameSize);
+            final double length2 = (Files.size(path) - 44) / (frameRate * frameSize);
             System.out.printf("Length2 in seconds: %f%n", length2);
 
             final int timeOfFrame = (int) frameRate / 1000;
@@ -74,53 +72,8 @@ public final class Analysis {
 
             for (int i = 0; i < 10; i++) {
                 final int bytesRead = audioInputStream.read(audioData);
-                // sourceDataLinePlayer.play(audioData, bytesRead);
 
-                if (channels == 1) {
-                    // Mono
-                    final List<Double> samples = new ArrayList<>(bytesRead / 2);
-
-                    for (int j = 0; j < bytesRead / 2; j++) {
-                        final double sample;
-
-                        if (audioFormat.isBigEndian()) {
-                            sample = (audioData[2 * j + 1] & 0xFF | audioData[2 * j] << 8) / (double) SourceDataLinePlayer.MAX_16_BIT;
-                        }
-                        else {
-                            sample = (audioData[2 * j] & 0xFF | audioData[2 * j + 1] << 8) / (double) SourceDataLinePlayer.MAX_16_BIT;
-                        }
-
-                        samples.add(sample);
-                    }
-
-                    sourceDataLinePlayer.play(samples);
-                }
-                else {
-                    // Stereo
-                    final List<Double> samplesLeft = new ArrayList<>(bytesRead / 4);
-                    final List<Double> samplesRight = new ArrayList<>(bytesRead / 4);
-
-                    for (int j = 0; j < bytesRead / 4; j++) {
-                        final double left;
-                        final double right;
-
-                        if (audioFormat.isBigEndian()) {
-                            left = (audioData[4 * j + 1] & 0xFF | audioData[4 * j] << 8) / (double) SourceDataLinePlayer.MAX_16_BIT;
-                            right = (audioData[4 * j + 3] & 0xFF | audioData[4 * j + 2] << 8) / (double) SourceDataLinePlayer.MAX_16_BIT;
-                        }
-                        else {
-                            left = (audioData[4 * j] & 0xFF | audioData[4 * j + 1] << 8) / (double) SourceDataLinePlayer.MAX_16_BIT;
-                            right = (audioData[4 * j + 2] & 0xFF | audioData[4 * j + 3] << 8) / (double) SourceDataLinePlayer.MAX_16_BIT;
-                        }
-
-                        // final double sampleMono = (left + right) / 2.0D;
-
-                        samplesLeft.add(left);
-                        samplesRight.add(right);
-                    }
-
-                    sourceDataLinePlayer.play(samplesLeft, samplesRight);
-                }
+                sourceDataLinePlayer.play(audioData, bytesRead);
             }
 
             sourceDataLinePlayer.close();

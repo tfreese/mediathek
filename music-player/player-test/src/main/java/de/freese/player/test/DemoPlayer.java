@@ -95,8 +95,8 @@ public final class DemoPlayer {
 
         // Adjust the volume on the output line.
         // if (audioClip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
-        //     FloatControl volume = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);
-        //     volume.setValue((volume.getMaximum() - volume.getMinimum()) * 0.7f + volume.getMinimum());
+        //     FloatControl volumeControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);
+        //     volumeControl.setValue((volumeControl.getMaximum() - volumeControl.getMinimum()) * 0.7F + volumeControl.getMinimum());
         // }
 
         // pause = stop + start

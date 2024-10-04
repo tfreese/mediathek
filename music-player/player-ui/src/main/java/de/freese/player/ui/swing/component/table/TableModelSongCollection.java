@@ -36,7 +36,7 @@ public final class TableModelSongCollection extends AbstractTableModel implement
                 "Album",
                 "Title",
                 "Duration",
-                "SamplingRate",
+                "SampleRate",
                 "BitRate",
                 "Channels",
                 "Format",
@@ -53,10 +53,10 @@ public final class TableModelSongCollection extends AbstractTableModel implement
         durationTotal = durationTotal.plus(audioSource.getDuration());
 
         if (SwingUtilities.isEventDispatchThread()) {
-            fireTableRowsInserted(getRowCount(), getRowCount());
+            fireTableRowsInserted(getRowCount(), getRowCount() - 1);
         }
         else {
-            SwingUtilities.invokeLater(() -> fireTableRowsInserted(getRowCount(), getRowCount()));
+            SwingUtilities.invokeLater(() -> fireTableRowsInserted(getRowCount(), getRowCount() - 1));
         }
 
         return this;
@@ -73,10 +73,10 @@ public final class TableModelSongCollection extends AbstractTableModel implement
         );
 
         if (SwingUtilities.isEventDispatchThread()) {
-            fireTableRowsInserted(firstRow, getRowCount());
+            fireTableRowsInserted(firstRow, getRowCount() - 1);
         }
         else {
-            SwingUtilities.invokeLater(() -> fireTableRowsInserted(firstRow, getRowCount()));
+            SwingUtilities.invokeLater(() -> fireTableRowsInserted(firstRow, getRowCount() - 1));
         }
 
         return this;
@@ -130,7 +130,7 @@ public final class TableModelSongCollection extends AbstractTableModel implement
             case 1 -> audioSource.getAlbum();
             case 2 -> audioSource.getTitle();
             case 3 -> audioSource.getDuration();
-            case 4 -> audioSource.getSamplingRate();
+            case 4 -> audioSource.getSampleRate();
             case 5 -> audioSource.getBitRate();
             case 6 -> audioSource.getChannels();
             case 7 -> audioSource.getFormat();

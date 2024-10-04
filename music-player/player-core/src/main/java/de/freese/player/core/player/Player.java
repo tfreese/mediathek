@@ -3,6 +3,8 @@ package de.freese.player.core.player;
 
 import java.util.function.Consumer;
 
+import javax.sound.sampled.FloatControl;
+
 import de.freese.player.core.input.AudioSource;
 
 /**
@@ -11,6 +13,8 @@ import de.freese.player.core.input.AudioSource;
 // extends AutoCloseable
 public interface Player {
     void addSongFinishedListener(Consumer<AudioSource> consumer);
+
+    void configureVolumeControl(Consumer<FloatControl> consumer);
 
     boolean isPlaying();
 

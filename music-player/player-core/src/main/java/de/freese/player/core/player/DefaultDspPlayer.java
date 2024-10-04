@@ -7,14 +7,17 @@ import java.nio.file.Path;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.concurrent.Executor;
+import java.util.function.Consumer;
 
 import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.FloatControl;
 
 import de.freese.player.core.dsp.DspChain;
 import de.freese.player.core.dsp.DspProcessor;
 import de.freese.player.core.exception.PlayerException;
 import de.freese.player.core.input.AudioInputStreamFactory;
 import de.freese.player.core.model.Window;
+import de.freese.player.core.util.PlayerUtils;
 
 /**
  * @author Thomas Freese
@@ -35,20 +38,28 @@ public final class DefaultDspPlayer extends AbstractPlayer implements DspPlayer 
     }
 
     @Override
+    public void configureVolumeControl(final Consumer<FloatControl> consumer) {
+        if (!isPlaying()) {
+            return;
+        }
+
+        sourceDataLinePlayer.configureVolumeControl(consumer);
+    }
+
+    @Override
     public void jumpTo(final Duration duration) {
         if (!isPlaying() || duration == null) {
             return;
         }
 
         try {
-            final double percent = (double) duration.toMillis() / (double) getAudioSource().getDuration().toMillis();
-            final long byteIndex = (long) (Files.size(getAudioSource().getTmpFile()) / percent);
+            // final double percent = (double) duration.toMillis() / (double) getAudioSource().getDuration().toMillis();
+            // final long byteIndex = (long) (Files.size(getAudioSource().getTmpFile()) * percent);
+
+            final long byteIndex = PlayerUtils.micros2Bytes(getAudioInputStream().getFormat(), duration.toMillis() * 1000L);
 
             getAudioInputStream().reset();
             getAudioInputStream().skip(byteIndex);
-
-            // audioInputStream.getFrameLength()
-            // float durationInSeconds = (audioFileLength / (format.getFrameSize() * format.getFrameRate()));
         }
         catch (RuntimeException ex) {
             throw ex;
@@ -156,7 +167,7 @@ public final class DefaultDspPlayer extends AbstractPlayer implements DspPlayer 
 
         // final int bytesPerFrame = audioFormat.getChannels() == 1 ? 2 : 4;
         final int bytesPerFrame = audioFormat.getFrameSize();
-        final int framesToRead = (int) (audioFormat.getSampleRate() / 20F);
+        final int framesToRead = (int) (audioFormat.getSampleRate() / 20D); // ~ 50ms
         final int byteLength = bytesPerFrame * audioFormat.getChannels() * framesToRead;
 
         while (true) {

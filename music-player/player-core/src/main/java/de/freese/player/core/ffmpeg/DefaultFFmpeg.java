@@ -25,11 +25,11 @@ import de.freese.player.core.util.PlayerUtils;
 final class DefaultFFmpeg extends AbstractFF implements FFmpeg {
     private static AudioFormat getTargetAudioFormat(final AudioSource audioSource) {
         return new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
-                audioSource.getSamplingRate(),
+                audioSource.getSampleRate(),
                 16,
                 audioSource.getChannels(),
                 audioSource.getChannels() * 2,
-                audioSource.getSamplingRate(),
+                audioSource.getSampleRate(),
                 ByteOrder.BIG_ENDIAN.equals(ByteOrder.nativeOrder()) // false
         );
         // return new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
@@ -113,7 +113,7 @@ final class DefaultFFmpeg extends AbstractFF implements FFmpeg {
         final Process process = processBuilder.start();
 
         // buffer = 1/4 second of audio.
-        final int bufferSize = audioSource.getSamplingRate() / 4;
+        final int bufferSize = audioSource.getSampleRate() / 4;
         final InputStream inputStream = new BufferedInputStream(process.getInputStream(), bufferSize);
         // final InputStream inputStream = new BufferedInputStream(process.getInputStream());
 
@@ -193,7 +193,7 @@ final class DefaultFFmpeg extends AbstractFF implements FFmpeg {
             addArgument(String.valueOf(channels));
         }
 
-        final int samplingRate = audioSource.getSamplingRate();
+        final int samplingRate = audioSource.getSampleRate();
         if (samplingRate > 0) {
             addArgument("-ar");
             addArgument(String.valueOf(samplingRate));

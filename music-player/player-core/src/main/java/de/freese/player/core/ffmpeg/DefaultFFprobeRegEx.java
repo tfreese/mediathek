@@ -126,7 +126,7 @@ final class DefaultFFprobeRegEx extends AbstractFF implements FFprobe {
             throw new PlayerException("MetaData Problems - Sampling-Rate invalid: " + samplingRate + System.lineSeparator() + content);
         }
         else {
-            audioFile.setSamplingRate(samplingRate);
+            audioFile.setSampleRate(samplingRate);
         }
 
         return audioFile;

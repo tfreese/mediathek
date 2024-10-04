@@ -52,7 +52,7 @@ public interface AudioSource {
     /**
      * Hz
      */
-    int getSamplingRate();
+    int getSampleRate();
 
     String getTitle();
 

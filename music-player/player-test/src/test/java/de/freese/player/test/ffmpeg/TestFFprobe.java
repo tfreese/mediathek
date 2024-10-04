@@ -35,7 +35,7 @@ class TestFFprobe {
         assertEquals(2, audioSource.getChannels());
         assertEquals("PT1M0.48S", audioSource.getDuration().toString());
         assertEquals("aiff/adpcm_ima_qt", audioSource.getFormat());
-        assertEquals(48000, audioSource.getSamplingRate());
+        assertEquals(48000, audioSource.getSampleRate());
     }
 
     @Test
@@ -47,7 +47,7 @@ class TestFFprobe {
         assertEquals(1, audioSource.getChannels());
         assertEquals("PT2.42S", audioSource.getDuration().toString());
         assertEquals("au/pcm_s8", audioSource.getFormat());
-        assertEquals(44100, audioSource.getSamplingRate());
+        assertEquals(44100, audioSource.getSampleRate());
     }
 
     @Test
@@ -59,7 +59,7 @@ class TestFFprobe {
         assertEquals(2, audioSource.getChannels());
         assertEquals("PT2M2.09S", audioSource.getDuration().toString());
         assertEquals("flac", audioSource.getFormat());
-        assertEquals(44100, audioSource.getSamplingRate());
+        assertEquals(44100, audioSource.getSampleRate());
     }
 
     @Test
@@ -71,7 +71,7 @@ class TestFFprobe {
         assertEquals(2, audioSource.getChannels());
         assertEquals("PT39.94S", audioSource.getDuration().toString());
         assertEquals("mov/aac", audioSource.getFormat());
-        assertEquals(48000, audioSource.getSamplingRate());
+        assertEquals(48000, audioSource.getSampleRate());
         assertEquals("Bee Moved", audioSource.getAlbum());
         assertEquals("Blue Monday FM", audioSource.getArtist());
         assertEquals("Bee Moved", audioSource.getTitle());
@@ -87,7 +87,7 @@ class TestFFprobe {
         assertEquals(1, audioSource.getChannels());
         assertEquals("PT3M8.04S", audioSource.getDuration().toString());
         assertEquals("mov/aac", audioSource.getFormat());
-        assertEquals(44100, audioSource.getSamplingRate());
+        assertEquals(44100, audioSource.getSampleRate());
         assertEquals("Epistle of Philemon", audioSource.getAlbum());
         assertEquals("American Standard Version", audioSource.getArtist());
         assertEquals("1", audioSource.getTitle());
@@ -103,7 +103,7 @@ class TestFFprobe {
         assertEquals(2, audioSource.getChannels());
         assertEquals("PT43.08S", audioSource.getDuration().toString());
         assertEquals("mp3", audioSource.getFormat());
-        assertEquals(44100, audioSource.getSamplingRate());
+        assertEquals(44100, audioSource.getSampleRate());
     }
 
     @Test
@@ -115,7 +115,7 @@ class TestFFprobe {
         assertEquals(2, audioSource.getChannels());
         assertEquals("PT26.29S", audioSource.getDuration().toString());
         assertEquals("ogg/vorbis", audioSource.getFormat());
-        assertEquals(44100, audioSource.getSamplingRate());
+        assertEquals(44100, audioSource.getSampleRate());
         assertEquals("Virgin Radio", audioSource.getArtist());
     }
 
@@ -128,7 +128,7 @@ class TestFFprobe {
         assertEquals(2, audioSource.getChannels());
         assertEquals("PT5.94S", audioSource.getDuration().toString());
         assertEquals("wav/pcm_s16le", audioSource.getFormat());
-        assertEquals(44100, audioSource.getSamplingRate());
+        assertEquals(44100, audioSource.getSampleRate());
     }
 
     @Test
@@ -140,6 +140,6 @@ class TestFFprobe {
         assertEquals(2, audioSource.getChannels());
         assertEquals("PT1M45.79S", audioSource.getDuration().toString());
         assertEquals("asf/wmav2", audioSource.getFormat());
-        assertEquals(44100, audioSource.getSamplingRate());
+        assertEquals(44100, audioSource.getSampleRate());
     }
 }

@@ -5,7 +5,7 @@ CREATE TABLE song
 	channels		NUMERIC(1, 0) NOT NULL,
 	duration		VARCHAR (20) NOT NULL,
 	format		    VARCHAR (20) NOT NULL,
-	sampling_rate   INTEGER NOT NULL,
+	sample_rate     INTEGER NOT NULL,
 	artist  	    VARCHAR(100),
 	album     	    VARCHAR(100),
 	title     	    VARCHAR(200),

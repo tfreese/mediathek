@@ -3,11 +3,13 @@ package de.freese.player.core.player;
 
 import java.nio.file.Path;
 import java.util.concurrent.Executor;
+import java.util.function.Consumer;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
+import javax.sound.sampled.FloatControl;
 
 import de.freese.player.core.exception.PlayerException;
 import de.freese.player.core.input.AudioInputStreamFactory;
@@ -23,6 +25,17 @@ public final class DefaultClipPlayer extends AbstractPlayer {
 
     public DefaultClipPlayer(final Executor executor, final Path tempDir) {
         super(executor, tempDir);
+    }
+
+    @Override
+    public void configureVolumeControl(final Consumer<FloatControl> consumer) {
+        if (!isPlaying()) {
+            return;
+        }
+
+        if (clip.isOpen() && clip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+            consumer.accept((FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN));
+        }
     }
 
     @Override

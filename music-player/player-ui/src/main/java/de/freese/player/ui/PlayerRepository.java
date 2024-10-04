@@ -301,7 +301,7 @@ public final class PlayerRepository {
                 audioSource.setChannels(resultSet.getInt("channels"));
                 audioSource.setDuration(Duration.parse(resultSet.getString("duration")));
                 audioSource.setFormat(resultSet.getString("format"));
-                audioSource.setSamplingRate(resultSet.getInt("sampling_rate"));
+                audioSource.setSampleRate(resultSet.getInt("sample_rate"));
                 audioSource.setArtist(resultSet.getString("artist"));
                 audioSource.setAlbum(resultSet.getString("album"));
                 audioSource.setTitle(resultSet.getString("title"));
@@ -439,7 +439,7 @@ public final class PlayerRepository {
                 merge into song
                 (
                 uri, bit_rate, channels, duration,
-                format, sampling_rate, artist, album,
+                format, sample_rate, artist, album,
                 title, genre, release_date, disc,
                 track, is_compilation, meta_data
                 )
@@ -460,7 +460,7 @@ public final class PlayerRepository {
             preparedStatement.setInt(3, audioSource.getChannels());
             preparedStatement.setString(4, audioSource.getDuration().toString());
             preparedStatement.setString(5, audioSource.getFormat());
-            preparedStatement.setInt(6, audioSource.getSamplingRate());
+            preparedStatement.setInt(6, audioSource.getSampleRate());
             preparedStatement.setString(7, audioSource.getArtist());
             preparedStatement.setString(8, audioSource.getAlbum());
             preparedStatement.setString(9, audioSource.getTitle());

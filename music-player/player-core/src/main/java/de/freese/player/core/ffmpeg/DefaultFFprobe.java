@@ -69,7 +69,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
             throw new PlayerException("MetaData Problems - Sampling-Rate invalid: " + samplingRate + System.lineSeparator() + String.join(System.lineSeparator(), output));
         }
         else {
-            audioSource.setSamplingRate(samplingRate);
+            audioSource.setSampleRate(samplingRate);
         }
 
         audioSource.setAlbum(parseMetaDataAlbum(output));

@@ -15,32 +15,69 @@ import java.util.List;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import de.freese.player.core.model.Window;
 
 /**
  * @author Thomas Freese
+ * //@see com.sun.media.sound.Toolkit
  */
 public final class PlayerUtils {
+    /**
+     * short: -32768 to 32767
+     */
+    public static final int MAX_16_BIT = 32_768;
+
+    /**
+     * Gets the time in microseconds for the given number of bytes.
+     */
+    public static long bytes2Micros(final AudioFormat format, final long bytes) {
+        return (long) (bytes / (double) format.getFrameRate() * 1000000.0D / format.getFrameSize());
+    }
+
+    /**
+     * Gets the time in milliseconds for the given number of bytes.
+     */
+    public static long bytes2Millis(final AudioFormat format, final long bytes) {
+        return (long) (bytes / (double) format.getFrameRate() * 1000.0D / format.getFrameSize());
+    }
+
+    public static int createSampleMono(final boolean isBigEndian, final byte[] audioBytes, final int index) {
+        // final int bytesPerFrame = 2;
+
+        if (isBigEndian) {
+            return audioBytes[2 * index + 1] & 0xFF | audioBytes[2 * index] << 8;
+        }
+
+        return audioBytes[2 * index] & 0xFF | audioBytes[2 * index + 1] << 8;
+    }
+
+    public static int[] createSampleStereo(final boolean isBigEndian, final byte[] audioBytes, final int index) {
+        // final int bytesPerFrame = 4;
+        final int sampleLeft;
+        final int sampleRight;
+
+        if (isBigEndian) {
+            sampleLeft = audioBytes[4 * index + 1] & 0xFF | audioBytes[4 * index] << 8;
+            sampleRight = audioBytes[4 * index + 3] & 0xFF | audioBytes[4 * index + 2] << 8;
+        }
+        else {
+            sampleLeft = audioBytes[4 * index] & 0xFF | audioBytes[4 * index + 1] << 8;
+            sampleRight = audioBytes[4 * index + 2] & 0xFF | audioBytes[4 * index + 3] << 8;
+        }
+
+        return new int[]{sampleLeft, sampleRight};
+    }
 
     public static int[] createSamplesMono(final AudioFormat audioFormat, final byte[] audioBytes) {
         final boolean isBigEndian = audioFormat.isBigEndian();
-        final int bytesPerFrame = 2;
 
-        final int[] samples = new int[audioBytes.length / bytesPerFrame];
+        final int[] samples = new int[audioBytes.length / 2];
 
         for (int i = 0; i < samples.length; i++) {
-            final int sample;
-
-            if (isBigEndian) {
-                sample = audioBytes[bytesPerFrame * i + 1] & 0xFF | audioBytes[bytesPerFrame * i] << 8;
-            }
-            else {
-                sample = audioBytes[bytesPerFrame * i] & 0xFF | audioBytes[bytesPerFrame * i + 1] << 8;
-            }
-
-            samples[i] = sample;
+            samples[i] = createSampleMono(isBigEndian, audioBytes, i);
         }
 
         return samples;
@@ -52,29 +89,27 @@ public final class PlayerUtils {
      */
     public static int[][] createSamplesStereo(final AudioFormat audioFormat, final byte[] audioBytes) {
         final boolean isBigEndian = audioFormat.isBigEndian();
-        final int bytesPerFrame = 4;
 
-        final int[] samplesLeft = new int[audioBytes.length / bytesPerFrame];
-        final int[] samplesRight = new int[audioBytes.length / bytesPerFrame];
+        final int[] samplesLeft = new int[audioBytes.length / 4];
+        final int[] samplesRight = new int[audioBytes.length / 4];
 
         for (int i = 0; i < samplesLeft.length; i++) {
-            final int sampleLeft;
-            final int sampleRight;
+            final int[] leftRight = createSampleStereo(isBigEndian, audioBytes, i);
 
-            if (isBigEndian) {
-                sampleLeft = audioBytes[bytesPerFrame * i + 1] & 0xFF | audioBytes[bytesPerFrame * i] << 8;
-                sampleRight = audioBytes[bytesPerFrame * i + 3] & 0xFF | audioBytes[bytesPerFrame * i + 2] << 8;
-            }
-            else {
-                sampleLeft = audioBytes[bytesPerFrame * i] & 0xFF | audioBytes[bytesPerFrame * i + 1] << 8;
-                sampleRight = audioBytes[bytesPerFrame * i + 2] & 0xFF | audioBytes[bytesPerFrame * i + 3] << 8;
-            }
-
-            samplesLeft[i] = sampleLeft;
-            samplesRight[i] = sampleRight;
+            samplesLeft[i] = leftRight[0];
+            samplesRight[i] = leftRight[1];
         }
 
         return new int[][]{samplesLeft, samplesRight};
+    }
+
+    /**
+     * DB to linear scale conversion.<br>
+     *
+     * @see FloatControl.Type#MASTER_GAIN
+     */
+    public static double dBToLinear(final double dB) {
+        return Math.pow(10.0D, dB / 20.0D);
     }
 
     public static Window extractWindow(final AudioFormat audioFormat, final byte[] audioBytes, final int windowSize) {
@@ -90,6 +125,13 @@ public final class PlayerUtils {
         System.arraycopy(audioBytes, 0, bytes, 0, bytes.length);
 
         return new Window(audioFormat, bytes, 0, 0);
+    }
+
+    /**
+     * Gets the time in microseconds for the given number of frames.
+     */
+    public static long frames2Micros(final AudioFormat format, final long frames) {
+        return (long) (((double) frames) / (double) format.getFrameRate() * 1000000.0D);
     }
 
     public static Duration getDuration(final Path file) throws Exception {
@@ -122,7 +164,7 @@ public final class PlayerUtils {
     }
 
     public static double getMilliesPerSample(final AudioFormat audioFormat) {
-        return 1D / audioFormat.getFrameRate();
+        return 1D / audioFormat.getSampleRate();
     }
 
     public static double getMilliesPerSample(final Path file) throws Exception {
@@ -131,6 +173,205 @@ public final class PlayerUtils {
 
             return (double) duration.toMillis() / (double) audioInputStream.getFrameLength();
         }
+    }
+
+    /**
+     * Linear to DB scale conversion.<br>
+     *
+     * @see FloatControl.Type#MASTER_GAIN
+     */
+    public static double linearToDB(final double linear) {
+        return Math.log(((Double.compare(linear, 0.0D) == 0) ? 0.0001D : linear) / Math.log(10.0D) * 20.0D);
+    }
+
+    /**
+     * Gets the number of bytes needed to play the specified number of microseconds.
+     */
+    public static long micros2Bytes(final AudioFormat format, final long micros) {
+        final long result = (long) (micros * (double) format.getFrameRate() / 1000000.0D * format.getFrameSize());
+
+        return align(result, format.getFrameSize());
+    }
+
+    /**
+     * Gets the number of frames needed to play the specified number of microseconds.
+     */
+    public static long micros2Frames(final AudioFormat format, final long micros) {
+        return (long) (micros * (double) format.getFrameRate() / 1000000.0D);
+    }
+
+    /**
+     * Gets the number of bytes needed to play the specified number of milliseconds.
+     */
+    public static long millis2Bytes(final AudioFormat format, final long millis) {
+        final long result = (long) (millis * (double) format.getFrameRate() / 1000.0D * format.getFrameSize());
+
+        return align(result, format.getFrameSize());
+    }
+
+    /**
+     * If a sample is outside the range, it will be clipped (rounded to –1.0 or +1.0).
+     */
+    public static byte[] sampleToByte(final AudioFormat audioFormat, final double sampleLeft, final double sampleRight) {
+        if (Double.isNaN(sampleLeft)) {
+            throw new IllegalArgumentException("sampleLeft is NaN");
+        }
+
+        if (Double.isNaN(sampleRight)) {
+            throw new IllegalArgumentException("sampleRight is NaN");
+        }
+
+        double left = sampleLeft;
+        double right = sampleRight;
+
+        // clip if outside [-1, +1]
+        if (left < -1.0D) {
+            left = -1.0D;
+        }
+        if (left > +1.0D) {
+            left = +1.0D;
+        }
+        if (right < -1.0D) {
+            right = -1.0D;
+        }
+        if (right > +1.0D) {
+            right = +1.0D;
+        }
+
+        short sLeft = (short) (MAX_16_BIT * left);
+        if (Double.compare(left, 1.0D) == 0) {
+            sLeft = Short.MAX_VALUE;   // special case since 32768 not a short
+        }
+
+        short sRight = (short) (MAX_16_BIT * right);
+        if (Double.compare(right, 1.0D) == 0) {
+            sRight = Short.MAX_VALUE;   // special case since 32768 not a short
+        }
+
+        final byte[] buffer = new byte[4];
+
+        if (audioFormat.isBigEndian()) {
+            buffer[0] = (byte) (sLeft >> 8);
+            buffer[1] = (byte) sLeft;
+            buffer[2] = (byte) (sRight >> 8);
+            buffer[3] = (byte) sRight;
+        }
+        else {
+            buffer[0] = (byte) sLeft;
+            buffer[1] = (byte) (sLeft >> 8);
+            buffer[2] = (byte) sRight;
+            buffer[3] = (byte) (sRight >> 8);
+        }
+
+        return buffer;
+    }
+
+    /**
+     * If a sample is outside the range, it will be clipped (rounded to –SAMPLE_RATE or +SAMPLE_RATE).
+     */
+    public static byte[] sampleToByte(final AudioFormat audioFormat, final int sampleLeft, final int sampleRight) {
+        final float sampleRate = audioFormat.getSampleRate();
+        int left = sampleLeft;
+        int right = sampleRight;
+
+        // clip if outside [-SAMPLE_RATE, +SAMPLE_RATE]
+        if (left < -sampleRate) {
+            left = -(int) sampleRate;
+        }
+        if (left > +sampleRate) {
+            left = +(int) sampleRate;
+        }
+
+        if (right < -sampleRate) {
+            right = -(int) sampleRate;
+        }
+        if (right > +sampleRate) {
+            right = +(int) sampleRate;
+        }
+
+        final byte[] buffer = new byte[4];
+
+        if (audioFormat.isBigEndian()) {
+            buffer[0] = (byte) (left >> 8);
+            buffer[1] = (byte) left;
+            buffer[2] = (byte) (right >> 8);
+            buffer[3] = (byte) right;
+        }
+        else {
+            buffer[0] = (byte) left;
+            buffer[1] = (byte) (left >> 8);
+            buffer[2] = (byte) right;
+            buffer[3] = (byte) (right >> 8);
+        }
+
+        return buffer;
+    }
+
+    /**
+     * If the sample is outside the range, it will be clipped (rounded to –1.0 or +1.0).
+     */
+    public static byte[] sampleToByte(final AudioFormat audioFormat, final double sampleMono) {
+        if (Double.isNaN(sampleMono)) {
+            throw new IllegalArgumentException("sample is NaN");
+        }
+
+        double mono = sampleMono;
+
+        // clip if outside [-1, +1]
+        if (mono < -1.0D) {
+            mono = -1.0D;
+        }
+        if (mono > +1.0D) {
+            mono = +1.0D;
+        }
+
+        short s = (short) (MAX_16_BIT * mono);
+        if (Double.compare(mono, 1.0D) == 0) {
+            s = Short.MAX_VALUE;   // special case since 32768 not a short
+        }
+
+        final byte[] buffer = new byte[2];
+
+        if (audioFormat.isBigEndian()) {
+            buffer[0] = (byte) (s >> 8);
+            buffer[1] = (byte) s;
+        }
+        else {
+            buffer[0] = (byte) s;
+            buffer[1] = (byte) (s >> 8);
+        }
+
+        return buffer;
+    }
+
+    /**
+     * If the sample is outside the range, it will be clipped (rounded to –SAMPLE_RATE or +SAMPLE_RATE).
+     */
+    public static byte[] sampleToByte(final AudioFormat audioFormat, final int sampleMono) {
+        final float sampleRate = audioFormat.getSampleRate();
+        int mono = sampleMono;
+
+        // clip if outside [-SAMPLE_RATE, +SAMPLE_RATE]
+        if (mono < -sampleRate) {
+            mono = -(int) sampleRate;
+        }
+
+        if (mono > +sampleRate) {
+            mono = +(int) sampleRate;
+        }
+
+        final byte[] buffer = new byte[2];
+
+        if (audioFormat.isBigEndian()) {
+            buffer[0] = (byte) (mono >> 8);
+            buffer[1] = (byte) mono;
+        }
+        else {
+            buffer[0] = (byte) mono;
+            buffer[1] = (byte) (mono >> 8);
+        }
+
+        return buffer;
     }
 
     public static String toFileName(final URI uri) {
@@ -182,26 +423,6 @@ public final class PlayerUtils {
         return String.join("/", splits);
     }
 
-    // private static int[] convertBytesToSamples(final byte[] bytes) {
-    //     final int BYTES_PER_SAMPLE = 2;
-    //     final int[] samples = new int[bytes.length / BYTES_PER_SAMPLE];
-    //
-    //     int b = 0;
-    //
-    //     for (int i = 0; i < samples.length; i++) {
-    //         final ByteBuffer bb = ByteBuffer.allocate(BYTES_PER_SAMPLE);
-    //         bb.order(ByteOrder.LITTLE_ENDIAN);
-    //
-    //         for (int j = 0; j < BYTES_PER_SAMPLE; j++) {
-    //             bb.put(bytes[b++]);
-    //         }
-    //
-    //         samples[i] = bb.getShort(0);
-    //     }
-    //
-    //     return samples;
-    // }
-
     public static AudioInputStream wrapTo16Bit(final InputStream inputStream) throws IOException, UnsupportedAudioFileException {
         final AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(inputStream);
         final AudioFormat audioFormat = audioInputStream.getFormat();
@@ -221,7 +442,47 @@ public final class PlayerUtils {
         return AudioSystem.getAudioInputStream(decodedFormat, audioInputStream);
     }
 
+    /**
+     * Returns bytes aligned to a multiple of block size
+     * the return value will be in the range of (bytes-blockSize+1) ... bytes
+     */
+    static long align(final long bytes, final int blockSize) {
+        if (blockSize <= 1) {
+            return bytes;
+        }
+
+        return bytes - (bytes % blockSize);
+    }
+
+    static int align(final int bytes, final int blockSize) {
+        if (blockSize <= 1) {
+            return bytes;
+        }
+
+        return bytes - (bytes % blockSize);
+    }
+
     private PlayerUtils() {
         super();
     }
+
+    // private static int[] convertBytesToSamples(final byte[] bytes) {
+    //     final int BYTES_PER_SAMPLE = 2;
+    //     final int[] samples = new int[bytes.length / BYTES_PER_SAMPLE];
+    //
+    //     int b = 0;
+    //
+    //     for (int i = 0; i < samples.length; i++) {
+    //         final ByteBuffer bb = ByteBuffer.allocate(BYTES_PER_SAMPLE);
+    //         bb.order(ByteOrder.LITTLE_ENDIAN);
+    //
+    //         for (int j = 0; j < BYTES_PER_SAMPLE; j++) {
+    //             bb.put(bytes[b++]);
+    //         }
+    //
+    //         samples[i] = bb.getShort(0);
+    //     }
+    //
+    //     return samples;
+    // }
 }

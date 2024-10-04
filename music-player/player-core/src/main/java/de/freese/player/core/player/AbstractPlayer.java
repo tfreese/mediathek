@@ -81,5 +81,10 @@ public abstract class AbstractPlayer implements Player {
 
     protected void setAudioInputStream(final AudioInputStream audioInputStream) {
         this.audioInputStream = audioInputStream;
+
+        if (audioInputStream != null) {
+            // See DspPlayer#jumpTo
+            audioInputStream.mark(Integer.MAX_VALUE);
+        }
     }
 }
