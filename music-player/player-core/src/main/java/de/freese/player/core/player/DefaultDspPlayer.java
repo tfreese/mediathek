@@ -52,11 +52,16 @@ public final class DefaultDspPlayer extends AbstractPlayer implements DspPlayer 
             return;
         }
 
+        if (duration.toMillis() >= getAudioSource().getDuration().toMillis()) {
+            return;
+        }
+
         try {
             // final double percent = (double) duration.toMillis() / (double) getAudioSource().getDuration().toMillis();
             // final long byteIndex = (long) (Files.size(getAudioSource().getTmpFile()) * percent);
 
-            final long byteIndex = PlayerUtils.micros2Bytes(getAudioInputStream().getFormat(), duration.toMillis() * 1000L);
+            final long byteIndex = PlayerUtils.millisToBytes(getAudioInputStream().getFormat(), duration.toMillis());
+            framesRead = PlayerUtils.milliesToFrames(getAudioInputStream().getFormat(), duration.toMillis());
 
             getAudioInputStream().reset();
             getAudioInputStream().skip(byteIndex);

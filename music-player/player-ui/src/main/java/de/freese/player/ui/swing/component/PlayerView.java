@@ -117,7 +117,43 @@ public final class PlayerView {
         panel.add(labelSongsTotal, GbcBuilder.of(0, row).anchorWest().gridwidth(4).insets(5, 5, 0, 0));
         panel.add(labelSongTimePlayed, GbcBuilder.of(4, row).anchorEast().insets(5, 5, 0, 0));
         panel.add(sliderTimeLine, GbcBuilder.of(5, row).anchorCenter().gridwidth(4).fillHorizontal().insets(5, 0, 0, 0));
-        panel.add(labelSongTimeTotal, GbcBuilder.of(9, row).anchorWest().insets(5, 0, 0, 0));
+        // panel.add(labelSongTimeTotal, GbcBuilder.of(9, row).anchorWest().insets(5, 0, 0, 0));
+
+        final JPanel timePanel = new JPanel(new GridBagLayout());
+        timePanel.add(labelSongTimeTotal, GbcBuilder.of(0, 0).anchorWest().insets(5, 0, 0, 0));
+
+        final JButton buttonFastBackward = new JButton("<<");
+        buttonFastBackward.setToolTipText("Backward 10 Sec.");
+        buttonFastBackward.addActionListener(event -> {
+            final Duration timeTotal = ApplicationContext.getSongCollection().getCurrentAudioSource().getDuration();
+
+            final long newTimeIndex = (long) (timeTotal.toMillis() * (sliderTimeLine.getValue() / 100D));
+            final Duration timeTarget = Duration.ofMillis(newTimeIndex).minusSeconds(10);
+
+            if (timeTarget.toMillis() <= 0) {
+                return;
+            }
+
+            ApplicationContext.getPlayer().jumpTo(timeTarget);
+        });
+        timePanel.add(buttonFastBackward, GbcBuilder.of(1, 0).insets(0, 0, 5, 0));
+
+        final JButton buttonFastForward = new JButton(">>");
+        buttonFastForward.setToolTipText("Forward 10 Sec.");
+        buttonFastForward.addActionListener(event -> {
+            final Duration timeTotal = ApplicationContext.getSongCollection().getCurrentAudioSource().getDuration();
+
+            final long newTimeIndex = (long) (timeTotal.toMillis() * (sliderTimeLine.getValue() / 100D));
+            final Duration timeTarget = Duration.ofMillis(newTimeIndex).plusSeconds(10);
+
+            if (timeTarget.toMillis() >= timeTotal.toMillis()) {
+                return;
+            }
+
+            ApplicationContext.getPlayer().jumpTo(timeTarget);
+        });
+        timePanel.add(buttonFastForward, GbcBuilder.of(2, 0).insets(0, 0, 5, 5));
+        panel.add(timePanel, GbcBuilder.of(9, row).insets(5, 0, 0, 0));
 
         initListener();
     }
@@ -387,29 +423,6 @@ public final class PlayerView {
     private void initTimeLine() {
         sliderTimeLine = new JSlider(0, 100);
         sliderTimeLine.setEnabled(false);
-        sliderTimeLine.setSnapToTicks(false);
-        sliderTimeLine.setMinorTickSpacing(5);
-        // sliderTimeLine.setLabelTable(jSlider.createStandardLabels(100));
-        // sliderTimeLine.setPaintLabels(false);
-        // sliderTimeLine.setPaintTicks(false);
-        // sliderTimeLine.addChangeListener(event -> {
-        //             if (sliderTimeLine.getValueIsAdjusting()) {
-        //                 // Manual Changes
-        //                 System.out.println("getValueIsAdjusting");
-        //                 final AudioSource audioSource = ApplicationContext.getSongCollection().getCurrentAudioSource();
-        //                 final Duration timeTotal = audioSource.getDuration();
-        //
-        //                 final long newTimeIndex = (long) (timeTotal.toMillis() * (sliderTimeLine.getValue() / 100D));
-        //                 final Duration timeTarget = Duration.ofMillis(newTimeIndex);
-        //
-        //                 ApplicationContext.getPlayer().jumpTo(timeTarget);
-        //
-        //                 return;
-        //             }
-        //
-        //             System.out.println(sliderTimeLine.getValue());
-        //         }
-        // );
 
         labelSongTimePlayed = new JLabel();
         labelSongTimePlayed.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -450,7 +463,7 @@ public final class PlayerView {
         // Min: -80.0 dB
         // Max: 6.0206 dB
         sliderVolumeControl = new JSlider(-40, 7, 0);
-        // sliderVolumeControl.setSnapToTicks(true);
+        sliderVolumeControl.setSnapToTicks(false);
         sliderVolumeControl.setMajorTickSpacing(5);
         sliderVolumeControl.setMinorTickSpacing(5);
         sliderVolumeControl.setLabelTable(new Hashtable<>(Map.of(-40, new JLabel("0"), 7, new JLabel("100"))));

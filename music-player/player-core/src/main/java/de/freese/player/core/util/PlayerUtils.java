@@ -31,16 +31,9 @@ public final class PlayerUtils {
     public static final int MAX_16_BIT = 32_768;
 
     /**
-     * Gets the time in microseconds for the given number of bytes.
-     */
-    public static long bytes2Micros(final AudioFormat format, final long bytes) {
-        return (long) (bytes / (double) format.getFrameRate() * 1000000.0D / format.getFrameSize());
-    }
-
-    /**
      * Gets the time in milliseconds for the given number of bytes.
      */
-    public static long bytes2Millis(final AudioFormat format, final long bytes) {
+    public static long bytesToMillis(final AudioFormat format, final long bytes) {
         return (long) (bytes / (double) format.getFrameRate() * 1000.0D / format.getFrameSize());
     }
 
@@ -128,10 +121,10 @@ public final class PlayerUtils {
     }
 
     /**
-     * Gets the time in microseconds for the given number of frames.
+     * Gets the time in milliseconds for the given number of frames.
      */
-    public static long frames2Micros(final AudioFormat format, final long frames) {
-        return (long) (((double) frames) / (double) format.getFrameRate() * 1000000.0D);
+    public static long framesToMillies(final AudioFormat format, final long frames) {
+        return (long) (((double) frames) / (double) format.getFrameRate() * 1000.0D);
     }
 
     public static Duration getDuration(final Path file) throws Exception {
@@ -185,25 +178,16 @@ public final class PlayerUtils {
     }
 
     /**
-     * Gets the number of bytes needed to play the specified number of microseconds.
+     * Gets the number of frames needed to play the specified number of milliseconds.
      */
-    public static long micros2Bytes(final AudioFormat format, final long micros) {
-        final long result = (long) (micros * (double) format.getFrameRate() / 1000000.0D * format.getFrameSize());
-
-        return align(result, format.getFrameSize());
-    }
-
-    /**
-     * Gets the number of frames needed to play the specified number of microseconds.
-     */
-    public static long micros2Frames(final AudioFormat format, final long micros) {
-        return (long) (micros * (double) format.getFrameRate() / 1000000.0D);
+    public static long milliesToFrames(final AudioFormat format, final long millis) {
+        return (long) (millis * (double) format.getFrameRate() / 1000.0D);
     }
 
     /**
      * Gets the number of bytes needed to play the specified number of milliseconds.
      */
-    public static long millis2Bytes(final AudioFormat format, final long millis) {
+    public static long millisToBytes(final AudioFormat format, final long millis) {
         final long result = (long) (millis * (double) format.getFrameRate() / 1000.0D * format.getFrameSize());
 
         return align(result, format.getFrameSize());

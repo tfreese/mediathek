@@ -128,6 +128,41 @@ public final class PlayerApplication {
 
         final SwingWorker<Void, AudioSource> swingWorker = new ReloadPlayListSwingWorker();
         ApplicationContext.getExecutorService().execute(swingWorker);
+
+        // mainFrame.addKeyListener(new KeyAdapter() {
+        //     @Override
+        //     public void keyPressed(final KeyEvent event) {
+        //         System.out.println("event = " + event.paramString());
+        //     }
+        // });
+
+        // ((JComponent) mainFrame.getComponent(0)).getInputMap().put(KeyStroke.getKeyStroke("F2"), "doSomething");
+        // ((JComponent) mainFrame.getComponent(0)).getActionMap().put("doSomething", new AbstractAction() {
+        //     @Serial
+        //     private static final long serialVersionUID = 6527590687764755853L;
+        //
+        //     @Override
+        //     public void actionPerformed(final ActionEvent event) {
+        //         System.out.println("event = " + event.paramString());
+        //     }
+        // });
+
+        // KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(event -> {
+        //     System.out.println("event = " + event.paramString());
+        //     return false;
+        // });
+
+        // SwingUtilities.invokeLater(() -> {
+        //     try {
+        //         final Robot robot = new Robot();
+        //         robot.delay(1000);
+        //         robot.keyPress(KeyEvent.VK_P);
+        //         robot.keyRelease(KeyEvent.VK_P);
+        //     }
+        //     catch (AWTException ex) {
+        //         LOGGER.error(ex.getMessage(), ex);
+        //     }
+        // });
     }
 
     private static void initMenu(final JFrame frame) {

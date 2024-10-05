@@ -1,7 +1,7 @@
 // Created: 07 Sept. 2024
 package de.freese.player.ui.spectrum;
 
-import javax.swing.JComponent;
+import java.awt.Component;
 
 import de.freese.player.fft.output.Spectrum;
 
@@ -9,7 +9,7 @@ import de.freese.player.fft.output.Spectrum;
  * @author Thomas Freese
  */
 public interface SpectrumRenderer {
-    JComponent getComponent();
+    Component getComponent();
 
     void updateChartData(Spectrum spectrum);
 }

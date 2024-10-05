@@ -3,13 +3,14 @@ package de.freese.player.ui.swing.component.spectrum;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serial;
 import java.text.DecimalFormat;
 import java.util.List;
 
-import javax.swing.JComponent;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import org.jfree.chart.ChartPanel;
@@ -91,27 +92,31 @@ public final class JFreeChartRenderer implements SpectrumRenderer {
     }
 
     @Override
-    public JComponent getComponent() {
+    public Component getComponent() {
         return panel;
     }
 
     @Override
     public void updateChartData(final Spectrum spectrum) {
-        final XYSeries series = data.getSeries("f");
+        final Runnable runnable = () -> {
+            final XYSeries series = data.getSeries("f");
+            series.clear();
 
-        series.clear();
+            if (spectrum == null) {
+                return;
+            }
 
-        if (spectrum == null) {
-            return;
+            // spectrum.forEach(frequency -> series.addOrUpdate(frequency.getFrequency() / 1000D, frequency.getAmplitude()));
+            spectrum.forEach(frequency -> series.add(frequency.getFrequency() / 1000D, frequency.getAmplitude(), false));
+
+            series.fireSeriesChanged();
+        };
+
+        if (SwingUtilities.isEventDispatchThread()) {
+            runnable.run();
         }
-
-        // spectrum.forEach(frequency -> series.addOrUpdate(frequency.getFrequency() / 1000D, frequency.getAmplitude()));
-        spectrum.forEach(frequency -> series.add(frequency.getFrequency() / 1000D, frequency.getAmplitude(), false));
-        series.fireSeriesChanged();
-
-        // 220 -> Spectrum is 0-22kHz -> 100Hz Range per Band
-        // final Map<Integer, Double> result = spectrum.stream().parallel().collect(new BandSpectrumCollector(220));
-        // result.forEach((band, amp) -> series.add(band, amp, false));
-        // series.fireSeriesChanged();
+        else {
+            SwingUtilities.invokeLater(runnable);
+        }
     }
 }

@@ -4,8 +4,6 @@ package de.freese.player.ui.spectrum;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-import javax.swing.SwingUtilities;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -103,11 +101,6 @@ public final class SpectrumDspProcessor implements DspProcessor {
 
         FFTMath.normalize(spectrum, frequency.getAmplitude());
 
-        if (SwingUtilities.isEventDispatchThread()) {
-            spectrumConsumer.accept(spectrum);
-        }
-        else {
-            SwingUtilities.invokeLater(() -> spectrumConsumer.accept(spectrum));
-        }
+        spectrumConsumer.accept(spectrum);
     }
 }

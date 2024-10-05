@@ -22,7 +22,8 @@ public final class SpectrumView {
     public SpectrumView() {
         super();
 
-        spectrumRenderer = new JFreeChartRenderer();
+        // spectrumRenderer = new JFreeChartRenderer();
+        spectrumRenderer = new BarSpectrumRenderer();
         panel.add(spectrumRenderer.getComponent(), BorderLayout.CENTER);
     }
 
