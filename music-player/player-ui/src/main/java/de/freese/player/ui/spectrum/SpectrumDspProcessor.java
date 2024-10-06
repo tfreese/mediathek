@@ -4,15 +4,10 @@ package de.freese.player.ui.spectrum;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import de.freese.player.core.dsp.DspProcessor;
 import de.freese.player.core.model.Window;
 import de.freese.player.fft.config.FFTConfig;
 import de.freese.player.fft.math.FFTComputationWrapper;
-import de.freese.player.fft.math.FFTMath;
-import de.freese.player.fft.output.Frequency;
 import de.freese.player.fft.output.Spectrum;
 import de.freese.player.fft.sampling.WindowFunction;
 
@@ -20,7 +15,7 @@ import de.freese.player.fft.sampling.WindowFunction;
  * @author Thomas Freese
  */
 public final class SpectrumDspProcessor implements DspProcessor {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SpectrumDspProcessor.class);
+    // private static final Logger LOGGER = LoggerFactory.getLogger(SpectrumDspProcessor.class);
 
     /**
      * Smoothing
@@ -33,7 +28,7 @@ public final class SpectrumDspProcessor implements DspProcessor {
     private final Consumer<Spectrum> spectrumConsumer;
 
     private int[] lastSamples;
-    private double maxAmp;
+    // private double maxAmp;
 
     public SpectrumDspProcessor(final Consumer<Spectrum> spectrumConsumer) {
         super();
@@ -55,7 +50,7 @@ public final class SpectrumDspProcessor implements DspProcessor {
 
     @Override
     public void reset() {
-        maxAmp = 0D;
+        // maxAmp = 0D;
         spectrumConsumer.accept(null);
     }
 
@@ -92,14 +87,12 @@ public final class SpectrumDspProcessor implements DspProcessor {
 
         final Spectrum spectrum = FFTComputationWrapper.createSpectrum(fftSamples, window.getAudioFormat().getSampleRate(), fftConfig);
 
-        final Frequency frequency = FFTMath.findMaxAmplitude(spectrum);
+        // final Frequency frequency = FFTMath.findMaxAmplitude(spectrum);
+        //
+        // maxAmp = Math.max(maxAmp, frequency.getAmplitude());
+        // LOGGER.trace("maxAmp = {}", maxAmp);
+        //
         // FFTMath.normalize(spectrum, frequency.getAmplitude());
-
-        maxAmp = Math.max(maxAmp, frequency.getAmplitude());
-        // maxAmp = (maxAmp + frequency.getAmplitude()) / 2D;
-        LOGGER.trace("maxAmp = {}", maxAmp);
-
-        FFTMath.normalize(spectrum, frequency.getAmplitude());
 
         spectrumConsumer.accept(spectrum);
     }

@@ -26,6 +26,7 @@ import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import de.freese.player.fft.math.FFTMath;
 import de.freese.player.fft.output.Spectrum;
 import de.freese.player.ui.spectrum.SpectrumRenderer;
 
@@ -98,6 +99,8 @@ public final class JFreeChartRenderer implements SpectrumRenderer {
 
     @Override
     public void updateChartData(final Spectrum spectrum) {
+        FFTMath.normalize(spectrum, FFTMath.findMaxAmplitude(spectrum).getAmplitude());
+
         final Runnable runnable = () -> {
             final XYSeries series = data.getSeries("f");
             series.clear();
@@ -106,8 +109,8 @@ public final class JFreeChartRenderer implements SpectrumRenderer {
                 return;
             }
 
-            // spectrum.forEach(frequency -> series.addOrUpdate(frequency.getFrequency() / 1000D, frequency.getAmplitude()));
-            spectrum.forEach(frequency -> series.add(frequency.getFrequency() / 1000D, frequency.getAmplitude(), false));
+            // spectrum.forEach(f -> series.addOrUpdate(f.getFrequency() / 1000D, frequency.getAmplitude()));
+            spectrum.forEach(f -> series.add(f.getFrequency() / 1000D, f.getAmplitude(), false));
 
             series.fireSeriesChanged();
         };

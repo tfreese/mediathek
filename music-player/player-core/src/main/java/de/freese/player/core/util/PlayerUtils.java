@@ -135,7 +135,7 @@ public final class PlayerUtils {
 
     public static Duration getDuration(final Path file, final AudioFormat audioFormat) throws IOException {
         final long audioFileLength = Files.size(file);
-        final double durationInSeconds = (audioFileLength / ((double) audioFormat.getFrameSize() * audioFormat.getFrameRate()));
+        final double durationInSeconds = audioFileLength / ((double) audioFormat.getFrameSize() * audioFormat.getFrameRate());
 
         return Duration.ofSeconds((long) durationInSeconds);
     }

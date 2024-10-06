@@ -21,6 +21,8 @@ import de.freese.player.fft.output.Frequency;
 public final class BandSpectrumCollector implements Collector<Frequency, Map<Integer, double[]>, Map<Integer, Double>> {
     private final double bandCount;
 
+    private double maxAmp;
+
     /**
      * Example:<br>
      * bandCount = 220 -> Spectrum is 0-22kHz -> 100Hz Range per Band
@@ -79,11 +81,17 @@ public final class BandSpectrumCollector implements Collector<Frequency, Map<Int
 
             map.forEach((key, value) -> {
                 final double avg = value[0] / value[1];
+                maxAmp = Math.max(maxAmp, avg);
+
                 finish.put(key, avg);
             });
 
             return finish;
         };
+    }
+
+    public double getMaxAmp() {
+        return maxAmp;
     }
 
     @Override

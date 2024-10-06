@@ -52,7 +52,7 @@ public final class TimeLineDspProcessor implements DspProcessor {
             progressConsumer.accept(progress);
         }
         else {
-            progressConsumer.accept(progress);
+            SwingUtilities.invokeLater(() -> progressConsumer.accept(progress));
         }
     }
 }

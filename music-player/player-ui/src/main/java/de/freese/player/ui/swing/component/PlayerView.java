@@ -382,27 +382,28 @@ public final class PlayerView {
         columnModel.getColumn(0).setWidth(250);
         // columnModel.getColumn(0).setPreferredWidth(250);
 
-        for (int i = 3; i < tableSongSollection.getColumnModel().getColumnCount(); i++) {
-            if (i == 4) {
-                // SampleRate
-                columnModel.getColumn(i).setMinWidth(110);
-                columnModel.getColumn(i).setMaxWidth(110);
-            }
-            else if (i == 5 || i == 8 || i == 9) {
-                // BitRate, Disk, Track
-                columnModel.getColumn(i).setMinWidth(80);
-                columnModel.getColumn(i).setMaxWidth(80);
-            }
-            else if (i == 11) {
-                // Genre
-                columnModel.getColumn(i).setMinWidth(150);
-                columnModel.getColumn(i).setMaxWidth(1000);
-            }
-            else {
-                columnModel.getColumn(i).setMinWidth(90);
-                // columnModel.getColumn(i).setWidth(90);
-                // columnModel.getColumn(i).setPreferredWidth(90);
-                columnModel.getColumn(i).setMaxWidth(90);
+        for (int col = 3; col < tableSongSollection.getColumnModel().getColumnCount(); col++) {
+            switch (col) {
+                case 4:
+                    // SampleRate
+                    columnModel.getColumn(col).setMinWidth(110);
+                    columnModel.getColumn(col).setMaxWidth(110);
+                    break;
+                case 5, 8, 9:
+                    // BitRate, Disk, Track
+                    columnModel.getColumn(col).setMinWidth(80);
+                    columnModel.getColumn(col).setMaxWidth(80);
+                    break;
+                case 11:
+                    // Genre
+                    columnModel.getColumn(col).setMinWidth(150);
+                    columnModel.getColumn(col).setMaxWidth(1000);
+                    break;
+                default:
+                    columnModel.getColumn(col).setMinWidth(90);
+                    // columnModel.getColumn(i).setWidth(90);
+                    // columnModel.getColumn(i).setPreferredWidth(90);
+                    columnModel.getColumn(col).setMaxWidth(90);
             }
         }
 
