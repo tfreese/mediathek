@@ -65,12 +65,7 @@ public final class SourceDataLinePlayer {
     public void play(final Window window) {
         Objects.requireNonNull(window, "window required");
 
-        if (window.isMono()) {
-            window.forEachMono(this::play);
-        }
-        else {
-            window.forEachStereo(this::play);
-        }
+        window.forEach(this::play);
     }
 
     public void play(final byte[] audioData, final int length) {

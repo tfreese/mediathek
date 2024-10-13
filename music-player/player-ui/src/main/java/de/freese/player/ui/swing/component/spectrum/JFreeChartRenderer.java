@@ -27,6 +27,7 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import de.freese.player.fft.math.FFTMath;
+import de.freese.player.fft.output.Frequency;
 import de.freese.player.fft.output.Spectrum;
 import de.freese.player.ui.spectrum.SpectrumRenderer;
 
@@ -37,6 +38,8 @@ import de.freese.player.ui.spectrum.SpectrumRenderer;
 public final class JFreeChartRenderer implements SpectrumRenderer {
     private final XYSeriesCollection data = new XYSeriesCollection();
     private final ChartPanel panel;
+
+    private double maxAmp;
 
     public JFreeChartRenderer() {
         super();
@@ -99,15 +102,21 @@ public final class JFreeChartRenderer implements SpectrumRenderer {
 
     @Override
     public void updateChartData(final Spectrum spectrum) {
-        FFTMath.normalize(spectrum, FFTMath.findMaxAmplitude(spectrum).getAmplitude());
-
         final Runnable runnable = () -> {
             final XYSeries series = data.getSeries("f");
             series.clear();
 
             if (spectrum == null) {
+                maxAmp = 0D;
                 return;
             }
+
+            // Normalize
+            final Frequency frequency = FFTMath.findMaxAmplitude(spectrum);
+
+            maxAmp = frequency.getAmplitude();
+            // maxAmp = Math.max(maxAmp, frequency.getAmplitude());
+            FFTMath.normalize(spectrum, maxAmp);
 
             // spectrum.forEach(f -> series.addOrUpdate(f.getFrequency() / 1000D, frequency.getAmplitude()));
             spectrum.forEach(f -> series.add(f.getFrequency() / 1000D, f.getAmplitude(), false));

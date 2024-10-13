@@ -37,6 +37,7 @@ import de.freese.player.core.player.DspPlayer;
 import de.freese.player.core.player.SongCollection;
 import de.freese.player.core.util.PlayerUtils;
 import de.freese.player.ui.ApplicationContext;
+import de.freese.player.ui.equalizer.EqualizerDspProcessor;
 import de.freese.player.ui.spectrum.SpectrumDspProcessor;
 import de.freese.player.ui.swing.component.spectrum.SpectrumView;
 import de.freese.player.ui.swing.component.table.TableCellRendererSongCollection;
@@ -84,6 +85,8 @@ public final class PlayerView {
         initPlayerControl();
 
         final JScrollPane scrollPaneSongCollection = initTableSongCollection();
+
+        ApplicationContext.getPlayer().addProcessor(new EqualizerDspProcessor());
 
         initSearch();
         initSpectrum();

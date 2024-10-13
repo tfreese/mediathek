@@ -23,7 +23,7 @@ package de.freese.player.equalizer;
  * Date: 02.05.2004
  * Time: 12:00:29
  */
-public class IIRBase {
+public abstract class IIRBase {
     /* BETA, ALPHA, GAMMA */
     static final IIRCoefficients[] IIR_CF10_11K_11025 = {
             /* 31 Hz*/

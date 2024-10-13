@@ -1,9 +1,6 @@
 // Created: 21 Sept. 2024
 package de.freese.player.ui.equalizer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import de.freese.player.core.dsp.DspProcessor;
 import de.freese.player.core.model.Window;
 
@@ -11,20 +8,30 @@ import de.freese.player.core.model.Window;
  * @author Thomas Freese
  */
 public final class EqualizerDspProcessor implements DspProcessor {
-    private static final Logger LOGGER = LoggerFactory.getLogger(EqualizerDspProcessor.class);
+    // private static final Logger LOGGER = LoggerFactory.getLogger(EqualizerDspProcessor.class);
+
+    private final IIR iir = new IIR();
+
+    public EqualizerControls getControls() {
+        return iir.getControls();
+    }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return getControls().isEnabled();
     }
 
     @Override
     public void process(final Window window) {
-        // TODO
+        doEqualize(window);
     }
 
     @Override
     public void reset() {
-        // Empty
+        iir.cleanHistory();
+    }
+
+    private void doEqualize(final Window window) {
+        iir.iir(window.getSamplesLeft(), window.getSamplesRight());
     }
 }

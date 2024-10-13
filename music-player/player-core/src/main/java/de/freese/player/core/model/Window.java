@@ -3,7 +3,6 @@ package de.freese.player.core.model;
 
 import java.util.Objects;
 import java.util.function.BiConsumer;
-import java.util.function.IntConsumer;
 
 import javax.sound.sampled.AudioFormat;
 
@@ -35,7 +34,7 @@ public final class Window {
         if (audioFormat.getChannels() == 1) {
             // Mono
             this.samplesLeft = PlayerUtils.createSamplesMono(audioFormat, audioBytes);
-            this.samplesRight = null;
+            this.samplesRight = this.samplesLeft;
         }
         else {
             // Stereo
@@ -48,13 +47,7 @@ public final class Window {
         this.framesTotal = framesTotal;
     }
 
-    public void forEachMono(final IntConsumer consumer) {
-        for (int sample : getSamplesLeft()) {
-            consumer.accept(sample);
-        }
-    }
-
-    public void forEachStereo(final BiConsumer<Integer, Integer> consumer) {
+    public void forEach(final BiConsumer<Integer, Integer> consumer) {
         for (int i = 0; i < getSamplesRight().length; i++) {
             consumer.accept(getSamplesLeft()[i], getSamplesRight()[i]);
         }

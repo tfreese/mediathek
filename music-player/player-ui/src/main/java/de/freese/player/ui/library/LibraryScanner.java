@@ -29,7 +29,7 @@ import de.freese.player.ui.ApplicationContext;
  */
 public final class LibraryScanner {
     private static final FileVisitOption[] FILEVISITOPTION_NO_SYNLINKS = {};
-    private static final FileVisitOption[] FILEVISITOPTION_WITH_SYMLINKS = {FileVisitOption.FOLLOW_LINKS};
+    // private static final FileVisitOption[] FILEVISITOPTION_WITH_SYMLINKS = {FileVisitOption.FOLLOW_LINKS};
     private static final Logger LOGGER = LoggerFactory.getLogger(LibraryScanner.class);
 
     public void scan(final Set<Path> paths, final IntConsumer sizeConsumer, final Consumer<AudioSource> audioSourceConsumer) {

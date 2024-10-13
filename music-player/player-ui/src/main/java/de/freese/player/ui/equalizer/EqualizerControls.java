@@ -11,6 +11,8 @@ public final class EqualizerControls {
      */
     private final double[] bands;
 
+    // private final boolean enabled = true;
+
     /**
      * Volume gain.
      * Values should be between 0.0 and 1.0.
@@ -21,6 +23,10 @@ public final class EqualizerControls {
         super();
 
         bands = new double[bandCount];
+    }
+
+    public double[] getBands() {
+        return bands;
     }
 
     /**
@@ -84,6 +90,17 @@ public final class EqualizerControls {
      */
     public double getPreampValue() {
         return preamp;
+    }
+
+    public boolean isEnabled() {
+        // return enabled;
+        double bandSum = 0D;
+
+        for (double band : bands) {
+            bandSum += band;
+        }
+
+        return Double.compare(preamp, 1D) != 0 || Double.compare(bandSum, 0D) != 0;
     }
 
     /**

@@ -96,7 +96,6 @@ public class IIR extends IIRBase {
      * Equalizer config
      */
     private final IIRControls eqcfg;
-    private final float rate;
 
     /**
      * Indexes for the history arrays.
@@ -115,7 +114,6 @@ public class IIR extends IIRBase {
     public IIR(final int bands, final float rate, final int channels) {
         super();
 
-        this.rate = rate;
         this.channels = channels;
         this.bands = bands;
         this.eqcfg = new IIRControls(bands, channels);
@@ -124,7 +122,7 @@ public class IIR extends IIRBase {
             throw new IllegalArgumentException("Unsupported parameters");
         }
 
-        initIir();
+        initIir(rate);
     }
 
     /**
@@ -176,7 +174,7 @@ public class IIR extends IIRBase {
                 // Preamp gain
                 final double pcm = data[index + channel] * eqpreamp[channel];
 
-                double out = 0F;
+                double out = 0D;
 
                 // For each band
                 for (int band = 0; band < bands; band++) {
@@ -234,7 +232,7 @@ public class IIR extends IIRBase {
     /**
      * Init the filters
      */
-    private void initIir() {
+    private void initIir(final float rate) {
         for (int ii = 0; ii < EQ_MAX_BANDS; ii++) {
             for (int jj = 0; jj < EQ_MAX_CHANNELS; jj++) {
                 dataHistory[ii][jj] = new XYData();

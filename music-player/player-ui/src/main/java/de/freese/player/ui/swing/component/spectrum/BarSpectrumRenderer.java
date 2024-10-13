@@ -43,6 +43,7 @@ public final class BarSpectrumRenderer extends Component implements SpectrumRend
     private Map<Integer, Double> bandSpectrum = Collections.emptyMap();
     private transient BufferedImage bufferedImage;
     private transient Graphics2D bufferedImageGraphics2d;
+    // private double maxAmp;
 
     public BarSpectrumRenderer() {
         super();
@@ -103,6 +104,7 @@ public final class BarSpectrumRenderer extends Component implements SpectrumRend
     public void updateChartData(final Spectrum spectrum) {
         if (spectrum == null) {
             bandSpectrum = Collections.emptyMap();
+            // maxAmp = 0D;
         }
         else {
             // 220 -> Spectrum is 0-22kHz -> 100Hz Range per Band
@@ -111,10 +113,13 @@ public final class BarSpectrumRenderer extends Component implements SpectrumRend
 
             // Normalize
             final double maxAmp = bandSpectrumCollector.getMaxAmp();
+            // maxAmp = Math.max(maxAmp, bandSpectrumCollector.getMaxAmp());
 
-            for (Map.Entry<Integer, Double> entry : bandSpectrum.entrySet()) {
-                bandSpectrum.put(entry.getKey(), entry.getValue() / maxAmp);
-            }
+            bandSpectrum.replaceAll((key, value) -> value / maxAmp);
+
+            // for (Map.Entry<Integer, Double> entry : bandSpectrum.entrySet()) {
+            //     bandSpectrum.put(entry.getKey(), entry.getValue() / maxAmp);
+            // }
         }
 
         if (bufferedImageGraphics2d != null) {
