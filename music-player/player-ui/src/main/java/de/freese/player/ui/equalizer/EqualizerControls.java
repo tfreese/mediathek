@@ -11,8 +11,6 @@ public final class EqualizerControls {
      */
     private final double[] bands;
 
-    // private final boolean enabled = true;
-
     /**
      * Volume gain.
      * Values should be between 0.0 and 1.0.
@@ -23,6 +21,12 @@ public final class EqualizerControls {
         super();
 
         bands = new double[bandCount];
+
+        // Arrays.fill(bands, 1D);
+    }
+
+    public double getBand(final int index) {
+        return bands[index];
     }
 
     public double[] getBands() {
@@ -104,6 +108,16 @@ public final class EqualizerControls {
     }
 
     /**
+     * Setter for value of control for given band (in Db).
+     */
+    public void setBandDbValue(final int band, final double value) {
+        // Map the gain and preamp values.
+        // -12dB .. 12dB mapping
+        bands[band] = 2.5220207857061455181125E-01D * Math.exp(8.0178361802353992349168E-02D * value) - 2.5220207852836562523180E-01D;
+        // bands[band] = PlayerUtils.rescale(value, getMinimumBandDbValue(), getMaximumBandDbValue(), -0.2D, 1D);
+    }
+
+    /**
      * Setter for value of control for given band.
      */
     public void setBandValue(final int band, final double value) {
@@ -116,6 +130,7 @@ public final class EqualizerControls {
     public void setPreampDbValue(final double value) {
         // -12dB .. 12dB mapping
         preamp = 9.9999946497217584440165E-01D * Math.exp(6.9314738656671842642609E-02D * value) + 3.7119444716771825623636E-07D;
+        // preamp = PlayerUtils.rescale(value, getMinimumPreampDbValue(), getMaximumPreampDbValue(), 0D, 1D);
     }
 
     /**
@@ -123,14 +138,5 @@ public final class EqualizerControls {
      */
     public void setPreampValue(final double value) {
         preamp = value;
-    }
-
-    /**
-     * Setter for value of control for given band (in Db).
-     */
-    void setBandDbValue(final int band, final double value) {
-        // Map the gain and preamp values.
-        // -12dB .. 12dB mapping
-        bands[band] = 2.5220207857061455181125E-01D * Math.exp(8.0178361802353992349168E-02D * value) - 2.5220207852836562523180E-01D;
     }
 }

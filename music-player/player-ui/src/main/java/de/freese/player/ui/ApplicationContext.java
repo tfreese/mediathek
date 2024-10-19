@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import de.freese.player.core.player.DefaultDspPlayer;
 import de.freese.player.core.player.DspPlayer;
 import de.freese.player.core.player.SongCollection;
+import de.freese.player.ui.equalizer.EqualizerDspProcessor;
 import de.freese.player.ui.swing.component.table.TableModelSongCollection;
 
 /**
@@ -33,12 +34,17 @@ public final class ApplicationContext {
     private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationContext.class);
 
     private static DataSource dataSource;
+    private static EqualizerDspProcessor equalizerDspProcessor;
     private static ExecutorService executorService;
     private static DspPlayer player;
     private static PlayerRepository repository;
     private static SongCollection songCollection;
     private static Path tempDir;
     private static Path workingDir;
+
+    public static EqualizerDspProcessor getEqualizerDspProcessor() {
+        return equalizerDspProcessor;
+    }
 
     public static ExecutorService getExecutorService() {
         return executorService;
@@ -58,6 +64,10 @@ public final class ApplicationContext {
 
     public static Path getWorkingDir() {
         return workingDir;
+    }
+
+    public static void setEqualizerDspProcessor(final EqualizerDspProcessor equalizerDspProcessor) {
+        ApplicationContext.equalizerDspProcessor = equalizerDspProcessor;
     }
 
     public static void start() {

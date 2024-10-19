@@ -7,11 +7,9 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import javax.swing.SwingWorker;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
@@ -22,7 +20,9 @@ import org.slf4j.LoggerFactory;
 
 import de.freese.player.core.input.AudioSource;
 import de.freese.player.ui.ApplicationContext;
+import de.freese.player.ui.equalizer.EqualizerDspProcessor;
 import de.freese.player.ui.swing.component.PlayerView;
+import de.freese.player.ui.swing.component.equalizer.EqualizerView;
 import de.freese.player.ui.swing.component.library.LibraryView;
 import de.freese.player.ui.swing.component.playlist.PlayListView;
 import de.freese.player.ui.swing.component.playlist.ReloadPlayListSwingWorker;
@@ -95,6 +95,10 @@ public final class PlayerApplication {
         UIManager.put("ToolTip.foreground", UIManager.getColor("Label.foreground"));
 
         // UIManager.put("Viewport.background", defaultBackground);
+
+        final EqualizerDspProcessor equalizerDspProcessor = new EqualizerDspProcessor();
+        ApplicationContext.getPlayer().addProcessor(equalizerDspProcessor);
+        ApplicationContext.setEqualizerDspProcessor(equalizerDspProcessor);
 
         final JFrame jFrame = new JFrame();
         jFrame.setTitle("Music-Player");
@@ -202,11 +206,9 @@ public final class PlayerApplication {
         final JMenuItem jMenuItemToolsEqualizer = new JMenuItem("Equalizer");
         jMenuItemToolsEqualizer.addActionListener(event -> {
             final JDialog jDialog = new JDialog(getMainFrame(), "Equalizer", true);
-            final JPanel jPanel = new JPanel();
-            jPanel.add(new JLabel("TODO"));
-            jDialog.setContentPane(jPanel);
+            jDialog.setContentPane(new EqualizerView(ApplicationContext.getEqualizerDspProcessor().getControls()).getComponent());
             jDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-            jDialog.setSize(500, 200);
+            jDialog.pack();
             jDialog.setLocationRelativeTo(null);
             jDialog.setVisible(true);
         });

@@ -97,7 +97,15 @@ public final class PlayerUtils {
     }
 
     /**
-     * DB to linear scale conversion.<br>
+     * <pre>{@code
+     * Using the natural log, ln, log base e:
+     * linear-to-db(x) = ln(x) / (ln(10) / 20)
+     * db-to-linear(x) = e^(x * (ln(10) / 20))
+     *
+     * Using the common log, log, log base 10:
+     * linear-to-db(x) = log(x) * 20
+     * db-to-linear(x) = 10^(x / 20)
+     * }</pre>
      *
      * @see FloatControl.Type#MASTER_GAIN
      */
@@ -169,12 +177,25 @@ public final class PlayerUtils {
     }
 
     /**
-     * Linear to DB scale conversion.<br>
+     * <pre>{@code
+     * Using the natural log, ln, log base e:
+     * linear-to-db(x) = ln(x) / (ln(10) / 20)
+     * db-to-linear(x) = e^(x * (ln(10) / 20))
+     *
+     * Using the common log, log, log base 10:
+     * linear-to-db(x) = log(x) * 20
+     * db-to-linear(x) = 10^(x / 20)
+     * }</pre>
      *
      * @see FloatControl.Type#MASTER_GAIN
      */
     public static double linearToDB(final double linear) {
-        return Math.log(((Double.compare(linear, 0.0D) == 0) ? 0.0001D : linear) / Math.log(10.0D) * 20.0D);
+        // return Math.log(((Double.compare(linear, 0.0D) == 0) ? 0.0001D : linear) / Math.log(10.0D) * 20.0D);
+        if (Double.compare(linear, 0.0D) == 0) {
+            return 0D;
+        }
+
+        return Math.log10(linear) * 20D;
     }
 
     /**
@@ -191,6 +212,19 @@ public final class PlayerUtils {
         final long result = (long) (millis * (double) format.getFrameRate() / 1000.0D * format.getFrameSize());
 
         return align(result, format.getFrameSize());
+    }
+
+    /**
+     * Scales a Value (Wikipedia).<br>
+     *
+     * @param value double
+     * @param minOld double
+     * @param maxOld double
+     * @param minNew double
+     * @param maxNew double
+     */
+    public static double rescale(final double value, final double minOld, final double maxOld, final double minNew, final double maxNew) {
+        return minNew + (((value - minOld) * (maxNew - minNew)) / (maxOld - minOld));
     }
 
     /**
