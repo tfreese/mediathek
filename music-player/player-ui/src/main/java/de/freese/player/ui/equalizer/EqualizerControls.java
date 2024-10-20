@@ -21,8 +21,6 @@ public final class EqualizerControls {
         super();
 
         bands = new double[bandCount];
-
-        // Arrays.fill(bands, 1D);
     }
 
     public double getBand(final int index) {

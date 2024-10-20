@@ -165,11 +165,11 @@ public class IIR {
             outRight += pcmRight * 0.25D;
 
             // Normalize the output
-            // outLeft *= 4D;
-            // outRight *= 4D;
+            outLeft *= 4D;
+            outRight *= 4D;
 
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("left: in {} / out {}; right: in {} / out {}", samplesLeft[index], (int) outLeft, samplesRight[index], (int) outRight);
+            if (LOGGER.isTraceEnabled() && index % 50 == 0) {
+                LOGGER.trace("left: in {} / out {}; right: in {} / out {}", samplesLeft[index], (int) outLeft, samplesRight[index], (int) outRight);
             }
 
             samplesLeft[index] = (int) outLeft;

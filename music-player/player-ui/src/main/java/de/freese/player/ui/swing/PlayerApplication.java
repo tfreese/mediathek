@@ -206,7 +206,7 @@ public final class PlayerApplication {
         final JMenuItem jMenuItemToolsEqualizer = new JMenuItem("Equalizer");
         jMenuItemToolsEqualizer.addActionListener(event -> {
             final JDialog jDialog = new JDialog(getMainFrame(), "Equalizer", true);
-            jDialog.setContentPane(new EqualizerView(ApplicationContext.getEqualizerDspProcessor().getControls()).getComponent());
+            jDialog.setContentPane(new EqualizerView(ApplicationContext.getEqualizerDspProcessor()).getComponent());
             jDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             jDialog.pack();
             jDialog.setLocationRelativeTo(null);

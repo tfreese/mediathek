@@ -1,6 +1,7 @@
 // Created: 19 Okt. 2024
 package de.freese.player.ui.swing.component.equalizer;
 
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.function.Consumer;
 import java.util.function.IntConsumer;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.freese.player.ui.equalizer.EqualizerControls;
+import de.freese.player.ui.equalizer.EqualizerDspProcessor;
 import de.freese.player.ui.swing.component.GbcBuilder;
 
 /**
@@ -45,8 +48,12 @@ public class EqualizerView {
 
         jSlider.setPaintLabels(true);
         jSlider.setPaintTicks(true);
+        // jSlider.setMinimumSize(new Dimension(80, 400));
+        jSlider.setPreferredSize(new Dimension(80, 400));
+        jSlider.setFont(jLabelValue.getFont().deriveFont(10F));
 
         jPanel.add(jSlider, GbcBuilder.of(0, 1).fillVertical());
+        // jPanel.add(jLabelValue, GbcBuilder.of(0, 2).insets(0, 0, 5, 5));
         jPanel.add(jLabelValue, GbcBuilder.of(0, 2).anchorWest());
 
         jSlider.addChangeListener(event -> {
@@ -69,10 +76,11 @@ public class EqualizerView {
     private final JPanel panel = new JPanel(new GridBagLayout());
     private final List<JSlider> sliders = new ArrayList<>();
 
-    public EqualizerView(final EqualizerControls equalizerControls) {
+    public EqualizerView(final EqualizerDspProcessor equalizerDspProcessor) {
         super();
 
-        Objects.requireNonNull(equalizerControls, "equalizerControls required");
+        Objects.requireNonNull(equalizerDspProcessor, "equalizerDspProcessor required");
+        final EqualizerControls equalizerControls = equalizerDspProcessor.getControls();
 
         int row = 0;
         int column = 0;
@@ -85,13 +93,23 @@ public class EqualizerView {
             // Bands
             sliders.stream().skip(1).forEach(slider -> slider.setValue(0));
         });
-        panel.add(jButtonReset, GbcBuilder.of(column, row).gridwidth(20));
+        panel.add(jButtonReset, GbcBuilder.of(column, row).anchorWest().gridwidth(20));
+
+        row++;
+
+        final JCheckBox jCheckBoxEnabled = new JCheckBox("Equalizer enabled");
+        jCheckBoxEnabled.setSelected(equalizerDspProcessor.isEnabled());
+        jCheckBoxEnabled.addActionListener(event -> {
+            equalizerDspProcessor.setEnabled(jCheckBoxEnabled.isSelected());
+            sliders.forEach(slider -> slider.setEnabled(jCheckBoxEnabled.isSelected()));
+        });
+        panel.add(jCheckBoxEnabled, GbcBuilder.of(column, row).anchorWest().gridwidth(20));
 
         row++;
 
         panel.add(createSliderPanel("PreAmp.", "%d %%", slider -> {
             sliders.add(slider);
-            slider.setMinimum((int) equalizerControls.getMinimumPreampValue());
+            slider.setMinimum((int) (equalizerControls.getMinimumPreampValue() * 100D));
             slider.setMaximum((int) (equalizerControls.getMaximumPreampValue() * 100D));
             slider.setValue((int) (equalizerControls.getPreampValue() * 100D));
             slider.setMajorTickSpacing(25);

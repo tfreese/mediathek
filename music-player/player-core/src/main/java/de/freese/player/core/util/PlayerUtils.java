@@ -28,7 +28,7 @@ public final class PlayerUtils {
     /**
      * short: -32768 to 32767
      */
-    public static final int MAX_16_BIT = 32_768;
+    public static final int MAX_16_BIT = Short.MAX_VALUE + 1;
 
     /**
      * Gets the time in milliseconds for the given number of bytes.
@@ -246,13 +246,14 @@ public final class PlayerUtils {
         if (left < -1.0D) {
             left = -1.0D;
         }
-        if (left > +1.0D) {
+        else if (left > +1.0D) {
             left = +1.0D;
         }
+
         if (right < -1.0D) {
             right = -1.0D;
         }
-        if (right > +1.0D) {
+        else if (right > +1.0D) {
             right = +1.0D;
         }
 
@@ -288,37 +289,23 @@ public final class PlayerUtils {
      * If a sample is outside the range, it will be clipped (rounded to –SAMPLE_RATE or +SAMPLE_RATE).
      */
     public static byte[] sampleToByte(final AudioFormat audioFormat, final int sampleLeft, final int sampleRight) {
-        final float sampleRate = audioFormat.getSampleRate();
         int left = sampleLeft;
         int right = sampleRight;
 
-        // clip if outside [-SAMPLE_RATE, +SAMPLE_RATE]
-        if (left < -sampleRate) {
-            left = -(int) sampleRate;
+        final int maxRange = (int) Math.min(audioFormat.getSampleRate(), Short.MAX_VALUE);
+
+        if (left < -maxRange) {
+            left = -maxRange;
         }
-        if (left > +sampleRate) {
-            left = +(int) sampleRate;
+        else if (left > +maxRange) {
+            left = +maxRange;
         }
 
-        if (right < -sampleRate) {
-            right = -(int) sampleRate;
+        if (right < -maxRange) {
+            right = -maxRange;
         }
-        if (right > +sampleRate) {
-            right = +(int) sampleRate;
-        }
-
-        if (left < -MAX_16_BIT) {
-            left = -MAX_16_BIT;
-        }
-        if (left > +MAX_16_BIT) {
-            left = +MAX_16_BIT;
-        }
-
-        if (right < -MAX_16_BIT) {
-            right = -MAX_16_BIT;
-        }
-        if (right > +MAX_16_BIT) {
-            right = +MAX_16_BIT;
+        else if (right > +maxRange) {
+            right = +maxRange;
         }
 
         final byte[] buffer = new byte[4];

@@ -8,9 +8,9 @@ import de.freese.player.core.model.Window;
  * @author Thomas Freese
  */
 public final class EqualizerDspProcessor implements DspProcessor {
-    // private static final Logger LOGGER = LoggerFactory.getLogger(EqualizerDspProcessor.class);
 
     private final IIR iir = new IIR();
+    private boolean enabled = true;
 
     public EqualizerControls getControls() {
         return iir.getControls();
@@ -18,7 +18,7 @@ public final class EqualizerDspProcessor implements DspProcessor {
 
     @Override
     public boolean isEnabled() {
-        return getControls().isEnabled();
+        return enabled;
     }
 
     @Override
@@ -29,6 +29,10 @@ public final class EqualizerDspProcessor implements DspProcessor {
     @Override
     public void reset() {
         iir.cleanHistory();
+    }
+
+    public void setEnabled(final boolean enabled) {
+        this.enabled = enabled;
     }
 
     private void doEqualize(final Window window) {
