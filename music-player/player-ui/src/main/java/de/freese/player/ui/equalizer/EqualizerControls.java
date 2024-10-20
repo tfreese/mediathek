@@ -33,54 +33,54 @@ public final class EqualizerControls {
         return bands;
     }
 
-    /**
-     * Returns the maximum value for band control (in Db).
-     */
-    public double getMaximumBandDbValue() {
-        return 12D;
-    }
+    // /**
+    //  * Returns the maximum value for band control (in Db).
+    //  */
+    // public double getMaximumBandDbValue() {
+    //     return 12D;
+    // }
 
     /**
      * Returns the maximum value for band control.
      */
     public double getMaximumBandValue() {
-        return 1.0D;
+        return 0.5D;
     }
 
-    /**
-     * Returns the maximum value for preamp control (in Db).
-     */
-    public double getMaximumPreampDbValue() {
-        return 12D;
-    }
+    // /**
+    //  * Returns the maximum value for preamp control (in Db).
+    //  */
+    // public double getMaximumPreampDbValue() {
+    //     return 12D;
+    // }
 
     /**
      * Returns the maximum value for preamp control.
      */
     public double getMaximumPreampValue() {
-        return 1.0D;
+        return 1.5D;
     }
 
-    /**
-     * Returns the minimum value for band control (in Db).
-     */
-    public double getMinimumBandDbValue() {
-        return -12D;
-    }
+    // /**
+    //  * Returns the minimum value for band control (in Db).
+    //  */
+    // public double getMinimumBandDbValue() {
+    //     return -12D;
+    // }
 
     /**
      * Returns the minimum value for band control.
      */
     public double getMinimumBandValue() {
-        return -0.2D;
+        return -0.5D;
     }
 
-    /**
-     * Returns the minimum value for preamp control (in Db).
-     */
-    public double getMinimumPreampDbValue() {
-        return -12D;
-    }
+    // /**
+    //  * Returns the minimum value for preamp control (in Db).
+    //  */
+    // public double getMinimumPreampDbValue() {
+    //     return -12D;
+    // }
 
     /**
      * Returns the minimum value for preamp control.

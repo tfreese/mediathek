@@ -307,6 +307,20 @@ public final class PlayerUtils {
             right = +(int) sampleRate;
         }
 
+        if (left < -MAX_16_BIT) {
+            left = -MAX_16_BIT;
+        }
+        if (left > +MAX_16_BIT) {
+            left = +MAX_16_BIT;
+        }
+
+        if (right < -MAX_16_BIT) {
+            right = -MAX_16_BIT;
+        }
+        if (right > +MAX_16_BIT) {
+            right = +MAX_16_BIT;
+        }
+
         final byte[] buffer = new byte[4];
 
         if (audioFormat.isBigEndian()) {

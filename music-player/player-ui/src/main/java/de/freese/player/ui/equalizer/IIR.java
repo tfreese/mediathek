@@ -165,10 +165,9 @@ public class IIR {
             outRight += pcmRight * 0.25D;
 
             // Normalize the output
-            outLeft *= 4D;
-            outRight *= 4D;
+            // outLeft *= 4D;
+            // outRight *= 4D;
 
-            // Round and convert to integer
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("left: in {} / out {}; right: in {} / out {}", samplesLeft[index], (int) outLeft, samplesRight[index], (int) outRight);
             }
