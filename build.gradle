@@ -9,8 +9,34 @@ plugins {
     id "de.freese.gradle.sonarlint-conventions" version "$version_myConventionPlugin" apply false
 }
 
-subprojects {
+allprojects {
     apply plugin: "base"
+
+    clean {
+        doFirst {
+            def dirs = ["bin", "logs", "out", "target"]
+
+            dirs.each(dir -> {
+                Directory directory = layout.projectDirectory.dir(dir)
+
+                if (directory.getAsFile().exists()) {
+                    // println("delete: " + directory)
+                    logger.lifecycle("delete: {}", directory)
+                    // delete fileTree(directory).include("**/*")
+                    delete directory
+                }
+            })
+        }
+    }
+
+    ant.lifecycleLogLevel = "INFO"
+
+    // repositories {
+    //
+    // }
+}
+
+subprojects {
     apply plugin: "io.spring.dependency-management"
     apply plugin: "de.freese.gradle.conventions"
     apply plugin: "name.remal.sonarlint"
@@ -39,7 +65,7 @@ subprojects {
     pluginManager.withPlugin("java") {
         dependencies {
             testImplementation("org.junit.jupiter:junit-jupiter")
-            
+
             testRuntimeOnly("org.junit.platform:junit-platform-launcher")
         }
     }
