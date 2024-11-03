@@ -21,7 +21,7 @@ import javax.swing.SwingConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.freese.player.ui.equalizer.EqualizerControls;
+import de.freese.player.equalizer.EqualizerControls;
 import de.freese.player.ui.equalizer.EqualizerDspProcessor;
 import de.freese.player.ui.swing.component.GbcBuilder;
 

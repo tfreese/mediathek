@@ -13,7 +13,7 @@ public final class Complex {
      * Converts an array of values to an array of Complex values.<br>
      * The imaginary component always 0.
      */
-    static Complex[] toComplex(final int[] values) {
+    public static Complex[] toComplex(final int[] values) {
         int length = values.length;
 
         if (length % 2 != 0) {
@@ -61,9 +61,20 @@ public final class Complex {
     }
 
     /**
+     * Divides this complex number by a scalar.
+     *
+     * @param n The divisor which is a real number.
+     *
+     * @return The quotient.
+     */
+    public Complex divide(final double n) {
+        return new Complex(this.re / n, this.im / n);
+    }
+
+    /**
      * return a / b
      */
-    public Complex divides(final Complex b) {
+    public Complex divide(final Complex b) {
         return times(b.reciprocal());
     }
 
@@ -140,7 +151,7 @@ public final class Complex {
      * return a new Complex object whose value is the complex tangent of this
      */
     public Complex tan() {
-        return sin().divides(cos());
+        return sin().divide(cos());
     }
 
     /**
@@ -155,18 +166,21 @@ public final class Complex {
 
     @Override
     public String toString() {
+        final String toString;
+
         if (Double.compare(im, 0D) == 0) {
-            return re + "";
+            toString = re + "";
+        }
+        else if (Double.compare(re, 0D) == 0) {
+            toString = im + "i";
+        }
+        else if (im < 0D) {
+            toString = re + " - " + (-im) + "i";
+        }
+        else {
+            toString = re + " + " + im + "i";
         }
 
-        if (Double.compare(re, 0D) == 0) {
-            return im + "i";
-        }
-
-        if (im < 0D) {
-            return re + " - " + (-im) + "i";
-        }
-
-        return re + " + " + im + "i";
+        return toString;
     }
 }

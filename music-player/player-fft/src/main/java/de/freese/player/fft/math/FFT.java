@@ -89,6 +89,51 @@ public final class FFT {
         return y;
     }
 
+    /**
+     * Returns the inverse FFT of the specified complex array.
+     *
+     * @return the inverse FFT of the complex array {@code x}
+     *
+     * @throws IllegalArgumentException if the length of {@code x} is not a power of 2
+     */
+    public static Complex[] ifft(final Complex[] x) {
+        final int n = x.length;
+        final Complex[] y = new Complex[n];
+
+        // take conjugate
+        for (int i = 0; i < n; i++) {
+            y[i] = x[i].conjugate();
+        }
+
+        // compute forward FFT
+        fft(y);
+
+        // take conjugate again
+        for (int i = 0; i < n; i++) {
+            y[i] = y[i].conjugate();
+        }
+
+        // divide by n
+        for (int i = 0; i < n; i++) {
+            y[i] = y[i].scale(1.0D / n);
+        }
+
+        return y;
+
+    }
+
+    /**
+     * Divide by n if we want the inverse FFT.
+     */
+    public static Complex[] inverseFFT(final int n, final Complex[] x) {
+        for (int i = 0; i < x.length; i++) {
+            final Complex z = x[i];
+            x[i] = z.divide(n);
+        }
+
+        return x;
+    }
+
     private FFT() {
         super();
     }

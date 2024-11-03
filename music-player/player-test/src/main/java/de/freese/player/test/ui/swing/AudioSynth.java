@@ -5,8 +5,9 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.nio.ByteBuffer;
-import java.nio.ShortBuffer;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Supplier;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -21,13 +22,29 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
+import de.freese.player.core.signal.DecayPulse;
+import de.freese.player.core.signal.EchoPulse;
+import de.freese.player.core.signal.FmSweep;
+import de.freese.player.core.signal.SawWave;
+import de.freese.player.core.signal.SineWave;
+import de.freese.player.core.signal.SquareWave;
+import de.freese.player.core.signal.StereoPanning;
+import de.freese.player.core.signal.StereoPingPong;
+import de.freese.player.core.signal.Tones;
+import de.freese.player.core.signal.WhiteNoise;
+
 /**
  * @author Thomas Freese
  */
 public final class AudioSynth {
-    private static final boolean BIG_ENDIAN = true;
-    private static final int SAMPLE_SIZE_IN_BITS = 16;
-    private static final boolean SIGNED = true;
+    // private static final boolean BIG_ENDIAN = true;
+    // private static final int SAMPLE_SIZE_IN_BITS = 16;
+    // private static final boolean SIGNED = true;
+    private static final AudioFormat AUDIO_FORMAT = new AudioFormat(16_000.0F,
+            16,
+            2,
+            true,
+            true);
 
     public static void main(final String[] args) {
         SwingUtilities.invokeLater(AudioSynth::new);
@@ -42,28 +59,62 @@ public final class AudioSynth {
         controlPanel.setBorder(BorderFactory.createEtchedBorder());
         controlPanel.add(elapsedTimeMeter);
 
-        final JButton decayPulse = new JButton("Decay Pulse");
-        final JButton echoPulse = new JButton("Echo Pulse");
-        final JButton fmSweep = new JButton("FM Sweep");
-        final JButton stereoPanning = new JButton("Stereo Panning");
-        final JButton stereoPingpong = new JButton("Stereo Pingpong");
-        final JButton tones = new JButton("Tones");
+        final List<Supplier<JButton>> buttons = new ArrayList<>();
+        buttons.add(() -> {
+            final JButton button = new JButton("Decay Pulse");
+            button.addActionListener(event -> playSignalDecayPulse());
+            return button;
+        });
+        buttons.add(() -> {
+            final JButton button = new JButton("Echo Pulse");
+            button.addActionListener(event -> playSignalEchoPulse());
+            return button;
+        });
+        buttons.add(() -> {
+            final JButton button = new JButton("FM Sweep");
+            button.addActionListener(event -> playSignalFmSweep());
+            return button;
+        });
+        buttons.add(() -> {
+            final JButton button = new JButton("Stereo Panning");
+            button.addActionListener(event -> playSignalStereoPanning());
+            return button;
+        });
+        buttons.add(() -> {
+            final JButton button = new JButton("Stereo Pingpong");
+            button.addActionListener(event -> playSignalStereoPingPong());
+            return button;
+        });
+        buttons.add(() -> {
+            final JButton button = new JButton("Tones");
+            button.addActionListener(event -> playSignalTones());
+            return button;
+        });
+        buttons.add(() -> {
+            final JButton button = new JButton("SineWave");
+            button.addActionListener(event -> playSignalSineWave());
+            return button;
+        });
+        buttons.add(() -> {
+            final JButton button = new JButton("SquareWave");
+            button.addActionListener(event -> playSignalSquareWave());
+            return button;
+        });
+        buttons.add(() -> {
+            final JButton button = new JButton("SawWave");
+            button.addActionListener(event -> playSignalSawWave());
+            return button;
+        });
+        buttons.add(() -> {
+            final JButton button = new JButton("WhiteNoise");
+            button.addActionListener(event -> playSignalWhiteNoise());
+            return button;
+        });
 
         final JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(0, 1));
-        buttonPanel.add(tones);
-        buttonPanel.add(stereoPanning);
-        buttonPanel.add(stereoPingpong);
-        buttonPanel.add(fmSweep);
-        buttonPanel.add(decayPulse);
-        buttonPanel.add(echoPulse);
 
-        echoPulse.addActionListener(event -> playEchoPulse());
-        decayPulse.addActionListener(event -> playDecayPulse());
-        fmSweep.addActionListener(event -> playFmSweep());
-        stereoPanning.addActionListener(event -> playStereoPanning());
-        stereoPingpong.addActionListener(event -> playStereoPingpong());
-        tones.addActionListener(event -> playTones());
+        buttons.forEach(s -> buttonPanel.add(s.get()));
 
         // final JPanel centerPanel = new JPanel();
         // centerPanel.add(buttonPanel);
@@ -91,33 +142,33 @@ public final class AudioSynth {
         // Thread.ofPlatform().daemon().name("player-", 1).start(new Player(sourceDataLine));
         Thread.ofVirtual().name("player-", 1).start(() -> {
             try (InputStream inputStream = new ByteArrayInputStream(audioData);
-                 AudioInputStream audioInputStream = new AudioInputStream(inputStream, audioFormat, audioData.length / audioFormat.getFrameSize())) {
+                 AudioInputStream audioInputStream = new AudioInputStream(inputStream, audioFormat, AudioSystem.NOT_SPECIFIED)) {
+                // audioData.length / (long) audioFormat.getFrameSize()
+                // AudioSystem.NOT_SPECIFIED
 
                 final DataLine.Info dataLineInfo = new DataLine.Info(SourceDataLine.class, audioFormat);
                 final SourceDataLine sourceDataLine = (SourceDataLine) AudioSystem.getLine(dataLineInfo);
-                // final byte[] playBuffer = new byte[16384];
-                final byte[] playBuffer = new byte[4096];
 
                 sourceDataLine.open(audioFormat);
                 sourceDataLine.start();
 
                 final long startTime = System.currentTimeMillis();
-                int cnt;
+                System.out.println(startTime);
 
-                while ((cnt = audioInputStream.read(playBuffer, 0, playBuffer.length)) != -1) {
-                    if (cnt > 0) {
-                        sourceDataLine.write(playBuffer, 0, cnt);
-                    }
+                final byte[] playBuffer = new byte[8196];
+                int read;
+
+                while ((read = audioInputStream.read(playBuffer, 0, playBuffer.length)) > 0) {
+                    sourceDataLine.write(playBuffer, 0, read);
                 }
 
-                sourceDataLine.drain();
-
                 final long elapsedTime = System.currentTimeMillis() - startTime;
+                System.out.println(elapsedTime);
+                SwingUtilities.invokeLater(() -> elapsedTimeMeter.setText("Duration: %d ms".formatted(elapsedTime)));
 
+                sourceDataLine.drain();
                 sourceDataLine.stop();
                 sourceDataLine.close();
-
-                SwingUtilities.invokeLater(() -> elapsedTimeMeter.setText("Duration: %d ms".formatted(elapsedTime)));
             }
             catch (Exception ex) {
                 ex.printStackTrace();
@@ -125,291 +176,63 @@ public final class AudioSynth {
         });
     }
 
-    /**
-     * This method generates a mono triple-frequency pulse that decays in a linear fashion with time.
-     */
-    private void playDecayPulse() {
-        final int channels = 1;
-        final int bytesPerSamp = 2; // Based on channels
-        final float sampleRate = 16_000.0F;
+    private void playSignalDecayPulse() {
+        final byte[] audioData = new DecayPulse().generate(AUDIO_FORMAT, 2, 1000D);
 
-        // A buffer to hold two seconds mono and one second stereo data at 16000 samp/sec for 16-bit samples
-        final byte[] audioData = new byte[16_000 * 4];
-        final int byteLength = audioData.length;
-
-        // Allowable 8000,11025,16000,22050,44100
-        final int sampLength = byteLength / bytesPerSamp;
-
-        // This class uses a ByteBuffer asShortBuffer to handle the data, it can only be used to generate signed 16-bit data.
-        final ByteBuffer byteBuffer = ByteBuffer.wrap(audioData);
-        final ShortBuffer shortBuffer = byteBuffer.asShortBuffer();
-
-        for (int cnt = 0; cnt < sampLength; cnt++) {
-            // The value of scale controls the rate of decay - large scale, fast decay.
-            double scale = 2D * cnt;
-
-            if (scale > sampLength) {
-                scale = sampLength;
-            }
-
-            final double gain = 16_000D * (sampLength - scale) / sampLength;
-            final double time = cnt / sampleRate;
-            final double freq = 499.0D; // Frequency
-            final double sinValue = (Math.sin(2D * Math.PI * freq * time)
-                    + Math.sin(2D * Math.PI * (freq / 1.8D) * time)
-                    + Math.sin(2D * Math.PI * (freq / 1.5D) * time)) / 3.0D;
-            shortBuffer.put((short) (gain * sinValue));
-        }
-
-        final AudioFormat audioFormat = new AudioFormat(sampleRate,
-                SAMPLE_SIZE_IN_BITS,
-                channels,
-                SIGNED,
-                BIG_ENDIAN);
-
-        play(audioData, audioFormat);
+        play(audioData, AUDIO_FORMAT);
     }
 
-    /**
-     * This method generates a mono triple-frequency pulse that decays in a linear fashion with time. However, three echoes
-     * can be heard over time with the amplitude of the echoes also decreasing with time.
-     */
-    private void playEchoPulse() {
-        final int channels = 1;
-        final int bytesPerSamp = 2; // Based on channels
-        final float sampleRate = 16_000.0F;
+    private void playSignalEchoPulse() {
+        final byte[] audioData = new EchoPulse().generate(AUDIO_FORMAT, 2, 1000D);
 
-        // A buffer to hold two seconds mono and one second stereo data at 16000 samp/sec for 16-bit samples
-        final byte[] audioData = new byte[16_000 * 4];
-        final int byteLength = audioData.length;
-
-        // Allowable 8000,11025,16000,22050,44100
-        final int sampLength = byteLength / bytesPerSamp;
-
-        // This class uses a ByteBuffer asShortBuffer to handle the data, it can only be used to generate signed 16-bit data.
-        final ByteBuffer byteBuffer = ByteBuffer.wrap(audioData);
-        final ShortBuffer shortBuffer = byteBuffer.asShortBuffer();
-
-        int cnt2 = -8_000;
-        int cnt3 = -16_000;
-        int cnt4 = -24_000;
-
-        for (int cnt1 = 0; cnt1 < sampLength; cnt1++, cnt2++, cnt3++, cnt4++) {
-            double val = playEchoPulseHelper(cnt1, sampLength, sampleRate);
-
-            if (cnt2 > 0) {
-                val += 0.7D * playEchoPulseHelper(cnt2, sampLength, sampleRate);
-            }
-
-            if (cnt3 > 0) {
-                val += 0.49D * playEchoPulseHelper(cnt3, sampLength, sampleRate);
-            }
-
-            if (cnt4 > 0) {
-                val += 0.34D * playEchoPulseHelper(cnt4, sampLength, sampleRate);
-            }
-
-            shortBuffer.put((short) val);
-        }
-
-        final AudioFormat audioFormat = new AudioFormat(sampleRate,
-                SAMPLE_SIZE_IN_BITS,
-                channels,
-                SIGNED,
-                BIG_ENDIAN);
-
-        play(audioData, audioFormat);
+        play(audioData, AUDIO_FORMAT);
     }
 
-    private double playEchoPulseHelper(final int cnt, final int sampLength, final float sampleRate) {
-        // The value of scale controls the rate of decay - large scale, fast decay.
-        double scale = 2D * cnt;
+    private void playSignalFmSweep() {
+        final byte[] audioData = new FmSweep().generate(AUDIO_FORMAT, 2, Double.NaN);
 
-        if (scale > sampLength) {
-            scale = sampLength;
-        }
-
-        final double gain = 16_000D * (sampLength - scale) / sampLength;
-        final double time = cnt / sampleRate;
-        final double freq = 499.0D; // Frequency
-        final double sinValue = (Math.sin(2D * Math.PI * freq * time)
-                + Math.sin(2D * Math.PI * (freq / 1.8D) * time)
-                + Math.sin(2D * Math.PI * (freq / 1.5D) * time)) / 3.0D;
-
-        return (short) (gain * sinValue);
+        play(audioData, AUDIO_FORMAT);
     }
 
-    /**
-     * This method generates a mono linear frequency sweep from 100 Hz to 1000Hz.
-     */
-    private void playFmSweep() {
-        final int channels = 1;
-        final int bytesPerSamp = 2; // Based on channels
-        final float sampleRate = 16_000.0F;
+    private void playSignalSawWave() {
+        final byte[] audioData = new SawWave().generate(AUDIO_FORMAT, 2, 1000D);
 
-        // A buffer to hold two seconds mono and one second stereo data at 16000 samp/sec for 16-bit samples
-        final byte[] audioData = new byte[16_000 * 4];
-        final int byteLength = audioData.length;
-
-        // Allowable 8000,11025,16000,22050,44100
-        final int sampLength = byteLength / bytesPerSamp;
-
-        // This class uses a ByteBuffer asShortBuffer to handle the data, it can only be used to generate signed 16-bit data.
-        final ByteBuffer byteBuffer = ByteBuffer.wrap(audioData);
-        final ShortBuffer shortBuffer = byteBuffer.asShortBuffer();
-
-        final double lowFreq = 100.0D;
-        final double highFreq = 1000.0D;
-
-        for (int cnt = 0; cnt < sampLength; cnt++) {
-            final double time = cnt / sampleRate;
-
-            final double freq = lowFreq + cnt * (highFreq - lowFreq) / sampLength;
-            final double sinValue = Math.sin(2D * Math.PI * freq * time);
-            shortBuffer.put((short) (16_000D * sinValue));
-        }
-
-        final AudioFormat audioFormat = new AudioFormat(sampleRate,
-                SAMPLE_SIZE_IN_BITS,
-                channels,
-                SIGNED,
-                BIG_ENDIAN);
-
-        play(audioData, audioFormat);
+        play(audioData, AUDIO_FORMAT);
     }
 
-    /**
-     * This method generates a stereo speaker sweep, starting with a relatively high frequency
-     * tone on the left speaker and moving across to a lower frequency tone on the right speaker.
-     */
-    private void playStereoPanning() {
-        final int channels = 2;
-        final int bytesPerSamp = 4; // Based on channels
-        final float sampleRate = 16_000.0F;
+    private void playSignalSineWave() {
+        final byte[] audioData = new SineWave().generate(AUDIO_FORMAT, 2, 1000D);
 
-        // A buffer to hold two seconds mono and one second stereo data at 16000 samp/sec for 16-bit samples
-        final byte[] audioData = new byte[16_000 * 4];
-        final int byteLength = audioData.length;
-
-        // Allowable 8000,11025,16000,22050,44100
-        final int sampLength = byteLength / bytesPerSamp;
-
-        // This class uses a ByteBuffer asShortBuffer to handle the data, it can only be used to generate signed 16-bit data.
-        final ByteBuffer byteBuffer = ByteBuffer.wrap(audioData);
-        final ShortBuffer shortBuffer = byteBuffer.asShortBuffer();
-
-        for (int cnt = 0; cnt < sampLength; cnt++) {
-            // Calculate time-varying gain for each speaker.
-            final double rightGain = 16_000.0D * cnt / sampLength;
-            final double leftGain = 16_000.0D - rightGain;
-
-            final double time = cnt / sampleRate;
-            final double freq = 600D; // Frequency
-
-            // Generate data for left speaker.
-            double sinValue = Math.sin(2D * Math.PI * freq * time);
-            shortBuffer.put((short) (leftGain * sinValue));
-
-            // Generate data for right speaker.
-            sinValue = Math.sin(2D * Math.PI * (freq * 0.8D) * time);
-            shortBuffer.put((short) (rightGain * sinValue));
-        }
-
-        final AudioFormat audioFormat = new AudioFormat(sampleRate,
-                SAMPLE_SIZE_IN_BITS,
-                channels,
-                SIGNED,
-                BIG_ENDIAN);
-
-        play(audioData, audioFormat);
+        play(audioData, AUDIO_FORMAT);
     }
 
-    private void playStereoPingpong() {
-        final int channels = 2;
-        final int bytesPerSamp = 4; // Based on channels
-        final float sampleRate = 16_000.0F;
+    private void playSignalSquareWave() {
+        final byte[] audioData = new SquareWave().generate(AUDIO_FORMAT, 2, 1000D);
 
-        // A buffer to hold two seconds mono and one second stereo data at 16000 samp/sec for 16-bit samples
-        final byte[] audioData = new byte[16_000 * 4];
-        final int byteLength = audioData.length;
-
-        // Allowable 8000,11025,16000,22050,44100
-        final int sampLength = byteLength / bytesPerSamp;
-
-        // This class uses a ByteBuffer asShortBuffer to handle the data, it can only be used to generate signed 16-bit data.
-        final ByteBuffer byteBuffer = ByteBuffer.wrap(audioData);
-        final ShortBuffer shortBuffer = byteBuffer.asShortBuffer();
-
-        double leftGain = 0.0D;
-        double rightGain = 16_000.0D;
-
-        for (int cnt = 0; cnt < sampLength; cnt++) {
-            // Calculate time-varying gain for each speaker.
-            if (cnt % (sampLength / 8) == 0) {
-                // swap gain values
-                final double temp = leftGain;
-                leftGain = rightGain;
-                rightGain = temp;
-            }
-
-            final double time = cnt / sampleRate;
-            final double freq = 600D; // Frequency
-
-            // Generate data for left speaker.
-            double sinValue = Math.sin(2D * Math.PI * freq * time);
-            shortBuffer.put((short) (leftGain * sinValue));
-
-            // Generate data for right speaker.
-            sinValue = Math.sin(2D * Math.PI * (freq * 0.8D) * time);
-            shortBuffer.put((short) (rightGain * sinValue));
-        }
-
-        final AudioFormat audioFormat = new AudioFormat(sampleRate,
-                SAMPLE_SIZE_IN_BITS,
-                channels,
-                SIGNED,
-                BIG_ENDIAN);
-
-        play(audioData, audioFormat);
+        play(audioData, AUDIO_FORMAT);
     }
 
-    /**
-     * This method generates a mono tone consisting of the sum of three sinusoids.
-     */
-    private void playTones() {
-        final int channels = 1;
+    private void playSignalStereoPanning() {
+        final byte[] audioData = new StereoPanning().generate(AUDIO_FORMAT, 2, 1000D);
 
-        // Each channel requires two 8-bit bytes per 16-bit sample.
-        final int bytesPerSamp = 2;
-        final float sampleRate = 16_000.0F;
+        play(audioData, AUDIO_FORMAT);
+    }
 
-        // A buffer to hold two seconds mono and one second stereo data at 16000 samp/sec for 16-bit samples
-        final byte[] audioData = new byte[16_000 * 4];
-        final int byteLength = audioData.length;
+    private void playSignalStereoPingPong() {
+        final byte[] audioData = new StereoPingPong().generate(AUDIO_FORMAT, 2, 1000D);
 
-        // Allowable 8000,11025,16000,22050,44100
-        final int sampLength = byteLength / bytesPerSamp;
+        play(audioData, AUDIO_FORMAT);
+    }
 
-        // This class uses a ByteBuffer asShortBuffer to handle the data, it can only be used to generate signed 16-bit data.
-        final ByteBuffer byteBuffer = ByteBuffer.wrap(audioData);
-        final ShortBuffer shortBuffer = byteBuffer.asShortBuffer();
+    private void playSignalTones() {
+        final byte[] audioData = new Tones().generate(AUDIO_FORMAT, 2, 1000D);
 
-        for (int cnt = 0; cnt < sampLength; cnt++) {
-            final double time = cnt / sampleRate;
-            final double freq = 950.0D; // Frequency
-            final double sinValue = (Math.sin(2D * Math.PI * freq * time)
-                    + Math.sin(2D * Math.PI * (freq / 1.8D) * time)
-                    + Math.sin(2D * Math.PI * (freq / 1.5D) * time)
-            ) / 3.0D;
-            shortBuffer.put((short) (16_000D * sinValue));
-        }
+        play(audioData, AUDIO_FORMAT);
+    }
 
-        final AudioFormat audioFormat = new AudioFormat(sampleRate,
-                SAMPLE_SIZE_IN_BITS,
-                channels,
-                SIGNED,
-                BIG_ENDIAN);
+    private void playSignalWhiteNoise() {
+        final byte[] audioData = new WhiteNoise().generate(AUDIO_FORMAT, 2, 1000D);
 
-        play(audioData, audioFormat);
+        play(audioData, AUDIO_FORMAT);
     }
 }

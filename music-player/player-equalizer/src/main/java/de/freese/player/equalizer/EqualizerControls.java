@@ -1,5 +1,5 @@
 // Created: 21 Sept. 2024
-package de.freese.player.ui.equalizer;
+package de.freese.player.equalizer;
 
 /**
  * @author Thomas Freese

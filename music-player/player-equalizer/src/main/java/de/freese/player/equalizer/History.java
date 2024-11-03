@@ -16,7 +16,7 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *----------------------------------------------------------------------
  */
-package de.freese.player.ui.equalizer;
+package de.freese.player.equalizer;
 
 /**
  * Structure for storing history data of equalizer.

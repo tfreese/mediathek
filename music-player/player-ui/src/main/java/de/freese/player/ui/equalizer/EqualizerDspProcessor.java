@@ -3,6 +3,8 @@ package de.freese.player.ui.equalizer;
 
 import de.freese.player.core.dsp.DspProcessor;
 import de.freese.player.core.model.Window;
+import de.freese.player.equalizer.EqualizerControls;
+import de.freese.player.equalizer.IIR;
 
 /**
  * @author Thomas Freese

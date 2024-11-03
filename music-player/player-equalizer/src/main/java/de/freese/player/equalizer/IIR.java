@@ -1,5 +1,5 @@
 // Created: 13 Okt. 2024
-package de.freese.player.ui.equalizer;
+package de.freese.player.equalizer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
