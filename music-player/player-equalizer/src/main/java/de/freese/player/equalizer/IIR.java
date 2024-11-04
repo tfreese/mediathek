@@ -11,35 +11,35 @@ import org.slf4j.LoggerFactory;
  */
 public class IIR {
     static final IIRCoefficients[] IIR_CF15_44100 = {
-            /* 25 Hz*/
+            // 25 Hz
             new IIRCoefficients(9.9834072702e-01, 8.2963648917e-04, 1.9983280505e+00),
-            /* 40 Hz*/
+            // 40 Hz
             new IIRCoefficients(9.9734652663e-01, 1.3267366865e-03, 1.9973140908e+00),
-            /* 63 Hz*/
+            // 63 Hz
             new IIRCoefficients(9.9582396353e-01, 2.0880182333e-03, 1.9957435641e+00),
-            /* 100 Hz*/
+            // 100 Hz
             new IIRCoefficients(9.9337951306e-01, 3.3102434709e-03, 1.9931771947e+00),
-            /* 160 Hz*/
+            // 160 Hz
             new IIRCoefficients(9.8942832039e-01, 5.2858398053e-03, 1.9889114258e+00),
-            /* 250 Hz*/
+            // 250 Hz
             new IIRCoefficients(9.8353109588e-01, 8.2344520610e-03, 1.9822729654e+00),
-            /* 400 Hz*/
+            // 400 Hz
             new IIRCoefficients(9.7378088082e-01, 1.3109559588e-02, 1.9705764276e+00),
-            /* 630 Hz*/
+            // 630 Hz
             new IIRCoefficients(9.5901979676e-01, 2.0490101620e-02, 1.9511333590e+00),
-            /* 1k Hz*/
+            // 1k Hz
             new IIRCoefficients(9.3574903986e-01, 3.2125480071e-02, 1.9161350100e+00),
-            /* 1.6k Hz*/
+            // 1.6k Hz
             new IIRCoefficients(8.9923630641e-01, 5.0381846793e-02, 1.8501014162e+00),
-            /* 2.5k Hz*/
+            // 2.5k Hz
             new IIRCoefficients(8.4722457681e-01, 7.6387711593e-02, 1.7312785699e+00),
-            /* 4k Hz*/
+            // 4k Hz
             new IIRCoefficients(7.6755471307e-01, 1.1622264346e-01, 1.4881981417e+00),
-            /* 6.3k Hz*/
+            // 6.3k Hz
             new IIRCoefficients(6.6125377473e-01, 1.6937311263e-01, 1.0357747868e+00),
-            /* 10k Hz*/
+            // 10k Hz
             new IIRCoefficients(5.2683267950e-01, 2.3658366025e-01, 2.2218349322e-01),
-            /* 16k Hz*/
+            // 16k Hz
             new IIRCoefficients(4.0179628792e-01, 2.9910185604e-01, -9.1248032613e-01)
     };
 

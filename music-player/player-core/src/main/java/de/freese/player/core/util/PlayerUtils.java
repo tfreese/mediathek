@@ -239,23 +239,24 @@ public final class PlayerUtils {
             throw new IllegalArgumentException("sampleRight is NaN");
         }
 
-        double left = sampleLeft;
-        double right = sampleRight;
-
         // clip if outside [-1, +1]
-        if (left < -1.0D) {
-            left = -1.0D;
-        }
-        else if (left > +1.0D) {
-            left = +1.0D;
-        }
+        // double left = sampleLeft;
+        final double left = Math.clamp(sampleLeft, -1.0D, +1.0D);
+        // if (left < -1.0D) {
+        //     left = -1.0D;
+        // }
+        // else if (left > +1.0D) {
+        //     left = +1.0D;
+        // }
 
-        if (right < -1.0D) {
-            right = -1.0D;
-        }
-        else if (right > +1.0D) {
-            right = +1.0D;
-        }
+        // double right = sampleRight;
+        final double right = Math.clamp(sampleLeft, -1.0D, +1.0D);
+        // if (right < -1.0D) {
+        //     right = -1.0D;
+        // }
+        // else if (right > +1.0D) {
+        //     right = +1.0D;
+        // }
 
         short sLeft = (short) (MAX_16_BIT * left);
         if (Double.compare(left, 1.0D) == 0) {
@@ -289,24 +290,25 @@ public final class PlayerUtils {
      * If a sample is outside the range, it will be clipped (rounded to –SAMPLE_RATE or +SAMPLE_RATE).
      */
     public static byte[] sampleToByte(final AudioFormat audioFormat, final int sampleLeft, final int sampleRight) {
-        int left = sampleLeft;
-        int right = sampleRight;
-
         final int maxRange = (int) Math.min(audioFormat.getSampleRate(), Short.MAX_VALUE);
 
-        if (left < -maxRange) {
-            left = -maxRange;
-        }
-        else if (left > +maxRange) {
-            left = +maxRange;
-        }
+        // int left = sampleLeft;
+        final int left = Math.clamp(sampleLeft, -maxRange, +maxRange);
+        // if (left < -maxRange) {
+        //     left = -maxRange;
+        // }
+        // else if (left > +maxRange) {
+        //     left = +maxRange;
+        // }
 
-        if (right < -maxRange) {
-            right = -maxRange;
-        }
-        else if (right > +maxRange) {
-            right = +maxRange;
-        }
+        // int right = sampleRight;
+        final int right = Math.clamp(sampleRight, -maxRange, +maxRange);
+        // if (right < -maxRange) {
+        //     right = -maxRange;
+        // }
+        // else if (right > +maxRange) {
+        //     right = +maxRange;
+        // }
 
         final byte[] buffer = new byte[4];
 
@@ -334,15 +336,14 @@ public final class PlayerUtils {
             throw new IllegalArgumentException("sample is NaN");
         }
 
-        double mono = sampleMono;
-
         // clip if outside [-1, +1]
-        if (mono < -1.0D) {
-            mono = -1.0D;
-        }
-        if (mono > +1.0D) {
-            mono = +1.0D;
-        }
+        final double mono = Math.clamp(sampleMono, -1.0D, +1.0D);
+        // if (mono < -1.0D) {
+        //     mono = -1.0D;
+        // }
+        // if (mono > +1.0D) {
+        //     mono = +1.0D;
+        // }
 
         short s = (short) (MAX_16_BIT * mono);
         if (Double.compare(mono, 1.0D) == 0) {
@@ -367,17 +368,17 @@ public final class PlayerUtils {
      * If the sample is outside the range, it will be clipped (rounded to –SAMPLE_RATE or +SAMPLE_RATE).
      */
     public static byte[] sampleToByte(final AudioFormat audioFormat, final int sampleMono) {
-        final float sampleRate = audioFormat.getSampleRate();
-        int mono = sampleMono;
+        final int sampleRate = (int) audioFormat.getSampleRate();
 
         // clip if outside [-SAMPLE_RATE, +SAMPLE_RATE]
-        if (mono < -sampleRate) {
-            mono = -(int) sampleRate;
-        }
-
-        if (mono > +sampleRate) {
-            mono = +(int) sampleRate;
-        }
+        final int mono = Math.clamp(sampleMono, -sampleRate, +sampleRate);
+        // if (mono < -sampleRate) {
+        //     mono = -(int) sampleRate;
+        // }
+        //
+        // if (mono > +sampleRate) {
+        //     mono = +(int) sampleRate;
+        // }
 
         final byte[] buffer = new byte[2];
 

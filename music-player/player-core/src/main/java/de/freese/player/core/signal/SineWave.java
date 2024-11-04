@@ -17,7 +17,7 @@ public final class SineWave implements Signal {
         // final int bytesPerSample = frameSize * channels;
         final int bytesPerSample = frameSize;
         final int byteCount = (int) sampleRate * bytesPerSample * seconds;
-        final int sampleLength = (byteCount / bytesPerSample);
+        final int sampleLength = byteCount / bytesPerSample;
 
         final byte[] audioBytes = new byte[byteCount];
         int bufferIndex = 0;

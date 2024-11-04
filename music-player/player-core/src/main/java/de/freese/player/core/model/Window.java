@@ -88,11 +88,15 @@ public final class Window {
         return samplesLeft;
     }
 
+    public int getSamplesLength() {
+        return samplesLeft.length;
+    }
+
     public int[] getSamplesRight() {
         return samplesRight;
     }
 
     public boolean isMono() {
-        return this.samplesRight == null;
+        return samplesRight == null;
     }
 }

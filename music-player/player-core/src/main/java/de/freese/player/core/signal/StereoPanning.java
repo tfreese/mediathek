@@ -35,9 +35,9 @@ public final class StereoPanning implements Signal {
             final double sinValueRight = rightGain * Math.sin(Math.TAU * (frequency * 0.8D) * time);
 
             // final int sampleValueLeft = (int) (sampleRate * sinValueLeft);
-            final int sampleValueLeft = (int) (sinValueLeft);
+            final int sampleValueLeft = (int) sinValueLeft;
             // final int sampleValueRight = (int) (sampleRate * sinValueRight);
-            final int sampleValueRight = (int) (sinValueRight);
+            final int sampleValueRight = (int) sinValueRight;
 
             if (audioFormat.isBigEndian()) {
                 audioBytes[bufferIndex++] = (byte) (sampleValueLeft >> 8);

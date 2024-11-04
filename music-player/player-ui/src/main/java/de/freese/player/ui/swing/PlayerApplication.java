@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import de.freese.player.core.input.AudioSource;
 import de.freese.player.ui.ApplicationContext;
 import de.freese.player.ui.equalizer.EqualizerDspProcessor;
+import de.freese.player.ui.equalizer.EqualizerDspProcessorNew;
 import de.freese.player.ui.swing.component.PlayerView;
 import de.freese.player.ui.swing.component.equalizer.EqualizerView;
 import de.freese.player.ui.swing.component.library.LibraryView;
@@ -96,7 +97,7 @@ public final class PlayerApplication {
 
         // UIManager.put("Viewport.background", defaultBackground);
 
-        final EqualizerDspProcessor equalizerDspProcessor = new EqualizerDspProcessor();
+        final EqualizerDspProcessor equalizerDspProcessor = new EqualizerDspProcessorNew();
         ApplicationContext.getPlayer().addProcessor(equalizerDspProcessor);
         ApplicationContext.setEqualizerDspProcessor(equalizerDspProcessor);
 
