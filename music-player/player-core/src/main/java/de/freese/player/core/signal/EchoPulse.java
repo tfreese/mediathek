@@ -28,36 +28,38 @@ public final class EchoPulse implements Signal {
     }
 
     @Override
-    public byte[] generate(final AudioFormat audioFormat, final int seconds, final double frequency) {
-        final int frameSize = audioFormat.getFrameSize();
-        final float sampleRate = audioFormat.getSampleRate();
+    public byte[] generate(final AudioFormat audioFormat, final double seconds, final double frequency) {
         final int channels = audioFormat.getChannels();
 
-        // final int bytesPerSample = frameSize * channels;
-        final int bytesPerSample = frameSize;
-        final int byteCount = (int) sampleRate * bytesPerSample * seconds;
-        final int sampleLength = byteCount / bytesPerSample;
+        final int frameSize = audioFormat.getFrameSize(); // Bytes per Frame
+        // float frameRate = audioFormat.getFrameRate();
 
-        final byte[] audioBytes = new byte[byteCount];
+        // int sampleSizeInBits = audioFormat.getSampleSizeInBits();
+        final double sampleRate = audioFormat.getSampleRate();
+
+        final int samplesCount = (int) (sampleRate * seconds);
+        final int arrayLength = samplesCount * frameSize;
+
+        final byte[] audioBytes = new byte[arrayLength];
         int bufferIndex = 0;
 
         int cnt2 = -8_000;
         int cnt3 = -16_000;
         int cnt4 = -24_000;
 
-        for (int cnt1 = 0; cnt1 < sampleLength; cnt1++, cnt2++, cnt3++, cnt4++) {
-            double sinValue = playEchoPulseHelper(cnt1, sampleLength, sampleRate, frequency);
+        for (int cnt1 = 0; cnt1 < samplesCount; cnt1++, cnt2++, cnt3++, cnt4++) {
+            double sinValue = playEchoPulseHelper(cnt1, samplesCount, sampleRate, frequency);
 
             if (cnt2 > 0) {
-                sinValue += 0.7D * playEchoPulseHelper(cnt2, sampleLength, sampleRate, frequency);
+                sinValue += 0.7D * playEchoPulseHelper(cnt2, samplesCount, sampleRate, frequency);
             }
 
             if (cnt3 > 0) {
-                sinValue += 0.49D * playEchoPulseHelper(cnt3, sampleLength, sampleRate, frequency);
+                sinValue += 0.49D * playEchoPulseHelper(cnt3, samplesCount, sampleRate, frequency);
             }
 
             if (cnt4 > 0) {
-                sinValue += 0.34D * playEchoPulseHelper(cnt4, sampleLength, sampleRate, frequency);
+                sinValue += 0.34D * playEchoPulseHelper(cnt4, samplesCount, sampleRate, frequency);
             }
 
             final int sampleValue = (int) sinValue;

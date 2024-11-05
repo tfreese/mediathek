@@ -8,30 +8,32 @@ import javax.sound.sampled.AudioFormat;
  */
 public final class DecayPulse implements Signal {
     @Override
-    public byte[] generate(final AudioFormat audioFormat, final int seconds, final double frequency) {
-        final int frameSize = audioFormat.getFrameSize();
-        final float sampleRate = audioFormat.getSampleRate();
+    public byte[] generate(final AudioFormat audioFormat, final double seconds, final double frequency) {
         final int channels = audioFormat.getChannels();
 
-        // final int bytesPerSample = frameSize * channels;
-        final int bytesPerSample = frameSize;
-        final int byteCount = (int) sampleRate * bytesPerSample * seconds;
-        final int sampleLength = byteCount / bytesPerSample;
+        final int frameSize = audioFormat.getFrameSize(); // Bytes per Frame
+        // float frameRate = audioFormat.getFrameRate();
 
-        final byte[] audioBytes = new byte[byteCount];
+        // int sampleSizeInBits = audioFormat.getSampleSizeInBits();
+        final double sampleRate = audioFormat.getSampleRate();
+
+        final int samplesCount = (int) (sampleRate * seconds);
+        final int arrayLength = samplesCount * frameSize;
+
+        final byte[] audioBytes = new byte[arrayLength];
         int bufferIndex = 0;
 
-        for (int cnt = 0; cnt < sampleLength; cnt++) {
-            final double time = cnt / (double) sampleRate;
+        for (int step = 0; step < samplesCount; step++) {
+            final double time = step / sampleRate;
 
             // The value of scale controls the rate of decay - large scale, fast decay.
-            double scale = 2D * cnt;
+            double scale = 2D * step;
 
-            if (scale > sampleLength) {
-                scale = sampleLength;
+            if (scale > samplesCount) {
+                scale = samplesCount;
             }
 
-            final double gain = sampleRate * (sampleLength - scale) / sampleLength;
+            final double gain = sampleRate * (samplesCount - scale) / samplesCount;
             // final double freq = 499.0D; // Frequency
 
             final double sinValue =

@@ -1,29 +1,35 @@
 // Created: 03 Nov. 2024
 package de.freese.player.core.signal;
 
+import java.nio.ByteBuffer;
+
 import javax.sound.sampled.AudioFormat;
+
+import de.freese.player.core.util.PlayerUtils;
 
 /**
  * @author Thomas Freese
  */
 public final class SineWave implements Signal {
     @Override
-    public byte[] generate(final AudioFormat audioFormat, final int seconds, final double frequency) {
-        final int frameSize = audioFormat.getFrameSize();
-        // final int sampleSize = audioFormat.getSampleSizeInBits();
-        final float sampleRate = audioFormat.getSampleRate();
+    public byte[] generate(final AudioFormat audioFormat, final double seconds, final double frequency) {
         final int channels = audioFormat.getChannels();
 
-        // final int bytesPerSample = frameSize * channels;
-        final int bytesPerSample = frameSize;
-        final int byteCount = (int) sampleRate * bytesPerSample * seconds;
-        final int sampleLength = byteCount / bytesPerSample;
+        final int frameSize = audioFormat.getFrameSize(); // Bytes per Frame
+        // float frameRate = audioFormat.getFrameRate();
 
-        final byte[] audioBytes = new byte[byteCount];
-        int bufferIndex = 0;
+        // int sampleSizeInBits = audioFormat.getSampleSizeInBits();
+        final double sampleRate = audioFormat.getSampleRate();
 
-        for (int cnt = 0; cnt < sampleLength; cnt++) {
-            final double time = cnt / (double) sampleRate;
+        final int samplesCount = (int) (sampleRate * seconds);
+        final int arrayLength = samplesCount * frameSize;
+
+        // final byte[] audioBytes = new byte[arrayLength];
+        // int bufferIndex = 0;
+        final ByteBuffer byteBuffer = ByteBuffer.allocate(arrayLength);
+
+        for (int step = 0; step < samplesCount; step++) {
+            final double time = step / sampleRate;
 
             final double sinValue = Math.sin(Math.TAU * frequency * time);
 
@@ -34,19 +40,39 @@ public final class SineWave implements Signal {
 
             final int sampleValue = (int) (sampleRate * sinValue);
 
-            if (audioFormat.isBigEndian()) {
-                for (int c = 0; c < channels; c++) {
-                    audioBytes[bufferIndex++] = (byte) (sampleValue >> 8);
-                    audioBytes[bufferIndex++] = (byte) sampleValue;
-                }
+            if (channels == 1) {
+                // Mono
+                PlayerUtils.sampleToByte(audioFormat, sampleValue, byteBuffer::put);
             }
             else {
-                for (int c = 0; c < channels; c++) {
-                    audioBytes[bufferIndex++] = (byte) sampleValue;
-                    audioBytes[bufferIndex++] = (byte) (sampleValue >> 8);
-                }
+                // Stereo
+                PlayerUtils.sampleToByte(audioFormat, sampleValue, byteBuffer::put);
+                PlayerUtils.sampleToByte(audioFormat, sampleValue, byteBuffer::put);
             }
+
+            // if (audioFormat.isBigEndian()) {
+            //     for (int c = 0; c < channels; c++) {
+            //         audioBytes[bufferIndex++] = (byte) (sampleValue >> 8);
+            //         audioBytes[bufferIndex++] = (byte) sampleValue;
+            //     }
+            // }
+            // else {
+            //     for (int c = 0; c < channels; c++) {
+            //         audioBytes[bufferIndex++] = (byte) sampleValue;
+            //         audioBytes[bufferIndex++] = (byte) (sampleValue >> 8);
+            //     }
+            // }
         }
+
+        byteBuffer.flip();
+
+        if (byteBuffer.hasArray()) {
+            return byteBuffer.array();
+        }
+
+        // DirectBuffers don't have an Array.
+        final byte[] audioBytes = new byte[arrayLength];
+        byteBuffer.get(audioBytes);
 
         return audioBytes;
     }

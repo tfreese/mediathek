@@ -1,14 +1,13 @@
-// Created: 04 Nov. 2024
-package de.freese.player.ui.equalizer;
-
-import de.freese.player.core.model.Window;
-import de.freese.player.equalizer.EqualizerControls;
-import de.freese.player.equalizer.IIRCoefficients;
+// Created: 05 Nov. 2024
+package de.freese.player.equalizer;
 
 /**
+ * Equalizer with Infinite Impulse Response (IIR) Algorithm.
+ *
  * @author Thomas Freese
+ * @see <a href="https://github.com/sedmelluq/lavaplayer/tree/master/main/src/main/java/com/sedmelluq/discord/lavaplayer/filter/equalizer">lavaplayer-equalizer</a>
  */
-public final class EqualizerDspProcessorNew implements EqualizerDspProcessor {
+public final class DefaultEqualizer implements Equalizer {
     private static final IIRCoefficients[] COEFFICIENTS_48000 = {
             // 25 Hz
             new IIRCoefficients(9.9847546664e-01D, 7.6226668143e-04D, 1.9984647656e+00D),
@@ -42,32 +41,22 @@ public final class EqualizerDspProcessorNew implements EqualizerDspProcessor {
             new IIRCoefficients(4.1811888447e-01D, 2.9094055777e-01D, -7.0905944223e-01D)
     };
 
-    private final EqualizerControls controls = new EqualizerControls(15);
-    private final double[] historyLeft = new double[15 * 6];
-    private final double[] historyRight = new double[15 * 6];
+    private final EqualizerControls controls = new EqualizerControls(COEFFICIENTS_48000.length);
+    private final double[] historyLeft = new double[COEFFICIENTS_48000.length * 6];
+    private final double[] historyRight = new double[COEFFICIENTS_48000.length * 6];
 
     private int current;
-    private boolean enabled = true;
-    private int minusOne = 2;
-    private int minusTwo = 1;
+    private int minusOne;
+    private int minusTwo;
 
-    @Override
-    public EqualizerControls getControls() {
-        return controls;
+    public DefaultEqualizer() {
+        super();
+
+        cleanHistory();
     }
 
     @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    @Override
-    public void process(final Window window) {
-        doEqualize(window.getSamplesLeft(), window.getSamplesRight());
-    }
-
-    @Override
-    public void reset() {
+    public void cleanHistory() {
         for (int i = 0; i < historyLeft.length; i++) {
             historyLeft[i] = 0F;
             historyRight[i] = 0F;
@@ -79,11 +68,13 @@ public final class EqualizerDspProcessorNew implements EqualizerDspProcessor {
     }
 
     @Override
-    public void setEnabled(final boolean enabled) {
-        this.enabled = enabled;
-    }
+    public void equalize(final int[] samplesLeft, final int[] samplesRight) {
+        // IIR filter equation is
+        // y[n] = 2 * (alpha*(x[n]-x[n-2]) + gamma*y[n-1] - beta*y[n-2])
+        //
+        // NOTE: The 2 factor was introduced in the coefficients to save a multiplication
+        // This algorithm cascades two filters to get nice filtering at the expense of extra CPU cycles.
 
-    private void doEqualize(final int[] samplesLeft, final int[] samplesRight) {
         final double preampValue = controls.getPreampValue();
         final double[] bandValues = controls.getBands();
 
@@ -91,6 +82,10 @@ public final class EqualizerDspProcessorNew implements EqualizerDspProcessor {
             final int sampleLeft = samplesLeft[sampleIndex];
             final int sampleRight = samplesRight[sampleIndex];
 
+            // Volume stuff
+            // Scale down original PCM sample and add it to the filters output.
+            // This substitutes the multiplication by 0.25.
+            // Go back to use the floating point multiplication before the conversion to give more dynamic range.
             double resultLeft = sampleLeft * 0.25D * preampValue;
             double resultRight = sampleRight * 0.25D * preampValue;
 
@@ -100,11 +95,15 @@ public final class EqualizerDspProcessorNew implements EqualizerDspProcessor {
 
                 final IIRCoefficients coefficients = COEFFICIENTS_48000[bandIndex];
 
-                final double bandResultLeft = coefficients.alpha() * (sampleLeft - historyLeft[x + minusTwo])
-                        +
-                        coefficients.gamma() * historyLeft[y + minusOne]
-                        -
-                        coefficients.beta() * historyLeft[y + minusTwo];
+                final double bandResultLeft =
+                        // = alpha * [x(n)-x(n-2)]
+                        coefficients.alpha() * (sampleLeft - historyLeft[x + minusTwo])
+                                +
+                                // + gamma * y(n-1)
+                                coefficients.gamma() * historyLeft[y + minusOne]
+                                -
+                                // - beta * y(n-2)
+                                coefficients.beta() * historyLeft[y + minusTwo];
 
                 final double bandResultRight = coefficients.alpha() * (sampleRight - historyRight[x + minusTwo])
                         +
@@ -122,23 +121,31 @@ public final class EqualizerDspProcessorNew implements EqualizerDspProcessor {
                 resultRight += bandResultRight * bandValues[bandIndex];
             }
 
+            // Normalize the output.
             // samplesLeft[sampleIndex] = (int) Math.min(Math.max(resultLeft * 4.0D, -1.0D), 1.0D);
             samplesLeft[sampleIndex] = (int) (resultLeft * 4.0D);
             // samplesRight[sampleIndex] = (int) Math.min(Math.max(resultRight * 4.0D, -1.0D), 1.0D);
             samplesRight[sampleIndex] = (int) (resultRight * 4.0D);
 
-            if (++current == 3) {
+            current++;
+            if (current == 3) {
                 current = 0;
             }
 
-            if (++minusOne == 3) {
+            minusOne++;
+            if (minusOne == 3) {
                 minusOne = 0;
             }
 
-            if (++minusTwo == 3) {
+            minusTwo++;
+            if (minusTwo == 3) {
                 minusTwo = 0;
             }
         }
+    }
 
+    @Override
+    public EqualizerControls getControls() {
+        return controls;
     }
 }

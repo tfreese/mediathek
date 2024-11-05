@@ -66,18 +66,14 @@ public class IIR extends IIRBase {
         }
 
         switch (bands) {
-            case EQ_10_BANDS:
-            case EQ_15_BANDS:
-            case EQ_25_BANDS:
-            case EQ_31_BANDS:
+            case EQ_10_BANDS, EQ_15_BANDS, EQ_25_BANDS, EQ_31_BANDS:
                 break;
             default:
                 return false;
         }
 
         switch (channels) {
-            case 1:
-            case 2:
+            case 1, 2:
                 break;
             default:
                 return false;
@@ -187,11 +183,11 @@ public class IIR extends IIRBase {
 
                     xyData.setY(i,
                             // = alpha * [x(n)-x(n-2)]
-                            coefficients.getAlpha() * (pcm - xyData.getX(k))
+                            coefficients.alpha() * (pcm - xyData.getX(k))
                                     // + gamma * y(n-1)
-                                    + coefficients.getGamma() * xyData.getY(j)
+                                    + coefficients.gamma() * xyData.getY(j)
                                     // - beta * y(n-2)
-                                    - coefficients.getBeta() * xyData.getY(k)
+                                    - coefficients.beta() * xyData.getY(k)
                     );
 
                     // The multiplication by 2.0 was 'moved' into the coefficients to save CPU cycles here.

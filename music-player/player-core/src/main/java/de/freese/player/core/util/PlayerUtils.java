@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -362,6 +363,24 @@ public final class PlayerUtils {
         }
 
         return buffer;
+    }
+
+    /**
+     * If the sample is outside the range, it will be clipped (rounded to –SAMPLE_RATE or +SAMPLE_RATE).
+     */
+    public static void sampleToByte(final AudioFormat audioFormat, final int sampleMono, final Consumer<Byte> byteConsumer) {
+        final int sampleRate = (int) audioFormat.getSampleRate();
+
+        final int mono = Math.clamp(sampleMono, -sampleRate, +sampleRate);
+
+        if (audioFormat.isBigEndian()) {
+            byteConsumer.accept((byte) (mono >> 8));
+            byteConsumer.accept((byte) mono);
+        }
+        else {
+            byteConsumer.accept((byte) mono);
+            byteConsumer.accept((byte) (mono >> 8));
+        }
     }
 
     /**

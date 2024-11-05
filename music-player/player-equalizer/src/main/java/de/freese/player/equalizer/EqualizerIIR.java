@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Thomas Freese
  */
-public class IIR {
+public class EqualizerIIR implements Equalizer {
     static final IIRCoefficients[] IIR_CF15_44100 = {
             // 25 Hz
             new IIRCoefficients(9.9834072702e-01, 8.2963648917e-04, 1.9983280505e+00),
@@ -43,7 +43,7 @@ public class IIR {
             new IIRCoefficients(4.0179628792e-01, 2.9910185604e-01, -9.1248032613e-01)
     };
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(IIR.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EqualizerIIR.class);
 
     private final int bands;
     private final int channels;
@@ -58,16 +58,15 @@ public class IIR {
     private int j;
     private int k;
 
-    public IIR() {
-        this(15, 2, 0F);
+    public EqualizerIIR() {
+        this(15, 2);
     }
 
     /**
      * @param bands is the number of bands to be used
      * @param channels is the number of channels
-     * @param rate is the sample rate of equalizer
      */
-    private IIR(final int bands, final int channels, final float rate) {
+    private EqualizerIIR(final int bands, final int channels) {
         super();
 
         this.bands = bands;
@@ -90,6 +89,7 @@ public class IIR {
         k = 1;
     }
 
+    @Override
     public void cleanHistory() {
         for (int ii = 0; ii < bands; ii++) {
             for (int jj = 0; jj < channels; jj++) {
@@ -102,11 +102,8 @@ public class IIR {
         k = 1;
     }
 
-    public EqualizerControls getControls() {
-        return controls;
-    }
-
-    public void iir(final int[] samplesLeft, final int[] samplesRight) {
+    @Override
+    public void equalize(final int[] samplesLeft, final int[] samplesRight) {
         final double preampValue = controls.getPreampValue();
         final double[] bandValues = controls.getBands();
 
@@ -164,7 +161,7 @@ public class IIR {
             outLeft += pcmLeft * 0.25D;
             outRight += pcmRight * 0.25D;
 
-            // Normalize the output
+            // Normalize the output.
             outLeft *= 4D;
             outRight *= 4D;
 
@@ -189,5 +186,10 @@ public class IIR {
         else {
             k = 0;
         }
+    }
+
+    @Override
+    public EqualizerControls getControls() {
+        return controls;
     }
 }

@@ -42,9 +42,7 @@ public class EqualizerInputStream extends InputStream {
      */
     public static boolean isParamsSupported(final float sampleRate, final int channels, final int samplesize, final int bands) {
         switch (samplesize) {
-            case 8:
-            case 16:
-            case 24:
+            case 8, 16, 24:
                 break;
             default:
                 return false;

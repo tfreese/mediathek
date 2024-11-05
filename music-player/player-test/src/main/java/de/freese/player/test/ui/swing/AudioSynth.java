@@ -3,14 +3,11 @@ package de.freese.player.test.ui.swing;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
 import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.SourceDataLine;
@@ -40,7 +37,7 @@ public final class AudioSynth {
     // private static final boolean BIG_ENDIAN = true;
     // private static final int SAMPLE_SIZE_IN_BITS = 16;
     // private static final boolean SIGNED = true;
-    private static final AudioFormat AUDIO_FORMAT = new AudioFormat(16_000.0F,
+    private static final AudioFormat AUDIO_FORMAT = new AudioFormat(8_000.0F,
             16,
             2,
             true,
@@ -136,39 +133,35 @@ public final class AudioSynth {
         elapsedTimeMeter.setText("Duration:");
 
         // Write the data to an output file.
-        // // AudioSystem.write(audioInputStream, AudioFileFormat.Type.AU, new File(fileName.getText() + ".au"));
         // AudioSystem.write(audioInputStream, AudioFileFormat.Type.WAVE, new File(fileName.getText() + ".wav"));
+
+        final DataLine.Info dataLineInfo = new DataLine.Info(SourceDataLine.class, audioFormat);
+
+        // InputStream inputStream = new ByteArrayInputStream(audioData);
+        // AudioInputStream audioInputStream = new AudioInputStream(inputStream, audioFormat, AudioSystem.NOT_SPECIFIED);
+        // audioData.length / (long) audioFormat.getFrameSize()
+        // AudioSystem.NOT_SPECIFIED
 
         // Thread.ofPlatform().daemon().name("player-", 1).start(new Player(sourceDataLine));
         Thread.ofVirtual().name("player-", 1).start(() -> {
-            try (InputStream inputStream = new ByteArrayInputStream(audioData);
-                 AudioInputStream audioInputStream = new AudioInputStream(inputStream, audioFormat, AudioSystem.NOT_SPECIFIED)) {
-                // audioData.length / (long) audioFormat.getFrameSize()
-                // AudioSystem.NOT_SPECIFIED
-
-                final DataLine.Info dataLineInfo = new DataLine.Info(SourceDataLine.class, audioFormat);
-                final SourceDataLine sourceDataLine = (SourceDataLine) AudioSystem.getLine(dataLineInfo);
-
+            try (SourceDataLine sourceDataLine = (SourceDataLine) AudioSystem.getLine(dataLineInfo)) {
                 sourceDataLine.open(audioFormat);
                 sourceDataLine.start();
 
                 final long startTime = System.currentTimeMillis();
-                System.out.println(startTime);
 
-                final byte[] playBuffer = new byte[8196];
-                int read;
+                sourceDataLine.write(audioData, 0, audioData.length);
+                // final byte[] playBuffer = new byte[8196];
+                // int read;
+                //
+                // while ((read = audioInputStream.read(playBuffer, 0, playBuffer.length)) > 0) {
+                //     sourceDataLine.write(playBuffer, 0, read);
+                // }
 
-                while ((read = audioInputStream.read(playBuffer, 0, playBuffer.length)) > 0) {
-                    sourceDataLine.write(playBuffer, 0, read);
-                }
-
-                final long elapsedTime = System.currentTimeMillis() - startTime;
-                System.out.println(elapsedTime);
-                SwingUtilities.invokeLater(() -> elapsedTimeMeter.setText("Duration: %d ms".formatted(elapsedTime)));
+                SwingUtilities.invokeLater(() -> elapsedTimeMeter.setText("Duration: %d ms".formatted(System.currentTimeMillis() - startTime)));
 
                 sourceDataLine.drain();
                 sourceDataLine.stop();
-                sourceDataLine.close();
             }
             catch (Exception ex) {
                 ex.printStackTrace();
@@ -189,49 +182,49 @@ public final class AudioSynth {
     }
 
     private void playSignalFmSweep() {
-        final byte[] audioData = new FmSweep().generate(AUDIO_FORMAT, 2, Double.NaN);
+        final byte[] audioData = new FmSweep().generate(AUDIO_FORMAT, 2D, Double.NaN);
 
         play(audioData, AUDIO_FORMAT);
     }
 
     private void playSignalSawWave() {
-        final byte[] audioData = new SawWave().generate(AUDIO_FORMAT, 2, 1000D);
+        final byte[] audioData = new SawWave().generate(AUDIO_FORMAT, 2D, 1000D);
 
         play(audioData, AUDIO_FORMAT);
     }
 
     private void playSignalSineWave() {
-        final byte[] audioData = new SineWave().generate(AUDIO_FORMAT, 2, 1000D);
+        final byte[] audioData = new SineWave().generate(AUDIO_FORMAT, 2D, 1000D);
 
         play(audioData, AUDIO_FORMAT);
     }
 
     private void playSignalSquareWave() {
-        final byte[] audioData = new SquareWave().generate(AUDIO_FORMAT, 2, 1000D);
+        final byte[] audioData = new SquareWave().generate(AUDIO_FORMAT, 2D, 1000D);
 
         play(audioData, AUDIO_FORMAT);
     }
 
     private void playSignalStereoPanning() {
-        final byte[] audioData = new StereoPanning().generate(AUDIO_FORMAT, 2, 1000D);
+        final byte[] audioData = new StereoPanning().generate(AUDIO_FORMAT, 2D, 1000D);
 
         play(audioData, AUDIO_FORMAT);
     }
 
     private void playSignalStereoPingPong() {
-        final byte[] audioData = new StereoPingPong().generate(AUDIO_FORMAT, 2, 1000D);
+        final byte[] audioData = new StereoPingPong().generate(AUDIO_FORMAT, 2D, 1000D);
 
         play(audioData, AUDIO_FORMAT);
     }
 
     private void playSignalTones() {
-        final byte[] audioData = new Tones().generate(AUDIO_FORMAT, 2, 1000D);
+        final byte[] audioData = new Tones().generate(AUDIO_FORMAT, 2D, 1000D);
 
         play(audioData, AUDIO_FORMAT);
     }
 
     private void playSignalWhiteNoise() {
-        final byte[] audioData = new WhiteNoise().generate(AUDIO_FORMAT, 2, 1000D);
+        final byte[] audioData = new WhiteNoise().generate(AUDIO_FORMAT, 2D, 1000D);
 
         play(audioData, AUDIO_FORMAT);
     }

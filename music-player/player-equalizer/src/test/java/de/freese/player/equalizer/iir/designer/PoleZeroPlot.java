@@ -41,6 +41,7 @@ public class PoleZeroPlot extends Canvas {
         return plotColor;
     }
 
+    @Override
     public void paint(final Graphics g) {
         final int horzSpace = 20;
         final int vertSpace = 20;

@@ -75,6 +75,7 @@ public class GraphPlot extends Canvas {
         return tracePlot;
     }
 
+    @Override
     public void paint(final Graphics g) {
         int x;
         int y;
