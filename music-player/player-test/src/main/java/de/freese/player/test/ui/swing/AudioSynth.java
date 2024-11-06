@@ -34,9 +34,6 @@ import de.freese.player.core.signal.WhiteNoise;
  * @author Thomas Freese
  */
 public final class AudioSynth {
-    // private static final boolean BIG_ENDIAN = true;
-    // private static final int SAMPLE_SIZE_IN_BITS = 16;
-    // private static final boolean SIGNED = true;
     private static final AudioFormat AUDIO_FORMAT = new AudioFormat(8_000.0F,
             16,
             2,
@@ -158,9 +155,11 @@ public final class AudioSynth {
                 //     sourceDataLine.write(playBuffer, 0, read);
                 // }
 
-                SwingUtilities.invokeLater(() -> elapsedTimeMeter.setText("Duration: %d ms".formatted(System.currentTimeMillis() - startTime)));
-
                 sourceDataLine.drain();
+
+                final long endTime = System.currentTimeMillis() - startTime;
+                SwingUtilities.invokeLater(() -> elapsedTimeMeter.setText("Duration: %d ms".formatted(endTime)));
+
                 sourceDataLine.stop();
             }
             catch (Exception ex) {

@@ -114,7 +114,7 @@ public final class SourceDataLinePlayer {
 
     public void stop() {
         // Continues data line I/O until its buffer is drained.
-        // sourceDataLine.drain();
+        sourceDataLine.drain();
 
         sourceDataLine.stop();
     }
