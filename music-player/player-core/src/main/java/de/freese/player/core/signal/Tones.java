@@ -1,14 +1,24 @@
 // Created: 03 Nov. 2024
 package de.freese.player.core.signal;
 
+import java.util.Set;
+
 import javax.sound.sampled.AudioFormat;
 
 /**
  * @author Thomas Freese
  */
 public final class Tones implements Signal {
+    private final Set<Double> frequencies;
+
+    public Tones(final Set<Double> frequencies) {
+        super();
+
+        this.frequencies = Set.copyOf(frequencies);
+    }
+
     @Override
-    public byte[] generate(final AudioFormat audioFormat, final double seconds, final double frequency) {
+    public byte[] generate(final AudioFormat audioFormat, final double seconds) {
         final int channels = audioFormat.getChannels();
 
         final int frameSize = audioFormat.getFrameSize(); // Bytes per Frame
@@ -26,11 +36,13 @@ public final class Tones implements Signal {
         for (int step = 0; step < samplesCount; step++) {
             final double time = step / sampleRate;
 
-            final double sinValue =
-                    (Math.sin(2D * Math.PI * frequency * time)
-                            + Math.sin(2D * Math.PI * (frequency / 1.8D) * time)
-                            + Math.sin(2D * Math.PI * (frequency / 1.5D) * time)
-                    ) / 3.0D;
+            double sinValue = 0D;
+
+            for (double frequency : frequencies) {
+                sinValue += Math.sin(Math.TAU * frequency * time);
+            }
+
+            sinValue /= 3.0D;
 
             final int sampleValue = (int) (sampleRate * sinValue);
 

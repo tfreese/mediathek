@@ -7,8 +7,16 @@ import javax.sound.sampled.AudioFormat;
  * @author Thomas Freese
  */
 public final class SawWave implements Signal {
+    private final double frequency;
+
+    public SawWave(final double frequency) {
+        super();
+        
+        this.frequency = frequency;
+    }
+
     @Override
-    public byte[] generate(final AudioFormat audioFormat, final double seconds, final double frequency) {
+    public byte[] generate(final AudioFormat audioFormat, final double seconds) {
         final int channels = audioFormat.getChannels();
 
         final int frameSize = audioFormat.getFrameSize(); // Bytes per Frame

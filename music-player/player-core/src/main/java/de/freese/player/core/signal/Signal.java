@@ -7,5 +7,5 @@ import javax.sound.sampled.AudioFormat;
  * @author Thomas Freese
  */
 public interface Signal {
-    byte[] generate(AudioFormat audioFormat, double seconds, double frequency);
+    byte[] generate(AudioFormat audioFormat, double seconds);
 }

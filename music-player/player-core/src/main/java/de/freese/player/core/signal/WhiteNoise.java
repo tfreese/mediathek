@@ -12,7 +12,7 @@ public final class WhiteNoise implements Signal {
     private final Random random = new Random();
 
     @Override
-    public byte[] generate(final AudioFormat audioFormat, final double seconds, final double frequency) {
+    public byte[] generate(final AudioFormat audioFormat, final double seconds) {
         final int channels = audioFormat.getChannels();
 
         final int frameSize = audioFormat.getFrameSize(); // Bytes per Frame

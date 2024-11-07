@@ -7,8 +7,16 @@ import javax.sound.sampled.AudioFormat;
  * @author Thomas Freese
  */
 public final class StereoPingPong implements Signal {
+    private final double frequency;
+
+    public StereoPingPong(final double frequency) {
+        super();
+
+        this.frequency = frequency;
+    }
+
     @Override
-    public byte[] generate(final AudioFormat audioFormat, final double seconds, final double frequency) {
+    public byte[] generate(final AudioFormat audioFormat, final double seconds) {
         // final int channels = audioFormat.getChannels();
 
         final int frameSize = audioFormat.getFrameSize(); // Bytes per Frame
@@ -27,6 +35,8 @@ public final class StereoPingPong implements Signal {
         double rightGain = sampleRate;
 
         for (int step = 0; step < samplesCount; step++) {
+            final double time = step / sampleRate;
+
             // Calculate time-varying gain for each speaker.
             if (step % (samplesCount / 8) == 0) {
                 // swap gain values
@@ -34,8 +44,6 @@ public final class StereoPingPong implements Signal {
                 leftGain = rightGain;
                 rightGain = temp;
             }
-
-            final double time = step / sampleRate;
 
             // Generate data for left speaker.
             final double sinValueLeft = leftGain * Math.sin(Math.TAU * frequency * time);

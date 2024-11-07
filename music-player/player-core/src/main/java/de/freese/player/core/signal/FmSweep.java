@@ -8,7 +8,7 @@ import javax.sound.sampled.AudioFormat;
  */
 public final class FmSweep implements Signal {
     @Override
-    public byte[] generate(final AudioFormat audioFormat, final double seconds, final double frequency) {
+    public byte[] generate(final AudioFormat audioFormat, final double seconds) {
         final int channels = audioFormat.getChannels();
 
         final int frameSize = audioFormat.getFrameSize(); // Bytes per Frame

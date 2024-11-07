@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Supplier;
 
 import javax.sound.sampled.AudioFormat;
@@ -169,61 +170,61 @@ public final class AudioSynth {
     }
 
     private void playSignalDecayPulse() {
-        final byte[] audioData = new DecayPulse().generate(AUDIO_FORMAT, 2, 1000D);
+        final byte[] audioData = new DecayPulse(Set.of(500D, 750D, 1000D)).generate(AUDIO_FORMAT, 2);
 
         play(audioData, AUDIO_FORMAT);
     }
 
     private void playSignalEchoPulse() {
-        final byte[] audioData = new EchoPulse().generate(AUDIO_FORMAT, 2, 1000D);
+        final byte[] audioData = new EchoPulse(Set.of(500D, 750D, 1000D)).generate(AUDIO_FORMAT, 2);
 
         play(audioData, AUDIO_FORMAT);
     }
 
     private void playSignalFmSweep() {
-        final byte[] audioData = new FmSweep().generate(AUDIO_FORMAT, 2D, Double.NaN);
+        final byte[] audioData = new FmSweep().generate(AUDIO_FORMAT, 2D);
 
         play(audioData, AUDIO_FORMAT);
     }
 
     private void playSignalSawWave() {
-        final byte[] audioData = new SawWave().generate(AUDIO_FORMAT, 2D, 1000D);
+        final byte[] audioData = new SawWave(1000D).generate(AUDIO_FORMAT, 2D);
 
         play(audioData, AUDIO_FORMAT);
     }
 
     private void playSignalSineWave() {
-        final byte[] audioData = new SineWave().generate(AUDIO_FORMAT, 2D, 1000D);
+        final byte[] audioData = new SineWave(1000D).generate(AUDIO_FORMAT, 2D);
 
         play(audioData, AUDIO_FORMAT);
     }
 
     private void playSignalSquareWave() {
-        final byte[] audioData = new SquareWave().generate(AUDIO_FORMAT, 2D, 1000D);
+        final byte[] audioData = new SquareWave(1000D).generate(AUDIO_FORMAT, 2D);
 
         play(audioData, AUDIO_FORMAT);
     }
 
     private void playSignalStereoPanning() {
-        final byte[] audioData = new StereoPanning().generate(AUDIO_FORMAT, 2D, 1000D);
+        final byte[] audioData = new StereoPanning(1000D).generate(AUDIO_FORMAT, 2D);
 
         play(audioData, AUDIO_FORMAT);
     }
 
     private void playSignalStereoPingPong() {
-        final byte[] audioData = new StereoPingPong().generate(AUDIO_FORMAT, 2D, 1000D);
+        final byte[] audioData = new StereoPingPong(1000D).generate(AUDIO_FORMAT, 2D);
 
         play(audioData, AUDIO_FORMAT);
     }
 
     private void playSignalTones() {
-        final byte[] audioData = new Tones().generate(AUDIO_FORMAT, 2D, 1000D);
+        final byte[] audioData = new Tones(Set.of(500D, 1000D)).generate(AUDIO_FORMAT, 2D);
 
         play(audioData, AUDIO_FORMAT);
     }
 
     private void playSignalWhiteNoise() {
-        final byte[] audioData = new WhiteNoise().generate(AUDIO_FORMAT, 2D, 1000D);
+        final byte[] audioData = new WhiteNoise().generate(AUDIO_FORMAT, 2D);
 
         play(audioData, AUDIO_FORMAT);
     }
