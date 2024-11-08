@@ -12,49 +12,52 @@ import de.freese.player.core.util.PlayerUtils;
  * @author Thomas Freese
  */
 public final class Window {
-    private final byte[] audioBytes;
-    private final AudioFormat audioFormat;
-    private final long framesRead;
-    private final long framesTotal;
-    private final int[] samplesLeft;
-    private final int[] samplesRight;
-
-    public Window(final AudioFormat audioFormat, final byte[] audioBytes, final long framesRead, final long framesTotal) {
-        super();
-
+    public static Window of(final AudioFormat audioFormat, final byte[] audioBytes, final long framesRead, final long framesTotal) {
+        Objects.requireNonNull(audioFormat, "audioFormat required");
         Objects.requireNonNull(audioBytes, "audioBytes required");
 
         if (audioBytes.length % 2 != 0) {
             throw new IllegalArgumentException("audioBytes length is not a power of 2: " + audioBytes.length);
         }
 
-        this.audioFormat = Objects.requireNonNull(audioFormat, "audioFormat required");
-        this.audioBytes = audioBytes;
+        int[] samplesLeft = null;
+        int[] samplesRight = null;
 
         if (audioFormat.getChannels() == 1) {
             // Mono
-            this.samplesLeft = PlayerUtils.createSamplesMono(audioFormat, audioBytes);
-            this.samplesRight = this.samplesLeft;
+            samplesLeft = PlayerUtils.createSamplesMono(audioFormat, audioBytes);
+            samplesRight = samplesLeft;
         }
         else {
             // Stereo
             final int[][] samples = PlayerUtils.createSamplesStereo(audioFormat, audioBytes);
-            this.samplesLeft = samples[0];
-            this.samplesRight = samples[1];
+            samplesLeft = samples[0];
+            samplesRight = samples[1];
         }
 
+        return new Window(audioFormat, samplesLeft, samplesRight, framesRead, framesTotal);
+    }
+
+    private final AudioFormat audioFormat;
+    private final long framesRead;
+    private final long framesTotal;
+    private final int[] samplesLeft;
+    private final int[] samplesRight;
+
+    private Window(final AudioFormat audioFormat, final int[] samplesLeft, final int[] samplesRight, final long framesRead, final long framesTotal) {
+        super();
+
+        this.audioFormat = audioFormat;
+        this.samplesLeft = samplesLeft;
+        this.samplesRight = samplesRight;
         this.framesRead = framesRead;
         this.framesTotal = framesTotal;
     }
 
     public void forEach(final BiConsumer<Integer, Integer> consumer) {
-        for (int i = 0; i < getSamplesRight().length; i++) {
+        for (int i = 0; i < getSamplesLeft().length; i++) {
             consumer.accept(getSamplesLeft()[i], getSamplesRight()[i]);
         }
-    }
-
-    public byte[] getAudioBytes() {
-        return audioBytes;
     }
 
     public AudioFormat getAudioFormat() {
@@ -88,15 +91,11 @@ public final class Window {
         return samplesLeft;
     }
 
-    public int getSamplesLength() {
-        return samplesLeft.length;
-    }
-
     public int[] getSamplesRight() {
         return samplesRight;
     }
 
     public boolean isMono() {
-        return samplesRight == null;
+        return getAudioFormat().getChannels() == 1;
     }
 }

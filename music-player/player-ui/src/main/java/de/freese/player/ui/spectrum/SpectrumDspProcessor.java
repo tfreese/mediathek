@@ -28,7 +28,6 @@ public final class SpectrumDspProcessor implements DspProcessor {
     private final Consumer<Spectrum> spectrumConsumer;
 
     private int[] lastSamples;
-    // private double maxAmp;
 
     public SpectrumDspProcessor(final Consumer<Spectrum> spectrumConsumer) {
         super();
@@ -50,7 +49,6 @@ public final class SpectrumDspProcessor implements DspProcessor {
 
     @Override
     public void reset() {
-        // maxAmp = 0D;
         spectrumConsumer.accept(null);
     }
 
@@ -86,13 +84,6 @@ public final class SpectrumDspProcessor implements DspProcessor {
         fftConfig.windowSize(fftSamples.length);
 
         final Spectrum spectrum = FFTComputationWrapper.createSpectrum(fftSamples, window.getAudioFormat().getSampleRate(), fftConfig);
-
-        // final Frequency frequency = FFTMath.findMaxAmplitude(spectrum);
-        //
-        // maxAmp = Math.max(maxAmp, frequency.getAmplitude());
-        // LOGGER.trace("maxAmp = {}", maxAmp);
-        //
-        // FFTMath.normalize(spectrum, frequency.getAmplitude());
 
         spectrumConsumer.accept(spectrum);
     }

@@ -126,7 +126,7 @@ public final class PlayerUtils {
         final byte[] bytes = new byte[windowSize * 2];
         System.arraycopy(audioBytes, 0, bytes, 0, bytes.length);
 
-        return new Window(audioFormat, bytes, 0, 0);
+        return Window.of(audioFormat, bytes, 0, 0);
     }
 
     /**

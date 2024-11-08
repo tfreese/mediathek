@@ -157,7 +157,7 @@ public final class AudioSynth {
                 // }
 
                 sourceDataLine.drain();
-
+                
                 final long endTime = System.currentTimeMillis() - startTime;
                 SwingUtilities.invokeLater(() -> elapsedTimeMeter.setText("Duration: %d ms".formatted(endTime)));
 

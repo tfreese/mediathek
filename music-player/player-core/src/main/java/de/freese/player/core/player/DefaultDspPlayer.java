@@ -183,11 +183,11 @@ public final class DefaultDspPlayer extends AbstractPlayer implements DspPlayer 
                 Window window = null;
 
                 if (bytesRead == audioBytes.length) {
-                    window = new Window(audioFormat, audioBytes, framesRead, getAudioInputStream().getFrameLength());
+                    window = Window.of(audioFormat, audioBytes, framesRead, getAudioInputStream().getFrameLength());
                 }
                 else if (bytesRead > -1) {
                     // End of Song.
-                    window = new Window(audioFormat, Arrays.copyOf(audioBytes, bytesRead), framesRead, getAudioInputStream().getFrameLength());
+                    window = Window.of(audioFormat, Arrays.copyOf(audioBytes, bytesRead), framesRead, getAudioInputStream().getFrameLength());
                     doStop = true;
                 }
                 else {
