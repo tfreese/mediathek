@@ -39,10 +39,10 @@ public class KodiMovieReporter extends AbstractMediaReporter {
                 where
                     idfile = ?
                 """;
-        
+
         // mysql:
         // UPDATE files
-        // INNER JOIN movie ON movie.idfile = files.idfile"
+        // INNER JOIN movie ON movie.idfile = files.idfile
         // set files.playcount = ?, files.lastplayed = ?
         // where movie.c00 = ?
 

@@ -17,6 +17,9 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.freese.player.fft.FFTFactory;
 import de.freese.player.fft.config.FFTConfig;
 import de.freese.player.fft.output.Spectrum;
@@ -31,7 +34,7 @@ public final class SpectrumVisualizer {
      * Wrapper for JFreeChart line graph
      */
     private static final LineChart LINE_CHART = new LineChart();
-    
+    private static final Logger LOGGER = LoggerFactory.getLogger(SpectrumVisualizer.class);
     private static Iterator<Spectrum> spectrumIterator;
     private static SpectrumStream spectrumStream;
 
@@ -76,10 +79,10 @@ public final class SpectrumVisualizer {
             spectrumIterator = spectrumStream.iterator();
         }
         catch (IOException | UnsupportedAudioFileException ex) {
-            ex.printStackTrace();
+            LOGGER.error(ex.getMessage(), ex);
         }
 
-        System.out.println(spectrumStream);
+        LOGGER.info("{}", spectrumStream);
 
         // Start playing audio
         Thread.ofVirtual().start(() -> {
@@ -91,7 +94,7 @@ public final class SpectrumVisualizer {
                 audioClip.start();
             }
             catch (Exception ex) {
-                ex.printStackTrace();
+                LOGGER.error(ex.getMessage(), ex);
             }
         });
 

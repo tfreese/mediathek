@@ -69,7 +69,7 @@ public class KodiJavaFxClient extends Application {
         }
         else {
             // clazz = Class.forName(parameters.get(0));
-            profile = parameters.get(0);
+            profile = parameters.getFirst();
         }
 
         // this.applicationContext = new AnnotationConfigApplicationContext(clazz);

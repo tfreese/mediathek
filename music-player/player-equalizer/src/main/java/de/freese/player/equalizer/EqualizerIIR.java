@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Wrapper for Infinite Impulse Response Algorithm.
+ * Equalizer with Infinite Impulse Response (IIR) Algorithm.
  *
  * @author Thomas Freese
  */

@@ -110,7 +110,7 @@ public final class EqualizerControls {
      */
     public void setBandDbValue(final int band, final double value) {
         // Map the gain and preamp values.
-        // -12dB .. 12dB mapping
+        // -12dB - 12dB mapping
         bands[band] = 2.5220207857061455181125E-01D * Math.exp(8.0178361802353992349168E-02D * value) - 2.5220207852836562523180E-01D;
         // bands[band] = PlayerUtils.rescale(value, getMinimumBandDbValue(), getMaximumBandDbValue(), -0.2D, 1D);
     }

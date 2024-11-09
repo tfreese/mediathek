@@ -105,11 +105,12 @@ public final class DefaultEqualizer implements Equalizer {
                                 // - beta * y(n-2)
                                 coefficients.beta() * historyLeft[y + minusTwo];
 
-                final double bandResultRight = coefficients.alpha() * (sampleRight - historyRight[x + minusTwo])
-                        +
-                        coefficients.gamma() * historyRight[y + minusOne]
-                        -
-                        coefficients.beta() * historyRight[y + minusTwo];
+                final double bandResultRight =
+                        coefficients.alpha() * (sampleRight - historyRight[x + minusTwo])
+                                +
+                                coefficients.gamma() * historyRight[y + minusOne]
+                                -
+                                coefficients.beta() * historyRight[y + minusTwo];
 
                 historyLeft[x + current] = sampleLeft;
                 historyLeft[y + current] = bandResultLeft;

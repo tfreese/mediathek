@@ -13,7 +13,7 @@ public interface ResourceCache {
 
     InputStream getResource(URI uri) throws Exception;
 
-    default InputStream getResource(URL url) throws Exception {
+    default InputStream getResource(final URL url) throws Exception {
         return getResource(url.toURI());
     }
 }

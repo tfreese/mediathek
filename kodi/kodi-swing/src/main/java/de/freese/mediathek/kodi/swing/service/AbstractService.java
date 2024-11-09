@@ -13,6 +13,8 @@ public abstract class AbstractService implements Service {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     protected AbstractService(final ApplicationContext applicationContext) {
+        super();
+        
         this.applicationContext = applicationContext;
     }
 

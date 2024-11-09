@@ -1,13 +1,15 @@
 // Created: 05 Aug. 2024
 package de.freese.player.test;
 
+import java.util.Set;
+
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.LineUnavailableException;
 
 import de.freese.player.core.model.Window;
 import de.freese.player.core.player.SourceDataLinePlayer;
+import de.freese.player.core.signal.Tones;
 import de.freese.player.core.util.PlayerUtils;
-import de.freese.player.core.util.SoundGenerator;
 import de.freese.player.fft.config.FFTConfig;
 import de.freese.player.fft.math.FFTComputationWrapper;
 import de.freese.player.fft.output.Spectrum;
@@ -32,7 +34,7 @@ public final class FFTDemo {
 
         final SourceDataLinePlayer sourceDataLinePlayer = new SourceDataLinePlayer(audioFormat);
 
-        final byte[] audioBytes = SoundGenerator.createSound(audioFormat, 1, new double[]{1000D, 2000D});
+        final byte[] audioBytes = new Tones(Set.of(1000D, 2000D)).generate(audioFormat, 1);
         // sourceDataLinePlayer.play(audioBytes, audioBytes.length);
         sourceDataLinePlayer.play(PlayerUtils.extractWindow(audioFormat, audioBytes, 16_000));
 

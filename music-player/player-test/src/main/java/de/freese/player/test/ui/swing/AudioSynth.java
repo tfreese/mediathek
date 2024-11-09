@@ -20,6 +20,9 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.freese.player.core.signal.DecayPulse;
 import de.freese.player.core.signal.EchoPulse;
 import de.freese.player.core.signal.FmSweep;
@@ -40,6 +43,7 @@ public final class AudioSynth {
             2,
             true,
             true);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AudioSynth.class);
 
     public static void main(final String[] args) {
         SwingUtilities.invokeLater(AudioSynth::new);
@@ -157,14 +161,14 @@ public final class AudioSynth {
                 // }
 
                 sourceDataLine.drain();
-                
+
                 final long endTime = System.currentTimeMillis() - startTime;
                 SwingUtilities.invokeLater(() -> elapsedTimeMeter.setText("Duration: %d ms".formatted(endTime)));
 
                 sourceDataLine.stop();
             }
             catch (Exception ex) {
-                ex.printStackTrace();
+                LOGGER.error(ex.getMessage(), ex);
             }
         });
     }

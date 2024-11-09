@@ -17,7 +17,7 @@ package de.freese.mediathek.kodi.javafx.controller;
 // import javafx.scene.image.ImageView;
 // import javafx.scene.text.Text;
 //
-///**
+// /**
 // * @author Thomas Freese
 // */
 // public class MovieControllerFXML extends AbstractMediaController<Movie>

@@ -257,7 +257,7 @@ public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
         final List<String> genreList = getJdbcTemplate().queryForList(sql.toString(), String.class, movieID);
         final StringBuilder genres = new StringBuilder();
 
-        for (Iterator<String> iterator = genreList.iterator(); iterator.hasNext(); ) {
+        for (final Iterator<String> iterator = genreList.iterator(); iterator.hasNext(); ) {
             genres.append(iterator.next());
 
             if (iterator.hasNext()) {
@@ -309,7 +309,7 @@ public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
         final List<String> genreList = getJdbcTemplate().queryForList(sql.toString(), String.class, showID);
         final StringBuilder genres = new StringBuilder();
 
-        for (Iterator<String> iterator = genreList.iterator(); iterator.hasNext(); ) {
+        for (final Iterator<String> iterator = genreList.iterator(); iterator.hasNext(); ) {
             genres.append(iterator.next());
 
             if (iterator.hasNext()) {

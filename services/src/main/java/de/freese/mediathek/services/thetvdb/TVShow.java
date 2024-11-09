@@ -17,7 +17,7 @@ import de.freese.mediathek.services.themoviedb.model.Image;
 @XmlRootElement(name = "Series")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class TVShow implements Comparable<TVShow> {
-    @XmlElement(name = "Actors", required = false)
+    @XmlElement(name = "Actors")
     private String actors;
     private List<Actor> actorsList;
     @XmlElement()
@@ -25,10 +25,10 @@ public class TVShow implements Comparable<TVShow> {
     @XmlElement(name = "Overview")
     private String beschreibung;
     private List<Episode> episodes;
-    @XmlElement(name = "fanart", required = false)
+    @XmlElement(name = "fanart")
     private String fanArt;
     private List<Image> fanartList;
-    @XmlElement(name = "Genre", required = false)
+    @XmlElement(name = "Genre")
     private String genres;
     @XmlElement(name = "id")
     private String id;
@@ -36,7 +36,7 @@ public class TVShow implements Comparable<TVShow> {
     private String imdbID;
     @XmlElements({@XmlElement(name = "language"), @XmlElement(name = "Language")})
     private String language;
-    @XmlElement(required = false)
+    @XmlElement()
     private String poster;
     private List<Image> posterList;
     @XmlElement(name = "FirstAired")

@@ -59,7 +59,7 @@ public class TVService extends AbstractService {
             return null;
         }
 
-        return search.getSeries().get(0);
+        return search.getSeries().getFirst();
     }
 
     public TVShow getDetailsAll(final String id) {
@@ -77,7 +77,7 @@ public class TVService extends AbstractService {
             return null;
         }
 
-        final TVShow show = search.getSeries().get(0);
+        final TVShow show = search.getSeries().getFirst();
 
         final List<Episode> episodes = search.getEpisodes();
         Collections.sort(episodes);
