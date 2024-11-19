@@ -32,7 +32,8 @@ public final class PlayerUtils {
     public static final int MAX_16_BIT = Short.MAX_VALUE + 1;
 
     /**
-     * Gets the time in milliseconds for the given number of bytes.
+     * Gets the time in milliseconds for the given number of bytes.<br>
+     * //@see com.sun.media.sound.Toolkit#bytes2millis
      */
     public static long bytesToMillis(final AudioFormat format, final long bytes) {
         return (long) (bytes / (double) format.getFrameRate() * 1000.0D / format.getFrameSize());
@@ -109,6 +110,7 @@ public final class PlayerUtils {
      * }</pre>
      *
      * @see FloatControl.Type#MASTER_GAIN
+     * //@see com.sun.media.sound.Toolkit#dBToLinear
      */
     public static double dBToLinear(final double dB) {
         return Math.pow(10.0D, dB / 20.0D);
@@ -189,14 +191,15 @@ public final class PlayerUtils {
      * }</pre>
      *
      * @see FloatControl.Type#MASTER_GAIN
+     * //@see com.sun.media.sound.Toolkit#linearToDB
      */
     public static double linearToDB(final double linear) {
-        // return Math.log(((Double.compare(linear, 0.0D) == 0) ? 0.0001D : linear) / Math.log(10.0D) * 20.0D);
-        if (Double.compare(linear, 0.0D) == 0) {
-            return 0D;
-        }
-
-        return Math.log10(linear) * 20D;
+        return Math.log(((Double.compare(linear, 0.0D) == 0) ? 0.0001D : linear) / Math.log(10.0D) * 20.0D);
+        // if (Double.compare(linear, 0.0D) == 0) {
+        //     return 0D;
+        // }
+        //
+        // return Math.log10(linear) * 20D;
     }
 
     /**
@@ -207,7 +210,8 @@ public final class PlayerUtils {
     }
 
     /**
-     * Gets the number of bytes needed to play the specified number of milliseconds.
+     * Gets the number of bytes needed to play the specified number of milliseconds.<br>
+     * //@see com.sun.media.sound.Toolkit#millis2bytes
      */
     public static long millisToBytes(final AudioFormat format, final long millis) {
         final long result = (long) (millis * (double) format.getFrameRate() / 1000.0D * format.getFrameSize());
@@ -476,14 +480,15 @@ public final class PlayerUtils {
                 audioFormat.getChannels(),
                 audioFormat.getChannels() * 2,
                 audioFormat.getSampleRate(),
-                audioFormat.isBigEndian()); // ByteOrder.BIG_ENDIAN.equals(ByteOrder.nativeOrder()
+                audioFormat.isBigEndian()); // ByteOrder.BIG_ENDIAN.equals(ByteOrder.nativeOrder(), Platform.isBigEndian()
 
         return AudioSystem.getAudioInputStream(decodedFormat, audioInputStream);
     }
 
     /**
      * Returns bytes aligned to a multiple of block size
-     * the return value will be in the range of (bytes-blockSize+1) ... bytes
+     * the return value will be in the range of (bytes-blockSize+1) ... bytes<br>
+     * //@see com.sun.media.sound.Toolkit#align
      */
     static long align(final long bytes, final int blockSize) {
         if (blockSize <= 1) {
@@ -493,6 +498,9 @@ public final class PlayerUtils {
         return bytes - (bytes % blockSize);
     }
 
+    /**
+     * //@see com.sun.media.sound.Toolkit#align
+     */
     static int align(final int bytes, final int blockSize) {
         if (blockSize <= 1) {
             return bytes;
