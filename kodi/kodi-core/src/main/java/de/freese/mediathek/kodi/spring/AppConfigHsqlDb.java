@@ -17,6 +17,17 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 @Configuration
 @Profile("hsqldb")
 public class AppConfigHsqlDb extends AbstractAppConfig {
+    private static SingleConnectionDataSource createSingleConnectionDataSource() {
+        final SingleConnectionDataSource dataSource = new SingleConnectionDataSource();
+        dataSource.setDriverClassName("org.hsqldb.jdbc.JDBCDriver");
+        dataSource.setUsername("sa");
+        dataSource.setPassword("");
+        dataSource.setAutoCommit(false);
+        dataSource.setSuppressClose(true);
+
+        return dataSource;
+    }
+
     @Override
     @Bean
     public DataSource dataSourceAudio() {
@@ -37,17 +48,6 @@ public class AppConfigHsqlDb extends AbstractAppConfig {
         populator.addScript(new ClassPathResource("kodi_video_hsqldb_schema.sql"));
         populator.addScript(new ClassPathResource("kodi_video_hsqldb_data.sql"));
         populator.execute(dataSource);
-
-        return dataSource;
-    }
-
-    private SingleConnectionDataSource createSingleConnectionDataSource() {
-        final SingleConnectionDataSource dataSource = new SingleConnectionDataSource();
-        dataSource.setDriverClassName("org.hsqldb.jdbc.JDBCDriver");
-        dataSource.setUsername("sa");
-        dataSource.setPassword("");
-        dataSource.setAutoCommit(false);
-        dataSource.setSuppressClose(true);
 
         return dataSource;
     }
