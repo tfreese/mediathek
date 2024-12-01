@@ -35,28 +35,27 @@ public class Configuration {
     private List<String> profileSizes;
 
     public List<String> getBackdropSizes() {
-        return this.backdropSizes;
+        return List.copyOf(backdropSizes);
     }
 
-    // public List<String> getChangeKeys()
-    // {
-    // return this.changeKeys;
+    // public List<String> getChangeKeys() {
+    // return List.copyOf(changeKeys);
     // }
 
     public String getImageBaseURL() {
-        return this.imageBaseURL;
+        return imageBaseURL;
     }
 
     public List<String> getLogoSizes() {
-        return this.logoSizes;
+        return List.copyOf(logoSizes);
     }
 
     public List<String> getPosterSizes() {
-        return this.posterSizes;
+        return List.copyOf(posterSizes);
     }
 
     public List<String> getProfileSizes() {
-        return this.profileSizes;
+        return List.copyOf(profileSizes);
     }
 
     @SuppressWarnings("unchecked")
@@ -65,36 +64,35 @@ public class Configuration {
         if ("images".equals(propertyName)) {
             final Map<String, Object> map = (Map<String, Object>) propertyValue;
 
-            this.imageBaseURL = (String) map.get("secure_base_url");
-            // this.imageBaseURL = (String) map.get("base_url");
-            this.backdropSizes = (List<String>) map.get("backdrop_sizes");
-            this.posterSizes = (List<String>) map.get("poster_sizes");
-            this.logoSizes = (List<String>) map.get("logo_sizes");
-            this.profileSizes = (List<String>) map.get("profile_sizes");
+            imageBaseURL = (String) map.get("secure_base_url");
+            // imageBaseURL = (String) map.get("base_url");
+            backdropSizes = (List<String>) map.get("backdrop_sizes");
+            posterSizes = (List<String>) map.get("poster_sizes");
+            logoSizes = (List<String>) map.get("logo_sizes");
+            profileSizes = (List<String>) map.get("profile_sizes");
         }
     }
 
     // @JsonSetter("change_keys")
-    // public void setChangeKeys(final List<String> changeKeys)
-    // {
-    // this.changeKeys = changeKeys;
+    // public void setChangeKeys(final List<String> changeKeys) {
+    // this.changeKeys = List.copyOf(changeKeys);
     // }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append("Configuration [imageBaseURL=");
-        builder.append(this.imageBaseURL);
+        builder.append(imageBaseURL);
         builder.append(", backdropSizes=");
-        builder.append(this.backdropSizes);
+        builder.append(backdropSizes);
         builder.append(", posterSizes=");
-        builder.append(this.posterSizes);
+        builder.append(posterSizes);
         builder.append(", logoSizes=");
-        builder.append(this.logoSizes);
+        builder.append(logoSizes);
         builder.append(", profileSizes=");
-        builder.append(this.profileSizes);
+        builder.append(profileSizes);
         // builder.append(", changeKeys=");
-        // builder.append(this.changeKeys);
+        // builder.append(changeKeys);
         builder.append("]");
 
         return builder.toString();

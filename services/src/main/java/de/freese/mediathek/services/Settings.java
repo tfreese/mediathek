@@ -29,19 +29,19 @@ public final class Settings {
     public static final String TEST_SHOW_ID = "72449";
 
     public static String getMovieDbApiKey() {
-        final String apiKey = "generateMe";
+        return "generateMe";
 
         // System.setProperty(PROPERTY_MOVIE_DB_API_KEY, apiKey);
-
-        return apiKey;
+        //
+        // return apiKey;
     }
 
     public static String getTvDbApiKey() {
-        final String apiKey = "generateMe";
+        return "generateMe";
 
         // System.setProperty(PROPERTY_TV_DB_API_KEY, apiKey);
-
-        return apiKey;
+        //
+        // return apiKey;
     }
 
     private Settings() {

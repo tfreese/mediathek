@@ -1,6 +1,8 @@
 // Created: 10.11.2014
 package de.freese.mediathek.services.thetvdb;
 
+import java.util.Objects;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
@@ -25,7 +27,7 @@ public class Actor implements Comparable<Actor> {
 
     @Override
     public int compareTo(final Actor o) {
-        int comp = this.sortOrder - o.sortOrder;
+        int comp = sortOrder - o.sortOrder;
 
         if (comp == 0) {
             comp = getName().compareTo(o.getName());
@@ -34,27 +36,42 @@ public class Actor implements Comparable<Actor> {
         return comp;
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (!(o instanceof final Actor actor)) {
+            return false;
+        }
+
+        return sortOrder == actor.sortOrder && Objects.equals(id, actor.id) && Objects.equals(image, actor.image) && Objects.equals(name, actor.name) &&
+                Objects.equals(role, actor.role);
+    }
+
     public String getImage() {
-        return this.image;
+        return image;
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public String getRole() {
-        return this.role;
+        return role;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(sortOrder, id, image, name, role);
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append("Actor [");
-        builder.append("id=").append(this.id);
-        builder.append(", name=").append(this.name);
-        builder.append(", role=").append(this.role);
-        builder.append(", sortOrder=").append(this.sortOrder);
-        builder.append(", image=").append(this.image);
+        builder.append("id=").append(id);
+        builder.append(", name=").append(name);
+        builder.append(", role=").append(role);
+        builder.append(", sortOrder=").append(sortOrder);
+        builder.append(", image=").append(image);
         builder.append("]");
 
         return builder.toString();

@@ -19,7 +19,7 @@ public class ThumbList {
     private List<Thumb> thumbs = new ArrayList<>();
 
     public List<Thumb> getThumbs() {
-        return this.thumbs;
+        return thumbs;
     }
 
     public void setThumbs(final List<Thumb> thumbs) {

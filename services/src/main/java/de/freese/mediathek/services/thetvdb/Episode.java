@@ -1,6 +1,8 @@
 // Created: 10.11.2014
 package de.freese.mediathek.services.thetvdb;
 
+import java.util.Objects;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
@@ -43,52 +45,68 @@ public class Episode implements Comparable<Episode> {
         return comp;
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (!(o instanceof final Episode episode1)) {
+            return false;
+        }
+
+        return episode == episode1.episode && season == episode1.season && Objects.equals(beschreibung, episode1.beschreibung) &&
+                Objects.equals(guestStars, episode1.guestStars) && Objects.equals(id, episode1.id) && Objects.equals(image, episode1.image) &&
+                Objects.equals(language, episode1.language) && Objects.equals(releaseDate, episode1.releaseDate) && Objects.equals(title, episode1.title);
+    }
+
     public String getBeschreibung() {
-        return this.beschreibung;
+        return beschreibung;
     }
 
     public int getEpisode() {
-        return this.episode;
+        return episode;
     }
 
     public String getGuestStars() {
-        return this.guestStars;
+        return guestStars;
     }
 
     public String getID() {
-        return this.id;
+        return id;
     }
 
     public String getImage() {
-        return this.image;
+        return image;
     }
 
     public String getLanguage() {
-        return this.language;
+        return language;
     }
 
     public String getReleaseDate() {
-        return this.releaseDate;
+        return releaseDate;
     }
 
     public int getSeason() {
-        return this.season;
+        return season;
     }
 
     public String getTitle() {
-        return this.title;
+        return title;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(episode, season, beschreibung, guestStars, id, image, language, releaseDate, title);
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append("Episode [");
-        builder.append("id=").append(this.id);
-        builder.append(", season=").append(this.season);
-        builder.append(", episode=").append(this.episode);
-        builder.append(", releaseDate=").append(this.releaseDate);
-        builder.append(", title=").append(this.title);
-        builder.append(", language=").append(this.language);
+        builder.append("id=").append(id);
+        builder.append(", season=").append(season);
+        builder.append(", episode=").append(episode);
+        builder.append(", releaseDate=").append(releaseDate);
+        builder.append(", title=").append(title);
+        builder.append(", language=").append(language);
         builder.append("]");
 
         return builder.toString();

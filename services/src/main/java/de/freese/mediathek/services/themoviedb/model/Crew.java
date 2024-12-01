@@ -23,15 +23,15 @@ public class Crew {
     private String profile;
 
     public String getJob() {
-        return this.job;
+        return job;
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public String getProfile() {
-        return this.profile;
+        return profile;
     }
 
     public void setJob(final String job) {
@@ -51,11 +51,11 @@ public class Crew {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append("Crew [name=");
-        builder.append(this.name);
+        builder.append(name);
         builder.append(", job=");
-        builder.append(this.job);
+        builder.append(job);
         builder.append(", profile=");
-        builder.append(this.profile);
+        builder.append(profile);
         builder.append("]");
 
         return builder.toString();

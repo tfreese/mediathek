@@ -1,6 +1,8 @@
 // Created: 24.04.2014
 package de.freese.mediathek.services.themoviedb.model;
 
+import java.util.Objects;
+
 import javax.swing.ImageIcon;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -37,16 +39,27 @@ public class Movie implements Comparable<Movie> {
         return s1.compareTo(s2);
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (!(o instanceof final Movie movie)) {
+            return false;
+        }
+        
+        return id == movie.id && Objects.equals(backdrop, movie.backdrop) && Objects.equals(imageIcon, movie.imageIcon) &&
+                Objects.equals(originalTitle, movie.originalTitle) && Objects.equals(poster, movie.poster) &&
+                Objects.equals(releaseDate, movie.releaseDate) && Objects.equals(title, movie.title);
+    }
+
     public String getBackdrop() {
-        return this.backdrop;
+        return backdrop;
     }
 
     public int getId() {
-        return this.id;
+        return id;
     }
 
     public ImageIcon getImageIcon() {
-        return this.imageIcon;
+        return imageIcon;
     }
 
     public String getJahr() {
@@ -54,19 +67,24 @@ public class Movie implements Comparable<Movie> {
     }
 
     public String getOriginalTitle() {
-        return this.originalTitle;
+        return originalTitle;
     }
 
     public String getPoster() {
-        return this.poster;
+        return poster;
     }
 
     public String getReleaseDate() {
-        return this.releaseDate;
+        return releaseDate;
     }
 
     public String getTitle() {
-        return this.title;
+        return title;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(backdrop, id, imageIcon, originalTitle, poster, releaseDate, title);
     }
 
     // @JsonSetter("backdrop_path")
@@ -105,17 +123,17 @@ public class Movie implements Comparable<Movie> {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append("Movie [id=");
-        builder.append(this.id);
+        builder.append(id);
         builder.append(", title=");
-        builder.append(this.title);
+        builder.append(title);
         builder.append(", originalTitle=");
-        builder.append(this.originalTitle);
+        builder.append(originalTitle);
         builder.append(", releaseDate=");
-        builder.append(this.releaseDate);
+        builder.append(releaseDate);
         builder.append(", backdrop=");
-        builder.append(this.backdrop);
+        builder.append(backdrop);
         builder.append(", poster=");
-        builder.append(this.poster);
+        builder.append(poster);
         builder.append("]");
 
         return builder.toString();

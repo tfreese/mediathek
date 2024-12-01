@@ -127,7 +127,7 @@ public class TvShowApiDebug {
         return Locale.GERMANY;
     }
 
-    private void prettyPrint(final String result) throws Exception {
+    private void prettyPrint(final String result) {
         // ObjectMapper mapper = new XmlMapper();
         // mapper.enable(SerializationFeature.INDENT_OUTPUT);
         // System.out.println(mapper.writeValueAsString(result));

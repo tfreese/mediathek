@@ -18,6 +18,6 @@ class Actors {
     private List<Actor> actors;
 
     List<Actor> getActors() {
-        return this.actors;
+        return actors;
     }
 }

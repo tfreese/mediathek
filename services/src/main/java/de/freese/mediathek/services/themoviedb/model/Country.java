@@ -1,6 +1,8 @@
 // Created: 27.04.2014
 package de.freese.mediathek.services.themoviedb.model;
 
+import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
@@ -20,15 +22,29 @@ public class Country implements Comparable<Country> {
 
     @Override
     public int compareTo(final Country o) {
-        return this.name.compareTo(o.getName());
+        return name.compareTo(o.getName());
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (!(o instanceof final Country country)) {
+            return false;
+        }
+        
+        return Objects.equals(iso31661, country.iso31661) && Objects.equals(name, country.name);
     }
 
     public String getIso31661() {
-        return this.iso31661;
+        return iso31661;
     }
 
     public String getName() {
-        return this.name;
+        return name;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(iso31661, name);
     }
 
     @JsonSetter("iso_3166_1")
@@ -44,9 +60,9 @@ public class Country implements Comparable<Country> {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append("Country [iso_3166_1=");
-        builder.append(this.iso31661);
+        builder.append(iso31661);
         builder.append(", name=");
-        builder.append(this.name);
+        builder.append(name);
         builder.append("]");
 
         return builder.toString();

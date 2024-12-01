@@ -16,6 +16,7 @@ import de.freese.player.fft.config.FFTConfig;
 /**
  * @author Thomas Freese
  */
+@SuppressWarnings("java:S5778")
 class TestParameterValidation {
     private static Path audioFile;
 

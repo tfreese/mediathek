@@ -15,19 +15,19 @@ public class Search implements Iterable<Movie> {
     private List<Movie> results;
 
     public List<Movie> getResults() {
-        return this.results;
+        return List.copyOf(results);
     }
 
     @Override
     public Iterator<Movie> iterator() {
-        if (getResults() != null) {
-            return getResults().iterator();
+        if (results != null) {
+            return results.iterator();
         }
 
         return Collections.emptyIterator();
     }
 
     public void setResults(final List<Movie> results) {
-        this.results = results;
+        this.results = List.copyOf(results);
     }
 }

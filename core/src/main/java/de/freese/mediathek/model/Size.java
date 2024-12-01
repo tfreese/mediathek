@@ -6,6 +6,7 @@ package de.freese.mediathek.model;
  *
  * @author Thomas Freese
  */
+@SuppressWarnings("java:S115")
 public enum Size {
     original,
     w1280,

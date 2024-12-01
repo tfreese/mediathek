@@ -26,27 +26,27 @@ public final class MultimediaReporter {
      * @author Thomas Freese
      */
     static final class DataSources {
-        static DataSource bansheeSqLite(final boolean readonly) throws Exception {
+        static DataSource bansheeSqLite(final boolean readonly) {
             return createSqLite(readonly, "jdbc:sqlite:/home/tommy/.config/banshee-1/banshee.db");
         }
 
-        static DataSource clementineSqLite(final boolean readonly) throws Exception {
+        static DataSource clementineSqLite(final boolean readonly) {
             return createSqLite(readonly, "jdbc:sqlite:/home/tommy/.config/Clementine/clementine.db");
         }
 
-        static DataSource kodiMusikSqLite(final boolean readonly) throws Exception {
+        static DataSource kodiMusikSqLite(final boolean readonly) {
             return createSqLite(readonly, "jdbc:sqlite:/home/tommy/.kodi/userdata/Database/MyMusic82.db");
         }
 
-        static DataSource plexSqlite(final boolean readonly) throws Exception {
+        static DataSource plexSqlite(final boolean readonly) {
             return createSqLite(readonly, "jdbc:sqlite:/home/tommy/com.plexapp.plugins.library.db");
         }
 
-        static DataSource strawberrySqLite(final boolean readonly) throws Exception {
+        static DataSource strawberrySqLite(final boolean readonly) {
             return createSqLite(readonly, "jdbc:sqlite:/home/tommy/.local/share/strawberry/strawberry/strawberry.db");
         }
 
-        private static DataSource createSqLite(final boolean readonly, final String url) throws Exception {
+        private static DataSource createSqLite(final boolean readonly, final String url) {
             // Native Libraries deaktivieren für den Zugriff auf die Dateien.
             System.setProperty("sqlite.purejava", "true");
 
@@ -123,10 +123,10 @@ public final class MultimediaReporter {
         finally {
             STOP_WATCH.start("disconnect");
 
-            //            if (dataSource instanceof SingleConnectionDataSource ds) {
-            //                ds.destroy();
-            //            }
-            //            else
+            // if (dataSource instanceof SingleConnectionDataSource ds) {
+            //     ds.destroy();
+            // }
+            // else
             if (dataSource instanceof Closeable c) {
                 c.close();
             }

@@ -20,10 +20,10 @@ class Search {
     private List<TVShow> series;
 
     List<Episode> getEpisodes() {
-        return this.episodes;
+        return episodes;
     }
 
     List<TVShow> getSeries() {
-        return this.series;
+        return series;
     }
 }

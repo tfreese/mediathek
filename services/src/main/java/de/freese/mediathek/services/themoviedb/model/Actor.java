@@ -1,6 +1,8 @@
 // Created: 26.04.2014
 package de.freese.mediathek.services.themoviedb.model;
 
+import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
@@ -28,23 +30,37 @@ public class Actor implements Comparable<Actor> {
 
     @Override
     public int compareTo(final Actor o) {
-        return this.order - o.getOrder();
+        return order - o.getOrder();
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (!(o instanceof final Actor actor)) {
+            return false;
+        }
+        
+        return order == actor.order && Objects.equals(name, actor.name) && Objects.equals(profile, actor.profile) && Objects.equals(role, actor.role);
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public int getOrder() {
-        return this.order;
+        return order;
     }
 
     public String getProfile() {
-        return this.profile;
+        return profile;
     }
 
     public String getRole() {
-        return this.role;
+        return role;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, order, profile, role);
     }
 
     public void setName(final String name) {
@@ -69,13 +85,13 @@ public class Actor implements Comparable<Actor> {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append("Actor [name=");
-        builder.append(this.name);
+        builder.append(name);
         builder.append(", role=");
-        builder.append(this.role);
+        builder.append(role);
         builder.append(", order=");
-        builder.append(this.order);
+        builder.append(order);
         builder.append(", profile=");
-        builder.append(this.profile);
+        builder.append(profile);
         builder.append("]");
 
         return builder.toString();

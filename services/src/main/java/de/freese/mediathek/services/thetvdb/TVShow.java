@@ -2,6 +2,7 @@
 package de.freese.mediathek.services.thetvdb;
 
 import java.util.List;
+import java.util.Objects;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
@@ -57,44 +58,58 @@ public class TVShow implements Comparable<TVShow> {
         return comp;
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (!(o instanceof final TVShow tvShow)) {
+            return false;
+        }
+
+        return Objects.equals(actors, tvShow.actors) && Objects.equals(actorsList, tvShow.actorsList) && Objects.equals(banner, tvShow.banner) &&
+                Objects.equals(beschreibung, tvShow.beschreibung) && Objects.equals(episodes, tvShow.episodes) && Objects.equals(fanArt, tvShow.fanArt) &&
+                Objects.equals(fanartList, tvShow.fanartList) && Objects.equals(genres, tvShow.genres) && Objects.equals(id, tvShow.id) &&
+                Objects.equals(imdbID, tvShow.imdbID) && Objects.equals(language, tvShow.language) && Objects.equals(poster, tvShow.poster) &&
+                Objects.equals(posterList, tvShow.posterList) && Objects.equals(releaseDate, tvShow.releaseDate) &&
+                Objects.equals(seasonList, tvShow.seasonList) && Objects.equals(seriesList, tvShow.seriesList) && Objects.equals(title, tvShow.title);
+    }
+
     public String getActors() {
-        return this.actors;
+        return actors;
     }
 
     public List<Actor> getActorsList() {
-        return this.actorsList;
+        return List.copyOf(actorsList);
     }
 
     public String getBanner() {
-        return this.banner;
+        return banner;
     }
 
     public String getBeschreibung() {
-        return this.beschreibung;
+        return beschreibung;
     }
 
     public List<Episode> getEpisodes() {
-        return this.episodes;
+        return List.copyOf(episodes);
     }
 
     public String getFanArt() {
-        return this.fanArt;
+        return fanArt;
     }
 
     public List<Image> getFanartList() {
-        return this.fanartList;
+        return List.copyOf(fanartList);
     }
 
     public String getGenres() {
-        return this.genres;
+        return genres;
     }
 
     public String getID() {
-        return this.id;
+        return id;
     }
 
     public String getImdbID() {
-        return this.imdbID;
+        return imdbID;
     }
 
     public String getJahr() {
@@ -102,41 +117,47 @@ public class TVShow implements Comparable<TVShow> {
     }
 
     public String getLanguage() {
-        return this.language;
+        return language;
     }
 
     public String getPoster() {
-        return this.poster;
+        return poster;
     }
 
     public List<Image> getPosterList() {
-        return this.posterList;
+        return List.copyOf(posterList);
     }
 
     public String getReleaseDate() {
-        return this.releaseDate;
+        return releaseDate;
     }
 
     public List<Image> getSeasonList() {
-        return this.seasonList;
+        return List.copyOf(seasonList);
     }
 
     public List<Image> getSeriesList() {
-        return this.seriesList;
+        return List.copyOf(seriesList);
     }
 
     public String getTitle() {
-        return this.title;
+        return title;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(actors, actorsList, banner, beschreibung, episodes, fanArt, fanartList, genres, id, imdbID, language, poster, posterList, releaseDate, seasonList,
+                seriesList, title);
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append("Serie [");
-        builder.append("id=").append(this.id);
-        builder.append(", releaseDate=").append(this.releaseDate);
-        builder.append(", title=").append(this.title);
-        builder.append(", language=").append(this.language);
+        builder.append("id=").append(id);
+        builder.append(", releaseDate=").append(releaseDate);
+        builder.append(", title=").append(title);
+        builder.append(", language=").append(language);
         builder.append("]");
 
         return builder.toString();
@@ -147,26 +168,26 @@ public class TVShow implements Comparable<TVShow> {
     }
 
     void setActorsList(final List<Actor> actorsList) {
-        this.actorsList = actorsList;
+        this.actorsList = List.copyOf(actorsList);
     }
 
     void setEpisodes(final List<Episode> episodes) {
-        this.episodes = episodes;
+        this.episodes = List.copyOf(episodes);
     }
 
     void setFanartList(final List<Image> fanartList) {
-        this.fanartList = fanartList;
+        this.fanartList = List.copyOf(fanartList);
     }
 
     void setPosterList(final List<Image> posterList) {
-        this.posterList = posterList;
+        this.posterList = List.copyOf(posterList);
     }
 
     void setSeasonList(final List<Image> seasonList) {
-        this.seasonList = seasonList;
+        this.seasonList = List.copyOf(seasonList);
     }
 
     void setSeriesList(final List<Image> seriesList) {
-        this.seriesList = seriesList;
+        this.seriesList = List.copyOf(seriesList);
     }
 }

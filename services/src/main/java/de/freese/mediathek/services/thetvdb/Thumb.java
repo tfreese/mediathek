@@ -16,7 +16,7 @@ public class Thumb {
     private String preview;
 
     public String getPreview() {
-        return this.preview;
+        return preview;
     }
 
     public void setPreview(final String preview) {

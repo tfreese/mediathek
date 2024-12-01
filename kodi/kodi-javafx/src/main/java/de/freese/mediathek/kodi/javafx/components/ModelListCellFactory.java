@@ -13,7 +13,7 @@ import de.freese.mediathek.kodi.model.Model;
 public class ModelListCellFactory implements Callback<ListView<Model>, ListCell<Model>> {
     @Override
     public ListCell<Model> call(final ListView<Model> param) {
-        final ListCell<Model> cell = new ListCell<>() {
+        return new ListCell<>() {
             @Override
             protected void updateItem(final Model model, final boolean empty) {
                 super.updateItem(model, empty);
@@ -28,6 +28,7 @@ public class ModelListCellFactory implements Callback<ListView<Model>, ListCell<
         };
 
         // cell.getStylesheets().add("styles/Styles.css");
-        return cell;
+        //
+        // return cell;
     }
 }

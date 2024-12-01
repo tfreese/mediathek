@@ -1,8 +1,8 @@
 // Created: 24.04.2014
 package de.freese.mediathek.services.themoviedb.model;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -55,58 +55,77 @@ public class MovieDetails extends Movie {
      */
     private int voteCount;
 
+    @Override
+    public boolean equals(final Object o) {
+        if (!(o instanceof final MovieDetails that)) {
+            return false;
+        }
+        
+        if (!super.equals(o)) {
+            return false;
+        }
+
+        return runtime == that.runtime && Float.compare(voteAverage, that.voteAverage) == 0 && voteCount == that.voteCount && Objects.equals(actors, that.actors) &&
+                Objects.equals(collection, that.collection) && Objects.equals(countries, that.countries) && Objects.equals(directors, that.directors) &&
+                Objects.equals(genres, that.genres) && Objects.equals(imdbID, that.imdbID) && Objects.equals(languages, that.languages) &&
+                Objects.equals(studios, that.studios) && Objects.equals(tagline, that.tagline);
+    }
+
     public List<Actor> getActors() {
-        return this.actors;
+        return List.copyOf(actors);
     }
 
     public String getCollection() {
-        return this.collection;
+        return collection;
     }
 
     public List<Country> getCountries() {
-        return this.countries;
+        return List.copyOf(countries);
     }
 
     public List<Crew> getDirectors() {
-        return this.directors;
+        return List.copyOf(directors);
     }
 
     public List<Genre> getGenres() {
-        return this.genres;
+        return List.copyOf(genres);
     }
 
     public String getImdbID() {
-        return this.imdbID;
+        return imdbID;
     }
 
     public List<Language> getLanguages() {
-        return this.languages;
+        return List.copyOf(languages);
     }
 
     public int getRuntime() {
-        return this.runtime;
+        return runtime;
     }
 
     public List<Studio> getStudios() {
-        return this.studios;
+        return List.copyOf(studios);
     }
 
     public String getTagline() {
-        return this.tagline;
+        return tagline;
     }
 
     public float getVoteAverage() {
-        return this.voteAverage;
+        return voteAverage;
     }
 
     public int getVoteCount() {
-        return this.voteCount;
+        return voteCount;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), actors, collection, countries, directors, genres, imdbID, languages, runtime, studios, tagline, voteAverage, voteCount);
     }
 
     public void setActors(final List<Actor> actors) {
-        this.actors = actors;
-
-        Collections.sort(this.actors);
+        this.actors = List.copyOf(actors);
     }
 
     @JsonSetter("belongs_to_collection")
@@ -116,19 +135,15 @@ public class MovieDetails extends Movie {
 
     @JsonSetter("production_countries")
     public void setCountries(final List<Country> countries) {
-        this.countries = countries;
-
-        Collections.sort(this.countries);
+        this.countries = List.copyOf(countries);
     }
 
     public void setDirectors(final List<Crew> directors) {
-        this.directors = directors;
+        this.directors = List.copyOf(directors);
     }
 
     public void setGenres(final List<Genre> genres) {
-        this.genres = genres;
-
-        Collections.sort(this.genres);
+        this.genres = List.copyOf(genres);
     }
 
     @JsonSetter("imdb_id")
@@ -138,9 +153,7 @@ public class MovieDetails extends Movie {
 
     @JsonSetter("spoken_languages")
     public void setLanguages(final List<Language> languages) {
-        this.languages = languages;
-
-        // Collections.sort(this.languages);
+        this.languages = List.copyOf(languages);
     }
 
     public void setRuntime(final int runtime) {
@@ -149,9 +162,7 @@ public class MovieDetails extends Movie {
 
     @JsonSetter("production_companies")
     public void setStudios(final List<Studio> studios) {
-        this.studios = studios;
-
-        // Collections.sort(this.studios);
+        this.studios = List.copyOf(studios);
     }
 
     public void setTagline(final String tagline) {
