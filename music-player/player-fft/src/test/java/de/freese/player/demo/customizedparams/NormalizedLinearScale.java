@@ -53,11 +53,11 @@ public final class NormalizedLinearScale {
 
         // inspect amplitudes of individual frequency in the first Spectrum
         final Frequency firstFrequency = result.getSpectrum(0).getFrequency(0);
-        System.out.println("The first Frequency, located at " + Math.round(firstFrequency.getFrequency()) + " Hz, has a relative amplitude of "
+        System.out.println("The first Frequency, located at " + Math.round(firstFrequency.getHz()) + " Hz, has a relative amplitude of "
                 + firstFrequency.getAmplitude() + ".");
 
         final Frequency mostPowerfulFrequency = result.getSpectrum(0).getFrequency(56); // closest to 600 Hz
-        System.out.println("The 56th Frequency, located at " + Math.round(mostPowerfulFrequency.getFrequency()) + " Hz, has a relative amplitude of "
+        System.out.println("The 56th Frequency, located at " + Math.round(mostPowerfulFrequency.getHz()) + " Hz, has a relative amplitude of "
                 + mostPowerfulFrequency.getAmplitude() + " (almost maximum possible).");
     }
 }

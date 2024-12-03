@@ -9,7 +9,7 @@ import java.util.Objects;
 /**
  * @author Thomas Freese
  */
-public class MovieSetIdYearComparator implements Comparator<Movie> {
+public final class MovieSetIdYearComparator implements Comparator<Movie> {
     private static final Collator COLLATOR = Collator.getInstance(Locale.GERMANY);
 
     @Override

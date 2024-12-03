@@ -1,12 +1,27 @@
 // Created: 13.09.2014
 package de.freese.mediathek.kodi.model;
 
+import java.util.Objects;
+
 /**
  * @author Thomas Freese
  */
-public class Genre extends AbstractModel {
+public final class Genre extends AbstractModel {
     private int anzahlFilme;
     private int anzahlSerien;
+
+    @Override
+    public boolean equals(final Object o) {
+        if (!(o instanceof final Genre genre)) {
+            return false;
+        }
+        
+        if (!super.equals(o)) {
+            return false;
+        }
+
+        return anzahlFilme == genre.anzahlFilme && anzahlSerien == genre.anzahlSerien;
+    }
 
     public int getAnzahlFilme() {
         return this.anzahlFilme;
@@ -14,6 +29,11 @@ public class Genre extends AbstractModel {
 
     public int getAnzahlSerien() {
         return this.anzahlSerien;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), anzahlFilme, anzahlSerien);
     }
 
     public void setAnzahlFilme(final int anzahlFilme) {

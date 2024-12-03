@@ -1,14 +1,30 @@
 // Created: 13.09.2014
 package de.freese.mediathek.kodi.model;
 
+import java.util.Objects;
+
 /**
  * @author Thomas Freese
  */
-public class Show extends AbstractModel {
+public final class Show extends AbstractModel {
     private String banner;
     private String fanArt;
     private String genres;
     private String tvDbId;
+
+    @Override
+    public boolean equals(final Object o) {
+        if (!(o instanceof final Show show)) {
+            return false;
+        }
+        
+        if (!super.equals(o)) {
+            return false;
+        }
+
+        return Objects.equals(banner, show.banner) && Objects.equals(fanArt, show.fanArt) && Objects.equals(genres, show.genres)
+                && Objects.equals(tvDbId, show.tvDbId);
+    }
 
     public String getBanner() {
         return this.banner;
@@ -24,6 +40,11 @@ public class Show extends AbstractModel {
 
     public String getTvDbId() {
         return this.tvDbId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), banner, fanArt, genres, tvDbId);
     }
 
     public void setBanner(final String banner) {

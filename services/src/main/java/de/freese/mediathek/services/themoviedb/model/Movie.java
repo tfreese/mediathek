@@ -44,10 +44,10 @@ public class Movie implements Comparable<Movie> {
         if (!(o instanceof final Movie movie)) {
             return false;
         }
-        
-        return id == movie.id && Objects.equals(backdrop, movie.backdrop) && Objects.equals(imageIcon, movie.imageIcon) &&
-                Objects.equals(originalTitle, movie.originalTitle) && Objects.equals(poster, movie.poster) &&
-                Objects.equals(releaseDate, movie.releaseDate) && Objects.equals(title, movie.title);
+
+        return id == movie.id && Objects.equals(backdrop, movie.backdrop) && Objects.equals(imageIcon, movie.imageIcon)
+                && Objects.equals(originalTitle, movie.originalTitle) && Objects.equals(poster, movie.poster)
+                && Objects.equals(releaseDate, movie.releaseDate) && Objects.equals(title, movie.title);
     }
 
     public String getBackdrop() {

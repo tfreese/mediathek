@@ -92,7 +92,7 @@ public final class FFTDemo {
         // FFTMath.normalize(spectrum, maxAmplitude);
 
         spectrum.forEach(frequency ->
-                System.out.printf("%f + %fi%n", frequency.getFrequency(), frequency.getAmplitude())
+                System.out.printf("%f + %fi%n", frequency.getHz(), frequency.getAmplitude())
         );
     }
 

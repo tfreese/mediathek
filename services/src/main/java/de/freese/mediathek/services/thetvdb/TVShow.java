@@ -64,12 +64,12 @@ public class TVShow implements Comparable<TVShow> {
             return false;
         }
 
-        return Objects.equals(actors, tvShow.actors) && Objects.equals(actorsList, tvShow.actorsList) && Objects.equals(banner, tvShow.banner) &&
-                Objects.equals(beschreibung, tvShow.beschreibung) && Objects.equals(episodes, tvShow.episodes) && Objects.equals(fanArt, tvShow.fanArt) &&
-                Objects.equals(fanartList, tvShow.fanartList) && Objects.equals(genres, tvShow.genres) && Objects.equals(id, tvShow.id) &&
-                Objects.equals(imdbID, tvShow.imdbID) && Objects.equals(language, tvShow.language) && Objects.equals(poster, tvShow.poster) &&
-                Objects.equals(posterList, tvShow.posterList) && Objects.equals(releaseDate, tvShow.releaseDate) &&
-                Objects.equals(seasonList, tvShow.seasonList) && Objects.equals(seriesList, tvShow.seriesList) && Objects.equals(title, tvShow.title);
+        return Objects.equals(actors, tvShow.actors) && Objects.equals(actorsList, tvShow.actorsList) && Objects.equals(banner, tvShow.banner)
+                && Objects.equals(beschreibung, tvShow.beschreibung) && Objects.equals(episodes, tvShow.episodes) && Objects.equals(fanArt, tvShow.fanArt)
+                && Objects.equals(fanartList, tvShow.fanartList) && Objects.equals(genres, tvShow.genres) && Objects.equals(id, tvShow.id)
+                && Objects.equals(imdbID, tvShow.imdbID) && Objects.equals(language, tvShow.language) && Objects.equals(poster, tvShow.poster)
+                && Objects.equals(posterList, tvShow.posterList) && Objects.equals(releaseDate, tvShow.releaseDate)
+                && Objects.equals(seasonList, tvShow.seasonList) && Objects.equals(seriesList, tvShow.seriesList) && Objects.equals(title, tvShow.title);
     }
 
     public String getActors() {

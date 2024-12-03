@@ -51,9 +51,9 @@ public class Episode implements Comparable<Episode> {
             return false;
         }
 
-        return episode == episode1.episode && season == episode1.season && Objects.equals(beschreibung, episode1.beschreibung) &&
-                Objects.equals(guestStars, episode1.guestStars) && Objects.equals(id, episode1.id) && Objects.equals(image, episode1.image) &&
-                Objects.equals(language, episode1.language) && Objects.equals(releaseDate, episode1.releaseDate) && Objects.equals(title, episode1.title);
+        return episode == episode1.episode && season == episode1.season && Objects.equals(beschreibung, episode1.beschreibung)
+                && Objects.equals(guestStars, episode1.guestStars) && Objects.equals(id, episode1.id) && Objects.equals(image, episode1.image)
+                && Objects.equals(language, episode1.language) && Objects.equals(releaseDate, episode1.releaseDate) && Objects.equals(title, episode1.title);
     }
 
     public String getBeschreibung() {

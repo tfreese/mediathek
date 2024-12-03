@@ -60,15 +60,15 @@ public class MovieDetails extends Movie {
         if (!(o instanceof final MovieDetails that)) {
             return false;
         }
-        
+
         if (!super.equals(o)) {
             return false;
         }
 
-        return runtime == that.runtime && Float.compare(voteAverage, that.voteAverage) == 0 && voteCount == that.voteCount && Objects.equals(actors, that.actors) &&
-                Objects.equals(collection, that.collection) && Objects.equals(countries, that.countries) && Objects.equals(directors, that.directors) &&
-                Objects.equals(genres, that.genres) && Objects.equals(imdbID, that.imdbID) && Objects.equals(languages, that.languages) &&
-                Objects.equals(studios, that.studios) && Objects.equals(tagline, that.tagline);
+        return runtime == that.runtime && Float.compare(voteAverage, that.voteAverage) == 0 && voteCount == that.voteCount && Objects.equals(actors, that.actors)
+                && Objects.equals(collection, that.collection) && Objects.equals(countries, that.countries) && Objects.equals(directors, that.directors)
+                && Objects.equals(genres, that.genres) && Objects.equals(imdbID, that.imdbID) && Objects.equals(languages, that.languages)
+                && Objects.equals(studios, that.studios) && Objects.equals(tagline, that.tagline);
     }
 
     public List<Actor> getActors() {

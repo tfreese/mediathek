@@ -40,7 +40,7 @@ public final class BandSpectrumCollector implements Collector<Frequency, Map<Int
     @Override
     public BiConsumer<Map<Integer, double[]>, Frequency> accumulator() {
         return (map, frequency) -> {
-            final int band = (int) Math.round(frequency.getFrequency() / bandCount);
+            final int band = (int) Math.round(frequency.getHz() / bandCount);
             final double[] values = map.computeIfAbsent(band, key -> new double[2]);
             values[0] += frequency.getAmplitude();
             values[1]++;

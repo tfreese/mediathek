@@ -112,13 +112,13 @@ class TestSpectraResult {
     @Test
     void testPeakAt500HzFor500HzMonoWavSignal() throws IOException, UnsupportedAudioFileException {
         final SpectraResult result = FFTFactory.createFull(mono500Hz3SecsWav);
-        assertEquals(500, FFTMath.findMaxAmplitude(result.getSpectrum(0)).getFrequency(), result.getFrequencyResolution());
+        assertEquals(500, FFTMath.findMaxAmplitude(result.getSpectrum(0)).getHz(), result.getFrequencyResolution());
     }
 
     @Test
     void testPeakAt500HzFor500HzStereoWavSignal() throws IOException, UnsupportedAudioFileException {
         final SpectraResult result = FFTFactory.createFull(stereo500Hz3SecsWav);
-        assertEquals(500, FFTMath.findMaxAmplitude(result.getSpectrum(0)).getFrequency(), result.getFrequencyResolution());
+        assertEquals(500, FFTMath.findMaxAmplitude(result.getSpectrum(0)).getHz(), result.getFrequencyResolution());
     }
 
     @Test

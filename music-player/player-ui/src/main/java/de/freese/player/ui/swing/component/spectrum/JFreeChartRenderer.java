@@ -118,8 +118,8 @@ public final class JFreeChartRenderer implements SpectrumRenderer {
             // maxAmp = Math.max(maxAmp, frequency.getAmplitude());
             FFTMath.normalize(spectrum, maxAmp);
 
-            // spectrum.forEach(f -> series.addOrUpdate(f.getFrequency() / 1000D, frequency.getAmplitude()));
-            spectrum.forEach(f -> series.add(f.getFrequency() / 1000D, f.getAmplitude(), false));
+            // spectrum.forEach(f -> series.addOrUpdate(f.getHz() / 1000D, frequency.getAmplitude()));
+            spectrum.forEach(f -> series.add(f.getHz() / 1000D, f.getAmplitude(), false));
 
             series.fireSeriesChanged();
         };

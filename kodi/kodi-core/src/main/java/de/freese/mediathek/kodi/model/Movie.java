@@ -1,10 +1,12 @@
 // Created: 13.09.2014
 package de.freese.mediathek.kodi.model;
 
+import java.util.Objects;
+
 /**
  * @author Thomas Freese
  */
-public class Movie extends AbstractModel {
+public final class Movie extends AbstractModel {
     private String fanArts;
     private String genres;
     private String imDbId;
@@ -12,6 +14,20 @@ public class Movie extends AbstractModel {
     private String posters;
     private int setID;
     private int year;
+
+    @Override
+    public boolean equals(final Object o) {
+        if (!(o instanceof final Movie movie)) {
+            return false;
+        }
+
+        if (!super.equals(o)) {
+            return false;
+        }
+
+        return setID == movie.setID && year == movie.year && Objects.equals(fanArts, movie.fanArts) && Objects.equals(genres, movie.genres)
+                && Objects.equals(imDbId, movie.imDbId) && Objects.equals(poster, movie.poster) && Objects.equals(posters, movie.posters);
+    }
 
     public String getFanArts() {
         return this.fanArts;
@@ -39,6 +55,11 @@ public class Movie extends AbstractModel {
 
     public int getYear() {
         return this.year;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), fanArts, genres, imDbId, poster, posters, setID, year);
     }
 
     public void setFanArts(final String fanArts) {

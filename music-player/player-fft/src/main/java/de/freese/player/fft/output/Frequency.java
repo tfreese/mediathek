@@ -8,7 +8,7 @@ public final class Frequency {
     /**
      * The frequency in Hz.
      */
-    private final double frequency;
+    private final double hz;
 
     /**
      * The amplitude of the signal at this frequency.<br>
@@ -17,10 +17,10 @@ public final class Frequency {
      */
     private double amplitude;
 
-    public Frequency(final double freq, final double amp) {
+    public Frequency(final double hz, final double amp) {
         super();
 
-        this.frequency = freq;
+        this.hz = hz;
         this.amplitude = amp;
     }
 
@@ -28,8 +28,8 @@ public final class Frequency {
         return amplitude;
     }
 
-    public double getFrequency() {
-        return frequency;
+    public double getHz() {
+        return hz;
     }
 
     public void setAmplitude(final double amplitude) {

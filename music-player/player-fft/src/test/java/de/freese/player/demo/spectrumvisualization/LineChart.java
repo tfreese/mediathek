@@ -96,6 +96,6 @@ final class LineChart extends JFrame {
 
         final XYSeries series = data.getSeries("f");
 
-        spectrum.forEach(frequency -> series.addOrUpdate(frequency.getFrequency(), frequency.getAmplitude()));
+        spectrum.forEach(frequency -> series.addOrUpdate(frequency.getHz(), frequency.getAmplitude()));
     }
 }

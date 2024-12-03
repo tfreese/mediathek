@@ -109,7 +109,7 @@ class TestSpectrumStream {
             iterator.next();
         }
 
-        assertEquals(500D, FFTMath.findMaxAmplitude(iterator.next()).getFrequency(), stream.getFrequencyResolution());
+        assertEquals(500D, FFTMath.findMaxAmplitude(iterator.next()).getHz(), stream.getFrequencyResolution());
     }
 
     @Test
@@ -123,7 +123,7 @@ class TestSpectrumStream {
             iterator.next();
         }
 
-        assertEquals(500D, FFTMath.findMaxAmplitude(iterator.next()).getFrequency(), stream.getFrequencyResolution());
+        assertEquals(500D, FFTMath.findMaxAmplitude(iterator.next()).getHz(), stream.getFrequencyResolution());
     }
 
     @Test

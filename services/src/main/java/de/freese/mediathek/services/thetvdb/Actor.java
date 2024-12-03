@@ -42,8 +42,8 @@ public class Actor implements Comparable<Actor> {
             return false;
         }
 
-        return sortOrder == actor.sortOrder && Objects.equals(id, actor.id) && Objects.equals(image, actor.image) && Objects.equals(name, actor.name) &&
-                Objects.equals(role, actor.role);
+        return sortOrder == actor.sortOrder && Objects.equals(id, actor.id) && Objects.equals(image, actor.image) && Objects.equals(name, actor.name)
+                && Objects.equals(role, actor.role);
     }
 
     public String getImage() {

@@ -54,11 +54,11 @@ public final class SmallRectangularWindow {
 
         // inspect amplitudes of individual frequency in the first Spectrum
         final Frequency firstFrequency = result.getSpectrum(0).getFrequency(0);
-        System.out.println("The first Frequency, located at " + Math.round(firstFrequency.getFrequency()) + " Hz, has an amplitude of "
+        System.out.println("The first Frequency, located at " + Math.round(firstFrequency.getHz()) + " Hz, has an amplitude of "
                 + Math.round(firstFrequency.getAmplitude()) + " dB.");
 
         final Frequency mostPowerfulFrequency = result.getSpectrum(0).getFrequency(14); // closest to 600 Hz
-        System.out.println("The 14th Frequency, located at " + Math.round(mostPowerfulFrequency.getFrequency()) + " Hz, has an amplitude of "
+        System.out.println("The 14th Frequency, located at " + Math.round(mostPowerfulFrequency.getHz()) + " Hz, has an amplitude of "
                 + Math.round(mostPowerfulFrequency.getAmplitude()) + " dB.");
 
         // remarks about window size's effect on frequency resolution
