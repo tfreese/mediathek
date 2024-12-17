@@ -20,43 +20,34 @@ import org.slf4j.LoggerFactory;
  * @author Thomas Freese
  */
 public abstract class AbstractResourceCache implements ResourceCache {
-    protected static MessageDigest createMessageDigest(final Logger logger) {
+    protected static MessageDigest createMessageDigest() {
         // final String algorithm ="SHA"; // 40 Zeichen
         // final String algorithm ="SHA-1"; // 40 Zeichen
         // final String algorithm ="SHA-256"; // 64 Zeichen
         // final String algorithm ="SHA-384"; // 96 Zeichen
-        final String algorithm = "SHA-512"; // 128 Zeichen
+        // final String algorithm = "SHA-512"; // 128 Zeichen
 
         try {
-            return MessageDigest.getInstance(algorithm);
+            return MessageDigest.getInstance("SHA-512");
         }
         catch (final NoSuchAlgorithmException ex) {
-            logger.error("Algorithm '{}' not found, trying 'MD5'", algorithm);
-
-            try {
-                return MessageDigest.getInstance("MD5"); // 32 Zeichen
-            }
-            catch (final NoSuchAlgorithmException ex2) {
-                throw new RuntimeException(ex2);
-            }
+            throw new RuntimeException(ex);
         }
     }
 
     private final HexFormat hexFormat;
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private final MessageDigest messageDigest;
 
     protected AbstractResourceCache() {
         super();
 
-        this.messageDigest = createMessageDigest(this.logger);
         this.hexFormat = HexFormat.of().withUpperCase();
     }
 
     protected String generateKey(final URI uri) {
         final String uriString = uri.toString();
         final byte[] uriBytes = uriString.getBytes(StandardCharsets.UTF_8);
-        final byte[] digest = getMessageDigest().digest(uriBytes);
+        final byte[] digest = createMessageDigest().digest(uriBytes);
 
         return getHexFormat().formatHex(digest);
     }
@@ -79,19 +70,15 @@ public abstract class AbstractResourceCache implements ResourceCache {
             return connection.getContentLengthLong();
         }
 
-        throw new IOException("unsupported protocol");
+        throw new IllegalArgumentException("unsupported protocol");
     }
 
     protected HexFormat getHexFormat() {
-        return this.hexFormat;
+        return hexFormat;
     }
 
     protected Logger getLogger() {
         return logger;
-    }
-
-    protected MessageDigest getMessageDigest() {
-        return this.messageDigest;
     }
 
     protected InputStream toInputStream(final URI uri) throws Exception {

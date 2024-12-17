@@ -59,17 +59,15 @@ public class KodiAudioReporter extends AbstractMediaReporter {
                     stmtSelect.setString(2, song);
 
                     try (ResultSet resultSet = stmtSelect.executeQuery()) {
-                        if (resultSet.next()) {
+                        if (resultSet.next() && playCount != resultSet.getInt("PLAYCOUNT")) {
                             // Entry found -> Update
-                            if (playCount != resultSet.getInt("PLAYCOUNT")) {
-                                getLogger().info("Update Song: {} - {}", artist, song);
+                            getLogger().info("Update Song: {} - {}", artist, song);
 
-                                stmtUpdate.setInt(1, playCount);
-                                stmtUpdate.setString(2, artist);
-                                stmtUpdate.setString(3, song);
+                            stmtUpdate.setInt(1, playCount);
+                            stmtUpdate.setString(2, artist);
+                            stmtUpdate.setString(3, song);
 
-                                stmtUpdate.executeUpdate();
-                            }
+                            stmtUpdate.executeUpdate();
                         }
                     }
                 }

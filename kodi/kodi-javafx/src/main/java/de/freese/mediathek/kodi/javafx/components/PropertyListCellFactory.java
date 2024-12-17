@@ -2,6 +2,7 @@
 package de.freese.mediathek.kodi.javafx.components;
 
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -20,7 +21,7 @@ public class PropertyListCellFactory<T> implements Callback<ListView<T>, ListCel
 
         // Class<T> clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 
-        this.method = ReflectionUtils.findMethod(clazz, methodName);
+        this.method = Objects.requireNonNull(ReflectionUtils.findMethod(clazz, methodName), "method required");
     }
 
     @Override
@@ -31,7 +32,11 @@ public class PropertyListCellFactory<T> implements Callback<ListView<T>, ListCel
                 super.updateItem(entity, empty);
 
                 if (entity != null) {
-                    setText(ReflectionUtils.invokeMethod(PropertyListCellFactory.this.method, entity).toString());
+                    final Object value = ReflectionUtils.invokeMethod(PropertyListCellFactory.this.method, entity);
+
+                    if (value != null) {
+                        setText(value.toString());
+                    }
                 }
                 else {
                     setText(null);

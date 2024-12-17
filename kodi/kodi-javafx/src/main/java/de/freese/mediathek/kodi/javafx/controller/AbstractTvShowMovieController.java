@@ -93,12 +93,9 @@ public abstract class AbstractTvShowMovieController<T extends Model> extends Abs
             getPane().getImageProperty().set(image);
 
         });
-        task.setOnFailed(event ->
-                        KodiJavaFxClient.LOGGER.error(task.getException().getMessage())
-
-                // Alert alert = new Alert(AlertType.ERROR, task.getException().getMessage());
-                // alert.showAndWait();
-        );
+        // Alert alert = new Alert(AlertType.ERROR, task.getException().getMessage());
+        // alert.showAndWait();
+        task.setOnFailed(event -> KodiJavaFxClient.LOGGER.error(task.getException().getMessage()));
 
         // task.run();
         getExecutor().execute(task);

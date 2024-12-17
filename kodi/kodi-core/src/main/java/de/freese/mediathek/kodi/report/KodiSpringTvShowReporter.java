@@ -14,7 +14,7 @@ import de.freese.mediathek.report.KodiTvShowReporter;
  * @author Thomas Freese
  */
 public class KodiSpringTvShowReporter extends KodiTvShowReporter {
-    public DataSource createDataSource(final boolean readonly) throws Exception {
+    public DataSource createDataSource() throws Exception {
         final ConfigurableEnvironment environment = new StandardEnvironment();
         environment.getPropertySources().addLast(new KodiPropertySource());
 

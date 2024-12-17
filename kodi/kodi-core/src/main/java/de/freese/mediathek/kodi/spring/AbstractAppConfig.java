@@ -74,10 +74,7 @@ public abstract class AbstractAppConfig implements EnvironmentAware {
 
     @Bean
     public MediaDao mediaDAO(@Qualifier("dataSourceVideo") final DataSource dataSourceVideo, @Qualifier("dataSourceAudio") final DataSource dataSourceAudio) {
-        final MediaDaoImpl dao = new MediaDaoImpl();
-        dao.setDataSource(dataSourceVideo);
-
-        return dao;
+        return new MediaDaoImpl(dataSourceVideo);
     }
 
     @Bean
@@ -96,13 +93,11 @@ public abstract class AbstractAppConfig implements EnvironmentAware {
     }
 
     @Bean
-    @Qualifier("txManagerAudio")
     public PlatformTransactionManager txManagerAudio(@Qualifier("dataSourceAudio") final DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 
     @Bean
-    @Qualifier("txManagerVideo")
     @Primary
     public PlatformTransactionManager txManagerVideo(@Qualifier("dataSourceVideo") final DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);

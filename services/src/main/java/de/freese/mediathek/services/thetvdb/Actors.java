@@ -15,9 +15,9 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 class Actors {
     @XmlElement(name = "Actor")
-    private List<Actor> actors;
+    private List<Actor> actorList;
 
-    List<Actor> getActors() {
-        return actors;
+    List<Actor> getActorList() {
+        return actorList;
     }
 }

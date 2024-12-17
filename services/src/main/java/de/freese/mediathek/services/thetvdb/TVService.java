@@ -15,7 +15,6 @@ import javax.imageio.ImageIO;
 
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
 
 import de.freese.mediathek.services.AbstractService;
@@ -55,7 +54,7 @@ public class TVService extends AbstractService {
 
         final Search search = getRestTemplate().getForObject(url.toString(), Search.class, getApiKey(), id, getLocale().getLanguage());
 
-        if (CollectionUtils.isEmpty(search.getSeries())) {
+        if (search == null || search.getSeries().isEmpty()) {
             return null;
         }
 
@@ -73,7 +72,7 @@ public class TVService extends AbstractService {
 
         final Search search = getRestTemplate().getForObject(url.toString(), Search.class, getApiKey(), id, getLocale().getLanguage());
 
-        if (CollectionUtils.isEmpty(search.getSeries())) {
+        if (search == null || search.getSeries().isEmpty()) {
             return null;
         }
 
@@ -86,38 +85,44 @@ public class TVService extends AbstractService {
         // Actors
         url = url().append("{apikey}/series/{id}/actors.xml");
         final Actors actors = getRestTemplate().getForObject(url.toString(), Actors.class, getApiKey(), id);
-        final List<Actor> actorsList = actors.getActors();
-        Collections.sort(actorsList);
-        show.setActorsList(actorsList);
 
-        final StringBuilder sb = new StringBuilder("|");
+        if (actors != null) {
+            final List<Actor> actorsList = actors.getActorList();
+            Collections.sort(actorsList);
+            show.setActorsList(actorsList);
 
-        for (Actor actor : actorsList) {
-            sb.append(actor.getName()).append("|");
+            final StringBuilder sb = new StringBuilder("|");
+
+            for (Actor actor : actorsList) {
+                sb.append(actor.getName()).append("|");
+            }
+
+            show.setActors(sb.toString());
         }
-
-        show.setActors(sb.toString());
 
         // Banner
         // BannerType: poster, fanart, series or season
         // BannerType2: graphical, text or blank
         url = url().append("{apikey}/series/{id}/banners.xml");
         final Images images = getRestTemplate().getForObject(url.toString(), Images.class, getApiKey(), id);
-        // List<Image> banners = images.getBanners();
-        final List<Image> poster = images.getPosters();
-        final List<Image> fanArt = new ArrayList<>();
-        final List<Image> series = images.getBackdrops();
-        final List<Image> season = new ArrayList<>();
 
-        Collections.sort(poster);
-        Collections.sort(fanArt);
-        Collections.sort(series);
-        Collections.sort(season);
+        if (images != null) {
+            // List<Image> banners = images.getBanners();
+            final List<Image> poster = images.getPosters();
+            final List<Image> fanArt = new ArrayList<>();
+            final List<Image> series = images.getBackdrops();
+            final List<Image> season = new ArrayList<>();
 
-        show.setPosterList(poster);
-        show.setFanartList(fanArt);
-        show.setSeriesList(series);
-        show.setSeasonList(season);
+            Collections.sort(poster);
+            Collections.sort(fanArt);
+            Collections.sort(series);
+            Collections.sort(season);
+
+            show.setPosterList(poster);
+            show.setFanartList(fanArt);
+            show.setSeriesList(series);
+            show.setSeasonList(season);
+        }
 
         return show;
     }
@@ -144,13 +149,13 @@ public class TVService extends AbstractService {
 
         final Search search = getRestTemplate().getForObject(url.toString(), Search.class, urlEncode(name), getLocale().getLanguage());
 
-        if (CollectionUtils.isEmpty(search.getSeries())) {
-            return null;
+        if (search == null || search.getSeries().isEmpty()) {
+            return List.of();
         }
 
         // Redundante Treffer für Sprache filtern.
-        Map<String, TVShow> map = new HashMap<>();
-        Map<String, TVShow> map2 = new HashMap<>();
+        final Map<String, TVShow> map = new HashMap<>();
+        final Map<String, TVShow> map2 = new HashMap<>();
 
         for (TVShow show : search.getSeries()) {
             if (show.getLanguage().equals(getLocale().getLanguage())) {
@@ -173,9 +178,7 @@ public class TVService extends AbstractService {
         Collections.sort(result);
 
         map.clear();
-        map = null;
         map2.clear();
-        map2 = null;
 
         return result;
     }

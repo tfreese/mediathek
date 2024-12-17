@@ -3,8 +3,11 @@ package de.freese.mediathek.kodi.impl;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
-import org.springframework.jdbc.core.support.JdbcDaoSupport;
+import javax.sql.DataSource;
+
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import de.freese.mediathek.kodi.api.MediaDao;
 import de.freese.mediathek.kodi.model.Genre;
@@ -14,8 +17,16 @@ import de.freese.mediathek.kodi.model.Show;
 /**
  * @author Thomas Freese
  */
-public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
+public class MediaDaoImpl implements MediaDao {
+    private final JdbcTemplate jdbcTemplate;
+
     private String schema = "";
+
+    public MediaDaoImpl(final DataSource dataSource) {
+        super();
+
+        jdbcTemplate = new JdbcTemplate(Objects.requireNonNull(dataSource, "dataSource required"));
+    }
 
     @Override
     public void deleteMovieGenres(final int movieID) {
@@ -325,6 +336,10 @@ public class MediaDaoImpl extends JdbcDaoSupport implements MediaDao {
         getJdbcTemplate().update(sql.toString(), genres.toString(), showID);
 
         return genres.toString();
+    }
+
+    private JdbcTemplate getJdbcTemplate() {
+        return jdbcTemplate;
     }
 
     private String prependSchema(final String table) {

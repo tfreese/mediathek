@@ -16,7 +16,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Episode implements Comparable<Episode> {
     @XmlElement(name = "EpisodeNumber")
-    private final int episode = -1;
+    private final int episodeNumber = -1;
     @XmlElement(name = "SeasonNumber")
     private final int season = -1;
     @XmlElement(name = "Overview")
@@ -39,7 +39,7 @@ public class Episode implements Comparable<Episode> {
         int comp = getSeason() - o.getSeason();
 
         if (comp == 0) {
-            comp = getEpisode() - o.getEpisode();
+            comp = getEpisodeNumber() - o.getEpisodeNumber();
         }
 
         return comp;
@@ -51,7 +51,7 @@ public class Episode implements Comparable<Episode> {
             return false;
         }
 
-        return episode == episode1.episode && season == episode1.season && Objects.equals(beschreibung, episode1.beschreibung)
+        return episodeNumber == episode1.episodeNumber && season == episode1.season && Objects.equals(beschreibung, episode1.beschreibung)
                 && Objects.equals(guestStars, episode1.guestStars) && Objects.equals(id, episode1.id) && Objects.equals(image, episode1.image)
                 && Objects.equals(language, episode1.language) && Objects.equals(releaseDate, episode1.releaseDate) && Objects.equals(title, episode1.title);
     }
@@ -60,8 +60,8 @@ public class Episode implements Comparable<Episode> {
         return beschreibung;
     }
 
-    public int getEpisode() {
-        return episode;
+    public int getEpisodeNumber() {
+        return episodeNumber;
     }
 
     public String getGuestStars() {
@@ -94,7 +94,7 @@ public class Episode implements Comparable<Episode> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(episode, season, beschreibung, guestStars, id, image, language, releaseDate, title);
+        return Objects.hash(episodeNumber, season, beschreibung, guestStars, id, image, language, releaseDate, title);
     }
 
     @Override
@@ -103,7 +103,7 @@ public class Episode implements Comparable<Episode> {
         builder.append("Episode [");
         builder.append("id=").append(id);
         builder.append(", season=").append(season);
-        builder.append(", episode=").append(episode);
+        builder.append(", episode=").append(episodeNumber);
         builder.append(", releaseDate=").append(releaseDate);
         builder.append(", title=").append(title);
         builder.append(", language=").append(language);
