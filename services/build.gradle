@@ -2,7 +2,7 @@ plugins {
     id "java-library"
 }
 
-description "API for Online-Media-Databases(www.themoviedb.org, www.thetvdb.com)"
+description = "API for Online-Media-Databases(www.themoviedb.org, www.thetvdb.com)"
 
 dependencies {
     api(project(":core"))

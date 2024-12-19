@@ -3,7 +3,7 @@ plugins {
     id "org.springframework.boot"
 }
 
-description "API for KODI"
+description = "API for KODI"
 
 dependencies {
     api(project(":core"))

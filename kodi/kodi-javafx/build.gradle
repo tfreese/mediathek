@@ -4,7 +4,7 @@ plugins {
     id "org.openjfx.javafxplugin"
 }
 
-description "JavaFX GUI for KODI"
+description = "JavaFX GUI for KODI"
 
 // For JavaFx native-Library Downloads.
 configurations.matching { it.canBeResolved }.configureEach {

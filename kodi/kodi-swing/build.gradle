@@ -3,7 +3,7 @@ plugins {
     id "org.springframework.boot"
 }
 
-description "Swing GUI for KODI"
+description = "Swing GUI for KODI"
 
 dependencies {
     implementation(project(":kodi:kodi-core"))
