@@ -6,7 +6,6 @@ import java.util.function.Consumer;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.DataLine;
 import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
@@ -25,9 +24,11 @@ public final class SourceDataLinePlayer {
         super();
 
         this.audioFormat = Objects.requireNonNull(audioFormat, "audioFormat required");
-        final DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
 
-        sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
+        // final DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
+        // sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
+
+        sourceDataLine = AudioSystem.getSourceDataLine(audioFormat);
         sourceDataLine.open(audioFormat);
         sourceDataLine.start();
     }

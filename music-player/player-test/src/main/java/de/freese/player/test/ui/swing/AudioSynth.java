@@ -10,7 +10,6 @@ import java.util.function.Supplier;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.DataLine;
 import javax.sound.sampled.SourceDataLine;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -137,8 +136,6 @@ public final class AudioSynth {
         // Write the data to an output file.
         // AudioSystem.write(audioInputStream, AudioFileFormat.Type.WAVE, new File(fileName.getText() + ".wav"));
 
-        final DataLine.Info dataLineInfo = new DataLine.Info(SourceDataLine.class, audioFormat);
-
         // InputStream inputStream = new ByteArrayInputStream(audioData);
         // AudioInputStream audioInputStream = new AudioInputStream(inputStream, audioFormat, AudioSystem.NOT_SPECIFIED);
         // audioData.length / (long) audioFormat.getFrameSize()
@@ -146,7 +143,7 @@ public final class AudioSynth {
 
         // Thread.ofPlatform().daemon().name("player-", 1).start(new Player(sourceDataLine));
         Thread.ofVirtual().name("player-", 1).start(() -> {
-            try (SourceDataLine sourceDataLine = (SourceDataLine) AudioSystem.getLine(dataLineInfo)) {
+            try (SourceDataLine sourceDataLine = AudioSystem.getSourceDataLine(audioFormat)) {
                 sourceDataLine.open(audioFormat);
                 sourceDataLine.start();
 

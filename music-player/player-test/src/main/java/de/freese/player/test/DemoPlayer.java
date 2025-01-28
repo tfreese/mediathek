@@ -120,8 +120,7 @@ public final class DemoPlayer {
         final AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(inputStream);
 
         final AudioFormat audioFormat = audioInputStream.getFormat();
-        final DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
-        final SourceDataLine sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
+        final SourceDataLine sourceDataLine = AudioSystem.getSourceDataLine(audioFormat);
 
         sourceDataLine.open(audioFormat);
         sourceDataLine.addLineListener(new MyLineListener());
