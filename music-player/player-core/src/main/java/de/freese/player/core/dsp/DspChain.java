@@ -28,7 +28,7 @@ public final class DspChain implements DspProcessor {
 
     @Override
     public void process(final Window window) {
-        for (DspProcessor processor : this.processors) {
+        for (DspProcessor processor : processors) {
             if (!processor.isEnabled()) {
                 continue;
             }
