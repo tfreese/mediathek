@@ -152,6 +152,8 @@ final class DefaultFFmpeg extends AbstractFF implements FFmpeg {
         Objects.requireNonNull(audioSource, "audioSource required");
         Objects.requireNonNull(audioSource.getUri(), "uri required");
 
+        // final AudioFormat targetAudioFormat = DefaultAudioPlayerSink.getTargetAudioFormat();
+
         addArgument("-hide_banner");
         addArgument("-i");
         addArgument(PlayerUtils.toFileName(audioSource.getUri()));
@@ -191,12 +193,14 @@ final class DefaultFFmpeg extends AbstractFF implements FFmpeg {
         if (channels > 0) {
             addArgument("-ac");
             addArgument(String.valueOf(channels));
+            // addArgument(String.valueOf(targetAudioFormat.getChannels()));
         }
 
         final int samplingRate = audioSource.getSampleRate();
         if (samplingRate > 0) {
             addArgument("-ar");
             addArgument(String.valueOf(samplingRate));
+            // addArgument(String.valueOf(targetAudioFormat.getSampleRate()));
         }
 
         // final int volume = audioSource.getVolume();

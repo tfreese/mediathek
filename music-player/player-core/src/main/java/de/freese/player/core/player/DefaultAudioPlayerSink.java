@@ -11,19 +11,27 @@ import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
-import de.freese.player.core.input.AudioSource;
-
 /**
  * @author Thomas Freese
  */
 public class DefaultAudioPlayerSink implements AudioPlayerSink {
-    public static AudioFormat getTargetAudioFormat(final AudioSource audioSource) {
+    // public static AudioFormat getTargetAudioFormat(final AudioSource audioSource) {
+    //     return new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
+    //             audioSource.getSampleRate(),
+    //             16,
+    //             audioSource.getChannels(),
+    //             audioSource.getChannels() * 2,
+    //             audioSource.getSampleRate(),
+    //             ByteOrder.BIG_ENDIAN.equals(ByteOrder.nativeOrder()) // false
+    //     );
+    // }
+    public static AudioFormat getTargetAudioFormat() {
         return new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
-                audioSource.getSampleRate(),
+                48_000F,
                 16,
-                audioSource.getChannels(),
-                audioSource.getChannels() * 2,
-                audioSource.getSampleRate(),
+                2,
+                2 * 2,
+                48_000F,
                 ByteOrder.BIG_ENDIAN.equals(ByteOrder.nativeOrder()) // false
         );
     }
@@ -46,19 +54,10 @@ public class DefaultAudioPlayerSink implements AudioPlayerSink {
 
     @Override
     public void close() {
-        // Continues data line I/O until its buffer is drained.
-        sourceDataLine.drain();
+        stop();
 
-        sourceDataLine.stop();
         sourceDataLine.close();
     }
-
-    // public void stop() {
-    //     // Continues data line I/O until its buffer is drained.
-    //     sourceDataLine.drain();
-    //
-    //     sourceDataLine.stop();
-    // }
 
     @Override
     public void configureVolumeControl(final Consumer<FloatControl> consumer) {
@@ -75,5 +74,12 @@ public class DefaultAudioPlayerSink implements AudioPlayerSink {
     @Override
     public void play(final byte[] audioData, final int length) {
         sourceDataLine.write(audioData, 0, length);
+    }
+
+    private void stop() {
+        // Continues data line I/O until its buffer is drained.
+        sourceDataLine.drain();
+
+        sourceDataLine.stop();
     }
 }
