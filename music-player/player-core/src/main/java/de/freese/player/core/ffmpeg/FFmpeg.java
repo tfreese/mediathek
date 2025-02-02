@@ -13,9 +13,9 @@ import de.freese.player.core.input.AudioSource;
  * @author Thomas Freese
  */
 public interface FFmpeg {
-    Path encodeToWav(AudioSource audioSource) throws Exception;
+    Path encodeToWav(AudioSource audioSource, final Path tempDir);
 
-    String getVersion() throws Exception;
+    String getVersion();
 
-    AudioInputStream toAudioStreamWav(AudioSource audioSource) throws Exception;
+    AudioInputStream toAudioStreamWav(AudioSource audioSource);
 }

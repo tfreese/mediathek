@@ -9,7 +9,8 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 
-import de.freese.player.core.player.SourceDataLinePlayer;
+import de.freese.player.core.player.AudioPlayerSink;
+import de.freese.player.core.player.DefaultAudioPlayerSink;
 
 /**
  * @author Thomas Freese
@@ -64,7 +65,7 @@ public final class Analysis {
             // final int runTimes = (int) (length * 1000) / timeOfFrame;
             // System.out.println("Run Times: " + runTimes);
 
-            final SourceDataLinePlayer sourceDataLinePlayer = new SourceDataLinePlayer(audioFormat);
+            final AudioPlayerSink audioPlayerSink = new DefaultAudioPlayerSink(audioFormat);
 
             // Read Frames for 1/10 Second.
             final int bufferSize = (int) (frameRate / 10D) * frameSize * channels;
@@ -73,10 +74,10 @@ public final class Analysis {
             for (int i = 0; i < 10; i++) {
                 final int bytesRead = audioInputStream.read(audioData);
 
-                sourceDataLinePlayer.play(audioData, bytesRead);
+                audioPlayerSink.play(audioData, bytesRead);
             }
 
-            sourceDataLinePlayer.close();
+            audioPlayerSink.close();
         }
     }
 

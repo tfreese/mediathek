@@ -9,7 +9,6 @@ import java.nio.ByteOrder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
-import java.util.concurrent.Executor;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -32,73 +31,61 @@ final class DefaultFFmpeg extends AbstractFF implements FFmpeg {
                 audioSource.getSampleRate(),
                 ByteOrder.BIG_ENDIAN.equals(ByteOrder.nativeOrder()) // false
         );
-        // return new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
-        //         44100,
-        //         16,
-        //         2,
-        //         2 * 2,
-        //         44100,
-        //         ByteOrder.BIG_ENDIAN.equals(ByteOrder.nativeOrder()) // false
-        // );
     }
 
-    private final Executor executor;
-    private final Path tempDir;
-
-    DefaultFFmpeg(final String ffmpegExecutable, final Executor executor, final Path tempDir) {
+    DefaultFFmpeg(final String ffmpegExecutable) {
         super(ffmpegExecutable);
-
-        this.executor = Objects.requireNonNull(executor, "executor required");
-        this.tempDir = Objects.requireNonNull(tempDir, "tempDir required");
-
-        if (!Files.exists(this.tempDir)) {
-            try {
-                Files.createDirectories(this.tempDir);
-            }
-            catch (IOException ex) {
-                throw new UncheckedIOException(ex);
-            }
-        }
     }
 
     @Override
-    public Path encodeToWav(final AudioSource audioSource) throws Exception {
+    public Path encodeToWav(final AudioSource audioSource, final Path tempDir) {
         addArguments(audioSource);
 
         // Overwrite existing
         addArgument("-y");
 
-        final Path tmpFile = Files.createTempFile(tempDir, null, ".wav");
-        tmpFile.toFile().deleteOnExit();
+        try {
+            final Path tmpFile = Files.createTempFile(tempDir, null, ".wav");
+            // tmpFile.toFile().deleteOnExit();
 
-        addArgument(tmpFile.toAbsolutePath().toString());
+            addArgument(tmpFile.toAbsolutePath().toString());
 
-        final String command = createCommand();
-        final ProcessBuilder processBuilder = createProcessBuilder(command);
-        processBuilder.redirectErrorStream(true);
+            final String command = createCommand();
+            final ProcessBuilder processBuilder = createProcessBuilder(command);
+            processBuilder.redirectErrorStream(true);
 
-        getLogger().debug("execute: {}", command);
+            getLogger().debug("execute: {}", command);
 
-        final Process process = processBuilder.start();
-        final int exitValue = process.waitFor();
+            final Process process = processBuilder.start();
+            final int exitValue = process.waitFor();
 
-        if (exitValue == 0) {
-            getLogger().debug("Finished piped decoding process: {}", command);
+            if (exitValue == 0) {
+                getLogger().debug("Finished piped decoding process: {}", command);
+            }
+            else {
+                getLogger().error("Finished piped decoding process with exitValue '{}': {}", exitValue, command);
+            }
+
+            return tmpFile;
         }
-        else {
-            getLogger().error("Finished piped decoding process with exitValue '{}': {}", exitValue, command);
+        catch (IOException ex) {
+            throw new UncheckedIOException(ex);
         }
-
-        return tmpFile;
+        catch (RuntimeException ex) {
+            throw ex;
+        }
+        catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     @Override
-    public String getVersion() throws Exception {
+    public String getVersion() {
         return super.getVersion();
     }
 
     @Override
-    public AudioInputStream toAudioStreamWav(final AudioSource audioSource) throws Exception {
+    public AudioInputStream toAudioStreamWav(final AudioSource audioSource) {
         addArguments(audioSource);
 
         // Pipe the output to stdout
@@ -110,42 +97,43 @@ final class DefaultFFmpeg extends AbstractFF implements FFmpeg {
 
         getLogger().debug("execute: {}", command);
 
-        final Process process = processBuilder.start();
+        try {
+            final Process process = processBuilder.start();
 
-        // buffer = 1/4 second of audio.
-        final int bufferSize = audioSource.getSampleRate() / 4;
-        final InputStream inputStream = new BufferedInputStream(process.getInputStream(), bufferSize);
-        // final InputStream inputStream = new BufferedInputStream(process.getInputStream());
+            // buffer = 1/4 second of audio.
+            final int bufferSize = audioSource.getSampleRate() / 4;
+            final InputStream inputStream = new BufferedInputStream(process.getInputStream(), bufferSize);
+            // final InputStream inputStream = new BufferedInputStream(process.getInputStream());
 
-        // Read and ignore the WAV header, only pipe the PCM samples to the AudioInputStream.
-        final long bytesRead = inputStream.skip(44L);
+            // Read and ignore the WAV header, only pipe the PCM samples to the AudioInputStream.
+            final long bytesRead = inputStream.skip(44L);
 
-        if (bytesRead != 44L) {
-            throw new PlayerException("Could not read complete WAV-header from pipe. This could result in mis-aligned frames!");
+            if (bytesRead != 44L) {
+                throw new PlayerException("Could not read complete WAV-header from pipe. This could result in mis-aligned frames!");
+            }
+
+            final int exitValue = process.waitFor();
+
+            if (exitValue == 0) {
+                getLogger().debug("Finished piped decoding process: {}", command);
+            }
+            else {
+                getLogger().error("Finished piped decoding process with exitValue '{}': {}", exitValue, command);
+            }
+
+            final AudioFormat audioFormatTarget = getTargetAudioFormat(audioSource);
+
+            return new AudioInputStream(inputStream, audioFormatTarget, AudioSystem.NOT_SPECIFIED);
         }
-
-        executor.execute(() -> {
-            try {
-                final int exitValue = process.waitFor();
-
-                if (exitValue == 0) {
-                    getLogger().debug("Finished piped decoding process: {}", command);
-                }
-                else {
-                    getLogger().error("Finished piped decoding process with exitValue '{}': {}", exitValue, command);
-                }
-            }
-            catch (InterruptedException ex) {
-                getLogger().error(ex.getMessage(), ex);
-
-                // Restore interrupted state.
-                Thread.currentThread().interrupt();
-            }
-        });
-
-        final AudioFormat audioFormatTarget = getTargetAudioFormat(audioSource);
-
-        return new AudioInputStream(inputStream, audioFormatTarget, AudioSystem.NOT_SPECIFIED);
+        catch (IOException ex) {
+            throw new UncheckedIOException(ex);
+        }
+        catch (RuntimeException ex) {
+            throw ex;
+        }
+        catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     private void addArguments(final AudioSource audioSource) {

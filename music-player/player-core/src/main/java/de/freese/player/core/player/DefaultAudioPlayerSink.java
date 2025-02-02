@@ -8,13 +8,14 @@ import java.util.function.Consumer;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.FloatControl;
-import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
+
+import de.freese.player.core.exception.PlayerException;
 
 /**
  * @author Thomas Freese
  */
-public class DefaultAudioPlayerSink implements AudioPlayerSink {
+public final class DefaultAudioPlayerSink implements AudioPlayerSink {
     // public static AudioFormat getTargetAudioFormat(final AudioSource audioSource) {
     //     return new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
     //             audioSource.getSampleRate(),
@@ -30,7 +31,7 @@ public class DefaultAudioPlayerSink implements AudioPlayerSink {
                 48_000F,
                 16,
                 2,
-                2 * 2,
+                4,
                 48_000F,
                 ByteOrder.BIG_ENDIAN.equals(ByteOrder.nativeOrder()) // false
         );
@@ -39,7 +40,7 @@ public class DefaultAudioPlayerSink implements AudioPlayerSink {
     private final AudioFormat audioFormat;
     private final SourceDataLine sourceDataLine;
 
-    public DefaultAudioPlayerSink(final AudioFormat audioFormat) throws LineUnavailableException {
+    public DefaultAudioPlayerSink(final AudioFormat audioFormat) {
         super();
 
         this.audioFormat = Objects.requireNonNull(audioFormat, "audioFormat required");
@@ -47,9 +48,17 @@ public class DefaultAudioPlayerSink implements AudioPlayerSink {
         // final DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
         // sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
 
-        sourceDataLine = AudioSystem.getSourceDataLine(audioFormat);
-        sourceDataLine.open(audioFormat);
-        sourceDataLine.start();
+        try {
+            sourceDataLine = AudioSystem.getSourceDataLine(audioFormat);
+            sourceDataLine.open(audioFormat);
+            sourceDataLine.start();
+        }
+        catch (RuntimeException ex) {
+            throw ex;
+        }
+        catch (Exception ex) {
+            throw new PlayerException(ex);
+        }
     }
 
     @Override
@@ -76,7 +85,8 @@ public class DefaultAudioPlayerSink implements AudioPlayerSink {
         sourceDataLine.write(audioData, 0, length);
     }
 
-    private void stop() {
+    @Override
+    public void stop() {
         // Continues data line I/O until its buffer is drained.
         sourceDataLine.drain();
 

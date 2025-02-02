@@ -1,49 +1,25 @@
 // Created: 14 Juli 2024
 package de.freese.player.core.player;
 
-import java.nio.file.Path;
 import java.util.concurrent.Executor;
-import java.util.function.Consumer;
 
 import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
-import javax.sound.sampled.FloatControl;
 
 import de.freese.player.core.exception.PlayerException;
-import de.freese.player.core.input.AudioInputStreamFactory;
 
 /**
  * @author Thomas Freese
  */
-public final class DefaultClipPlayer extends AbstractPlayer {
+public final class ClipPlayer {
 
     private Clip clip;
-    private volatile boolean looping;
     private volatile boolean running;
 
-    public DefaultClipPlayer(final Executor executor, final Path tempDir) {
-        super(executor, tempDir);
-    }
-
-    @Override
-    public void configureVolumeControl(final Consumer<FloatControl> consumer) {
-        if (!isPlaying()) {
-            return;
-        }
-
-        if (clip.isOpen() && clip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
-            consumer.accept((FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN));
-        }
-    }
-
-    @Override
     public void pause() {
-        getLogger().debug("pause: {}", getAudioSource());
-
-        running = false;
-
         if (clip == null) {
             return;
         }
@@ -71,19 +47,15 @@ public final class DefaultClipPlayer extends AbstractPlayer {
     //     });
     // }
 
-    @Override
-    public void play() {
+    public void play(final AudioInputStream audioInputStream, final Executor executor) {
         try {
-            setAudioInputStream(AudioInputStreamFactory.createAudioInputStream(getAudioSource(), getExecutor(), getTempDir()));
-
-            final AudioFormat audioFormat = getAudioInputStream().getFormat();
-            getLogger().debug("Play audio format: {}", audioFormat);
+            final AudioFormat audioFormat = audioInputStream.getFormat();
 
             final DataLine.Info info = new DataLine.Info(Clip.class, audioFormat);
             clip = (Clip) AudioSystem.getLine(info);
             // clip = AudioSystem.getClip();
 
-            clip.open(getAudioInputStream());
+            clip.open(audioInputStream);
         }
         catch (RuntimeException ex) {
             throw ex;
@@ -95,9 +67,7 @@ public final class DefaultClipPlayer extends AbstractPlayer {
         running = true;
         clip.setFramePosition(0);
 
-        getExecutor().execute(() -> {
-            getLogger().info("play: {}", getAudioSource());
-
+        executor.execute(() -> {
             clip.start();
 
             while (true) {
@@ -108,48 +78,38 @@ public final class DefaultClipPlayer extends AbstractPlayer {
                 }
 
                 if (!running) {
-                    getLogger().debug("not running: {}", getAudioSource());
                     break;
                 }
             }
         });
     }
 
-    @Override
-    public void resume() {
+    public void resume(final Executor executor) {
         if (clip == null) {
             return;
         }
 
         running = true;
 
-        getExecutor().execute(() -> {
-            getLogger().debug("resume: {}", getAudioSource());
-
+        executor.execute(() -> {
             clip.start();
 
             while (true) {
                 if (clip.getMicrosecondPosition() == clip.getMicrosecondLength()) {
                     running = false;
                     stop();
-                    fireSongFinished();
                     break;
                 }
 
                 if (!running) {
-                    getLogger().debug("not running");
                     break;
                 }
             }
         });
     }
 
-    @Override
     public void stop() {
-        getLogger().debug("stop: {}", getAudioSource());
-
         running = false;
-        looping = false;
 
         if (clip == null) {
             return;
@@ -165,16 +125,11 @@ public final class DefaultClipPlayer extends AbstractPlayer {
         close();
     }
 
-    protected void close() {
-        getLogger().debug("close: {}", getAudioSource());
-
+    private void close() {
         try {
             if (clip != null) {
                 clip.close();
                 clip = null;
-
-                getAudioInputStream().close();
-                setAudioInputStream(null);
             }
         }
         catch (PlayerException ex) {

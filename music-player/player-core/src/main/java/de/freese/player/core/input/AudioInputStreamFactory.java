@@ -4,7 +4,6 @@ package de.freese.player.core.input;
 import java.io.BufferedInputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.concurrent.Executor;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -22,7 +21,7 @@ public final class AudioInputStreamFactory {
     //         .map(type -> AudioCodec.valueOf(type.toString()))
     //         .collect(Collectors.toUnmodifiableSet());
 
-    public static AudioInputStream createAudioInputStream(final AudioSource audioSource, final Executor executor, final Path tempDir) throws Exception {
+    public static AudioInputStream createAudioInputStream(final AudioSource audioSource, final Path tempDir) throws Exception {
         final AudioCodec audioCodec = audioSource.getAudioCodec();
         final AudioInputStream audioInputStream;
 
@@ -31,7 +30,7 @@ public final class AudioInputStreamFactory {
         }
         else {
             if (audioSource.getTmpFile() == null) {
-                final Path tmpFile = FFLocator.createFFmpeg(executor, tempDir).encodeToWav(audioSource);
+                final Path tmpFile = FFLocator.createFFmpeg().encodeToWav(audioSource, tempDir);
 
                 audioSource.setTmpFile(tmpFile);
             }
@@ -49,7 +48,7 @@ public final class AudioInputStreamFactory {
         return audioInputStream;
     }
 
-    public static void encodeToWav(final AudioSource audioSource, final Executor executor, final Path tempDir) throws Exception {
+    public static void encodeToWav(final AudioSource audioSource, final Path tempDir) {
         final AudioCodec audioCodec = audioSource.getAudioCodec();
 
         if (AudioCodec.WAVE.equals(audioCodec)) {
@@ -57,7 +56,7 @@ public final class AudioInputStreamFactory {
         }
 
         if (audioSource.getTmpFile() == null) {
-            final Path tmpFile = FFLocator.createFFmpeg(executor, tempDir).encodeToWav(audioSource);
+            final Path tmpFile = FFLocator.createFFmpeg().encodeToWav(audioSource, tempDir);
 
             audioSource.setTmpFile(tmpFile);
         }

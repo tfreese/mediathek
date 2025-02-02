@@ -21,8 +21,8 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.freese.player.core.player.DefaultDspPlayer;
-import de.freese.player.core.player.DspPlayer;
+import de.freese.player.core.player.DefaultPlayer;
+import de.freese.player.core.player.Player;
 import de.freese.player.core.player.SongCollection;
 import de.freese.player.ui.equalizer.EqualizerDspProcessor;
 import de.freese.player.ui.swing.component.table.TableModelSongCollection;
@@ -36,7 +36,7 @@ public final class ApplicationContext {
     private static DataSource dataSource;
     private static EqualizerDspProcessor equalizerDspProcessor;
     private static ExecutorService executorService;
-    private static DspPlayer player;
+    private static Player player;
     private static PlayerRepository repository;
     private static SongCollection songCollection;
     private static Path tempDir;
@@ -50,7 +50,7 @@ public final class ApplicationContext {
         return executorService;
     }
 
-    public static DspPlayer getPlayer() {
+    public static Player getPlayer() {
         return player;
     }
 
@@ -135,7 +135,7 @@ public final class ApplicationContext {
         }
 
         songCollection = new TableModelSongCollection();
-        player = new DefaultDspPlayer(executorService, tempDir);
+        player = new DefaultPlayer(executorService, tempDir);
     }
 
     public static void stop() {

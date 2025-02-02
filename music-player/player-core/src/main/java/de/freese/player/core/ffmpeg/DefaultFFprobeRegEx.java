@@ -4,6 +4,7 @@ package de.freese.player.core.ffmpeg;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UncheckedIOException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
@@ -31,52 +32,7 @@ final class DefaultFFprobeRegEx extends AbstractFF implements FFprobe {
     private static final Pattern PATTERN_STREAM =
             Pattern.compile("Stream #.* ((?:Audio)|(?:Video)|(?:Data)): (.*)\\s*.*", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.UNIX_LINES);
 
-    DefaultFFprobeRegEx(final String ffprobeExecutable) {
-        super(ffprobeExecutable);
-    }
-
-    @Override
-    public AudioSource getMetaData(final URI uri) throws Exception {
-        addArgument("-hide_banner");
-        addArgument("-select_streams a");
-        addArgument("-i");
-        addArgument(uri.toString());
-
-        final String command = createCommand();
-
-        getLogger().debug("execute: {}", command);
-
-        final ProcessBuilder processBuilder = createProcessBuilder(command);
-        processBuilder.redirectErrorStream(true);
-
-        final Process process = processBuilder.start();
-
-        final String output;
-
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) {
-            output = br.lines().collect(Collectors.joining(System.lineSeparator()));
-        }
-
-        final int exitValue = process.waitFor();
-
-        if (exitValue != 0) {
-            throw new IOException("command: " + command + System.lineSeparator() + String.join(System.lineSeparator(), output));
-        }
-
-        getLogger().debug("info: {}", output);
-
-        final DefaultAudioSource audioFile = parseMetaData(output);
-        audioFile.setUri(uri);
-
-        return audioFile;
-    }
-
-    @Override
-    public String getVersion() throws Exception {
-        return super.getVersion();
-    }
-
-    private DefaultAudioSource parseMetaData(final String content) {
+    private static DefaultAudioSource parseMetaData(final String content) {
         final DefaultAudioSource audioFile = new DefaultAudioSource();
 
         // Format
@@ -132,7 +88,7 @@ final class DefaultFFprobeRegEx extends AbstractFF implements FFprobe {
         return audioFile;
     }
 
-    private int parseMetaDataBitRate(final String content) {
+    private static int parseMetaDataBitRate(final String content) {
         Matcher matcher = PATTERN_STREAM.matcher(content);
 
         if (matcher.find()) {
@@ -166,36 +122,39 @@ final class DefaultFFprobeRegEx extends AbstractFF implements FFprobe {
         return -1;
     }
 
-    private int parseMetaDataChannels(final String content) {
+    private static int parseMetaDataChannels(final String content) {
         final Matcher matcher = PATTERN_STREAM.matcher(content);
+        int channels = -1;
 
         if (matcher.find()) {
             final String streamType = matcher.group(1);
             final String specs = matcher.group(2);
 
-            if ("Audio".equalsIgnoreCase(streamType)) {
-                final Matcher m2 = PATTERN_CHANNELS.matcher(specs);
+            if (!"Audio".equalsIgnoreCase(streamType)) {
+                return channels;
+            }
 
-                if (m2.find()) {
-                    final String value = m2.group(1);
+            final Matcher m2 = PATTERN_CHANNELS.matcher(specs);
 
-                    if ("mono".equalsIgnoreCase(value)) {
-                        return 1;
-                    }
-                    else if ("stereo".equalsIgnoreCase(value)) {
-                        return 2;
-                    }
-                    else {
-                        return Integer.parseInt(m2.group(2));
-                    }
+            if (m2.find()) {
+                final String value = m2.group(1);
+
+                if ("mono".equalsIgnoreCase(value)) {
+                    channels = 1;
+                }
+                else if ("stereo".equalsIgnoreCase(value)) {
+                    channels = 2;
+                }
+                else {
+                    channels = Integer.parseInt(m2.group(2));
                 }
             }
         }
 
-        return -1;
+        return channels;
     }
 
-    private Duration parseMetaDataDuration(final String content) {
+    private static Duration parseMetaDataDuration(final String content) {
         final Matcher matcher = PATTERN_DURATION.matcher(content);
 
         if (matcher.find()) {
@@ -208,7 +167,7 @@ final class DefaultFFprobeRegEx extends AbstractFF implements FFprobe {
         return null;
     }
 
-    private String parseMetaDataFormat(final String content) {
+    private static String parseMetaDataFormat(final String content) {
         Matcher matcher = PATTERN_INPUT.matcher(content);
 
         String formatInput = null;
@@ -244,7 +203,7 @@ final class DefaultFFprobeRegEx extends AbstractFF implements FFprobe {
         return String.join("/", formatInput, formatStream);
     }
 
-    private int parseMetaDataSamplingRate(final String content) {
+    private static int parseMetaDataSamplingRate(final String content) {
         final Matcher matcher = PATTERN_STREAM.matcher(content);
 
         if (matcher.find()) {
@@ -261,5 +220,61 @@ final class DefaultFFprobeRegEx extends AbstractFF implements FFprobe {
         }
 
         return -1;
+    }
+
+    DefaultFFprobeRegEx(final String ffprobeExecutable) {
+        super(ffprobeExecutable);
+    }
+
+    @Override
+    public AudioSource getMetaData(final URI uri) {
+        addArgument("-hide_banner");
+        addArgument("-select_streams a");
+        addArgument("-i");
+        addArgument(uri.toString());
+
+        final String command = createCommand();
+
+        getLogger().debug("execute: {}", command);
+
+        final ProcessBuilder processBuilder = createProcessBuilder(command);
+        processBuilder.redirectErrorStream(true);
+
+        try {
+            final Process process = processBuilder.start();
+
+            final String output;
+
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) {
+                output = br.lines().collect(Collectors.joining(System.lineSeparator()));
+            }
+
+            final int exitValue = process.waitFor();
+
+            if (exitValue != 0) {
+                throw new PlayerException("command: " + command + System.lineSeparator() + String.join(System.lineSeparator(), output));
+            }
+
+            getLogger().debug("info: {}", output);
+
+            final DefaultAudioSource audioFile = parseMetaData(output);
+            audioFile.setUri(uri);
+
+            return audioFile;
+        }
+        catch (IOException ex) {
+            throw new UncheckedIOException(ex);
+        }
+        catch (RuntimeException ex) {
+            throw ex;
+        }
+        catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    @Override
+    public String getVersion() {
+        return super.getVersion();
     }
 }

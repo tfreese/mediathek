@@ -4,6 +4,7 @@ package de.freese.player.core.input;
 import java.net.URI;
 import java.nio.file.Path;
 import java.time.Duration;
+import java.util.Objects;
 
 /**
  * @author Thomas Freese
@@ -26,6 +27,15 @@ public class DefaultAudioSource implements AudioSource {
     private Path tmpFile;
     private String track;
     private URI uri;
+
+    @Override
+    public boolean equals(final Object o) {
+        if (!(o instanceof final DefaultAudioSource that)) {
+            return false;
+        }
+
+        return Objects.equals(tmpFile, that.tmpFile) && Objects.equals(uri, that.uri);
+    }
 
     @Override
     public String getAlbum() {
@@ -105,6 +115,11 @@ public class DefaultAudioSource implements AudioSource {
     @Override
     public URI getUri() {
         return uri;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tmpFile, uri);
     }
 
     @Override

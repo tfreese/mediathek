@@ -33,7 +33,7 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import de.freese.player.core.input.AudioSource;
-import de.freese.player.core.player.DspPlayer;
+import de.freese.player.core.player.Player;
 import de.freese.player.core.player.SongCollection;
 import de.freese.player.core.util.PlayerUtils;
 import de.freese.player.ui.ApplicationContext;
@@ -160,7 +160,7 @@ public final class PlayerView {
 
     private void initListener() {
         final SongCollection songCollection = ApplicationContext.getSongCollection();
-        final DspPlayer player = ApplicationContext.getPlayer();
+        final Player player = ApplicationContext.getPlayer();
 
         player.addSongFinishedListener(audioSource -> {
                     ApplicationContext.getRepository().updateSongPlayCount(audioSource.getUri(), audioSource.getPlayCount() + 1);
@@ -190,11 +190,11 @@ public final class PlayerView {
                 buttonPlayPause.setIcon(ICON_PAUSE);
 
                 if (!player.isPlaying()) {
-                    if (tableSongSollection.getSelectedRow() > -1) {
-                        songCollection.setCurrentIndex(tableSongSollection.getSelectedRow());
-                    }
+                    // if (tableSongSollection.getSelectedRow() > -1) {
+                    //     songCollection.setCurrentIndex(tableSongSollection.getSelectedRow());
+                    // }
 
-                    player.setAudioSource(songCollection.getCurrentAudioSource());
+                    // player.setAudioSource(songCollection.getCurrentAudioSource());
                     player.play();
                     tableSongSollection.getSelectionModel().setSelectionInterval(songCollection.getCurrentIndex(), songCollection.getCurrentIndex());
 
@@ -204,8 +204,7 @@ public final class PlayerView {
                     player.resume();
                 }
             }
-
-            if (!buttonPlayPause.isSelected()) {
+            else {
                 buttonPlayPause.setIcon(ICON_PLAY);
 
                 if (player.isPlaying()) {

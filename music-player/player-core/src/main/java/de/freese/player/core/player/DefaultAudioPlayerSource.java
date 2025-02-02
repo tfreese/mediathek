@@ -2,51 +2,39 @@
 package de.freese.player.core.player;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.concurrent.Executors;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 
 import de.freese.player.core.exception.PlayerException;
-import de.freese.player.core.input.AudioInputStreamFactory;
 import de.freese.player.core.input.AudioSource;
 import de.freese.player.core.model.Window;
+import de.freese.player.core.util.PlayerUtils;
 
 /**
  * @author Thomas Freese
  */
-class DefaultAudioPlayerSource implements AudioPlayerSource {
+final class DefaultAudioPlayerSource implements AudioPlayerSource {
     private final AudioInputStream audioInputStream;
     private final AudioSource audioSource;
 
     private long framesRead;
 
-    DefaultAudioPlayerSource(final AudioSource audioSource) {
+    DefaultAudioPlayerSource(final AudioSource audioSource, final AudioInputStream audioInputStream) {
         super();
 
         this.audioSource = Objects.requireNonNull(audioSource, "audioSource required");
-
-        try {
-            audioInputStream = AudioInputStreamFactory.createAudioInputStream(audioSource,
-                    Executors.newVirtualThreadPerTaskExecutor(),
-                    Path.of(System.getProperty("java.io.tmpdir"), ".music-player"));
-            // audioInputStream = AudioSystem.getAudioInputStream(DefaultAudioPlayerSink.getTargetAudioFormat(),
-            //         AudioInputStreamFactory.createAudioInputStream(audioSource,
-            //                 Executors.newVirtualThreadPerTaskExecutor(),
-            //                 Path.of(System.getProperty("java.io.tmpdir"), ".music-player")));
-        }
-        catch (Exception ex) {
-            throw new PlayerException(ex);
-        }
+        this.audioInputStream = Objects.requireNonNull(audioInputStream, "audioInputStream required");
     }
 
     @Override
     public void close() {
         try {
+            framesRead = 0L;
+
             if (audioInputStream != null) {
                 audioInputStream.close();
             }
@@ -58,7 +46,28 @@ class DefaultAudioPlayerSource implements AudioPlayerSource {
 
     @Override
     public void jumpTo(final Duration duration) {
-        // TODO
+        if (duration.toMillis() >= audioSource.getDuration().toMillis()) {
+            return;
+        }
+
+        final AudioFormat audioFormat = audioInputStream.getFormat();
+
+        try {
+            // final double percent = (double) duration.toMillis() / (double) audioSource.getDuration().toMillis();
+            // final long byteIndex = (long) (Files.size(audioSource.getTmpFile()) * percent);
+
+            final long byteIndex = PlayerUtils.millisToBytes(audioFormat, duration.toMillis());
+            framesRead = PlayerUtils.milliesToFrames(audioFormat, duration.toMillis());
+
+            audioInputStream.reset();
+            audioInputStream.skip(byteIndex);
+        }
+        catch (RuntimeException ex) {
+            throw ex;
+        }
+        catch (Exception ex) {
+            throw new PlayerException(ex);
+        }
     }
 
     @Override
@@ -75,7 +84,7 @@ class DefaultAudioPlayerSource implements AudioPlayerSource {
         Window window = null;
 
         try {
-            if (audioInputStream.available() == 0L) {
+            if (framesRead >= framesTotal || audioInputStream.available() == 0L) {
                 return null;
             }
 

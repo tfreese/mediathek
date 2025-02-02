@@ -7,7 +7,8 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.LineUnavailableException;
 
 import de.freese.player.core.model.Window;
-import de.freese.player.core.player.SourceDataLinePlayer;
+import de.freese.player.core.player.AudioPlayerSink;
+import de.freese.player.core.player.DefaultAudioPlayerSink;
 import de.freese.player.core.signal.Tones;
 import de.freese.player.core.util.PlayerUtils;
 import de.freese.player.fft.config.FFTConfig;
@@ -32,13 +33,13 @@ public final class FFTDemo {
                 SIGNED, // audioFormat.getEncoding().equals(AudioFormat.Encoding.PCM_SIGNED)
                 BIG_ENDIAN);
 
-        final SourceDataLinePlayer sourceDataLinePlayer = new SourceDataLinePlayer(audioFormat);
+        final AudioPlayerSink audioPlayerSink = new DefaultAudioPlayerSink(audioFormat);
 
         final byte[] audioBytes = new Tones(Set.of(1000D, 2000D)).generate(audioFormat, 1);
         // sourceDataLinePlayer.play(audioBytes, audioBytes.length);
-        sourceDataLinePlayer.play(PlayerUtils.extractWindow(audioFormat, audioBytes, 16_000));
+        audioPlayerSink.play(PlayerUtils.extractWindow(audioFormat, audioBytes, 16_000));
 
-        sourceDataLinePlayer.close();
+        audioPlayerSink.close();
 
         final Window window = PlayerUtils.extractWindow(audioFormat, audioBytes, 4096);
         final int[] samples = window.getMergedSamples();

@@ -4,6 +4,7 @@ package de.freese.player.core.ffmpeg;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,8 @@ import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import de.freese.player.core.exception.PlayerException;
 
 /**
  * @author Thomas Freese
@@ -60,27 +63,37 @@ abstract class AbstractFF {
         return logger;
     }
 
-    protected String getVersion() throws Exception {
+    protected String getVersion() {
         addArgument("-version");
 
         final String command = createCommand();
         final ProcessBuilder processBuilder = createProcessBuilder(command);
         processBuilder.redirectErrorStream(true);
 
-        final Process process = processBuilder.start();
-        final List<String> output;
+        try {
+            final Process process = processBuilder.start();
+            final List<String> output;
 
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) {
-            output = br.lines().toList();
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) {
+                output = br.lines().toList();
+            }
+
+            final int exitValue = process.waitFor();
+
+            if (exitValue != 0) {
+                throw new PlayerException("command: " + command + System.lineSeparator() + String.join(System.lineSeparator(), output));
+            }
+
+            return output.getFirst();
         }
-
-        final int exitValue = process.waitFor();
-
-        if (exitValue != 0) {
-            throw new IOException("command: " + command + System.lineSeparator() + String.join(System.lineSeparator(), output));
+        catch (IOException ex) {
+            throw new UncheckedIOException(ex);
         }
-
-        return output.getFirst();
+        catch (RuntimeException ex) {
+            throw ex;
+        }
+        catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
-
 }

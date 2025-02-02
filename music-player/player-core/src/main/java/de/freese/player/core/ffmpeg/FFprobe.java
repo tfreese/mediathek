@@ -9,7 +9,7 @@ import de.freese.player.core.input.AudioSource;
  * @author Thomas Freese
  */
 public interface FFprobe {
-    AudioSource getMetaData(URI uri) throws Exception;
+    AudioSource getMetaData(URI uri);
 
-    String getVersion() throws Exception;
+    String getVersion();
 }

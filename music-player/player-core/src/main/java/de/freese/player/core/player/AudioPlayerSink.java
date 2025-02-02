@@ -84,4 +84,6 @@ public interface AudioPlayerSink {
     }
 
     void play(final byte[] audioData, final int length);
+
+    void stop();
 }
