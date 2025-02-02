@@ -29,14 +29,12 @@ import de.freese.player.core.model.Window;
  */
 public final class DefaultPlayer implements Player {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultPlayer.class);
-
-    private final AudioPlayerSink audioPlayerSink;
     private final DspChain dspChain = new DspChain();
     private final ExecutorService executorService;
     private final AtomicBoolean playing = new AtomicBoolean(false);
     private final List<Consumer<AudioSource>> songFinishedListener = new ArrayList<>();
     private final Path tempDir;
-
+    private AudioPlayerSink audioPlayerSink;
     private AudioPlayerSource audioPlayerSource;
     private AudioSource audioSource;
 
@@ -49,8 +47,6 @@ public final class DefaultPlayer implements Player {
 
         this.executorService = Objects.requireNonNull(executorService, "executorService required");
         this.tempDir = Objects.requireNonNull(tempDir, "tempDir required");
-
-        audioPlayerSink = new DefaultAudioPlayerSink(DefaultAudioPlayerSink.getTargetAudioFormat());
     }
 
     @Override
@@ -65,7 +61,16 @@ public final class DefaultPlayer implements Player {
 
     @Override
     public void configureVolumeControl(final Consumer<FloatControl> consumer) {
+        if (audioPlayerSink == null) {
+            return;
+        }
+
         audioPlayerSink.configureVolumeControl(consumer);
+    }
+
+    @Override
+    public AudioSource getAudioSource() {
+        return audioSource;
     }
 
     @Override
@@ -88,7 +93,7 @@ public final class DefaultPlayer implements Player {
             return;
         }
 
-        LOGGER.debug("pause: {}", audioSource);
+        LOGGER.debug("pause: {}", getAudioSource());
 
         playing.set(false);
     }
@@ -99,10 +104,13 @@ public final class DefaultPlayer implements Player {
             return;
         }
 
-        LOGGER.debug("play: {}", audioSource);
+        LOGGER.debug("play: {}", getAudioSource());
 
         executorService.execute(() -> {
                     playing.set(true);
+
+                    audioPlayerSink = new DefaultAudioPlayerSink(audioPlayerSource.getAudioFormat());
+                    audioPlayerSink.configureVolumeControl(volumeControl -> volumeControl.setValue(volumeControl.getMaximum()));
 
                     try {
                         while (playing.get()) {
@@ -137,13 +145,15 @@ public final class DefaultPlayer implements Player {
 
                         // throw new PlayerException(ex);
                     }
+
+                    LOGGER.debug("exiting play task: {}", getAudioSource());
                 }
         );
     }
 
     @Override
     public void resume() {
-        LOGGER.debug("resume: {}", audioSource);
+        LOGGER.debug("resume: {}", getAudioSource());
 
         play();
     }
@@ -154,13 +164,17 @@ public final class DefaultPlayer implements Player {
             throw new PlayerException("Stop player before set new AudioSource");
         }
 
-        if (this.audioSource != null && this.audioSource.equals(audioSource)) {
+        if (getAudioSource() != null && getAudioSource().equals(audioSource)) {
             return;
         }
 
         if (this.audioPlayerSource != null) {
             this.audioPlayerSource.close();
             dspChain.reset();
+        }
+
+        if (audioPlayerSink != null) {
+            audioPlayerSink.close();
         }
 
         this.audioSource = Objects.requireNonNull(audioSource, "audioSource required");
@@ -193,18 +207,20 @@ public final class DefaultPlayer implements Player {
 
     @Override
     public void stop() {
-        LOGGER.debug("stop: {}", audioSource);
+        LOGGER.debug("stop: {}", getAudioSource());
 
         playing.set(false);
 
-        audioPlayerSink.stop();
+        if (audioPlayerSink != null) {
+            audioPlayerSink.stop();
+        }
 
         dspChain.reset();
     }
 
     private void fireSongFinished() {
-        LOGGER.debug("fire songFinished: {}", audioSource);
+        LOGGER.debug("fire songFinished: {}", getAudioSource());
 
-        songFinishedListener.forEach(consumer -> consumer.accept(audioSource));
+        songFinishedListener.forEach(consumer -> consumer.accept(getAudioSource()));
     }
 }

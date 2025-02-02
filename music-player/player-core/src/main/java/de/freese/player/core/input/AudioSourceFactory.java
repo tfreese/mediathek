@@ -10,11 +10,11 @@ import de.freese.player.core.ffmpeg.FFLocator;
  * @author Thomas Freese
  */
 public final class AudioSourceFactory {
-    public static AudioSource createAudioSource(final URI uri) throws Exception {
+    public static AudioSource createAudioSource(final URI uri) {
         return FFLocator.createFFprobe().getMetaData(uri);
     }
 
-    public static AudioSource createAudioSource(final Path path) throws Exception {
+    public static AudioSource createAudioSource(final Path path) {
         return createAudioSource(path.toUri());
     }
 

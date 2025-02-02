@@ -189,15 +189,15 @@ public final class PlayerView {
             if (buttonPlayPause.isSelected()) {
                 buttonPlayPause.setIcon(ICON_PAUSE);
 
-                if (!player.isPlaying()) {
-                    // if (tableSongSollection.getSelectedRow() > -1) {
-                    //     songCollection.setCurrentIndex(tableSongSollection.getSelectedRow());
-                    // }
+                if (player.getAudioSource() == null) {
+                    if (tableSongSollection.getSelectedRow() > -1) {
+                        songCollection.setCurrentIndex(tableSongSollection.getSelectedRow());
+                    }
 
-                    // player.setAudioSource(songCollection.getCurrentAudioSource());
+                    player.setAudioSource(songCollection.getCurrentAudioSource());
                     player.play();
-                    tableSongSollection.getSelectionModel().setSelectionInterval(songCollection.getCurrentIndex(), songCollection.getCurrentIndex());
 
+                    tableSongSollection.getSelectionModel().setSelectionInterval(songCollection.getCurrentIndex(), songCollection.getCurrentIndex());
                     labelSongTimeTotal.setText(PlayerUtils.toString(songCollection.getCurrentAudioSource().getDuration()));
                 }
                 else {

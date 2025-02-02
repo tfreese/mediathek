@@ -9,8 +9,6 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.SourceDataLine;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,6 +20,8 @@ import javax.swing.WindowConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.freese.player.core.player.AudioPlayerSink;
+import de.freese.player.core.player.DefaultAudioPlayerSink;
 import de.freese.player.core.signal.DecayPulse;
 import de.freese.player.core.signal.EchoPulse;
 import de.freese.player.core.signal.FmSweep;
@@ -143,30 +143,14 @@ public final class AudioSynth {
 
         // Thread.ofPlatform().daemon().name("player-", 1).start(new Player(sourceDataLine));
         Thread.ofVirtual().name("player-", 1).start(() -> {
-            try (SourceDataLine sourceDataLine = AudioSystem.getSourceDataLine(audioFormat)) {
-                sourceDataLine.open(audioFormat);
-                sourceDataLine.start();
+            final AudioPlayerSink audioPlayerSink = new DefaultAudioPlayerSink(audioFormat);
 
-                final long startTime = System.currentTimeMillis();
+            final long startTime = System.currentTimeMillis();
+            audioPlayerSink.play(audioData, audioData.length);
+            audioPlayerSink.stop();
 
-                sourceDataLine.write(audioData, 0, audioData.length);
-                // final byte[] playBuffer = new byte[8196];
-                // int read;
-                //
-                // while ((read = audioInputStream.read(playBuffer, 0, playBuffer.length)) > 0) {
-                //     sourceDataLine.write(playBuffer, 0, read);
-                // }
-
-                sourceDataLine.drain();
-
-                final long endTime = System.currentTimeMillis() - startTime;
-                SwingUtilities.invokeLater(() -> elapsedTimeMeter.setText("Duration: %d ms".formatted(endTime)));
-
-                sourceDataLine.stop();
-            }
-            catch (Exception ex) {
-                LOGGER.error(ex.getMessage(), ex);
-            }
+            final long endTime = System.currentTimeMillis() - startTime;
+            SwingUtilities.invokeLater(() -> elapsedTimeMeter.setText("Duration: %d ms".formatted(endTime)));
         });
     }
 

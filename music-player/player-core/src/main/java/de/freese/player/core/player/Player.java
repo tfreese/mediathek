@@ -20,6 +20,8 @@ public interface Player {
 
     void configureVolumeControl(Consumer<FloatControl> consumer);
 
+    AudioSource getAudioSource();
+
     boolean isPlaying();
 
     void jumpTo(Duration duration);

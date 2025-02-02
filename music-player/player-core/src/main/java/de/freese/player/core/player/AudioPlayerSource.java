@@ -5,6 +5,7 @@ import java.net.URI;
 import java.nio.file.Path;
 import java.time.Duration;
 
+import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 
 import de.freese.player.core.exception.PlayerException;
@@ -43,6 +44,8 @@ public interface AudioPlayerSource {
     }
 
     void close();
+
+    AudioFormat getAudioFormat();
 
     void jumpTo(final Duration duration);
 

@@ -16,7 +16,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import javax.sound.sampled.LineUnavailableException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -59,17 +58,13 @@ public final class AudioPlayer {
         });
     }
 
-    private final AudioPlayerSink audioPlayerSink;
     private final List<AudioSource> audioSources = new ArrayList<>();
     private final ExecutorService executorService = Executors.newVirtualThreadPerTaskExecutor();
     private final AtomicBoolean runner = new AtomicBoolean(false);
     private Future<?> future;
 
-    private AudioPlayer() throws LineUnavailableException {
+    private AudioPlayer() {
         super();
-
-        audioPlayerSink = new DefaultAudioPlayerSink(DefaultAudioPlayerSink.getTargetAudioFormat());
-        audioPlayerSink.configureVolumeControl(volumeControl -> volumeControl.setValue(volumeControl.getMaximum()));
     }
 
     private JPanel createPlayerPanel(final AudioCodec audioCodec, final AudioPlayerSource audioPlayerSource) {
@@ -193,6 +188,9 @@ public final class AudioPlayer {
     private void play(final AudioPlayerSource audioPlayerSource) {
         future = executorService.submit(() -> {
                     runner.set(true);
+                    
+                    final AudioPlayerSink audioPlayerSink = new DefaultAudioPlayerSink(audioPlayerSource.getAudioFormat());
+                    audioPlayerSink.configureVolumeControl(volumeControl -> volumeControl.setValue(volumeControl.getMaximum()));
 
                     while (runner.get()) {
                         final Window window = audioPlayerSource.nextWindow();

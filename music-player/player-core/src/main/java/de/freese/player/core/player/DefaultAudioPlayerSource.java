@@ -35,13 +35,16 @@ final class DefaultAudioPlayerSource implements AudioPlayerSource {
         try {
             framesRead = 0L;
 
-            if (audioInputStream != null) {
-                audioInputStream.close();
-            }
+            audioInputStream.close();
         }
         catch (IOException ex) {
             throw new PlayerException(ex);
         }
+    }
+
+    @Override
+    public AudioFormat getAudioFormat() {
+        return audioInputStream.getFormat();
     }
 
     @Override
@@ -50,7 +53,7 @@ final class DefaultAudioPlayerSource implements AudioPlayerSource {
             return;
         }
 
-        final AudioFormat audioFormat = audioInputStream.getFormat();
+        final AudioFormat audioFormat = getAudioFormat();
 
         try {
             // final double percent = (double) duration.toMillis() / (double) audioSource.getDuration().toMillis();
@@ -72,7 +75,7 @@ final class DefaultAudioPlayerSource implements AudioPlayerSource {
 
     @Override
     public Window nextWindow() {
-        final AudioFormat audioFormat = audioInputStream.getFormat();
+        final AudioFormat audioFormat = getAudioFormat();
 
         final int bytesPerFrame = audioFormat.getFrameSize();
         final int framesToRead = (int) (audioFormat.getSampleRate() / 20D); // ~ 50ms
@@ -97,7 +100,7 @@ final class DefaultAudioPlayerSource implements AudioPlayerSource {
             }
             else if (bytesRead > -1) {
                 // End of Song.
-                window = Window.of(audioFormat, Arrays.copyOf(audioBytes, bytesRead), Math.max(framesRead, framesTotal), framesTotal);
+                window = Window.of(audioFormat, Arrays.copyOf(audioBytes, bytesRead), Math.min(framesRead, framesTotal), framesTotal);
             }
         }
         catch (IOException ex) {
