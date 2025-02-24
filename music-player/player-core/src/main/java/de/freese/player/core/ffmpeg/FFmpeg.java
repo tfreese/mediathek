@@ -13,7 +13,7 @@ import de.freese.player.core.input.AudioSource;
  * @author Thomas Freese
  */
 public interface FFmpeg {
-    Path encodeToWav(AudioSource audioSource, final Path tempDir);
+    Path encodeToWav(AudioSource audioSource, Path tempDir);
 
     String getVersion();
 

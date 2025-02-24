@@ -47,7 +47,7 @@ public interface AudioPlayerSource {
 
     AudioFormat getAudioFormat();
 
-    void jumpTo(final Duration duration);
+    void jumpTo(Duration duration);
 
     Window nextWindow();
 }

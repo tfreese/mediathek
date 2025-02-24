@@ -83,7 +83,7 @@ public interface AudioPlayerSink {
         play(buffer, buffer.length);
     }
 
-    void play(final byte[] audioData, final int length);
+    void play(byte[] audioData, int length);
 
     void stop();
 }

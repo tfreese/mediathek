@@ -74,7 +74,10 @@ final class DefaultFFmpeg extends AbstractFF implements FFmpeg {
         catch (RuntimeException ex) {
             throw ex;
         }
-        catch (Exception ex) {
+        catch (InterruptedException ex) {
+            // Restore interrupted state.
+            Thread.currentThread().interrupt();
+
             throw new RuntimeException(ex);
         }
     }
@@ -131,7 +134,10 @@ final class DefaultFFmpeg extends AbstractFF implements FFmpeg {
         catch (RuntimeException ex) {
             throw ex;
         }
-        catch (Exception ex) {
+        catch (InterruptedException ex) {
+            // Restore interrupted state.
+            Thread.currentThread().interrupt();
+
             throw new RuntimeException(ex);
         }
     }

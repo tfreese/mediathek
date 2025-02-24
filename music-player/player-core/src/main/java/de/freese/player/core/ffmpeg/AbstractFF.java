@@ -92,7 +92,10 @@ abstract class AbstractFF {
         catch (RuntimeException ex) {
             throw ex;
         }
-        catch (Exception ex) {
+        catch (InterruptedException ex) {
+            // Restore interrupted state.
+            Thread.currentThread().interrupt();
+
             throw new RuntimeException(ex);
         }
     }

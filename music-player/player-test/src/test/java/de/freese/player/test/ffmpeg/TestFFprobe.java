@@ -19,7 +19,7 @@ import de.freese.player.core.input.AudioSource;
 class TestFFprobe {
     @Test
     @Disabled("only for temp. test")
-    void testMetaData() throws Exception {
+    void testMetaData() {
         final Path path = Path.of("");
         final AudioSource audioSource = FFLocator.createFFprobe().getMetaData(path.toUri());
 
@@ -27,7 +27,7 @@ class TestFFprobe {
     }
 
     @Test
-    void testMetaDataAif() throws Exception {
+    void testMetaDataAif() {
         final AudioSource audioSource = FFLocator.createFFprobe().getMetaData(Path.of("..", "samples", "sample.aif").toUri());
 
         assertNotNull(audioSource);
@@ -39,7 +39,7 @@ class TestFFprobe {
     }
 
     @Test
-    void testMetaDataAu() throws Exception {
+    void testMetaDataAu() {
         final AudioSource audioSource = FFLocator.createFFprobe().getMetaData(Path.of("..", "samples", "sample.au").toUri());
 
         assertNotNull(audioSource);
@@ -51,7 +51,7 @@ class TestFFprobe {
     }
 
     @Test
-    void testMetaDataFlac() throws Exception {
+    void testMetaDataFlac() {
         final AudioSource audioSource = FFLocator.createFFprobe().getMetaData(Path.of("..", "samples", "sample.flac").toUri());
 
         assertNotNull(audioSource);
@@ -63,7 +63,7 @@ class TestFFprobe {
     }
 
     @Test
-    void testMetaDataM4a() throws Exception {
+    void testMetaDataM4a() {
         final AudioSource audioSource = FFLocator.createFFprobe().getMetaData(Path.of("..", "samples", "sample.m4a").toUri());
 
         assertNotNull(audioSource);
@@ -79,7 +79,7 @@ class TestFFprobe {
     }
 
     @Test
-    void testMetaDataM4b() throws Exception {
+    void testMetaDataM4b() {
         final AudioSource audioSource = FFLocator.createFFprobe().getMetaData(Path.of("..", "samples", "sample.m4b").toUri());
 
         assertNotNull(audioSource);
@@ -95,7 +95,7 @@ class TestFFprobe {
     }
 
     @Test
-    void testMetaDataMp3() throws Exception {
+    void testMetaDataMp3() {
         final AudioSource audioSource = FFLocator.createFFprobe().getMetaData(Path.of("..", "samples", "sample.mp3").toUri());
 
         assertNotNull(audioSource);
@@ -107,7 +107,7 @@ class TestFFprobe {
     }
 
     @Test
-    void testMetaDataOgg() throws Exception {
+    void testMetaDataOgg() {
         final AudioSource audioSource = FFLocator.createFFprobe().getMetaData(Path.of("..", "samples", "sample.ogg").toUri());
 
         assertNotNull(audioSource);
@@ -120,7 +120,7 @@ class TestFFprobe {
     }
 
     @Test
-    void testMetaDataWav() throws Exception {
+    void testMetaDataWav() {
         final AudioSource audioSource = FFLocator.createFFprobe().getMetaData(Path.of("..", "samples", "sample.wav").toUri());
 
         assertNotNull(audioSource);
@@ -132,7 +132,7 @@ class TestFFprobe {
     }
 
     @Test
-    void testMetaDataWma() throws Exception {
+    void testMetaDataWma() {
         final AudioSource audioSource = FFLocator.createFFprobe().getMetaData(Path.of("..", "samples", "sample.wma").toUri());
 
         assertNotNull(audioSource);

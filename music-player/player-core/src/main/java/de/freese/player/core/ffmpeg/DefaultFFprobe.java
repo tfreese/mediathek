@@ -380,7 +380,10 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
         catch (RuntimeException ex) {
             throw ex;
         }
-        catch (Exception ex) {
+        catch (InterruptedException ex) {
+            // Restore interrupted state.
+            Thread.currentThread().interrupt();
+
             throw new RuntimeException(ex);
         }
     }
