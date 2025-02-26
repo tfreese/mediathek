@@ -20,10 +20,6 @@ subprojects {
     apply plugin: "io.spring.dependency-management"
     apply plugin: "de.freese.gradle.java.conventions"
 
-    configurations.configureEach {
-        exclude group: "ch.qos.logback", module: "logback-classic"
-    }
-
     dependencyManagement {
         imports {
             mavenBom("org.springframework.boot:spring-boot-dependencies:$version_springBoot")
@@ -41,6 +37,10 @@ subprojects {
     }
 
     pluginManager.withPlugin("java") {
+        configurations.configureEach {
+            exclude(group: "ch.qos.logback", module: "logback-classic")
+        }
+
         dependencies {
             testImplementation("org.junit.jupiter:junit-jupiter")
 
