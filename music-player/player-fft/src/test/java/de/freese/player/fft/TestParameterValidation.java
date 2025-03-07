@@ -21,7 +21,7 @@ class TestParameterValidation {
     private static Path audioFile;
 
     @BeforeAll
-    public static void beforeAll() throws URISyntaxException {
+    static void beforeAll() throws URISyntaxException {
         audioFile = Path.of(Thread.currentThread().getContextClassLoader().getResource("600hz-tone-3secs-mono.wav").toURI());
     }
 

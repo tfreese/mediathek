@@ -24,7 +24,7 @@ class TestWindowExtraction {
     private static int[] exampleWave;
 
     @BeforeAll
-    public static void createExampleWave() {
+    static void createExampleWave() {
         exampleWave = new int[32];
         Arrays.fill(exampleWave, 32768);
     }

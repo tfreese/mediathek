@@ -34,7 +34,7 @@ class TestSpectrumStream {
     private static Path stereo600Hz500MsWAV;
 
     @BeforeAll
-    public static void createPaths() throws Exception {
+    static void createPaths() throws Exception {
         mono600Hz3SecsWav = getPath("600hz-tone-3secs-mono.wav");
         stereo600Hz500MsWAV = getPath("600hz-tone-500ms-stereo.wav");
         mono500Hz3SecsWav = getPath("500hz-tone-3secs-mono.wav");

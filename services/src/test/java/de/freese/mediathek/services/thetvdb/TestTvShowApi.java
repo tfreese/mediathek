@@ -20,7 +20,7 @@ class TestTvShowApi {
     private static TVService service;
 
     @BeforeAll
-    public static void beforeClass() throws Exception {
+    static void beforeClass() throws Exception {
         service = new TVService(Settings.getTvDbApiKey());
         service.afterPropertiesSet();
     }
