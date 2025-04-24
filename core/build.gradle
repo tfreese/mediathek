@@ -1,13 +1,13 @@
 plugins {
     // apply plugin: "application"
-    id "java-library"
+    id("java-library")
 }
 
 description = "Base-Project for Media-Access"
 
 dependencies {
     api("org.springframework.boot:spring-boot-starter-jdbc") {
-//            exclude group: "ch.qos.logback", module: "logback-classic"
+        // exclude(group: "ch.qos.logback", module: "logback-classic")
     }
     api("org.xerial:sqlite-jdbc")
 

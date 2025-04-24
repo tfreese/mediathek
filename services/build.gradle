@@ -1,5 +1,5 @@
 plugins {
-    id "java-library"
+    id("java-library")
 }
 
 description = "API for Online-Media-Databases(www.themoviedb.org, www.thetvdb.com)"
