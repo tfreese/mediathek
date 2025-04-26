@@ -26,7 +26,10 @@ ext {
 //
 //     applicationDefaultJvmArgs = ["-Xms1024m", "-Xmx2048m"]
 // }
-//
+// run {
+//     jvmArgs = ["--enable-native-access=ALL-UNNAMED"]
+// }
+
 // distTar {
 //     enabled = false
 // }
@@ -40,14 +43,15 @@ ext {
 //     }
 // }
 
+// Start: gradle runMultimediaReporter
 tasks.register("runMultimediaReporter", JavaExec) {
     group = "MyTasks"
     description = "Run the main class with JavaExecTask"
 
-    // executable = "…/java.exe"
+    // executable = ".../java.exe"
     // workingDir = workDir
     // args = ["...","..."]
-    // jvmArgs( "myArgument")
+    jvmArgs("--enable-native-access=ALL-UNNAMED")
     // debugOptions {
     //     enabled = true
     //     port = 5566
@@ -59,4 +63,22 @@ tasks.register("runMultimediaReporter", JavaExec) {
     // classpath = configurations.runtimeClasspath // Doesn't contain Main-Class !
     classpath = sourceSets.main.runtimeClasspath
     mainClass = project.main
+
+    // args("-Dspring.profiles.active=file")
+    // environment("spring.profiles.active", "file")
 }
+
+// Start: gradle bootRun --args="--spring.profiles.active=file"
+// The archive name. If the name has not been explicitly set, the pattern for the name is:
+// [archiveBaseName]-[archiveAppendix]-[archiveVersion]-[archiveClassifier].[archiveExtension]
+// archiveFileName = "my-boot.jar"
+// springBoot {
+//     mainClass = project.main
+// }
+
+// gradle bootRun --args="--spring.profiles.active=file --server.port=65111"
+// bootRun {
+//     args = [
+//             "--enable-native-access=ALL-UNNAMED"
+//     ]
+// }
