@@ -7,6 +7,7 @@ echo "Musik Reports"
 BASEDIR="$(dirname "$0")" # Script directory
 cd "$BASEDIR" || exit
 
-../gradlew --quiet :core:runMultimediaReporter
+#../gradlew --quiet :core:runMultimediaReporter
+gradle --quiet :core:runMultimediaReporter
 
 cd ~ || exit
