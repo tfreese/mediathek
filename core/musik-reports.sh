@@ -8,6 +8,6 @@ BASEDIR="$(dirname "$0")" # Script directory
 cd "$BASEDIR" || exit
 
 #../gradlew --quiet :core:runMultimediaReporter
-gradle --quiet :core:runMultimediaReporter
+gradle --quiet :core:build :core:runMultimediaReporter
 
 cd ~ || exit
