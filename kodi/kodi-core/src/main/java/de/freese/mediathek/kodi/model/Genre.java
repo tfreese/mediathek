@@ -15,7 +15,7 @@ public final class Genre extends AbstractModel {
         if (!(o instanceof final Genre genre)) {
             return false;
         }
-        
+
         if (!super.equals(o)) {
             return false;
         }
@@ -24,11 +24,11 @@ public final class Genre extends AbstractModel {
     }
 
     public int getAnzahlFilme() {
-        return this.anzahlFilme;
+        return anzahlFilme;
     }
 
     public int getAnzahlSerien() {
-        return this.anzahlSerien;
+        return anzahlSerien;
     }
 
     @Override

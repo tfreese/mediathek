@@ -68,7 +68,7 @@ public final class Complex {
      * @return The quotient.
      */
     public Complex divide(final double n) {
-        return new Complex(this.re / n, this.im / n);
+        return new Complex(re / n, im / n);
     }
 
     /**

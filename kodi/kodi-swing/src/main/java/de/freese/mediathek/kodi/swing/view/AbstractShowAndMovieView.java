@@ -64,13 +64,13 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView {
     }
 
     public T getSelected() {
-        final int viewRow = this.table.getSelectedRow();
+        final int viewRow = table.getSelectedRow();
 
         if (viewRow < 0) {
             return null;
         }
 
-        final int modelRow = this.table.convertRowIndexToModel(viewRow);
+        final int modelRow = table.convertRowIndexToModel(viewRow);
 
         return getTableModel().getObjectAt(modelRow);
     }
@@ -101,13 +101,13 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView {
         final JTextField textFieldFilter = new JTextField();
         leftPanel.add(textFieldFilter, GbcBuilder.of(1, 0).fillHorizontal());
 
-        this.table = new JTable();
-        this.table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        initTable(this.table, textFieldFilter);
-        this.table.getColumnModel().getColumn(0).setMinWidth(30);
-        this.table.getColumnModel().getColumn(0).setMaxWidth(50);
+        table = new JTable();
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        initTable(table, textFieldFilter);
+        table.getColumnModel().getColumn(0).setMinWidth(30);
+        table.getColumnModel().getColumn(0).setMaxWidth(50);
 
-        final JScrollPane scrollPane = new JScrollPane(this.table);
+        final JScrollPane scrollPane = new JScrollPane(table);
 
         leftPanel.add(scrollPane, GbcBuilder.of(0, 1).gridWidth(2).fillBoth());
         splitPane.setLeftComponent(leftPanel);
@@ -123,25 +123,25 @@ public abstract class AbstractShowAndMovieView<T> extends AbstractView {
 
         // Details Genres
         detailPanel.add(new JLabel(getTranslation("genres") + ":"), GbcBuilder.of(0, 0));
-        this.genreLabel = new JLabel();
-        detailPanel.add(this.genreLabel, GbcBuilder.of(1, 0));
+        genreLabel = new JLabel();
+        detailPanel.add(genreLabel, GbcBuilder.of(1, 0));
 
         // Details TvDb Id, ImDb Id
         detailPanel.add(new JLabel(getTranslation(getKeyForIdLabel()) + ":"), GbcBuilder.of(0, 1));
-        this.idLabel = new JLabel();
-        detailPanel.add(this.idLabel, GbcBuilder.of(1, 1));
+        idLabel = new JLabel();
+        detailPanel.add(idLabel, GbcBuilder.of(1, 1));
 
         // Details Image
-        this.imageLabel = new JLabel();
-        detailPanel.add(this.imageLabel, GbcBuilder.of(0, 2).gridWidth(2).weightX(1.0D).fillHorizontal().anchorCenter());
+        imageLabel = new JLabel();
+        detailPanel.add(imageLabel, GbcBuilder.of(0, 2).gridWidth(2).weightX(1.0D).fillHorizontal().anchorCenter());
 
         rightPanel.add(detailPanel, GbcBuilder.of(0, 0).weightX(1.0D).fillHorizontal());
 
         // Genres
-        this.genreButton = new JButton(getTranslation("genres.edit"));
-        this.genreButton.addActionListener(event -> getController().openGenreDialog());
-        this.genreButton.setEnabled(false);
-        rightPanel.add(this.genreButton, GbcBuilder.of(0, 1));
+        genreButton = new JButton(getTranslation("genres.edit"));
+        genreButton.addActionListener(event -> getController().openGenreDialog());
+        genreButton.setEnabled(false);
+        rightPanel.add(genreButton, GbcBuilder.of(0, 1));
 
         // Push all up.
         rightPanel.add(Box.createGlue(), GbcBuilder.of(0, 2).fillBoth());

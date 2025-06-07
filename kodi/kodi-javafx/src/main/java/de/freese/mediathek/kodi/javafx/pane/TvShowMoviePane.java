@@ -49,9 +49,9 @@ public class TvShowMoviePane<T extends Model> extends VBox {
 
         getStyleClass().addAll("vbox", "padding");
 
-        this.buttonReload = new Button(resourceBundle.getString("reload"));
-        this.buttonReload.setPrefWidth(Double.MAX_VALUE);
-        getChildren().add(this.buttonReload);
+        buttonReload = new Button(resourceBundle.getString("reload"));
+        buttonReload.setPrefWidth(Double.MAX_VALUE);
+        getChildren().add(buttonReload);
 
         final SplitPane splitPane = new SplitPane();
         splitPane.setOrientation(Orientation.HORIZONTAL);
@@ -70,29 +70,29 @@ public class TvShowMoviePane<T extends Model> extends VBox {
         gridPane.add(textField, 1, 1);
         GridPane.setHgrow(textField, Priority.ALWAYS);
 
-        this.tableView = createTableView(textField.textProperty(), resourceBundle);
-        this.tableView.setPrefHeight(10000D);
+        tableView = createTableView(textField.textProperty(), resourceBundle);
+        tableView.setPrefHeight(10000D);
 
-        gridPane.add(this.tableView, 0, 2, 2, 1);
-        // GridPane.setVgrow(this.tableView, Priority.ALWAYS);
+        gridPane.add(tableView, 0, 2, 2, 1);
+        // GridPane.setVgrow(tableView, Priority.ALWAYS);
         splitPane.getItems().add(gridPane);
 
         // Details
         gridPane = new GridPane();
         gridPane.getStyleClass().addAll("gridpane", "padding");
-        this.imageView = new ImageView();
-        this.imageView.setPreserveRatio(true);
-        gridPane.add(this.imageView, 0, 0, 2, 1);
+        imageView = new ImageView();
+        imageView.setPreserveRatio(true);
+        gridPane.add(imageView, 0, 0, 2, 1);
 
         // Genres
         gridPane.add(new Label(resourceBundle.getString("genres") + ":"), 0, 1);
-        this.labelGenres = new Label();
-        gridPane.add(this.labelGenres, 1, 1);
+        labelGenres = new Label();
+        gridPane.add(labelGenres, 1, 1);
 
         // IMDB-IDs
         gridPane.add(new Label(resourceBundle.getString("id") + ":"), 0, 2);
-        this.labelId = new Label();
-        gridPane.add(this.labelId, 1, 2);
+        labelId = new Label();
+        gridPane.add(labelId, 1, 2);
 
         final TitledPane titledPane = new TitledPane(resourceBundle.getString("details"), gridPane);
         // titledPane.setPrefHeight(10000D);
@@ -101,41 +101,41 @@ public class TvShowMoviePane<T extends Model> extends VBox {
         vBox.getStyleClass().addAll("vbox");
         vBox.getChildren().add(titledPane);
 
-        this.buttonEditGenres = new Button(resourceBundle.getString("edit_genres"));
-        VBox.setMargin(this.buttonEditGenres, new Insets(5D, 5D, 5D, 5D));
-        this.buttonEditGenres.disableProperty().bind(this.tableView.getSelectionModel().selectedItemProperty().isNull());
-        vBox.getChildren().add(this.buttonEditGenres);
+        buttonEditGenres = new Button(resourceBundle.getString("edit_genres"));
+        VBox.setMargin(buttonEditGenres, new Insets(5D, 5D, 5D, 5D));
+        buttonEditGenres.disableProperty().bind(tableView.getSelectionModel().selectedItemProperty().isNull());
+        vBox.getChildren().add(buttonEditGenres);
 
         splitPane.getItems().add(vBox);
     }
 
     public Button getButtonEditGenres() {
-        return this.buttonEditGenres;
+        return buttonEditGenres;
     }
 
     public Button getButtonReload() {
-        return this.buttonReload;
+        return buttonReload;
     }
 
     public StringProperty getGenresProperty() {
-        return this.labelGenres.textProperty();
+        return labelGenres.textProperty();
     }
 
     public StringProperty getIdProperty() {
-        return this.labelId.textProperty();
+        return labelId.textProperty();
     }
 
     public ObjectProperty<Image> getImageProperty() {
-        return this.imageView.imageProperty();
+        return imageView.imageProperty();
     }
 
     public ObservableList<T> getTableItems() {
-        // return this.tableView.getItems();
-        return this.tableList;
+        // return tableView.getItems();
+        return tableList;
     }
 
     public TableViewSelectionModel<T> getTableSelectionModel() {
-        return this.tableView.getSelectionModel();
+        return tableView.getSelectionModel();
     }
 
     @SuppressWarnings("unchecked")
@@ -163,7 +163,7 @@ public class TvShowMoviePane<T extends Model> extends VBox {
         // columnName.prefWidthProperty().bind(tw.widthProperty().subtract(columnID.getMaxWidth() + 16D));
 
         // Für Filter
-        final FilteredList<T> filteredData = new FilteredList<>(this.tableList, p -> true);
+        final FilteredList<T> filteredData = new FilteredList<>(tableList, p -> true);
 
         // Filter-Textfeld mit FilteredList verbinden.
         propertyItemFilter.addListener((observable, oldValue, newValue) -> filteredData.setPredicate(value -> {

@@ -145,13 +145,13 @@ public class GenreDialog extends JDialog {
             return Collections.emptyList();
         }
 
-        final DefaultListListModel<Genre> defaultListListModel = (DefaultListListModel<Genre>) this.listRechts.getModel();
+        final DefaultListListModel<Genre> defaultListListModel = (DefaultListListModel<Genre>) listRechts.getModel();
 
         return defaultListListModel.getStream().toList();
     }
 
     public boolean hasBeenCanceled() {
-        return this.canceled;
+        return canceled;
     }
 
     public void open(final List<Genre> links, final List<Genre> rechts) {
@@ -159,10 +159,10 @@ public class GenreDialog extends JDialog {
         panel.setLayout(new GridBagLayout());
 
         // Links
-        this.listLinks = new JList<>(new DefaultListListModel<>(links));
-        this.listLinks.setCellRenderer(new GenreListCellRenderer());
+        listLinks = new JList<>(new DefaultListListModel<>(links));
+        listLinks.setCellRenderer(new GenreListCellRenderer());
 
-        JScrollPane scrollPane = new JScrollPane(this.listLinks);
+        JScrollPane scrollPane = new JScrollPane(listLinks);
         scrollPane.setBorder(new TitledBorder("Verfügbar"));
         panel.add(scrollPane, GbcBuilder.of(0, 0).gridHeight(10).gridWidth(2).fillBoth());
 
@@ -173,9 +173,9 @@ public class GenreDialog extends JDialog {
         panel.add(button, GbcBuilder.of(2, 7).fillVertical().anchorCenter());
 
         // Rechts
-        this.listRechts = new JList<>(new DefaultListListModel<>(rechts));
-        this.listRechts.setCellRenderer(new GenreListCellRenderer());
-        scrollPane = new JScrollPane(this.listRechts);
+        listRechts = new JList<>(new DefaultListListModel<>(rechts));
+        listRechts.setCellRenderer(new GenreListCellRenderer());
+        scrollPane = new JScrollPane(listRechts);
         scrollPane.setBorder(new TitledBorder("Auswahl"));
         panel.add(scrollPane, GbcBuilder.of(3, 0).gridHeight(10).gridWidth(2).fillBoth());
 

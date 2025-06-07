@@ -30,13 +30,13 @@ public class GenreController extends AbstractController<Genre> {
     public GenreController(final ApplicationContext applicationContext, final ResourceBundle resourceBundle) {
         super(applicationContext);
 
-        this.scene = new GenrePane(resourceBundle);
+        scene = new GenrePane(resourceBundle);
 
         initialize(null, resourceBundle);
     }
 
     public GenrePane getPane() {
-        return this.scene;
+        return scene;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class GenreController extends AbstractController<Genre> {
         final ObservableList<Genre> dataList = getPane().getTableItems();
         final TableViewSelectionModel<Genre> selectionModel = getPane().getTableSelectionModel();
 
-        final Button buttonReload = this.scene.getButtonReload();
+        final Button buttonReload = scene.getButtonReload();
         buttonReload.setOnAction(event -> handleReload(dataList, selectionModel));
 
         selectionModel.selectedItemProperty().addListener(this);

@@ -3,7 +3,6 @@ package de.freese.player.ui.utils.image;
 
 import java.awt.image.BufferedImage;
 
-import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.image.ImageTranscoder;
 
@@ -19,11 +18,11 @@ public final class BufferedImageTranscoder extends ImageTranscoder {
     }
 
     public BufferedImage getBufferedImage() {
-        return this.image;
+        return image;
     }
 
     @Override
-    public void writeImage(final BufferedImage img, final TranscoderOutput output) throws TranscoderException {
+    public void writeImage(final BufferedImage img, final TranscoderOutput output) {
         this.image = img;
     }
 }

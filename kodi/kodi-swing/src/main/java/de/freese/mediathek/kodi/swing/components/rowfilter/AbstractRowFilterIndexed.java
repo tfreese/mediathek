@@ -24,9 +24,9 @@ public abstract class AbstractRowFilterIndexed extends RowFilter<Object, Object>
     public boolean include(final Entry<?, ?> value) {
         int count = value.getValueCount();
 
-        if (!this.columns.isEmpty()) {
-            for (int i = this.columns.size() - 1; i >= 0; i--) {
-                final int index = this.columns.get(i);
+        if (!columns.isEmpty()) {
+            for (int i = columns.size() - 1; i >= 0; i--) {
+                final int index = columns.get(i);
 
                 if (index < count) {
                     if (isInclude(value, index)) {

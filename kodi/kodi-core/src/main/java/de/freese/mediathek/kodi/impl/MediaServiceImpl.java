@@ -117,6 +117,6 @@ public class MediaServiceImpl implements MediaService {
     }
 
     protected MediaDao getMediaDAO() {
-        return this.mediaDAO;
+        return mediaDAO;
     }
 }

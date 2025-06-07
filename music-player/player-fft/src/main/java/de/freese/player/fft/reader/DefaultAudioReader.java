@@ -74,8 +74,8 @@ final class DefaultAudioReader implements AudioReader {
             ais = wrapTo16Bit(inputStream);
         }
 
-        this.audioInputStream = ais;
-        this.fileLength = Files.size(audioFile);
+        audioInputStream = ais;
+        fileLength = Files.size(audioFile);
         this.fftConfig = Objects.requireNonNull(fftConfig, "fftConfig required");
     }
 
@@ -83,7 +83,7 @@ final class DefaultAudioReader implements AudioReader {
         super();
 
         this.audioInputStream = Objects.requireNonNull(audioInputStream, "audioInputStream required");
-        this.fileLength = audioInputStream.available();
+        fileLength = audioInputStream.available();
         this.fftConfig = Objects.requireNonNull(fftConfig, "fftConfig required");
     }
 

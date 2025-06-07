@@ -34,11 +34,11 @@ public abstract class AbstractTvShowMovieController<T extends Model> extends Abs
     protected AbstractTvShowMovieController(final ApplicationContext applicationContext, final ResourceBundle resourceBundle) {
         super(applicationContext);
 
-        this.pane = new TvShowMoviePane<>(resourceBundle);
+        pane = new TvShowMoviePane<>(resourceBundle);
     }
 
     public TvShowMoviePane<T> getPane() {
-        return this.pane;
+        return pane;
     }
 
     @Override

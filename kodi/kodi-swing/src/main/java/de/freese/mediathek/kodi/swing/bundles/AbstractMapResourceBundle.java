@@ -22,8 +22,8 @@ public abstract class AbstractMapResourceBundle extends ResourceBundle {
 
         final Set<String> keys = new HashSet<>(lookup.keySet());
 
-        if (this.parent != null) {
-            this.parent.getKeys().asIterator().forEachRemaining(keys::add);
+        if (parent != null) {
+            parent.getKeys().asIterator().forEachRemaining(keys::add);
         }
 
         return Collections.enumeration(keys);
@@ -41,7 +41,7 @@ public abstract class AbstractMapResourceBundle extends ResourceBundle {
             throw new NullPointerException();
         }
 
-        if (this.parent != null) {
+        if (parent != null) {
             return lookup.get(key);
         }
 

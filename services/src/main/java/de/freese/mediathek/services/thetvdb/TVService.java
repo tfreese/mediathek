@@ -38,12 +38,12 @@ public class TVService extends AbstractService {
     public void afterPropertiesSet() throws Exception {
         super.afterPropertiesSet();
 
-        if (this.restTemplate == null) {
+        if (restTemplate == null) {
             final List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
             messageConverters.add(new Jaxb2RootElementHttpMessageConverter());
 
-            this.restTemplate = new RestTemplate(messageConverters);
-            // this.restTemplate.getMessageConverters().add(new Jaxb2RootElementHttpMessageConverter());
+            restTemplate = new RestTemplate(messageConverters);
+            // restTemplate.getMessageConverters().add(new Jaxb2RootElementHttpMessageConverter());
 
         }
     }
@@ -188,7 +188,7 @@ public class TVService extends AbstractService {
     }
 
     private RestTemplate getRestTemplate() {
-        return this.restTemplate;
+        return restTemplate;
     }
 
     /**

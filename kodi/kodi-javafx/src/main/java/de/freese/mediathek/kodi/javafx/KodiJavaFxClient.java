@@ -72,12 +72,12 @@ public class KodiJavaFxClient extends Application {
             profile = parameters.getFirst();
         }
 
-        // this.applicationContext = new AnnotationConfigApplicationContext(clazz);
-        this.applicationContext = new AnnotationConfigApplicationContext();
-        this.applicationContext.getEnvironment().setActiveProfiles(profile);
-        this.applicationContext.register(AppConfigMySQL.class, AppConfigHsqlDb.class, AppConfigSqLite.class);
-        this.applicationContext.refresh();
-        this.applicationContext.registerShutdownHook();
+        // applicationContext = new AnnotationConfigApplicationContext(clazz);
+        applicationContext = new AnnotationConfigApplicationContext();
+        applicationContext.getEnvironment().setActiveProfiles(profile);
+        applicationContext.register(AppConfigMySQL.class, AppConfigHsqlDb.class, AppConfigSqLite.class);
+        applicationContext.refresh();
+        applicationContext.registerShutdownHook();
     }
 
     @Override
@@ -91,7 +91,7 @@ public class KodiJavaFxClient extends Application {
 
         // Tab tab = new Tab(resourceBundle.getString("serien"));
         // FXMLLoader fxmlLoader = new FXMLLoader(ClassLoader.getSystemResource("fxml/TvShowMovie-Scene.fxml"), resourceBundle);
-        // fxmlLoader.setController(new TvShowController(this.applicationContext));
+        // fxmlLoader.setController(new TvShowController(applicationContext));
         // Pane pane = fxmlLoader.load();
         // tab.setContent(pane);
         //
@@ -104,15 +104,15 @@ public class KodiJavaFxClient extends Application {
         // tabPane.getTabs().add(tab);
         //
         Tab tab = new Tab(resourceBundle.getString("serien"));
-        tab.setContent(new TvShowController(this.applicationContext, resourceBundle).getPane());
+        tab.setContent(new TvShowController(applicationContext, resourceBundle).getPane());
         tabPane.getTabs().add(tab);
 
         tab = new Tab(resourceBundle.getString("filme"));
-        tab.setContent(new MovieController(this.applicationContext, resourceBundle).getPane());
+        tab.setContent(new MovieController(applicationContext, resourceBundle).getPane());
         tabPane.getTabs().add(tab);
 
         tab = new Tab(resourceBundle.getString("genres"));
-        tab.setContent(new GenreController(this.applicationContext, resourceBundle).getPane());
+        tab.setContent(new GenreController(applicationContext, resourceBundle).getPane());
         tabPane.getTabs().add(tab);
 
         // Scene
@@ -142,7 +142,7 @@ public class KodiJavaFxClient extends Application {
     public void stop() throws Exception {
         getLogger().info("stop");
 
-        this.applicationContext.close();
+        applicationContext.close();
 
         Platform.exit();
     }

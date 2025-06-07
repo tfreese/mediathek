@@ -41,7 +41,7 @@ public abstract class AbstractResourceCache implements ResourceCache {
     protected AbstractResourceCache() {
         super();
 
-        this.hexFormat = HexFormat.of().withUpperCase();
+        hexFormat = HexFormat.of().withUpperCase();
     }
 
     protected String generateKey(final URI uri) {

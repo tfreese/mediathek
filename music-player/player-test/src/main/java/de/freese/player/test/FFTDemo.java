@@ -26,7 +26,7 @@ public final class FFTDemo {
     private static final int SAMPLE_SIZE_IN_BITS = 16;
     private static final boolean SIGNED = true;
 
-    public static void main(final String[] args) throws LineUnavailableException {
+    public static void main(final String[] args) {
         final AudioFormat audioFormat = new AudioFormat((float) SAMPLE_RATE,
                 SAMPLE_SIZE_IN_BITS,
                 CHANNELS,

@@ -43,19 +43,19 @@ public abstract class AbstractController<T extends Model> implements Initializab
     }
 
     public ResourceCache getResourceCache() {
-        return this.resourceCache;
+        return resourceCache;
     }
 
     protected <B> B getBean(final Class<B> clazz) {
-        return this.applicationContext.getBean(clazz);
+        return applicationContext.getBean(clazz);
     }
 
     protected Executor getExecutor() {
-        return this.executor;
+        return executor;
     }
 
     protected MediaService getMediaService() {
-        return this.mediaService;
+        return mediaService;
     }
 
     protected void handleReload(final ObservableList<T> dataList, final TableViewSelectionModel<T> selectionModel) {

@@ -33,11 +33,11 @@ public class FileResourceCache extends AbstractResourceCache {
     @Override
     public void clear() {
         try {
-            if (!Files.exists(this.cacheDirectory)) {
+            if (!Files.exists(cacheDirectory)) {
                 return;
             }
 
-            Files.walkFileTree(this.cacheDirectory, new SimpleFileVisitor<>() {
+            Files.walkFileTree(cacheDirectory, new SimpleFileVisitor<>() {
                 @Override
                 public FileVisitResult postVisitDirectory(final Path dir, final IOException exc) throws IOException {
                     Files.delete(dir);
@@ -62,7 +62,7 @@ public class FileResourceCache extends AbstractResourceCache {
     public InputStream getResource(final URI uri) throws Exception {
         final String key = generateKey(uri);
 
-        Path path = this.cacheDirectory;
+        Path path = cacheDirectory;
 
         // Build Structure in the Cache-Directory.
         for (int i = 0; i < 3; i++) {

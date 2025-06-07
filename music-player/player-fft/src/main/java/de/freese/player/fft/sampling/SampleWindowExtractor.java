@@ -34,7 +34,7 @@ public final class SampleWindowExtractor {
      * Constructs a SampleWindowExtractor to take windows from an input signal for use in FFTs
      *
      * @param isStereo true if waveform is stereo, false if mono
-     * @param windowSize size of window as defined by FFT parameters (excludes zero-padding)
+     * @param windowSize size of a window as defined by FFT parameters (excludes zero-padding)
      * @param windowFunction windowing function to be applied to input signal
      * @param windowOverlap window overlap percentage
      * @param zeroPadLength number of zeroes to be appended to windowed signal
@@ -47,7 +47,7 @@ public final class SampleWindowExtractor {
         this.windowSize = windowSize;
         this.windowFunction = windowFunction;
         this.zeroPadLength = zeroPadLength;
-        this.ds = (int) Math.floor(windowSize * (1 - windowOverlap));
+        ds = (int) Math.floor(windowSize * (1 - windowOverlap));
     }
 
     /**

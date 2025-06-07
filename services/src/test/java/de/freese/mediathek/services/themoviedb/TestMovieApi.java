@@ -35,7 +35,7 @@ class TestMovieApi {
     private static MovieService movieService;
 
     @BeforeAll
-    static void beforeAll() throws Exception {
+    static void beforeAll() {
         movieService = new DefaultMovieService(Settings.getMovieDbApiKey());
         ((DefaultMovieService) movieService).afterPropertiesSet();
 

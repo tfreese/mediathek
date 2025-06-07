@@ -17,7 +17,7 @@ public final class Show extends AbstractModel {
         if (!(o instanceof final Show show)) {
             return false;
         }
-        
+
         if (!super.equals(o)) {
             return false;
         }
@@ -27,19 +27,19 @@ public final class Show extends AbstractModel {
     }
 
     public String getBanner() {
-        return this.banner;
+        return banner;
     }
 
     public String getFanArt() {
-        return this.fanArt;
+        return fanArt;
     }
 
     public String getGenres() {
-        return this.genres;
+        return genres;
     }
 
     public String getTvDbId() {
-        return this.tvDbId;
+        return tvDbId;
     }
 
     @Override

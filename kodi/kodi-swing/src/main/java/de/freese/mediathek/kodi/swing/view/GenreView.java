@@ -37,8 +37,8 @@ public class GenreView extends AbstractView {
     private JTable table;
 
     public void clear() {
-        ((DefaultListListModel<?>) this.listShows.getModel()).clear();
-        ((DefaultListListModel<?>) this.listMovies.getModel()).clear();
+        ((DefaultListListModel<?>) listShows.getModel()).clear();
+        ((DefaultListListModel<?>) listMovies.getModel()).clear();
     }
 
     public void fill(final List<Genre> data) {
@@ -65,24 +65,24 @@ public class GenreView extends AbstractView {
         splitPane.setContinuousLayout(true);
         splitPane.setDividerLocation(500);
 
-        this.table = new JTable(new GenreTableModel());
-        this.table.getColumnModel().getColumn(0).setMinWidth(160);
-        this.table.getColumnModel().getColumn(1).setMinWidth(60);
-        this.table.getColumnModel().getColumn(2).setMinWidth(60);
-        this.table.getSelectionModel().addListSelectionListener(event -> {
+        table = new JTable(new GenreTableModel());
+        table.getColumnModel().getColumn(0).setMinWidth(160);
+        table.getColumnModel().getColumn(1).setMinWidth(60);
+        table.getColumnModel().getColumn(2).setMinWidth(60);
+        table.getSelectionModel().addListSelectionListener(event -> {
             if (event.getValueIsAdjusting()) {
                 return;
             }
 
             getController().clear();
 
-            final int viewRow = this.table.getSelectedRow();
+            final int viewRow = table.getSelectedRow();
 
             if (viewRow == -1) {
                 return;
             }
 
-            final int modelRow = this.table.convertRowIndexToModel(viewRow);
+            final int modelRow = table.convertRowIndexToModel(viewRow);
 
             final Genre genre = getTableModel().getObjectAt(modelRow);
 
@@ -91,24 +91,24 @@ public class GenreView extends AbstractView {
             getLogger().debug("{}", genre);
         });
 
-        JScrollPane scrollPane = new JScrollPane(this.table);
+        JScrollPane scrollPane = new JScrollPane(table);
         splitPane.setLeftComponent(scrollPane);
 
         final JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         splitPane.setRightComponent(panel);
 
-        this.listMovies = new JList<>(new DefaultListListModel<>());
-        this.listMovies.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        this.listMovies.setCellRenderer(new MovieListCellRenderer());
-        scrollPane = new JScrollPane(this.listMovies);
+        listMovies = new JList<>(new DefaultListListModel<>());
+        listMovies.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        listMovies.setCellRenderer(new MovieListCellRenderer());
+        scrollPane = new JScrollPane(listMovies);
         scrollPane.setBorder(new TitledBorder(getTranslation("movies")));
         panel.add(scrollPane, GbcBuilder.of(0, 0).fillBoth());
 
-        this.listShows = new JList<>(new DefaultListListModel<>());
-        this.listShows.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        this.listShows.setCellRenderer(new ShowListCellRenderer());
-        scrollPane = new JScrollPane(this.listShows);
+        listShows = new JList<>(new DefaultListListModel<>());
+        listShows.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        listShows.setCellRenderer(new ShowListCellRenderer());
+        scrollPane = new JScrollPane(listShows);
         scrollPane.setBorder(new TitledBorder(getTranslation("shows")));
         panel.add(scrollPane, GbcBuilder.of(1, 0).fillBoth());
 
@@ -120,11 +120,11 @@ public class GenreView extends AbstractView {
 
     @SuppressWarnings("unchecked")
     public void setShowsAndMovies(final List<? extends Model> shows, final List<? extends Model> movies) {
-        ((DefaultListListModel<?>) this.listShows.getModel()).clear();
-        ((DefaultListListModel<?>) this.listMovies.getModel()).clear();
+        ((DefaultListListModel<?>) listShows.getModel()).clear();
+        ((DefaultListListModel<?>) listMovies.getModel()).clear();
 
-        ((DefaultListListModel) this.listShows.getModel()).addAll(shows);
-        ((DefaultListListModel) this.listMovies.getModel()).addAll(movies);
+        ((DefaultListListModel) listShows.getModel()).addAll(shows);
+        ((DefaultListListModel) listMovies.getModel()).addAll(movies);
     }
 
     @Override
@@ -133,6 +133,6 @@ public class GenreView extends AbstractView {
     }
 
     private GenreTableModel getTableModel() {
-        return (GenreTableModel) this.table.getModel();
+        return (GenreTableModel) table.getModel();
     }
 }

@@ -21,7 +21,7 @@ public class PropertyListCellFactory<T> implements Callback<ListView<T>, ListCel
 
         // Class<T> clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 
-        this.method = Objects.requireNonNull(ReflectionUtils.findMethod(clazz, methodName), "method required");
+        method = Objects.requireNonNull(ReflectionUtils.findMethod(clazz, methodName), "method required");
     }
 
     @Override

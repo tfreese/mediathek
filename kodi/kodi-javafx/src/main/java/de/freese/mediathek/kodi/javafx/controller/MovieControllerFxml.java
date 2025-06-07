@@ -20,8 +20,7 @@ package de.freese.mediathek.kodi.javafx.controller;
 // /**
 // * @author Thomas Freese
 // */
-// public class MovieControllerFXML extends AbstractMediaController<Movie>
-//{
+// public class MovieControllerFXML extends AbstractMediaController<Movie> {
 //    @FXML
 //    private Button buttonGenres = null;
 //
@@ -40,26 +39,22 @@ package de.freese.mediathek.kodi.javafx.controller;
 //    @FXML
 //    private TableView<Movie> tableView = null;
 //
-//    public MovieControllerFXML(final ApplicationContext applicationContext)
-//    {
+//    public MovieControllerFXML(final ApplicationContext applicationContext) {
 //        super(applicationContext);
 //    }
 //
 //    @Override
-//    protected Button getButtonGenres()
-//    {
-//        return this.buttonGenres;
+//    protected Button getButtonGenres() {
+//        return buttonGenres;
 //    }
 //
 //    @Override
-//    protected List<Genre> getGenres(final Movie value)
-//    {
+//    protected List<Genre> getGenres(final Movie value) {
 //        return getXbmcService().getMovieGenres(value.getPk());
 //    }
 //
 //    @Override
-//    protected String getImageURL(final Movie value)
-//    {
+//    protected String getImageURL(final Movie value) {
 //        String url = StringUtils.substringBetween(value.getPosters(), "preview=\"", "\">");
 //        url = StringUtils.replace(url, "t/p/w500", "t/p/w342"); // w92, w154, w185, w342, w500
 //
@@ -67,66 +62,57 @@ package de.freese.mediathek.kodi.javafx.controller;
 //    }
 //
 //    @Override
-//    protected ImageView getImageView()
-//    {
-//        return this.imageView;
+//    protected ImageView getImageView()  {
+//        return imageView;
 //    }
 //
 //    @Override
-//    protected TableView<Movie> getTableView()
-//    {
-//        return this.tableView;
+//    protected TableView<Movie> getTableView()  {
+//        return tableView;
 //    }
 //
 //    @FXML
-//    private void handleGenres(final ActionEvent event)
-//    {
+//    private void handleGenres(final ActionEvent event)  {
 //        handleGenres();
 //    }
 //
 //    @FXML
-//    private void handleReload(final ActionEvent event)
-//    {
+//    private void handleReload(final ActionEvent event)  {
 //        handleReload();
 //    }
 //
 //    @Override
-//    public void initialize(final URL url, final ResourceBundle rb)
-//    {
+//    public void initialize(final URL url, final ResourceBundle rb)  {
 //        super.initialize(url, rb);
 //
-//        this.idLabel.setText(rb.getString("imdb_id"));
+//        idLabel.setText(rb.getString("imdb_id"));
 //
-//        // this.genreText.textProperty().bind(Bindings.selectString(getTableView().getSelectionModel().selectedItemProperty(), "genres"));
-//        this.idText.textProperty().bind(Bindings.selectString(getTableView().getSelectionModel().selectedItemProperty(), "imdbID"));
+//        // genreText.textProperty().bind(Bindings.selectString(getTableView().getSelectionModel().selectedItemProperty(), "genres"));
+//        idText.textProperty().bind(Bindings.selectString(getTableView().getSelectionModel().selectedItemProperty(), "imdbID"));
 //    }
 //
 //    @Override
-//    protected List<Movie> load()
-//    {
+//    protected List<Movie> load() {
 //        List<Movie> movies = getXbmcService().getMovies();
 //
 //        return movies;
 //    }
 //
 //    @Override
-//    protected void updateDetails(final Movie value)
-//    {
+//    protected void updateDetails(final Movie value) {
 //        super.updateDetails(value);
 //
-//        this.genreText.setText(null);
+//        genreText.setText(null);
 //
-//        if (value != null)
-//        {
-//            this.genreText.setText(value.getGenres());
+//        if (value != null) {
+//            genreText.setText(value.getGenres());
 //        }
 //    }
 //
 //    @Override
-//    protected void updateGenres(final Movie value, final int[] genreIDs)
-//    {
+//    protected void updateGenres(final Movie value, final int[] genreIDs)  {
 //        String newGenres = getXbmcService().updateMovieGenres(value.getPk(), genreIDs);
-//        this.genreText.setText(newGenres);
+//        genreText.setText(newGenres);
 //        value.setGenres(newGenres);
 //    }
 //}

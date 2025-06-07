@@ -168,8 +168,8 @@ public final class DefaultPlayer implements Player {
             return;
         }
 
-        if (this.audioPlayerSource != null) {
-            this.audioPlayerSource.close();
+        if (audioPlayerSource != null) {
+            audioPlayerSource.close();
             dspChain.reset();
         }
 

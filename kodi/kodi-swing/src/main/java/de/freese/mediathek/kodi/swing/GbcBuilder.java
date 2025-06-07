@@ -40,37 +40,37 @@ public final class GbcBuilder extends GridBagConstraints {
     }
 
     public GbcBuilder anchorCenter() {
-        this.anchor = CENTER;
+        anchor = CENTER;
 
         return this;
     }
 
     public GbcBuilder anchorEast() {
-        this.anchor = EAST;
+        anchor = EAST;
 
         return this;
     }
 
     public GbcBuilder anchorNorth() {
-        this.anchor = NORTH;
+        anchor = NORTH;
 
         return this;
     }
 
     public GbcBuilder anchorSouth() {
-        this.anchor = SOUTH;
+        anchor = SOUTH;
 
         return this;
     }
 
     public GbcBuilder anchorWest() {
-        this.anchor = WEST;
+        anchor = WEST;
 
         return this;
     }
 
     public GbcBuilder fillBoth() {
-        this.fill = BOTH;
+        fill = BOTH;
 
         weightX(1.0D);
         weightY(1.0D);
@@ -79,7 +79,7 @@ public final class GbcBuilder extends GridBagConstraints {
     }
 
     public GbcBuilder fillHorizontal() {
-        this.fill = HORIZONTAL;
+        fill = HORIZONTAL;
 
         weightX(1.0D);
         weightY(0.0D);
@@ -88,7 +88,7 @@ public final class GbcBuilder extends GridBagConstraints {
     }
 
     public GbcBuilder fillVertical() {
-        this.fill = VERTICAL;
+        fill = VERTICAL;
 
         weightX(0.0D);
         weightY(1.0D);
@@ -109,7 +109,7 @@ public final class GbcBuilder extends GridBagConstraints {
     }
 
     public GbcBuilder insets(final int top, final int left, final int bottom, final int right) {
-        this.insets = new Insets(top, left, bottom, right);
+        insets = new Insets(top, left, bottom, right);
 
         return this;
     }

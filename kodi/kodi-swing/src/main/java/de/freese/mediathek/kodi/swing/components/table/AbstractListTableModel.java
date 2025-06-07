@@ -34,7 +34,7 @@ public abstract class AbstractListTableModel<T> extends AbstractTableModel {
             throw new IllegalArgumentException("column count < 0: " + columnCount);
         }
 
-        this.columnNames = null;
+        columnNames = null;
         this.columnCount = columnCount;
         this.list = Objects.requireNonNull(list, "list required");
     }
@@ -47,7 +47,7 @@ public abstract class AbstractListTableModel<T> extends AbstractTableModel {
         super();
 
         this.columnNames = Objects.requireNonNull(columnNames, "columnNames required");
-        this.columnCount = this.columnNames.size();
+        columnCount = this.columnNames.size();
 
         this.list = Objects.requireNonNull(list, "list required");
     }
@@ -89,7 +89,7 @@ public abstract class AbstractListTableModel<T> extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return this.columnCount;
+        return columnCount;
     }
 
     @Override
@@ -148,10 +148,10 @@ public abstract class AbstractListTableModel<T> extends AbstractTableModel {
     }
 
     protected List<String> getColumnNames() {
-        return this.columnNames;
+        return columnNames;
     }
 
     protected List<T> getList() {
-        return this.list;
+        return list;
     }
 }

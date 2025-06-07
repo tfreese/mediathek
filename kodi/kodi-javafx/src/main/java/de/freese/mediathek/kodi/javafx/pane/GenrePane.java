@@ -36,9 +36,9 @@ public class GenrePane extends VBox {
 
         getStyleClass().addAll("vbox", "padding");
 
-        this.buttonReload = new Button(resourceBundle.getString("reload"));
-        this.buttonReload.setMaxWidth(Double.MAX_VALUE);
-        getChildren().add(this.buttonReload);
+        buttonReload = new Button(resourceBundle.getString("reload"));
+        buttonReload.setMaxWidth(Double.MAX_VALUE);
+        getChildren().add(buttonReload);
 
         final SplitPane splitPane = new SplitPane();
         splitPane.setOrientation(Orientation.HORIZONTAL);
@@ -46,27 +46,27 @@ public class GenrePane extends VBox {
         splitPane.setFocusTraversable(true);
         getChildren().add(splitPane);
 
-        this.tableViewGenres = createTableViewGenres(resourceBundle);
-        splitPane.getItems().add(this.tableViewGenres);
+        tableViewGenres = createTableViewGenres(resourceBundle);
+        splitPane.getItems().add(tableViewGenres);
 
         final HBox hBox = new HBox();
 
-        this.listViewFilme = new ListView<>();
-        this.listViewFilme.setEditable(false);
-        this.listViewFilme.setCellFactory(new ModelListCellFactory());
-        this.listViewFilme.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        listViewFilme = new ListView<>();
+        listViewFilme.setEditable(false);
+        listViewFilme.setCellFactory(new ModelListCellFactory());
+        listViewFilme.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-        TitledPane titledPane = new TitledPane(resourceBundle.getString("filme"), this.listViewFilme);
+        TitledPane titledPane = new TitledPane(resourceBundle.getString("filme"), listViewFilme);
         titledPane.setPrefHeight(10000D);
         HBox.setHgrow(titledPane, Priority.ALWAYS);
         hBox.getChildren().add(titledPane);
 
-        this.listViewSerien = new ListView<>();
-        this.listViewSerien.setEditable(false);
-        this.listViewSerien.setCellFactory(new ModelListCellFactory());
-        this.listViewSerien.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        listViewSerien = new ListView<>();
+        listViewSerien.setEditable(false);
+        listViewSerien.setCellFactory(new ModelListCellFactory());
+        listViewSerien.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-        titledPane = new TitledPane(resourceBundle.getString("serien"), this.listViewSerien);
+        titledPane = new TitledPane(resourceBundle.getString("serien"), listViewSerien);
         titledPane.setPrefHeight(10000D);
         HBox.setHgrow(titledPane, Priority.ALWAYS);
         hBox.getChildren().add(titledPane);
@@ -75,23 +75,23 @@ public class GenrePane extends VBox {
     }
 
     public Button getButtonReload() {
-        return this.buttonReload;
+        return buttonReload;
     }
 
     public ObservableList<Model> getFilmeItems() {
-        return this.listViewFilme.getItems();
+        return listViewFilme.getItems();
     }
 
     public ObservableList<Model> getSerienItems() {
-        return this.listViewSerien.getItems();
+        return listViewSerien.getItems();
     }
 
     public ObservableList<Genre> getTableItems() {
-        return this.tableViewGenres.getItems();
+        return tableViewGenres.getItems();
     }
 
     public TableViewSelectionModel<Genre> getTableSelectionModel() {
-        return this.tableViewGenres.getSelectionModel();
+        return tableViewGenres.getSelectionModel();
     }
 
     private TableView<Genre> createTableViewGenres(final ResourceBundle resourceBundle) {

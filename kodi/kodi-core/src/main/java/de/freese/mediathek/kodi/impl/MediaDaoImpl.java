@@ -343,6 +343,6 @@ public class MediaDaoImpl implements MediaDao {
     }
 
     private String prependSchema(final String table) {
-        return this.schema + table;
+        return schema + table;
     }
 }

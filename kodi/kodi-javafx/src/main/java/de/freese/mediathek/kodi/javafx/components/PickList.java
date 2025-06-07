@@ -22,8 +22,8 @@ public class PickList<T extends Comparable<? super T>> extends HBox {
         getStyleClass().addAll("hbox", "padding");
         setAlignment(Pos.CENTER);
 
-        this.listViewLeft = new ListView<>();
-        this.listViewRight = new ListView<>();
+        listViewLeft = new ListView<>();
+        listViewRight = new ListView<>();
 
         final Button buttonLeftToRight = new Button(">");
         final Button buttonRightToLeft = new Button("<");
@@ -32,11 +32,11 @@ public class PickList<T extends Comparable<? super T>> extends HBox {
         vBox.setAlignment(Pos.CENTER);
         vBox.getChildren().addAll(buttonLeftToRight, buttonRightToLeft);
 
-        getChildren().add(this.listViewLeft);
+        getChildren().add(listViewLeft);
         getChildren().add(vBox);
-        getChildren().add(this.listViewRight);
+        getChildren().add(listViewRight);
 
-        buttonLeftToRight.disableProperty().bind(this.listViewLeft.getSelectionModel().selectedItemProperty().isNull());
+        buttonLeftToRight.disableProperty().bind(listViewLeft.getSelectionModel().selectedItemProperty().isNull());
         buttonLeftToRight.setOnAction(event -> {
             final ObservableList<T> listRight = PickList.this.listViewRight.getItems();
 
@@ -49,7 +49,7 @@ public class PickList<T extends Comparable<? super T>> extends HBox {
             listRight.sort(Comparable::compareTo);
         });
 
-        buttonRightToLeft.disableProperty().bind(this.listViewRight.getSelectionModel().selectedItemProperty().isNull());
+        buttonRightToLeft.disableProperty().bind(listViewRight.getSelectionModel().selectedItemProperty().isNull());
         buttonRightToLeft.setOnAction(event -> {
             final T item = PickList.this.listViewRight.getSelectionModel().getSelectedItem();
             PickList.this.listViewRight.getItems().remove(item);
@@ -57,10 +57,10 @@ public class PickList<T extends Comparable<? super T>> extends HBox {
     }
 
     public ListView<T> getListViewLeft() {
-        return this.listViewLeft;
+        return listViewLeft;
     }
 
     public ListView<T> getListViewRight() {
-        return this.listViewRight;
+        return listViewRight;
     }
 }

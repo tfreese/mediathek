@@ -41,12 +41,12 @@ public abstract class AbstractModel implements Model {
 
     @Override
     public String getName() {
-        return this.name;
+        return name;
     }
 
     @Override
     public int getPk() {
-        return this.pk;
+        return pk;
     }
 
     @Override
@@ -68,8 +68,8 @@ public abstract class AbstractModel implements Model {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getClass().getSimpleName()).append(" [");
-        builder.append("pk=").append(this.pk);
-        builder.append(", name=").append(this.name);
+        builder.append("pk=").append(pk);
+        builder.append(", name=").append(name);
         builder.append("]");
 
         return builder.toString();

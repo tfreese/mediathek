@@ -46,9 +46,9 @@ public class FormattedTableCellFactory<S, T> implements Callback<TableColumn<S, 
             }
         };
 
-        cell.setTextAlignment(this.alignment);
+        cell.setTextAlignment(alignment);
 
-        switch (this.alignment) {
+        switch (alignment) {
             case CENTER -> cell.setAlignment(Pos.CENTER);
             case RIGHT -> cell.setAlignment(Pos.CENTER_RIGHT);
             default -> cell.setAlignment(Pos.CENTER_LEFT);
@@ -58,11 +58,11 @@ public class FormattedTableCellFactory<S, T> implements Callback<TableColumn<S, 
     }
 
     public TextAlignment getAlignment() {
-        return this.alignment;
+        return alignment;
     }
 
     public Format getFormat() {
-        return this.format;
+        return format;
     }
 
     public void setAlignment(final TextAlignment alignment) {

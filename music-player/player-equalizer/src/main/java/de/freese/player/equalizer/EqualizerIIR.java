@@ -71,7 +71,7 @@ public class EqualizerIIR implements Equalizer {
 
         this.bands = bands;
         this.channels = channels;
-        this.controls = new EqualizerControls(bands);
+        controls = new EqualizerControls(bands);
 
         dataHistory = new History[bands][channels];
 

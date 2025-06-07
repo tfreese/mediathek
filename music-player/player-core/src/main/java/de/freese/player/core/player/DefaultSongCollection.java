@@ -21,11 +21,11 @@ public final class DefaultSongCollection implements SongCollection {
     private int currentIndex;
     private Duration durationTotal = Duration.ZERO;
 
-    public DefaultSongCollection addAudioSource(final URI uri) throws Exception {
+    public DefaultSongCollection addAudioSource(final URI uri) {
         return addAudioSource(AudioSourceFactory.createAudioSource(uri));
     }
 
-    public DefaultSongCollection addAudioSource(final Path path) throws Exception {
+    public DefaultSongCollection addAudioSource(final Path path) {
         return addAudioSource(AudioSourceFactory.createAudioSource(path));
     }
 

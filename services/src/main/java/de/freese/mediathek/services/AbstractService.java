@@ -34,10 +34,10 @@ public abstract class AbstractService implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        Assert.notNull(this.apiKey, "API-Key is missing");
+        Assert.notNull(apiKey, "API-Key is missing");
 
-        if (this.cache == null) {
-            this.cache = new FileResourceCache(Paths.get(System.getProperty("java.io.tmpdir"), ".javacache"));
+        if (cache == null) {
+            cache = new FileResourceCache(Paths.get(System.getProperty("java.io.tmpdir"), ".javacache"));
         }
     }
 
@@ -50,19 +50,19 @@ public abstract class AbstractService implements InitializingBean {
     }
 
     protected String getApiKey() {
-        return this.apiKey;
+        return apiKey;
     }
 
     protected ResourceCache getCache() {
-        return this.cache;
+        return cache;
     }
 
     protected Locale getLocale() {
-        return this.locale;
+        return locale;
     }
 
     protected Logger getLogger() {
-        return this.logger;
+        return logger;
     }
 
     protected String urlEncode(final String value) {

@@ -18,7 +18,7 @@ public final class DspChain implements DspProcessor {
     public void addProcessor(final DspProcessor processor) {
         Objects.requireNonNull(processor, "processor required");
 
-        this.processors.add(processor);
+        processors.add(processor);
     }
 
     @Override
@@ -39,6 +39,6 @@ public final class DspChain implements DspProcessor {
 
     @Override
     public void reset() {
-        this.processors.forEach(DspProcessor::reset);
+        processors.forEach(DspProcessor::reset);
     }
 }

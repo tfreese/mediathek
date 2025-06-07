@@ -30,31 +30,31 @@ public final class Movie extends AbstractModel {
     }
 
     public String getFanArts() {
-        return this.fanArts;
+        return fanArts;
     }
 
     public String getGenres() {
-        return this.genres;
+        return genres;
     }
 
     public String getImDbId() {
-        return this.imDbId;
+        return imDbId;
     }
 
     public String getPoster() {
-        return this.poster;
+        return poster;
     }
 
     public String getPosters() {
-        return this.posters;
+        return posters;
     }
 
     public int getSetID() {
-        return this.setID;
+        return setID;
     }
 
     public int getYear() {
-        return this.year;
+        return year;
     }
 
     @Override

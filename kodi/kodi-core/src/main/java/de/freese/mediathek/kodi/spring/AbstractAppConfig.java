@@ -104,6 +104,6 @@ public abstract class AbstractAppConfig implements EnvironmentAware {
     }
 
     protected Environment getEnvironment() {
-        return this.environment;
+        return environment;
     }
 }
