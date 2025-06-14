@@ -17,6 +17,7 @@ include "kodi:kodi-core"
 include "kodi:kodi-swing"
 include "kodi:kodi-javafx"
 
+include "music-player:jxgrabkey"
 include "music-player:player-core"
 include "music-player:player-equalizer"
 include "music-player:player-fft"

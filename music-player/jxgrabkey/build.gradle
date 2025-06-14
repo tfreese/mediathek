@@ -1,0 +1,45 @@
+plugins {
+    id("java-library")
+}
+
+dependencies {
+    api("org.slf4j:slf4j-api")
+
+    runtimeOnly("org.slf4j:slf4j-simple")
+}
+
+// test {
+//     enabled = false
+// }
+
+// gcc -dynamiclib -o build/native/libjni_demo.dylib native/JXGrabKey.cpp -I/usr/lib/jvm/default/include -I/usr/lib/jvm/default/include/linux
+// gcc -shared -fPIC -o build/native/JXGrabKey.so native/JXGrabKey.cpp -I/usr/lib/jvm/default/include -I/usr/lib/jvm/default/include/linux
+// -I = JRE-Header Files
+tasks.register("compileLibrary", Exec) {
+    group = "MyTasks"
+    description = "Compile JNI-Library"
+
+    // delete("build/native")
+    // mkdir("build/native")
+
+    workingDir("native")
+
+    inputs.dir("native")
+    outputs.dir("build/native")
+
+    // On Windows:
+    // commandLine("cmd.exe", "/d", "/c", "stop.bat")
+
+    // On Linux:
+    // commandLine("/usr/bin/gcc", "-shared", "-fPIC", "-lX11", "JXGrabKey.cpp", "-I/usr/lib/jvm/default/include", "-I/usr/lib/jvm/default/include/linux", "-o", "../build/native/JXGrabKey.so")
+    commandLine("make")
+
+    // Store the output instead of printing to the console:
+    // standardOutput = new ByteArrayOutputStream()
+    //
+    // Extension method stopTomcat.output() can be used to obtain the output:
+    // ext.output = {
+    //     return standardOutput.toString()
+    // }
+}
+processResources.finalizedBy("compileLibrary")
