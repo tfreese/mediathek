@@ -78,7 +78,7 @@ final class LineChart extends JFrame {
         // final JFreeChart chart = ChartFactory.createXYLineChart("", "Frequency", "Amplitude", data, PlotOrientation.VERTICAL, false, true, false);
         // final XYPlot plot = (XYPlot) chart.getPlot();
 
-        // Create panel
+        // Create the panel.
         final ChartPanel panel = new ChartPanel(chart);
         setContentPane(panel);
 

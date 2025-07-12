@@ -30,11 +30,11 @@ public final class NormalizedLinearScale {
     }
 
     private void computeFFTWithCustomizedParameters() {
-        // compute an FFT with customized settings
+        // Compute an FFT with customized settings.
         SpectraResult result = null;
 
         try {
-            // create FFT with normalized amplitude values
+            // Create FFT with normalized amplitude values.
             result = FFTFactory.createFull(sineWave600Hz, new FFTConfig().decibelScale(false).normalized(true));
         }
         catch (IOException ex) {
@@ -44,19 +44,19 @@ public final class NormalizedLinearScale {
             System.out.println("Invalid audio file");
         }
 
-        // print the SpectraResult to see details about the transformation and the audio file on which it was performed
+        // Print the SpectraResult to see details about the transformation and the audio file on which it was performed.
         System.out.println(result);
 
-        // get individual frames (sampling windows) from FFT
+        // Get individual frames (sampling windows) from FFT.
         System.out.println("There are " + result.length() + " spectra in this FFT, each of which was computed "
                 + "from a sampling window that was about " + Math.round(result.getWindowDurationMs()) + " milliseconds long.");
 
-        // inspect amplitudes of individual frequency in the first Spectrum
+        // Inspect amplitudes of individual frequency in the first Spectrum.
         final Frequency firstFrequency = result.getSpectrum(0).getFrequency(0);
         System.out.println("The first Frequency, located at " + Math.round(firstFrequency.getHz()) + " Hz, has a relative amplitude of "
                 + firstFrequency.getAmplitude() + ".");
 
-        final Frequency mostPowerfulFrequency = result.getSpectrum(0).getFrequency(56); // closest to 600 Hz
+        final Frequency mostPowerfulFrequency = result.getSpectrum(0).getFrequency(56); // Closest to 600 Hz.
         System.out.println("The 56th Frequency, located at " + Math.round(mostPowerfulFrequency.getHz()) + " Hz, has a relative amplitude of "
                 + mostPowerfulFrequency.getAmplitude() + " (almost maximum possible).");
     }

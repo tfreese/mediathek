@@ -94,6 +94,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
         if (line == null || line.isBlank()) {
             return null;
         }
+        
         return line.substring(line.indexOf(":") + 1).strip();
     }
 

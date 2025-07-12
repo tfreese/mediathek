@@ -21,7 +21,7 @@ public abstract class AbstractFFTObject implements Iterable<Spectrum> {
      */
     private final FFTConfig fftConfig;
     /**
-     * Duration of input audio file in milliseconds
+     * Duration of an input audio file in milliseconds
      */
     private final long fileDurationMs;
     /**
@@ -34,7 +34,7 @@ public abstract class AbstractFFTObject implements Iterable<Spectrum> {
     private final double frequencyResolution;
     /**
      * Length of each sampling window in milliseconds.<br>
-     * This is proportional to the length of each window in terms of number of samples.
+     * This is proportional to the length of each window in terms of the number of samples.
      */
     private final double windowDurationMs;
 

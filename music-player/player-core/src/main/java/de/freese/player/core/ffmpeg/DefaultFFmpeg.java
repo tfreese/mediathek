@@ -91,7 +91,7 @@ final class DefaultFFmpeg extends AbstractFF implements FFmpeg {
     public AudioInputStream toAudioStreamWav(final AudioSource audioSource) {
         addArguments(audioSource);
 
-        // Pipe the output to stdout
+        // Pipe the output to stdout.
         addArgument("pipe:1");
 
         final String command = createCommand();

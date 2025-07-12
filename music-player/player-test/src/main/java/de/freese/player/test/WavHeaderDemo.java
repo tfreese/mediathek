@@ -17,7 +17,7 @@ public final class WavHeaderDemo {
     private static final Logger LOGGER = LoggerFactory.getLogger(WavHeaderDemo.class);
 
     public static void main(final String[] args) {
-        final Path path = Path.of("music-player/samples/sample.wav");
+        final Path path = Path.of("music-player/samples/sample5s.wav");
 
         try (InputStream inputStream = path.toUri().toURL().openStream()) {
             final byte[] header = new byte[44];

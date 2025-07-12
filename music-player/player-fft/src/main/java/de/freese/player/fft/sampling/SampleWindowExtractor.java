@@ -87,7 +87,7 @@ public final class SampleWindowExtractor {
      * @return a single window extracted from full-length audio waveform
      */
     public int[] extractWindow(final int[] wave, final int i) {
-        // copy section of original waveform into sample array
+        // copy the section of original waveform into a sample array
         final int[] window = new int[windowSize + zeroPadLength];
 
         int j = i * ds * (isStereo ? 2 : 1); // index into source waveform array

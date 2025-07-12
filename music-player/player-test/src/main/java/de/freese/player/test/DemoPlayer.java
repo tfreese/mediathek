@@ -44,7 +44,7 @@ public final class DemoPlayer {
         // final URI uri = Path.of("samples/sample.m4b").toUri(); // fail
         // final URI uri = Path.of("samples/sample.mp3").toUri();
         // final URI uri = Path.of("samples/sample.ogg").toUri(); // fail
-        final URI uri = Path.of("samples/sample.wav").toUri();
+        final URI uri = Path.of("samples/sample5s.wav").toUri();
         // final URI uri = Path.of("samples/sample.wma").toUri();
 
         // try (Player player = PlayerFactory.createPlayer(uri)) {

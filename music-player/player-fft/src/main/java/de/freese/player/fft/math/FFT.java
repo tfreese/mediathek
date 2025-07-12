@@ -6,7 +6,7 @@ public final class FFT {
      * Uses a non-recursive version of the Cooley-Tukey FFT.<br>
      * Runs in O(n log n) time.<br>
      * <br>
-     * Reference:  Algorithm 1.6.1 in Computational Frameworks for the Fast Fourier Transform by Charles Van Loan.<br>
+     * Reference: Algorithm 1.6.1 in Computational Frameworks for the Fast Fourier Transform by Charles Van Loan.<br>
      * <br>
      */
     public static void fft(final Complex[] x) {

@@ -30,12 +30,11 @@ public final class UsingZeroPadding {
     }
 
     private void computeFFTWithCustomizedParameters() {
-        // compute an FFT with customized settings
+        // Compute an FFT with customized settings.
         SpectraResult result = null;
 
         try {
-            // create FFT with window sizes of 1000 and num points of 1024
-            // (each window will be padded by 1024 - 1000 = 24 zeroes)
+            // Create FFT with window sizes of 1000 and num points of 1024 (each window will be padded by 1024 - 1000 = 24 zeroes).
             result = FFTFactory.createFull(sineWave600Hz, new FFTConfig().windowSize(1000).numPoints(1024));
         }
         catch (IOException ex) {
@@ -45,19 +44,19 @@ public final class UsingZeroPadding {
             System.out.println("Invalid audio file");
         }
 
-        // print the SpectraResult to see details about the transformation and the audio file on which it was performed
+        // Print the SpectraResult to see details about the transformation and the audio file on which it was performed.
         System.out.println(result);
 
-        // get individual frames (sampling windows) from FFT
+        // gGet individual frames (sampling windows) from FFT.
         System.out.println("There are " + result.length() + " spectra in this FFT, each of which was computed from a sampling window that was about "
                 + Math.round(result.getWindowDurationMs()) + " milliseconds long.");
 
-        // inspect amplitudes of individual frequency in the first Spectrum
+        // Inspect amplitudes of individual frequency in the first Spectrum.
         final Frequency firstFrequency = result.getSpectrum(0).getFrequency(0);
         System.out.println("The first Frequency, located at " + Math.round(firstFrequency.getHz()) + " Hz, has an amplitude of "
                 + Math.round(firstFrequency.getAmplitude()) + " dB.");
 
-        final Frequency mostPowerfulFrequency = result.getSpectrum(0).getFrequency(14); // closest to 600 Hz
+        final Frequency mostPowerfulFrequency = result.getSpectrum(0).getFrequency(14); // Closest to 600 Hz.
         System.out.println("The 14th Frequency, located at " + Math.round(mostPowerfulFrequency.getHz()) + " Hz, has an amplitude of "
                 + Math.round(mostPowerfulFrequency.getAmplitude()) + " dB.");
     }

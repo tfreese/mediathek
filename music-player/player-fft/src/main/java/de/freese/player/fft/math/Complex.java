@@ -11,7 +11,7 @@ import java.util.Objects;
 public final class Complex {
     /**
      * Converts an array of values to an array of Complex values.<br>
-     * The imaginary component always 0.
+     * The imaginary part always 0.
      */
     public static Complex[] toComplex(final int[] values) {
         int length = values.length;
@@ -111,7 +111,7 @@ public final class Complex {
     }
 
     /**
-     * return angle/phase/argument, normalized to be between -pi and pi
+     * return angle/phase/argument, normalized to be between -pi and +pi
      */
     public double phase() {
         return Math.atan2(im, re);

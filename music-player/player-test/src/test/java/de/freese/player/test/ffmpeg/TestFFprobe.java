@@ -121,7 +121,7 @@ class TestFFprobe {
 
     @Test
     void testMetaDataWav() {
-        final AudioSource audioSource = FFLocator.createFFprobe().getMetaData(Path.of("..", "samples", "sample.wav").toUri());
+        final AudioSource audioSource = FFLocator.createFFprobe().getMetaData(Path.of("..", "samples", "sample5s.wav").toUri());
 
         assertNotNull(audioSource);
         assertEquals(1411, audioSource.getBitRate());

@@ -43,14 +43,14 @@ public final class FirstFFT {
             System.out.println("Invalid audio file");
         }
 
-        // print the SpectraResult to see details about the transformation and the audio file on which it was performed
+        // Print the SpectraResult to see details about the transformation and the audio file on which it was performed.
         System.out.println(result);
 
-        // get individual frames (sampling windows) from FFT
+        // Get individual frames (sampling windows) from FFT.
         System.out.println("There are " + result.length() + " spectra in this FFT, each of which was computed from a sampling window that was about "
                 + Math.round(result.getWindowDurationMs()) + " milliseconds long.");
 
-        // inspect amplitudes of individual frequency in the first Spectrum
+        // Inspect amplitudes of individual frequency in the first Spectrum.
         final Frequency firstFrequency = result.getSpectrum(0).getFrequency(0);
         System.out.println("The first Frequency, located at " + Math.round(firstFrequency.getHz()) + " Hz, has an amplitude of "
                 + Math.round(firstFrequency.getAmplitude()) + " dB.");

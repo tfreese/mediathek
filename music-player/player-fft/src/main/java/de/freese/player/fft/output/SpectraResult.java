@@ -7,11 +7,11 @@ import java.util.Objects;
 import de.freese.player.fft.reader.AudioReader;
 
 /**
- * The result of an FFT computed over entirety of audio file.
+ * The result of an FFT computed over the entirety of an audio file.
  */
 public final class SpectraResult extends AbstractFFTObject {
     /**
-     * Array containing all Spectra computed for entirety of audio file.
+     * Array containing all Spectra computed for entirety of an audio file.
      */
     private final Spectrum[] spectra;
 

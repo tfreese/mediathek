@@ -59,7 +59,7 @@ public final class ConfigValidator {
             throw new BadConfigException(String.format("Number of points in FFT must be a power of two; was set to %d", config.getNumPoints()));
         }
 
-        // // normalization without dB scale can't be on for an SpectrumStream
+        // // normalization without dB scale can't be on for a SpectrumStream
         if (isFFTStream && !config.isDecibelScale() && config.isNormalized()) {
             throw new BadConfigException("Normalization can't be used without also using dB scale for an SpectrumStream "
                     + "because it doesn't make any sense -- normalization relies on knowing the maximum amplitude across "

@@ -30,7 +30,7 @@ public final class BarSpectrumRenderer extends Component implements SpectrumRend
     // private static final long serialVersionUID = -1L;
 
     /**
-     * Translate the Coordinate-Origin from upper left to lower left.
+     * Translate the Coordinate-Origin from the upper left to the lower left.
      */
     private static void translateCoordinates(final Graphics2D g, final int height) {
         // Swap the y-Axis to above.

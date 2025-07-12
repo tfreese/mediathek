@@ -32,8 +32,8 @@ public final class FFTComputationWrapper {
      *
      * @param wave sampled values from audio waveform
      * @param startTimeMs timestamp in the original audio file at which this sample window begins
-     * @param windowDurationMs duration of sample window in milliseconds
-     * @param fileDurationMs duration of entire audio file in milliseconds
+     * @param windowDurationMs duration of a sample window in milliseconds
+     * @param fileDurationMs duration of an entire audio file in milliseconds
      * @param audioSampleRate sample rate of audio file
      * @param fftConfig parameters used for this FFT
      *
@@ -71,8 +71,8 @@ public final class FFTComputationWrapper {
 
         final double frequencyAxisIncrement = audioSampleRate / (double) wave.length;
 
-        // Copy first half of FFT results into a list of frequencies.
-        // FFT is symmetrical so any information after the halfway point is redundant.
+        // Copy the first half of FFT results into a list of frequencies.
+        // FFT is symmetrical, so any information after the halfway point is redundant.
         final Frequency[] frequencies = new Frequency[complexWave.length / 2];
 
         for (int i = 0; i < frequencies.length; i++) {

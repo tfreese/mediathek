@@ -31,7 +31,7 @@ import de.freese.player.fft.sampling.WindowFunction;
  */
 public final class SpectrumVisualizer {
     /**
-     * Wrapper for JFreeChart line graph
+     * Wrapper for JFreeChart line graph.
      */
     private static final LineChart LINE_CHART = new LineChart();
     private static final Logger LOGGER = LoggerFactory.getLogger(SpectrumVisualizer.class);
@@ -48,10 +48,11 @@ public final class SpectrumVisualizer {
         if (spectrumIterator.hasNext()) {
             final Spectrum nextSpectrum = spectrumIterator.next();
 
-            // Graph currently stored frame
+            // Graph currently stored frame.
             LINE_CHART.updateChartData(nextSpectrum);
         }
-        else { // otherwise song has ended, so end program
+        else {
+            // Otherwise song has ended, so end program.
             System.exit(0);
         }
     }
@@ -63,12 +64,12 @@ public final class SpectrumVisualizer {
 
         // final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         // song = Path.of(classLoader.getResource("600hz-tone-3secs-stereo.wav").toURI());
-        // song = Path.of("samples/sample.wav");
-        song = Path.of("samples/sample.wav");
+        // song = Path.of("samples/sample60s.wav");
+        song = Path.of("samples/sample_music.wav");
     }
 
     private void visualizeSpectrum() {
-        // Obtain SpectrumStream for song.
+        // Get SpectrumStream for song.
         try {
             spectrumStream = FFTFactory.createStream(song, new FFTConfig()
                     .windowSize(8192)
@@ -84,7 +85,7 @@ public final class SpectrumVisualizer {
 
         LOGGER.info("{}", spectrumStream);
 
-        // Start playing audio
+        // Start playing audio.
         Thread.ofVirtual().start(() -> {
             try (InputStream inputStream = new BufferedInputStream(Files.newInputStream(song))) {
                 final AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(inputStream);
@@ -102,7 +103,7 @@ public final class SpectrumVisualizer {
         final double msBetweenFFTs = spectrumStream.getWindowDurationMs() * (1D - spectrumStream.getFFTConfig().getWindowOverlap());
         final long nanoTimeBetweenFFTs = Math.round(msBetweenFFTs * Math.pow(10D, 6D));
 
-        // Begin visualization cycle
+        // Begin visualization cycle.
         final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
         executorService.scheduleAtFixedRate(SpectrumVisualizer::graphThenComputeNextFrame, 0, nanoTimeBetweenFFTs, TimeUnit.NANOSECONDS);
     }

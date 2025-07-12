@@ -13,7 +13,7 @@ public final class Frequency {
     /**
      * The amplitude of the signal at this frequency.<br>
      * For normalized FFTs, this will be a value between 0 and 1.<br>
-     * For un-normalized FFTs, this value could be arbitrarily large.
+     * For unnormalized FFTs, this value could be arbitrarily large.
      */
     private double amplitude;
 

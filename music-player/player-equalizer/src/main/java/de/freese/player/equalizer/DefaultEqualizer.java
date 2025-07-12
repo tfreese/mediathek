@@ -83,7 +83,7 @@ public final class DefaultEqualizer implements Equalizer {
             final int sampleRight = samplesRight[sampleIndex];
 
             // Volume stuff
-            // Scale down original PCM sample and add it to the filters output.
+            // Scale down the original PCM sample and add it to the filter output.
             // This substitutes the multiplication by 0.25.
             // Go back to use the floating point multiplication before the conversion to give more dynamic range.
             double resultLeft = sampleLeft * 0.25D * preampValue;

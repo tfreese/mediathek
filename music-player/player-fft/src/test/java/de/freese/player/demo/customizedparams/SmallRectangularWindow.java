@@ -31,11 +31,11 @@ public final class SmallRectangularWindow {
     }
 
     private void computeFFTWithCustomizedParameters() {
-        // compute an FFT with customized settings
+        // Compute an FFT with customized settings.
         SpectraResult result = null;
 
         try {
-            // create FFT with window size of 1024 samples and overlap of 75%
+            // Create FFT with window size of 1024 samples and overlap of 75%.
             result = FFTFactory.createFull(sineWave600Hz, new FFTConfig().windowFunction(WindowFunction.RECTANGULAR).windowSize(1024).windowOverlap(0.75));
         }
         catch (IOException ex) {
@@ -45,23 +45,23 @@ public final class SmallRectangularWindow {
             System.out.println("Invalid audio file");
         }
 
-        // print the SpectraResult to see details about the transformation and the audio file on which it was performed
+        // Print the SpectraResult to see details about the transformation and the audio file on which it was performed.
         System.out.println(result);
 
-        // get individual frames (sampling windows) from FFT
+        // Get individual frames (sampling windows) from FFT.
         System.out.println("There are " + result.length() + " spectra in this FFT, each of which was computed from a sampling window that was about "
                 + Math.round(result.getWindowDurationMs()) + " milliseconds long.");
 
-        // inspect amplitudes of individual frequency in the first Spectrum
+        // Inspect amplitudes of individual frequency in the first Spectrum.
         final Frequency firstFrequency = result.getSpectrum(0).getFrequency(0);
         System.out.println("The first Frequency, located at " + Math.round(firstFrequency.getHz()) + " Hz, has an amplitude of "
                 + Math.round(firstFrequency.getAmplitude()) + " dB.");
 
-        final Frequency mostPowerfulFrequency = result.getSpectrum(0).getFrequency(14); // closest to 600 Hz
+        final Frequency mostPowerfulFrequency = result.getSpectrum(0).getFrequency(14); // Closest to 600 Hz.
         System.out.println("The 14th Frequency, located at " + Math.round(mostPowerfulFrequency.getHz()) + " Hz, has an amplitude of "
                 + Math.round(mostPowerfulFrequency.getAmplitude()) + " dB.");
 
-        // remarks about window size's effect on frequency resolution
+        // Remarks about window size's effect on frequency resolution.
         System.out.println();
         System.out.println("Notice that the frequency resolution has worsened from the \"First FFT\" example "
                 + "because we're taking sample windows of smaller size (1024 samples instead of the default 4096).");

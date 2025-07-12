@@ -14,7 +14,7 @@ public final class FFTMath {
     /**
      * dB is a measure that compares an intensity (amplitude) to some reference intensity.<br>
      * His reference intensity should be the maximum possible intensity for any sample in the entire signal.<br>
-     * For 16-bit signed audio, this intensity is 32768.
+     * For 16-bit signed audio, this intensity is 32_768.
      */
     private static final int MAX_AMPLITUDE_INTENSITY = 32768;
 

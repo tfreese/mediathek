@@ -106,7 +106,7 @@ public final class EqualizerControls {
     }
 
     /**
-     * Setter for value of control for given band (in Db).
+     * Setter for value of control for a given band (in Db).
      */
     public void setBandDbValue(final int band, final double value) {
         // Map the gain and preamp values.
@@ -116,7 +116,7 @@ public final class EqualizerControls {
     }
 
     /**
-     * Setter for value of control for given band.
+     * Setter for value of control for a given band.
      */
     public void setBandValue(final int band, final double value) {
         bands[band] = value;

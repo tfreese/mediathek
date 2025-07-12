@@ -9,17 +9,17 @@ import de.freese.player.fft.sampling.WindowFunction;
  */
 public final class FFTConfig {
     /**
-     * If true, amplitude of frequencies will be scaled logarithmically (decibels) instead of linearly.<br>
+     * If true, the amplitude of frequencies will be scaled logarithmically (decibels) instead of linearly.<br>
      * The decibel scale describes the amplitude of a sound relative to some reference value.<br>
      * In the case of digital audio, this reference value is the maximum possible amplitude value that can be<br>
      * represented at a given bit depth. Since each value will be compared to the maximum possible, most or all<br>
      * of the dB readings will be less than 0. No sound at all is typically represented by negative infinity,<br>
-     * in this case a floor of -100 dB to avoid infinite values.<br>
+     * in this case, a floor of -100 dB to avoid infinite values.<br>
      * Therefore, if a decibel scale is used, amplitudes will be in the range [-100.0, 0.0].
      */
     private boolean decibelScale = true;
     /**
-     * If true, all frequencies amplitudes will be in the range from 0.00 to 1.00,
+     * If true, all frequency amplitudes will be in the range from 0.00 to 1.00,
      * where 1.00 represents the maximum frequency amplitude amongst all amplitudes in the file.<br>
      * If {@code useDecibelScale} is set to true, the value of {@code isNormalized} doesn't
      * matter because the decibel scale is normalized by definition.
@@ -32,12 +32,12 @@ public final class FFTConfig {
      */
     private Integer numPoints;
     /**
-     * Window function to be used for obtaining sequence of samples to be used for each FFT frame.<br>
+     * Window function to be used for getting a sequence of samples to be used for each FFT frame.<br>
      * One of: rectangular, triangular, Bartlett, Hanning, Hamming, Blackman
      */
     private WindowFunction windowFunction = WindowFunction.HANNING;
     /**
-     * Percentage of overlap between adjacent sampled windows; must be between 0 and 1.<br>
+     * The Percentage of overlap between adjacent sampled windows; must be between 0 and 1.<br>
      * Large window overlap percentages can dramatically increase the size of the FFT result
      * because more FFT frames are calculated.<br>
      * For example, if 75% overlap is used (windowOverlap = .75), there will be 4 times as many
@@ -95,9 +95,9 @@ public final class FFTConfig {
     }
 
     /**
-     * Get total length of window; returns windowSize by default, but will return numPoints of it is set.
+     * Get the total length of a window; returns windowSize by default, but will return numPoints of it is set.
      *
-     * @return total length of sampling window (including zero-padding if applied)
+     * @return total length of a sampling window (including zero-padding if applied)
      */
     public int totalWindowLength() {
         if (numPoints == null) {

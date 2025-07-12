@@ -52,7 +52,7 @@ public class EqualizerIIR implements Equalizer {
     private final IIRCoefficients[] iirCoefficients;
     /**
      * Indexes for the history arrays.
-     * These have to be kept between calls to this function hence they are static.
+     * These have to be kept between calls to this function, hence they are static.
      */
     private int i;
     private int j;
@@ -155,7 +155,7 @@ public class EqualizerIIR implements Equalizer {
             }
 
             // Volume stuff
-            // Scale down original PCM sample and add it to the filters output.
+            // Scale down the original PCM sample and add it to the filter output.
             // This substitutes the multiplication by 0.25.
             // Go back to use the floating point multiplication before the conversion to give more dynamic range.
             outLeft += pcmLeft * 0.25D;
