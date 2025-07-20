@@ -32,6 +32,7 @@ subprojects {
                 entry("batik-transcoder")
             }
 
+            dependency("net.jthink:jaudiotagger:3.0.1")
             dependency("org.jfree:jfreechart:$version_jfreechart")
         }
     }

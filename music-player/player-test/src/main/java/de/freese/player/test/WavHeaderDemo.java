@@ -23,7 +23,7 @@ public final class WavHeaderDemo {
             final byte[] header = new byte[44];
             final int bytesRead = inputStream.read(header);
 
-            if (bytesRead != 44L) {
+            if (bytesRead != header.length) {
                 throw new PlayerException("Could not read complete WAV-header from pipe. This could result in mis-aligned frames!");
             }
 
