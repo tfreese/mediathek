@@ -26,13 +26,15 @@ subprojects {
         }
 
         dependencies {
+            dependency("com.github.kwhat:jnativehook:$version_jnativehook")
+
             dependencySet(group: "org.apache.xmlgraphics", version: "$version_batik") {
                 entry("batik-codec")
                 entry("batik-swing")
                 entry("batik-transcoder")
             }
 
-            dependency("net.jthink:jaudiotagger:3.0.1")
+            dependency("net.jthink:jaudiotagger:$version_jaudiotagger")
             dependency("org.jfree:jfreechart:$version_jfreechart")
         }
     }

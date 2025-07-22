@@ -2,8 +2,6 @@
 package de.freese.player.test;
 
 import java.io.InputStream;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.nio.file.Path;
 import java.util.BitSet;
 
@@ -49,12 +47,12 @@ public final class FlacHeaderDemo {
             buffer = new byte[34];
             inputStream.read(buffer);
 
-            final ByteBuffer byteBuffer = ByteBuffer.wrap(buffer);
-            byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
-            byteBuffer.rewind();
+            // final ByteBuffer byteBuffer = ByteBuffer.wrap(buffer);
+            // byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
+            // byteBuffer.rewind();
             // byteBuffer.flip();
 
-            final BitSet bitSet = BitSet.valueOf(byteBuffer);
+            final BitSet bitSet = BitSet.valueOf(buffer);
 
             LOGGER.info("Min. Block Size u(16): {}", getUnsignedInt(bitSet.get(0, 16)));
             LOGGER.info("Max. Block Size u(16): {}", getUnsignedInt(bitSet.get(16, 32)));

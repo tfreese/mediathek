@@ -4,7 +4,6 @@ package de.freese.player.test;
 import java.util.Set;
 
 import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.LineUnavailableException;
 
 import de.freese.player.core.model.Window;
 import de.freese.player.core.player.AudioPlayerSink;
