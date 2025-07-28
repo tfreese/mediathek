@@ -9,7 +9,7 @@ import org.apache.batik.transcoder.image.ImageTranscoder;
 /**
  * @author Thomas Freese
  */
-public final class BufferedImageTranscoder extends ImageTranscoder {
+final class BufferedImageTranscoder extends ImageTranscoder {
     private BufferedImage image;
 
     @Override
@@ -17,12 +17,12 @@ public final class BufferedImageTranscoder extends ImageTranscoder {
         return new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
     }
 
-    public BufferedImage getBufferedImage() {
-        return image;
-    }
-
     @Override
     public void writeImage(final BufferedImage img, final TranscoderOutput output) {
         this.image = img;
+    }
+
+    BufferedImage getBufferedImage() {
+        return image;
     }
 }
