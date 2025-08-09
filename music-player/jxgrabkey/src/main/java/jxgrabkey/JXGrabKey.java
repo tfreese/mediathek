@@ -41,6 +41,17 @@ public final class JXGrabKey {
     private static Thread thread;
 
     /**
+     * Adds a HotkeyListener.
+     */
+    public static void addHotkeyListener(final HotkeyListener listener) {
+        if (listener == null) {
+            throw new IllegalArgumentException("listener must not be null");
+        }
+
+        JXGrabKey.LISTENERS.add(listener);
+    }
+
+    /**
      * Either gives debug messages to a HotkeyListenerDebugEnabled if registered,
      * or prints to console otherwise.
      * Does only print if debug is enabled.
@@ -121,17 +132,6 @@ public final class JXGrabKey {
         });
 
         thread.start();
-    }
-
-    /**
-     * Adds a HotkeyListener.
-     */
-    public void addHotkeyListener(final HotkeyListener listener) {
-        if (listener == null) {
-            throw new IllegalArgumentException("listener must not be null");
-        }
-
-        JXGrabKey.LISTENERS.add(listener);
     }
 
     /**

@@ -33,7 +33,7 @@ public final class X11MaskDefinitions {
     public static final int X11_MOD3_MASK = 1 << 5;
     public static final int X11_MOD4_MASK = 1 << 6;
     public static final int X11_MOD5_MASK = 1 << 7;
-    public static final int X11_SHIFT_MASK = 1 << 0;
+    public static final int X11_SHIFT_MASK = 1;
 
     /**
      * Converts an AWT mask into a X11 mask.
@@ -41,23 +41,23 @@ public final class X11MaskDefinitions {
     public static int awtMaskToX11Mask(final int awtMask) {
         int x11Mask = 0;
 
-        if ((awtMask & InputEvent.SHIFT_MASK) != 0 || (awtMask & InputEvent.SHIFT_DOWN_MASK) != 0) {
+        if ((awtMask & InputEvent.SHIFT_DOWN_MASK) != 0) {
             x11Mask |= X11MaskDefinitions.X11_SHIFT_MASK;
         }
 
-        if ((awtMask & InputEvent.ALT_MASK) != 0 || (awtMask & InputEvent.ALT_DOWN_MASK) != 0) {
+        if ((awtMask & InputEvent.ALT_DOWN_MASK) != 0) {
             x11Mask |= X11MaskDefinitions.X11_MOD1_MASK;
         }
 
-        if ((awtMask & InputEvent.CTRL_MASK) != 0 || (awtMask & InputEvent.CTRL_DOWN_MASK) != 0) {
+        if ((awtMask & InputEvent.CTRL_DOWN_MASK) != 0) {
             x11Mask |= X11MaskDefinitions.X11_CONTROL_MASK;
         }
 
-        if ((awtMask & InputEvent.META_MASK) != 0 || (awtMask & InputEvent.META_DOWN_MASK) != 0) {
+        if ((awtMask & InputEvent.META_DOWN_MASK) != 0) {
             x11Mask |= X11MaskDefinitions.X11_MOD2_MASK;
         }
 
-        if ((awtMask & InputEvent.ALT_GRAPH_MASK) != 0 || (awtMask & InputEvent.ALT_GRAPH_DOWN_MASK) != 0) {
+        if ((awtMask & InputEvent.ALT_GRAPH_DOWN_MASK) != 0) {
             x11Mask |= X11MaskDefinitions.X11_MOD5_MASK;
         }
 
