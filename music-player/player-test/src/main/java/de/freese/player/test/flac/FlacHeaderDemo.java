@@ -1,6 +1,8 @@
 // Created: 30 Sept. 2024
 package de.freese.player.test.flac;
 
+import static de.freese.player.test.Unsigned.getIntLE;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -73,6 +75,57 @@ public final class FlacHeaderDemo {
                     throw new IllegalArgumentException(":FLAC StreamInfo not valid");
                 }
             }
+            else if (mbh.getBlockType() == BlockType.VORBIS_COMMENT) {
+                // 8.6 https://www.rfc-editor.org/rfc/rfc9639.html#name-vorbis-comment
+                // VorbisCommentReader
+                if (mbh.getDataLength() == 0) {
+                    throw new IllegalArgumentException("FLAC Comment has zero data length");
+                }
+
+                final ByteBuffer byteBufferCommentHeader = ByteBuffer.allocate(mbh.getDataLength());
+                final int bytesRead = fileChannel.read(byteBufferCommentHeader);
+
+                if (bytesRead < mbh.getDataLength()) {
+                    throw new IllegalArgumentException("Unable to read required number of bytes read:" + bytesRead + ":required:" + mbh.getDataLength());
+                }
+
+                byteBufferCommentHeader.flip();
+
+                // Vendor
+                byte[] buffer = new byte[4];
+                byteBufferCommentHeader.get(buffer);
+                final int vendorStringLength = getIntLE(buffer);
+
+                buffer = new byte[vendorStringLength];
+                byteBufferCommentHeader.get(buffer);
+                LOGGER.info("Vendor: {}", new String(buffer, StandardCharsets.UTF_8));
+
+                // Number of Comments.
+                buffer = new byte[4];
+                byteBufferCommentHeader.get(buffer);
+                final int numberOfComments = getIntLE(buffer);
+                LOGGER.info("Number of Comments: {}", numberOfComments);
+
+                for (int i = 0; i < numberOfComments; i++) {
+                    // Field comments length.
+                    buffer = new byte[4];
+                    byteBufferCommentHeader.get(buffer);
+                    final int commentLength = getIntLE(buffer);
+                    LOGGER.info("Next Comment Length: {}", commentLength);
+
+                    if (commentLength > byteBufferCommentHeader.remaining()) {
+                        LOGGER.warn("Comment field length {} is larger than remaining comment header {}", commentLength, byteBufferCommentHeader.remaining());
+                    }
+
+                    buffer = new byte[commentLength];
+                    byteBufferCommentHeader.get(buffer);
+                    LOGGER.info("Next Comment: {}", new String(buffer, StandardCharsets.UTF_8));
+                }
+            }
+            // else if (mbh.getBlockType() == BlockType.PICTURE) {
+            //     // 8.8 https://www.rfc-editor.org/rfc/rfc9639.html#name-picture
+            //     // MetadataBlockDataPicture
+            // }
             else {
                 fileChannel.position(fileChannel.position() + mbh.getDataLength());
             }
