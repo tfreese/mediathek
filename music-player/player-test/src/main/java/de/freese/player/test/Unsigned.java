@@ -6,6 +6,17 @@ package de.freese.player.test;
  */
 public final class Unsigned {
     /**
+     * Return the nth Bit in the Value.
+     */
+    public static int getBit(final int value, final int n) {
+        return (value >> n) & 1;
+    }
+
+    public static boolean isBit(final int value, final int n) {
+        return getBit(value, n) == 1;
+    }
+
+    /**
      * Some values are stored as 3 byte integrals (instead of the more usual 2 or 4).
      */
     public static int readThreeByteInteger(final byte b1, final byte b2, final byte b3) {

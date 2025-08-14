@@ -1,15 +1,15 @@
 // Created: 13 Aug. 2025
 package de.freese.player.test.flac;
 
+import static de.freese.player.test.Unsigned.readThreeByteInteger;
 import static de.freese.player.test.Unsigned.toIntFromByte;
+import static de.freese.player.test.Unsigned.toIntFromShort;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.channels.FileChannel;
 import java.util.HexFormat;
 import java.util.StringJoiner;
-
-import de.freese.player.test.Unsigned;
 
 /**
  * <a href="https://www.rfc-editor.org/rfc/rfc9639.html#name-streaminfo">streaminfo</a>
@@ -47,7 +47,7 @@ public final class MetadataBlockDataStreamInfo {
             //
             // return new String(hexChars);
 
-            // Offset: 34 -16
+            // Offset: 34 - 16
             byteBuffer.position(18);
 
             final byte[] buffer = new byte[16];
@@ -122,10 +122,10 @@ public final class MetadataBlockDataStreamInfo {
 
         byteBuffer.flip();
 
-        minBlockSize = Unsigned.toIntFromShort(byteBuffer.getShort());
-        maxBlockSize = Unsigned.toIntFromShort(byteBuffer.getShort());
-        minFrameSize = Unsigned.readThreeByteInteger(byteBuffer.get(), byteBuffer.get(), byteBuffer.get());
-        maxFrameSize = Unsigned.readThreeByteInteger(byteBuffer.get(), byteBuffer.get(), byteBuffer.get());
+        minBlockSize = toIntFromShort(byteBuffer.getShort());
+        maxBlockSize = toIntFromShort(byteBuffer.getShort());
+        minFrameSize = readThreeByteInteger(byteBuffer.get(), byteBuffer.get(), byteBuffer.get());
+        maxFrameSize = readThreeByteInteger(byteBuffer.get(), byteBuffer.get(), byteBuffer.get());
         samplingRate = readSamplingRate(byteBuffer);
         noOfChannels = readNoOfChannels(byteBuffer);
         bitsPerSample = readBitsPerSample(byteBuffer);

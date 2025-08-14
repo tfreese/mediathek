@@ -1,10 +1,10 @@
 // Created: 13 Aug. 2025
 package de.freese.player.test.flac;
 
+import static de.freese.player.test.Unsigned.toIntFromInt;
+
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-
-import de.freese.player.test.Unsigned;
 
 /**
  * <a href="https://www.rfc-editor.org/rfc/rfc9639.html#name-metadata-block-header">metadata-block-header</a>
@@ -37,7 +37,7 @@ public final class MetadataBlockHeader {
     private final boolean isLastBlock;
     private final long startByte;
 
-    public MetadataBlockHeader(final long startByte, final ByteBuffer byteBuffer) {
+    private MetadataBlockHeader(final long startByte, final ByteBuffer byteBuffer) {
         super();
 
         this.startByte = startByte;
@@ -52,7 +52,7 @@ public final class MetadataBlockHeader {
             blockType = BlockType.values()[type];
 
             // 8.1 The three bytes that follow code for the size of the metadata block in bytes, excluding the 4 header bytes, as an unsigned number coded big-endian.
-            dataLength = (Unsigned.toIntFromInt(byteBuffer.get(1)) << 16) + (Unsigned.toIntFromInt(byteBuffer.get(2)) << 8) + (Unsigned.toIntFromInt(byteBuffer.get(3)));
+            dataLength = (toIntFromInt(byteBuffer.get(1)) << 16) + (toIntFromInt(byteBuffer.get(2)) << 8) + (toIntFromInt(byteBuffer.get(3)));
         }
         else {
             throw new IllegalArgumentException("Flac file has invalid block type:" + type);

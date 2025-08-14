@@ -25,10 +25,12 @@ public final class FlacHeaderDemo {
     private static final Logger LOGGER = LoggerFactory.getLogger(FlacHeaderDemo.class);
 
     static void main(final String[] args) throws Exception {
-        final AudioFile audioFile = AudioFileIO.read(Path.of("music-player/samples/sample.m4b").toFile());
-        LOGGER.info("{}", audioFile);
+        // System.out.println(Long.toBinaryString(255L));
 
         final Path path = Path.of("music-player/samples/sample.flac");
+
+        final AudioFile audioFile = AudioFileIO.read(path.toFile());
+        LOGGER.info("{}", audioFile);
 
         final FlacAudioHeader flacAudioHeader = new FlacInfoReader().read(path);
         LOGGER.info("{} - MD5={}", flacAudioHeader, flacAudioHeader.getMd5());

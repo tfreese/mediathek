@@ -11,6 +11,102 @@ Music Player.
 * http://samples.mplayerhq.hu[samples,window="_blank"]
 * https://www.tek-tips.com/viewthread.cfm?qid=1358705[reading WAV,window="_blank"]
 
+== Bit Manipulation
+
+* & (and) — performs a bitwise AND operation between two numbers, resulting in a new number where each bit is 1 if and only if both corresponding bits are 1.
+* | (or) — performs a bitwise OR operation between two numbers, resulting in a new number where each bit is 1 if either corresponding bit is 1.
+* ^ (xor) — performs a bitwise XOR operation between two numbers, resulting in a new number where each bit is 1 if and only if exactly one corresponding bit is 1.
+* ~ (not) — performs a bitwise NOT operation on a number, resulting in a new number where each bit is the opposite of its corresponding bit in the original number.
+* << (left shift) — shifts the bits of a number to the left by a specified number of positions, effectively multiplying the number by 2 to the power of the shift amount.
+* Arithmetic/signed right shift: >> is the arithmetic (or signed) right shift operator.
+* Logical/unsigned right shift: >>> is the logical (or unsigned) right shift operator.
+
+=== Show Bits from Integer
+
+[source,java]
+----
+Integer.toBinaryString(129); // 10000001
+Long.toBinaryString(255L); // 11111111
+----
+
+=== Set a Bit
+
+[source,java]
+----
+int num = 5; // 00000101
+int bitMask = 1 << 2; // 00000100
+int result = num | bitMask; // 00000101 | 00000100 = 00000101
+----
+
+=== Clear a Bit
+
+[source,java]
+----
+int num = 7; // 00000111
+int bitMask = ~(1 << 2); // 11111011
+int result = num & bitMask; // 00000111 & 11111011 = 00000101
+----
+
+=== Toggle a Bit
+
+[source,java]
+----
+int num = 6; // 00000110
+int bitMask = 1 << 2; // 00000100
+int result = num ^ bitMask; // 00000110 ^ 00000100 = 00000010
+----
+
+=== Check if a Bit is set
+
+[source,java]
+----
+int num = 5; // 00000101
+int bitMask = 1 << 2; // 00000100
+boolean isSet = (num & bitMask) != 0; // (00000101 & 00000100) != 0 => true
+----
+
+=== Bit Count
+
+[source,java]
+----
+int num = 7; // 00000111
+int count = Integer.bitCount(num); // 3
+----
+
+=== Check if a Number is Power of Two
+
+[source,java]
+----
+int num = 16; // 00010000
+boolean isPowerOfTwo = (num & (num - 1)) == 0; // true
+----
+
+=== Check if a Number is Even or Odd
+
+[source,java]
+----
+int num = 6; // 00000110
+boolean isEven = (num & 1) == 0; // true
+----
+
+=== Set All Bits to 1
+
+[source,java]
+----
+int num = 5; // 00000101
+int allOnes = ~0; // 11111111 11111111 11111111 11111111
+int result = num | allOnes; // 11111111 11111111 11111111 11111101
+----
+
+=== Convert Characters to Uppercase or Lowercase
+
+[source,java]
+----
+char c = 'a'; // lowercase 'a' in ASCII
+char upperC = (char) (c & ~32); // uppercase 'A' in ASCII or use c ^ 32
+char lowerC = (char) (c | 32); // lowercase 'a' in ASCII
+----
+
 == Misc
 
 * https://stackoverflow.com/questions/53997426/java-how-to-get-current-frequency-of-audio-input[frequency,window="_blank"]
