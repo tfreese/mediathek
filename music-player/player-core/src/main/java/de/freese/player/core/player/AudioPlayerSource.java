@@ -19,23 +19,22 @@ import de.freese.player.core.model.Window;
  */
 public interface AudioPlayerSource {
 
-    static AudioPlayerSource of(final Path path) {
-        return of(path.toUri());
+    static AudioPlayerSource of(final Path path, final Path tempDir) {
+        return of(path.toUri(), tempDir);
     }
 
-    static AudioPlayerSource of(final URI uri) {
+    static AudioPlayerSource of(final URI uri, final Path tempDir) {
         try {
-            return of(AudioSourceFactory.createAudioSource(uri));
+            return of(AudioSourceFactory.createAudioSource(uri), tempDir);
         }
         catch (Exception ex) {
             throw new PlayerException(ex);
         }
     }
 
-    static AudioPlayerSource of(final AudioSource audioSource) throws Exception {
-        final AudioInputStream audioInputStream = AudioInputStreamFactory.createAudioInputStream(audioSource, Path.of(System.getProperty("java.io.tmpdir"), ".music-player"));
+    static AudioPlayerSource of(final AudioSource audioSource, final Path tempDir) throws Exception {
+        final AudioInputStream audioInputStream = AudioInputStreamFactory.createAudioInputStream(audioSource, tempDir);
         // final AudioInputStream  audioInputStream = AudioSystem.getAudioInputStream(DefaultAudioPlayerSink.getTargetAudioFormat(),
-        //         AudioInputStreamFactory.createAudioInputStream(audioSource, Path.of(System.getProperty("java.io.tmpdir"), ".music-player")));
 
         // See Player#jumpTo
         audioInputStream.mark(Integer.MAX_VALUE);
