@@ -16,8 +16,8 @@ import de.freese.player.core.exception.PlayerException;
 public final class WavHeaderDemo {
     private static final Logger LOGGER = LoggerFactory.getLogger(WavHeaderDemo.class);
 
-    public static void main(final String[] args) {
-        final Path path = Path.of("music-player/samples/sample5s.wav");
+    static void main(final String[] args) {
+        final Path path = Path.of("music-player/samples/sample.wav");
 
         try (InputStream inputStream = path.toUri().toURL().openStream()) {
             final byte[] header = new byte[44];
@@ -27,9 +27,11 @@ public final class WavHeaderDemo {
                 throw new PlayerException("Could not read complete WAV-header from pipe. This could result in mis-aligned frames!");
             }
 
+            // https://de.wikipedia.org/wiki/RIFF_WAVE
+
             // RIFF-Section, 12 Byte
             LOGGER.info("TYPE: {}", new String(Arrays.copyOfRange(header, 0, 4)));
-            LOGGER.debug("FileSize[b]: {}", toInt(Arrays.copyOfRange(header, 4, 8), false));
+            LOGGER.info("FileSize[b]: {}", toInt(Arrays.copyOfRange(header, 4, 8), false));
             LOGGER.info("WAVE: {}", new String(Arrays.copyOfRange(header, 8, 12)));
 
             // FMT-Section, 24 Byte
@@ -67,10 +69,12 @@ public final class WavHeaderDemo {
 
     private static short toShort(final byte[] value, final boolean bigEndian) {
         if (bigEndian) {
-            return (short) (((value[0] & 0xFF) << 8) + (value[1] & 0xFF));
+            return (short) (((value[0] & 0xFF) << 8)
+                    + (value[1] & 0xFF));
         }
 
-        return (short) (((value[1] & 0xFF) << 8) + (value[0] & 0xFF));
+        return (short) (((value[1] & 0xFF) << 8)
+                + (value[0] & 0xFF));
     }
 
     private WavHeaderDemo() {

@@ -25,7 +25,7 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
  * @author Thomas Freese
  */
 public final class TestPlayer {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AudioPlayer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestPlayer.class);
 
     static void main() {
         // Redirect Java-Util-Logger to Slf4J.
