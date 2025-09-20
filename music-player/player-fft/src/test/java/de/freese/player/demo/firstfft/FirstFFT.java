@@ -14,7 +14,7 @@ import de.freese.player.fft.output.SpectraResult;
  * @author Thomas Freese
  */
 public final class FirstFFT {
-    public static void main(final String[] args) throws Exception {
+    static void main() throws Exception {
         final FirstFFT firstFFT = new FirstFFT();
 
         firstFFT.computeDefaultFFT();
@@ -36,10 +36,10 @@ public final class FirstFFT {
         try {
             result = FFTFactory.createFull(sineWave600Hz);
         }
-        catch (IOException ex) {
+        catch (IOException _) {
             System.out.println("An I/O exception occurred when opening an input stream to the audio file");
         }
-        catch (UnsupportedAudioFileException ex) {
+        catch (UnsupportedAudioFileException _) {
             System.out.println("Invalid audio file");
         }
 

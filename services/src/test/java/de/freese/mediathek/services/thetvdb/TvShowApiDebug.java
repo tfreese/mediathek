@@ -24,7 +24,7 @@ public class TvShowApiDebug {
      */
     public static final String TEST_SHOW_ID = Settings.TEST_SHOW_ID;
 
-    public static void main(final String[] args) throws Exception {
+    static void main() throws Exception {
         final TvShowApiDebug debug = new TvShowApiDebug();
         // debug.testSearch();
         // debug.testDetails();

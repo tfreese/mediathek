@@ -18,10 +18,9 @@ import de.freese.mediathek.services.Settings;
  */
 public class MovieApiDebug {
     public static final String TEST_MOVIE = Settings.TEST_MOVIE;
-
     public static final int TEST_MOVIE_ID = Settings.TEST_MOVIE_ID;
 
-    public static void main(final String[] args) throws Exception {
+    static void main() throws Exception {
         final MovieApiDebug debug = new MovieApiDebug();
         debug.testSearch();
         // debug.testDetails();
@@ -118,7 +117,7 @@ public class MovieApiDebug {
         // String result =
         // template.getForObject("https://api.themoviedb.org/3/tv/{id}/season/1?api_key={api_key}&language={lang}", String.class, "4629", getApiKey(),
         // getLocale().getLanguage());
-        
+
         // String result =
         // template.getForObject("https://api.themoviedb.org/3/movie/{id}/keywords?api_key={api_key}", String.class, TEST_MOVIE_ID, getApiKey(),
         // getLocale().getLanguage());

@@ -80,7 +80,7 @@ public final class MultimediaReporter {
         }
     }
 
-    public static void main(final String[] args) throws Exception {
+    static void main() throws Exception {
         // final MediaReporter mediaReporter = new BansheeAudioReporter();
         // final MediaReporter mediaReporter = new ClementineAudioReporter();
         // final MediaReporter mediaReporter = new KodiAudioReporter();

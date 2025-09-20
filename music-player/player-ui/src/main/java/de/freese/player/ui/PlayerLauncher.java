@@ -17,7 +17,7 @@ import de.freese.player.ui.swing.PlayerApplication;
  * @author Thomas Freese
  */
 public final class PlayerLauncher {
-    public static void main(final String[] args) {
+    static void main(final String[] args) {
         final Map<String, String> arguments = parseArguments(args);
 
         if ("swing".equals(arguments.get("-gui"))) {
@@ -66,7 +66,7 @@ public final class PlayerLauncher {
                 }
             }
         }
-        catch (NoSuchElementException ex) {
+        catch (NoSuchElementException _) {
             throw new IllegalArgumentException("required arguments: -gui [swing,javafx]");
         }
 

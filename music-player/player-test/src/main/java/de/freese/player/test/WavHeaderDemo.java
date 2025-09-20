@@ -16,7 +16,7 @@ import de.freese.player.core.exception.PlayerException;
 public final class WavHeaderDemo {
     private static final Logger LOGGER = LoggerFactory.getLogger(WavHeaderDemo.class);
 
-    static void main(final String[] args) {
+    static void main() {
         final Path path = Path.of("music-player/samples/sample.wav");
 
         try (InputStream inputStream = path.toUri().toURL().openStream()) {

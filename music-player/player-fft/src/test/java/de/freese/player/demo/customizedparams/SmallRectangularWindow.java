@@ -16,7 +16,7 @@ import de.freese.player.fft.sampling.WindowFunction;
  * @author Thomas Freese
  */
 public final class SmallRectangularWindow {
-    public static void main(final String[] args) throws Exception {
+    static void main() throws Exception {
         final SmallRectangularWindow normalizedFFT = new SmallRectangularWindow();
         normalizedFFT.computeFFTWithCustomizedParameters();
     }
@@ -38,10 +38,10 @@ public final class SmallRectangularWindow {
             // Create FFT with window size of 1024 samples and overlap of 75%.
             result = FFTFactory.createFull(sineWave600Hz, new FFTConfig().windowFunction(WindowFunction.RECTANGULAR).windowSize(1024).windowOverlap(0.75));
         }
-        catch (IOException ex) {
+        catch (IOException _) {
             System.out.println("An I/O exception occurred when opening an input stream to the audio file");
         }
-        catch (UnsupportedAudioFileException ex) {
+        catch (UnsupportedAudioFileException _) {
             System.out.println("Invalid audio file");
         }
 

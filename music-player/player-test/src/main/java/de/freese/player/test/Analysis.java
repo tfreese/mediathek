@@ -16,7 +16,7 @@ import de.freese.player.core.player.DefaultAudioPlayerSink;
  * @author Thomas Freese
  */
 public final class Analysis {
-    public static void main(final String[] args) throws Exception {
+    static void main() throws Exception {
         final Path path = Path.of("music-player/samples/sample5s.wav");
 
         try (InputStream inputStream = path.toUri().toURL().openStream();

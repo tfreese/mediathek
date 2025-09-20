@@ -15,7 +15,7 @@ import de.freese.player.fft.output.SpectraResult;
  * @author Thomas Freese
  */
 public final class NormalizedLinearScale {
-    public static void main(final String[] args) throws Exception {
+    static void main() throws Exception {
         final NormalizedLinearScale normalizedFFT = new NormalizedLinearScale();
         normalizedFFT.computeFFTWithCustomizedParameters();
     }
@@ -37,10 +37,10 @@ public final class NormalizedLinearScale {
             // Create FFT with normalized amplitude values.
             result = FFTFactory.createFull(sineWave600Hz, new FFTConfig().decibelScale(false).normalized(true));
         }
-        catch (IOException ex) {
+        catch (IOException _) {
             System.out.println("An I/O exception occurred when opening an input stream to the audio file");
         }
-        catch (UnsupportedAudioFileException ex) {
+        catch (UnsupportedAudioFileException _) {
             System.out.println("Invalid audio file");
         }
 

@@ -10,7 +10,7 @@ import de.freese.player.fft.math.FFT;
  * @author Thomas Freese
  */
 public final class FFTDemo {
-    public static void main(final String[] args) {
+    static void main() {
         final int[] values = {1, 2, 3, 4, 5, 6, 7, 8, 9};
         Complex[] c = Complex.toComplex(values);
 

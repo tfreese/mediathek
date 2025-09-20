@@ -18,7 +18,7 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
 public final class MusicPlayerFx extends Application {
     public static final Logger LOGGER = LoggerFactory.getLogger(MusicPlayerFx.class);
 
-    public static void main(final String[] args) {
+    static void main(final String[] args) {
         launch(args);
     }
 

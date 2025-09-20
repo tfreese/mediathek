@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 public final class FlacHeaderDemo {
     private static final Logger LOGGER = LoggerFactory.getLogger(FlacHeaderDemo.class);
 
-    static void main(final String[] args) throws Exception {
+    static void main() throws Exception {
         // System.out.println(Long.toBinaryString(255L));
 
         final Path path = Path.of("music-player/samples/sample.flac");

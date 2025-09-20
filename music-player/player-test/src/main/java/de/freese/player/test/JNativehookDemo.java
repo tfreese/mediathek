@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 public final class JNativehookDemo {
     private static final Logger LOGGER = LoggerFactory.getLogger(JNativehookDemo.class);
 
-    public static void main(final String[] args) {
+    static void main() {
         /* Note:
          * JNativeHook does *NOT* operate on the event dispatching thread.
          * Because Swing components must be accessed on the event dispatching

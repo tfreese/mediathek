@@ -53,7 +53,7 @@ public class KodiSwingClient {
         return frame;
     }
 
-    public static void main(final String[] args) {
+    static void main(final String[] args) {
         // To avoid Comparator Errors.
         // System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
 

@@ -15,7 +15,7 @@ import de.freese.player.fft.output.SpectraResult;
  * @author Thomas Freese
  */
 public final class UsingZeroPadding {
-    public static void main(final String[] args) throws Exception {
+    static void main() throws Exception {
         final UsingZeroPadding normalizedFFT = new UsingZeroPadding();
         normalizedFFT.computeFFTWithCustomizedParameters();
     }
@@ -37,10 +37,10 @@ public final class UsingZeroPadding {
             // Create FFT with window sizes of 1000 and num points of 1024 (each window will be padded by 1024 - 1000 = 24 zeroes).
             result = FFTFactory.createFull(sineWave600Hz, new FFTConfig().windowSize(1000).numPoints(1024));
         }
-        catch (IOException ex) {
+        catch (IOException _) {
             System.out.println("An I/O exception occurred when opening an input stream to the audio file");
         }
-        catch (UnsupportedAudioFileException ex) {
+        catch (UnsupportedAudioFileException _) {
             System.out.println("Invalid audio file");
         }
 

@@ -38,7 +38,7 @@ public final class SpectrumVisualizer {
     private static Iterator<Spectrum> spectrumIterator;
     private static SpectrumStream spectrumStream;
 
-    public static void main(final String[] args) {
+    static void main() {
         final SpectrumVisualizer visualizer = new SpectrumVisualizer();
         LINE_CHART.init();
         visualizer.visualizeSpectrum();

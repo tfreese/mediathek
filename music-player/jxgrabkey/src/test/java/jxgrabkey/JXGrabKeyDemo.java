@@ -13,7 +13,7 @@ public class JXGrabKeyDemo {
     private static final int MY_HOTKEY_INDEX = 1;
     private static boolean hotkeyEventReceived;
 
-    public static void main(final String[] args) throws Exception {
+    static void main() throws Exception {
         // Load JXGrabKey lib.
         System.load(System.getProperty("user.dir") + "/music-player/jxgrabkey/build/native/JXGrabKey.so");
 
@@ -54,7 +54,8 @@ public class JXGrabKeyDemo {
         };
 
         // Add HotkeyListener.
-        JXGrabKey.getInstance().addHotkeyListener(hotkeyListener);
+        JXGrabKey.getInstance();
+        JXGrabKey.addHotkeyListener(hotkeyListener);
 
         // Wait for Hotkey Event.
         while (!hotkeyEventReceived) {

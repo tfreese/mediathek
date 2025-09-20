@@ -7,8 +7,7 @@ import javafx.application.Application;
  * @author Thomas Freese
  */
 public final class MusicPlayerFxLauncher {
-
-    public static void main(final String[] args) {
+    static void main() {
         // Avoid Warnings at JavaFx-Bindings.
         // Logging.getLogger().setLevel(Level.SEVERE);
         System.setProperty("org.slf4j.simpleLogger.log.de.freese.player", "DEBUG");

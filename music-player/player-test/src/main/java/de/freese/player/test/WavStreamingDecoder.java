@@ -15,9 +15,9 @@ import java.util.Arrays;
 public final class WavStreamingDecoder {
     // WavData speichert die grundlegenden WAV-Daten
     public static class WavData {
-        public int bitsPerSample;
-        public int channels;
-        public int sampleRate;
+        private final int bitsPerSample;
+        private final int channels;
+        private final int sampleRate;
 
         public WavData(final int sampleRate, final int channels, final int bitsPerSample) {
             super();
@@ -90,7 +90,7 @@ public final class WavStreamingDecoder {
             final byte[] wave = new byte[4];
             in.readFully(wave);
 
-            if (!new String(wave).equals("WAVE")) {
+            if (!"WAVE".equals(new String(wave))) {
                 throw new IllegalArgumentException("Not a WAVE file");
             }
 
@@ -105,7 +105,7 @@ public final class WavStreamingDecoder {
                 final String chunkId = new String(chunkIdBytes);
                 final int chunkSize = Integer.reverseBytes(in.readInt());
 
-                if (chunkId.equals("fmt ")) {
+                if ("fmt ".equals(chunkId)) {
                     final short audioFormat = Short.reverseBytes(in.readShort());
 
                     if (audioFormat != 1) {
@@ -125,7 +125,7 @@ public final class WavStreamingDecoder {
                         in.skipBytes(remaining);
                     }
                 }
-                else if (chunkId.equals("data")) {
+                else if ("data".equals(chunkId)) {
                     // Wir haben den "data"-Block gefunden, den wir später streamen.
                     break;
                 }
@@ -143,7 +143,7 @@ public final class WavStreamingDecoder {
         }
     }
 
-    static void main(final String[] args) {
+    static void main() {
         try {
             // final Path path = Path.of("music-player/samples/sample.wav");
             final String filename = "music-player/samples/sample.wav";  // Pfad zur WAV-Datei
@@ -169,5 +169,9 @@ public final class WavStreamingDecoder {
         for (int ch = 0; ch < samples.length; ch++) {
             System.out.println("Kanal " + (ch + 1) + ": " + Arrays.toString(Arrays.copyOfRange(samples[ch], 0, Math.min(5, samples[ch].length))));
         }
+    }
+
+    private WavStreamingDecoder() {
+        super();
     }
 }

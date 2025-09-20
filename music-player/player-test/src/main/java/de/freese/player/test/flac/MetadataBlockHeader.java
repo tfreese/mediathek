@@ -52,7 +52,7 @@ public final class MetadataBlockHeader {
             blockType = BlockType.values()[type];
 
             // 8.1 The three bytes that follow code for the size of the metadata block in bytes, excluding the 4 header bytes, as an unsigned number coded big-endian.
-            dataLength = (toIntFromInt(byteBuffer.get(1)) << 16) + (toIntFromInt(byteBuffer.get(2)) << 8) + (toIntFromInt(byteBuffer.get(3)));
+            dataLength = toIntFromInt(byteBuffer.get(1)) << 16 + toIntFromInt(byteBuffer.get(2)) << 8 + toIntFromInt(byteBuffer.get(3));
         }
         else {
             throw new IllegalArgumentException("Flac file has invalid block type:" + type);

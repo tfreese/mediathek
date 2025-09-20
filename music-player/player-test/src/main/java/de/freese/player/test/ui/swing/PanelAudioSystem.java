@@ -75,6 +75,12 @@ public final class PanelAudioSystem extends JPanel {
                         try {
                             get();
                         }
+                        catch (InterruptedException ex) {
+                            LOGGER.error(ex.getMessage(), ex);
+
+                            // Restore interrupted state.
+                            Thread.currentThread().interrupt();
+                        }
                         catch (Exception ex) {
                             LOGGER.error(ex.getMessage(), ex);
                         }
@@ -110,6 +116,12 @@ public final class PanelAudioSystem extends JPanel {
                         try {
                             get();
                         }
+                        catch (InterruptedException ex) {
+                            LOGGER.error(ex.getMessage(), ex);
+
+                            // Restore interrupted state.
+                            Thread.currentThread().interrupt();
+                        }
                         catch (Exception ex) {
                             LOGGER.error(ex.getMessage(), ex);
                         }
@@ -136,7 +148,7 @@ public final class PanelAudioSystem extends JPanel {
      */
     private void playClip(final Path sample) throws Exception {
         try (InputStream inputStream = sample.toUri().toURL().openStream();
-             final AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(inputStream)) {
+             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(inputStream)) {
             // final EqualizerAudioInputStream equalizerAudioInputStream = new EqualizerAudioInputStream(audioInputStream, 31);
             // final IIRControls iirControls = equalizerAudioInputStream.getControls();
             // audioInputStream = equalizerAudioInputStream;
