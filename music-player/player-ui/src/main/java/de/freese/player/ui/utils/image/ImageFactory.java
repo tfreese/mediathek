@@ -40,19 +40,21 @@ public final class ImageFactory {
             return image;
         }
 
+        final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+
         try {
             if (resource.endsWith(".svg")) {
-                image = loadSVG(resource, width, height);
+                image = loadSVG(resource, width, height, classLoader);
             }
             else {
-                try (InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(resource)) {
-                    assert inputStream != null;
-                    image = ImageIO.read(inputStream);
-                }
+                image = loadImage(resource, classLoader);
             }
         }
         catch (IOException ex) {
             throw new UncheckedIOException(ex);
+        }
+        catch (TranscoderException ex) {
+            throw new RuntimeException(ex);
         }
 
         if (image != null) {
@@ -65,22 +67,27 @@ public final class ImageFactory {
         return image;
     }
 
-    private static BufferedImage loadSVG(final String resource, final int width, final int height) {
-        try (InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(resource)) {
+    private static BufferedImage loadImage(final String resource, final ClassLoader classLoader) throws IOException {
+        try (InputStream inputStream = classLoader.getResourceAsStream(resource)) {
+            assert inputStream != null;
+
+            return ImageIO.read(inputStream);
+        }
+    }
+
+    private static BufferedImage loadSVG(final String resource, final int width, final int height, final ClassLoader classLoader) throws IOException, TranscoderException {
+        try (InputStream inputStream = classLoader.getResourceAsStream(resource)) {
+            assert inputStream != null;
+
             final BufferedImageTranscoder transcoder = new BufferedImageTranscoder();
             transcoder.addTranscodingHint(SVGAbstractTranscoder.KEY_WIDTH, (float) width);
             transcoder.addTranscodingHint(SVGAbstractTranscoder.KEY_HEIGHT, (float) height);
+            // transcoder.addTranscodingHint(ImageTranscoder.KEY_FORCE_TRANSPARENT_WHITE, true);
 
             final TranscoderInput transcoderInput = new TranscoderInput(inputStream);
             transcoder.transcode(transcoderInput, null);
 
             return transcoder.getBufferedImage();
-        }
-        catch (IOException ex) {
-            throw new UncheckedIOException(ex);
-        }
-        catch (TranscoderException ex) {
-            throw new RuntimeException(ex);
         }
     }
 
