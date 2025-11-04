@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -63,13 +62,13 @@ class TestParseCsv {
 
     @Test
     void testParseFile() throws IOException {
-        final Path path = Paths.get("/home/tommy/dokumente/linux/musik-report-strawberry.csv");
+        final Path path = Path.of("/home/tommy/dokumente/linux/musik-report-strawberry.csv");
 
         if (!Files.exists(path)) {
             return;
         }
 
-        final List<String> list = MediaDbUtils.parseCsv(path).stream().limit(3).map(Arrays::toString).toList();
+        final List<String> list = MediaDbUtils.readCsv(path).stream().limit(3).map(Arrays::toString).toList();
 
         assertFalse(list.isEmpty());
         assertEquals(3, list.size());

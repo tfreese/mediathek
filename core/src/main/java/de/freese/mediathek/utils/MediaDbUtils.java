@@ -20,7 +20,7 @@ import java.util.function.UnaryOperator;
  * @author Thomas Freese
  */
 public final class MediaDbUtils {
-    public static List<String[]> parseCsv(final Path path) throws IOException {
+    public static List<String[]> readCsv(final Path path) throws IOException {
         return Files.readAllLines(path).stream()
                 .filter(Objects::nonNull)
                 .filter(line -> !line.strip().isBlank())

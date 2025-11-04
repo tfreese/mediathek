@@ -32,7 +32,7 @@ public abstract class AbstractMediaReporter implements MediaReporter {
      * </ul>
      */
     protected List<Map<String, String>> readHeardMusik(final Path path) throws IOException {
-        return MediaDbUtils.parseCsv(path).stream().skip(1)// Header überspringen
+        return MediaDbUtils.readCsv(path).stream().skip(1)// Header überspringen
                 .map(row -> {
                     final Map<String, String> map = new LinkedHashMap<>();
                     map.put("ARTIST", row[0]);
@@ -52,7 +52,7 @@ public abstract class AbstractMediaReporter implements MediaReporter {
      * </ul>
      */
     protected List<Map<String, String>> readSeenMovies(final Path path) throws IOException {
-        return MediaDbUtils.parseCsv(path).stream().skip(1)// Header überspringen
+        return MediaDbUtils.readCsv(path).stream().skip(1)// Header überspringen
                 .map(row -> {
                     final Map<String, String> map = new LinkedHashMap<>();
                     map.put("MOVIE", row[0]);
@@ -75,7 +75,7 @@ public abstract class AbstractMediaReporter implements MediaReporter {
      * </ul>
      */
     protected List<Map<String, String>> readSeenTvShows(final Path path) throws IOException {
-        return MediaDbUtils.parseCsv(path).stream().skip(1)// Header überspringen
+        return MediaDbUtils.readCsv(path).stream().skip(1)// Header überspringen
                 .map(row -> {
                     final Map<String, String> map = new LinkedHashMap<>();
                     map.put("TVSHOW", row[0]);
