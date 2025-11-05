@@ -15,7 +15,7 @@ dependencies {
     runtimeOnly("org.slf4j:slf4j-simple")
     runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
 
-    testImplementation("tools.jackson.dataformat:jackson-dataformat-csv:3.0.1")
+    testImplementation("tools.jackson.dataformat:jackson-dataformat-csv:$version_jackson")
 }
 
 ext {
