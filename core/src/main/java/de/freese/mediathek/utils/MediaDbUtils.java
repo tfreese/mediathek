@@ -10,13 +10,13 @@ import java.util.Map;
 import java.util.Objects;
 
 import de.freese.mediathek.utils.csv.CsvUtils;
-import de.freese.mediathek.utils.csv.DefaultCsvUtils;
+import de.freese.mediathek.utils.csv.JacksonCsvUtils;
 
 /**
  * @author Thomas Freese
  */
 public final class MediaDbUtils {
-    private static final CsvUtils CSV_UTILS = new DefaultCsvUtils();
+    private static final CsvUtils CSV_UTILS = new JacksonCsvUtils();
 
     public static List<Map<String, String>> readCsv(final Path path) throws Exception {
         return CSV_UTILS.readCsv(path);

@@ -15,6 +15,9 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
+ * ColumnSeparator: ,<br>
+ * QuoteChar: "
+ *
  * @author Thomas Freese
  */
 public final class DefaultCsvUtils implements CsvUtils {
@@ -43,8 +46,8 @@ public final class DefaultCsvUtils implements CsvUtils {
         }
 
         return token.stream().map(t -> t.replaceAll("^\"|\"$", "")) // Remove first and last quote.
-                .map(l -> l.replace("\\\"\"", "\"")) // Unescape quotes.
-                .map(l -> l.replace("\\,", ",")) // Unescape comma.
+                .map(l -> l.replace("\"\"", "\"")) // Unescape quotes.
+                // .map(l -> l.replace("\\,", ",")) // Unescape comma.
                 .map(String::strip).toArray(String[]::new);
     }
 
@@ -57,21 +60,21 @@ public final class DefaultCsvUtils implements CsvUtils {
 
         // Escape quotes.
         if (v.contains("\"")) {
-            v = v.replace("\"", "\\\"\"");
+            v = v.replace("\"", "\"\"");
         }
 
         // Escape comma.
-        if (v.contains(",")) {
-            v = v.replace(",", "\\,");
-        }
+        // if (v.contains(",")) {
+        //     v = v.replace(",", "\\,");
+        // }
 
         // Value in quotes.
         return "\"" + v + "\"";
     }
 
     @Override
-    public List<Map<String, String>> readCsv(final Path path) throws Exception {
-        final List<String> lines = new ArrayList<>(Files.readAllLines(path));
+    public List<Map<String, String>> readCsv(final Path file) throws Exception {
+        final List<String> lines = new ArrayList<>(Files.readAllLines(file));
 
         final String[] header = parseCsvRow(lines.removeFirst());
 
@@ -107,7 +110,7 @@ public final class DefaultCsvUtils implements CsvUtils {
 
         ps.println(stringJoiner);
 
-        // Daten
+        // Values
         while (resultSet.next()) {
             stringJoiner = new StringJoiner(",");
 

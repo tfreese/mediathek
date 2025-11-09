@@ -15,14 +15,14 @@ import java.util.Map;
  */
 public interface CsvUtils {
 
-    List<Map<String, String>> readCsv(final Path path) throws Exception;
+    List<Map<String, String>> readCsv(Path path) throws Exception;
 
     /**
      * Stream is not closed.<br>
      * If the ResultSet is != ResultSet.TYPE_FORWARD_ONLY, {@link ResultSet#first()} is called and the {@link ResultSet} can still used.
      */
-    default void writeCsv(final ResultSet resultSet, final Path path) throws Exception {
-        try (PrintStream ps = new PrintStream(new BufferedOutputStream(Files.newOutputStream(path)), true, StandardCharsets.UTF_8)) {
+    default void writeCsv(final ResultSet resultSet, final Path file) throws Exception {
+        try (PrintStream ps = new PrintStream(new BufferedOutputStream(Files.newOutputStream(file)), true, StandardCharsets.UTF_8)) {
             writeCsv(resultSet, ps);
         }
     }
@@ -31,5 +31,5 @@ public interface CsvUtils {
      * Stream is not closed.<br>
      * If the ResultSet is != ResultSet.TYPE_FORWARD_ONLY, {@link ResultSet#first()} is called and the {@link ResultSet} can still used.
      */
-    void writeCsv(final ResultSet resultSet, final PrintStream ps) throws Exception;
+    void writeCsv(ResultSet resultSet, PrintStream ps) throws Exception;
 }
