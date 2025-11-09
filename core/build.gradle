@@ -10,12 +10,14 @@ dependencies {
         // exclude(group: "ch.qos.logback", module: "logback-classic")
     }
     api("org.xerial:sqlite-jdbc")
+    
+    implementation("tools.jackson.dataformat:jackson-dataformat-csv:$version_jackson")
 
     runtimeOnly("org.slf4j:jcl-over-slf4j")
     runtimeOnly("org.slf4j:slf4j-simple")
     runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
 
-    testImplementation("tools.jackson.dataformat:jackson-dataformat-csv:$version_jackson")
+    // testImplementation("tools.jackson.dataformat:jackson-dataformat-csv:$version_jackson")
 }
 
 ext {

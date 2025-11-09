@@ -1,10 +1,8 @@
 // Created: 05.04.2020
 package de.freese.mediathek.report;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.ResultSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,16 +29,8 @@ public abstract class AbstractMediaReporter implements MediaReporter {
      * <li>PLAYCOUNT</li>
      * </ul>
      */
-    protected List<Map<String, String>> readHeardMusik(final Path path) throws IOException {
-        return MediaDbUtils.readCsv(path).stream().skip(1)// Header überspringen
-                .map(row -> {
-                    final Map<String, String> map = new LinkedHashMap<>();
-                    map.put("ARTIST", row[0]);
-                    map.put("SONG", row[1]);
-                    map.put("PLAYCOUNT", row[2]);
-
-                    return map;
-                }).toList();
+    protected List<Map<String, String>> readHeardMusik(final Path path) throws Exception {
+        return MediaDbUtils.readCsv(path);
     }
 
     /**
@@ -51,16 +41,8 @@ public abstract class AbstractMediaReporter implements MediaReporter {
      * <li>LASTPLAYED</li>
      * </ul>
      */
-    protected List<Map<String, String>> readSeenMovies(final Path path) throws IOException {
-        return MediaDbUtils.readCsv(path).stream().skip(1)// Header überspringen
-                .map(row -> {
-                    final Map<String, String> map = new LinkedHashMap<>();
-                    map.put("MOVIE", row[0]);
-                    map.put("PLAYCOUNT", row[1]);
-                    map.put("LASTPLAYED", row[2]);
-
-                    return map;
-                }).toList();
+    protected List<Map<String, String>> readSeenMovies(final Path path) throws Exception {
+        return MediaDbUtils.readCsv(path);
     }
 
     /**
@@ -74,23 +56,13 @@ public abstract class AbstractMediaReporter implements MediaReporter {
      * <li>LASTPLAYED</li>
      * </ul>
      */
-    protected List<Map<String, String>> readSeenTvShows(final Path path) throws IOException {
-        return MediaDbUtils.readCsv(path).stream().skip(1)// Header überspringen
-                .map(row -> {
-                    final Map<String, String> map = new LinkedHashMap<>();
-                    map.put("TVSHOW", row[0]);
-                    map.put("SEASON", row[1]);
-                    map.put("EPISODE", row[2]);
-                    map.put("TITLE", row[3]);
-                    map.put("PLAYCOUNT", row[4]);
-                    map.put("LASTPLAYED", row[5]);
-
-                    return map;
-                }).toList();
+    protected List<Map<String, String>> readSeenTvShows(final Path path) throws Exception {
+        return MediaDbUtils.readCsv(path);
     }
 
     protected void writeResultSet(final ResultSet resultSet, final Path path) {
         try {
+            MediaDbUtils.rename(path);
             MediaDbUtils.writeCsv(resultSet, path);
         }
         catch (Exception ex) {
