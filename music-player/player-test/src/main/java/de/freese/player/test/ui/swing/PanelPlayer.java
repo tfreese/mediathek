@@ -36,9 +36,9 @@ public final class PanelPlayer extends JPanel {
 
     @Serial
     private static final long serialVersionUID = 896585557622293595L;
-    private final Map<Path, AudioPlayerSource> audioPlayerSourceMap = new HashMap<>();
+    private final transient Map<Path, AudioPlayerSource> audioPlayerSourceMap = new HashMap<>();
     private final AtomicBoolean runner = new AtomicBoolean(false);
-    private Future<?> future;
+    private transient Future<?> future;
 
     PanelPlayer(final ExecutorService executorService, final Path tempPath) {
         super();
