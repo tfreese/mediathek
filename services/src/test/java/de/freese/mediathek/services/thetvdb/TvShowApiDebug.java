@@ -6,9 +6,8 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.util.Locale;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.springframework.web.client.RestTemplate;
+import tools.jackson.dataformat.xml.XmlMapper;
 
 import de.freese.mediathek.services.Settings;
 
@@ -79,19 +78,17 @@ public class TvShowApiDebug {
         System.out.println("Content-Type = " + connection.getContentType());
         System.out.println("Location: " + connection.getHeaderField("Location"));
 
-        final ObjectMapper mapper = new XmlMapper();
+        final XmlMapper xmlMapper = XmlMapper.builder().build();
 
         try (InputStream inputStream = connection.getInputStream()) {
-            final Object xml = mapper.readValue(inputStream, Object.class);
+            final Object xml = xmlMapper.readValue(inputStream, Object.class);
             // System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(xml));
             prettyPrint(xml.toString());
 
-            // try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream)))
-            // {
+            // try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             // String line = reader.readLine();
             //
-            // while (line != null)
-            // {
+            // while (line != null) {
             // LOGGER.info(line);
             // line = reader.readLine();
             // }
@@ -128,14 +125,14 @@ public class TvShowApiDebug {
     }
 
     private void prettyPrint(final String result) {
-        // ObjectMapper mapper = new XmlMapper();
-        // mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        // XmlMapper xmlMapper = XmlMapper.builder().build();
+        // xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
         // System.out.println(mapper.writeValueAsString(result));
         //
-        // XmlMapper mapper = new XmlMapper();
-        // // // Object xml = mapper.readValue(result, Object.class);
-        // // System.out.println(mapper.writeValueAsString(result));
-        // System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(result));
+        // XmlMapper xmlMapper = XmlMapper.builder().build();
+        // // // Object xml = xmlMapper.readValue(result, Object.class);
+        // // System.out.println(xmlMapper.writeValueAsString(result));
+        // System.out.println(xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(result));
         System.out.println(result);
     }
 }

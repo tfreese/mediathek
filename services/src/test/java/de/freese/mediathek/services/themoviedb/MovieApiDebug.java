@@ -6,8 +6,8 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.util.Locale;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.client.RestTemplate;
+import tools.jackson.databind.json.JsonMapper;
 
 import de.freese.mediathek.services.Settings;
 
@@ -74,11 +74,11 @@ public class MovieApiDebug {
         System.out.println("Content-Type = " + connection.getContentType());
         System.out.println("Location: " + connection.getHeaderField("Location"));
 
-        final ObjectMapper mapper = new ObjectMapper();
+        final JsonMapper jsonMapper = JsonMapper.builder().build();
 
         try (InputStream inputStream = connection.getInputStream()) {
-            final Object json = mapper.readValue(inputStream, Object.class);
-            System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json));
+            final Object json = jsonMapper.readValue(inputStream, Object.class);
+            System.out.println(jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(json));
         }
 
         // try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
@@ -134,8 +134,8 @@ public class MovieApiDebug {
     }
 
     private void prettyPrint(final String result) throws Exception {
-        final ObjectMapper mapper = new ObjectMapper();
-        final Object json = mapper.readValue(result, Object.class);
-        System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json));
+        final JsonMapper jsonMapper = JsonMapper.builder().build();
+        final Object json = jsonMapper.readValue(result, Object.class);
+        System.out.println(jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(json));
     }
 }
