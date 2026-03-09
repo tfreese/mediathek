@@ -34,7 +34,7 @@ public final class MultimediaReporter {
             return createSqLite(readonly, "jdbc:sqlite:/home/tommy/.config/Clementine/clementine.db");
         }
 
-        static DataSource kodiMusikSqLite(final boolean readonly) {
+        static DataSource kodiMusicSqLite(final boolean readonly) {
             return createSqLite(readonly, "jdbc:sqlite:/home/tommy/.kodi/userdata/Database/MyMusic82.db");
         }
 
@@ -88,7 +88,7 @@ public final class MultimediaReporter {
         final MediaReporter mediaReporter = new StrawberryAudioReporter();
 
         STOP_WATCH.start("connect");
-        final DataSource dataSource = DataSources.strawberrySqLite(true);
+        final DataSource dataSource = DataSources.strawberrySqLite(false);
         STOP_WATCH.stop();
 
         // final Set<String> extensions = new TreeSet<>();
@@ -112,7 +112,7 @@ public final class MultimediaReporter {
             LOGGER.info("Path: {}", path);
 
             mediaReporter.writeReport(dataSource, path.resolve("musik-report-strawberry.csv"));
-            //            mediaReporter.updateDbFromReport(dataSource, path.resolve("musik-report-clementine.csv"));
+            //            mediaReporter.updateDbFromReport(dataSource, path.resolve("musik-report-strawberry.csv"));
 
             STOP_WATCH.stop();
         }

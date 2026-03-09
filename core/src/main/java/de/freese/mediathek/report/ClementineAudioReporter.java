@@ -1,6 +1,7 @@
 // Created: 05.04.2020
 package de.freese.mediathek.report;
 
+import javax.sql.DataSource;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,8 +9,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
-
-import javax.sql.DataSource;
 
 /**
  * @author Thomas Freese
@@ -59,11 +58,10 @@ public class ClementineAudioReporter extends AbstractMediaReporter {
                 }
 
                 final int[] affectedRows = pstmt.executeBatch();
-                getLogger().info("Affected Rows: {}}", affectedRows.length);
+                getLogger().info("Affected Rows: {}", affectedRows.length);
 
                 con.commit();
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 con.rollback();
 
                 getLogger().error(ex.getMessage(), ex);
