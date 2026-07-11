@@ -53,7 +53,7 @@ public final class JacksonCsvUtils implements CsvUtils {
     }
 
     @Override
-    public List<Map<String, String>> readCsv(final Path file) throws Exception {
+    public List<Map<String, String>> readCsv(final Path path) throws Exception {
         final CsvSchema csvSchema = createDefaultCsvSchemaBuilder().build();
 
         final ObjectMapper objectMapper = new CsvMapper();
@@ -66,7 +66,7 @@ public final class JacksonCsvUtils implements CsvUtils {
                 .with(CsvReadFeature.SKIP_EMPTY_LINES)
                 .with(CsvReadFeature.TRIM_HEADER_SPACES)
                 .with(CsvReadFeature.TRIM_SPACES)
-                .readValues(file)) {
+                .readValues(path)) {
 
             return mappingIterator.readAll();
         }
@@ -110,10 +110,9 @@ public final class JacksonCsvUtils implements CsvUtils {
                     final Object obj = resultSet.getObject(column);
                     final String value;
 
-                    if (obj instanceof byte[] bytes) {
+                    if (obj instanceof final byte[] bytes) {
                         value = new String(bytes, StandardCharsets.UTF_8);
-                    }
-                    else {
+                    } else {
                         value = Objects.toString(obj, "");
                     }
 

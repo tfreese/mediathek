@@ -45,7 +45,16 @@ public final class DefaultCsvUtils implements CsvUtils {
             row = row.substring(endIndex + 2).strip();
         }
 
-        return token.stream().map(t -> t.replaceAll("^\"|\"$", "")) // Remove first and last quote.
+        // "^\"|\"$"
+        // "(?:^\")|(?:\"$)"
+        return token.stream().map(t -> {
+                    // Remove first and last quote.
+                    if (t.startsWith("\"") && t.endsWith("\"")) {
+                        return t.substring(1, t.length() - 1);
+                    }
+
+                    return t;
+                })
                 .map(l -> l.replace("\"\"", "\"")) // Unescape quotes.
                 // .map(l -> l.replace("\\,", ",")) // Unescape comma.
                 .map(String::strip).toArray(String[]::new);
@@ -73,8 +82,8 @@ public final class DefaultCsvUtils implements CsvUtils {
     }
 
     @Override
-    public List<Map<String, String>> readCsv(final Path file) throws Exception {
-        final List<String> lines = new ArrayList<>(Files.readAllLines(file));
+    public List<Map<String, String>> readCsv(final Path path) throws Exception {
+        final List<String> lines = new ArrayList<>(Files.readAllLines(path));
 
         final String[] header = parseCsvRow(lines.removeFirst());
 
@@ -118,10 +127,9 @@ public final class DefaultCsvUtils implements CsvUtils {
                 final Object obj = resultSet.getObject(column);
                 final String value;
 
-                if (obj instanceof byte[] bytes) {
+                if (obj instanceof final byte[] bytes) {
                     value = new String(bytes, StandardCharsets.UTF_8);
-                }
-                else {
+                } else {
                     value = Objects.toString(obj, "");
                 }
 

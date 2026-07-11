@@ -36,6 +36,7 @@ subprojects {
 
             dependency("net.jthink:jaudiotagger:$version_jaudiotagger")
             dependency("org.jfree:jfreechart:$version_jfreechart")
+            dependency("tools.jackson.dataformat:jackson-dataformat-csv:" + dependencyManagement.importedProperties["jackson-bom.version"])
         }
     }
 

@@ -11,7 +11,7 @@ dependencies {
     }
     api("org.xerial:sqlite-jdbc")
 
-    implementation("tools.jackson.dataformat:jackson-dataformat-csv:$version_jackson")
+    implementation("tools.jackson.dataformat:jackson-dataformat-csv")
 
     runtimeOnly("org.slf4j:jcl-over-slf4j")
     runtimeOnly("org.slf4j:slf4j-simple")
