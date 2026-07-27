@@ -1,4 +1,3 @@
-// Created: 05.04.2020
 package de.freese.mediathek.report;
 
 import java.io.PrintWriter;
@@ -18,6 +17,7 @@ import de.freese.mediathek.utils.MediaDbUtils;
 
 /**
  * @author Thomas Freese
+ * @since 05.04.2020
  */
 public class KodiAudioReporter extends AbstractMediaReporter {
     @Override
@@ -50,7 +50,7 @@ public class KodiAudioReporter extends AbstractMediaReporter {
 
             try (PreparedStatement stmtUpdate = connection.prepareStatement(sqlUpdate);
                  PreparedStatement stmtSelect = connection.prepareStatement(sqlSelect)) {
-                for (Map<String, String> map : heardMusic) {
+                for (final Map<String, String> map : heardMusic) {
                     final String artist = map.get("ARTIST");
                     final String song = map.get("SONG");
                     final int playCount = Integer.parseInt(map.get("PLAYCOUNT"));
@@ -74,7 +74,7 @@ public class KodiAudioReporter extends AbstractMediaReporter {
 
                 connection.commit();
             }
-            catch (Exception ex) {
+            catch (final Exception ex) {
                 connection.rollback();
 
                 getLogger().error(ex.getMessage(), ex);

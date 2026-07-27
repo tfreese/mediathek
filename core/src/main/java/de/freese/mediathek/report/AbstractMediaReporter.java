@@ -1,4 +1,3 @@
-// Created: 05.04.2020
 package de.freese.mediathek.report;
 
 import java.nio.file.Path;
@@ -13,6 +12,7 @@ import de.freese.mediathek.utils.MediaDbUtils;
 
 /**
  * @author Thomas Freese
+ * @since 05.04.2020
  */
 public abstract class AbstractMediaReporter implements MediaReporter {
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -65,7 +65,7 @@ public abstract class AbstractMediaReporter implements MediaReporter {
             MediaDbUtils.rename(path);
             MediaDbUtils.writeCsv(resultSet, path);
         }
-        catch (Exception ex) {
+        catch (final Exception ex) {
             getLogger().error(ex.getMessage(), ex);
         }
     }

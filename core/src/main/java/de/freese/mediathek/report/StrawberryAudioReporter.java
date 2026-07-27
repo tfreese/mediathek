@@ -1,8 +1,8 @@
-// Created: 07.07.23
 package de.freese.mediathek.report;
 
 /**
  * @author Thomas Freese
+ * @since 07.07.2023
  */
 public class StrawberryAudioReporter extends ClementineAudioReporter {
 }

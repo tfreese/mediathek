@@ -1,4 +1,3 @@
-// Created: 05.04.2020
 package de.freese.mediathek.report;
 
 import java.io.Closeable;
@@ -17,6 +16,7 @@ import de.freese.mediathek.utils.StopWatch;
 
 /**
  * @author Thomas Freese
+ * @since 05.04.2020
  */
 public final class MultimediaReporter {
     private static final Logger LOGGER = LoggerFactory.getLogger(MultimediaReporter.class);
@@ -116,7 +116,7 @@ public final class MultimediaReporter {
 
             STOP_WATCH.stop();
         }
-        catch (Exception ex) {
+        catch (final Exception ex) {
             LOGGER.error(ex.getMessage(), ex);
             System.exit(-1);
         }
@@ -127,10 +127,9 @@ public final class MultimediaReporter {
             //     ds.destroy();
             // }
             // else
-            if (dataSource instanceof Closeable c) {
+            if (dataSource instanceof final Closeable c) {
                 c.close();
-            }
-            else if (dataSource instanceof AutoCloseable ac) {
+            } else if (dataSource instanceof final AutoCloseable ac) {
                 ac.close();
             }
 

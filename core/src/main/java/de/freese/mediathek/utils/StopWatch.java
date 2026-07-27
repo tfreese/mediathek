@@ -1,4 +1,3 @@
-// Created: 15.04.2020
 package de.freese.mediathek.utils;
 
 import java.io.PrintStream;
@@ -14,6 +13,7 @@ import java.util.function.Consumer;
  * org.springframework.util.StopWatch.
  *
  * @author Thomas Freese
+ * @since 15.04.2020
  */
 public class StopWatch {
     private static final AtomicInteger ID_NUMBER = new AtomicInteger(1);
@@ -52,11 +52,10 @@ public class StopWatch {
         protected void printTasks(final StopWatch sw, final PrintStream printStream, final TimeUnit timeUnit) {
             if (!sw.isKeepTaskList()) {
                 printStream.println("No task info kept");
-            }
-            else {
+            } else {
                 printStream.printf("%15s | %9s | %3s | Task Name%n", TimeUnit.NANOSECONDS.toChronoUnit(), timeUnit.toChronoUnit(), "%");
 
-                for (TaskInfo task : sw.getTaskList()) {
+                for (final TaskInfo task : sw.getTaskList()) {
                     final long nanos = task.getTime(TimeUnit.NANOSECONDS);
 
                     printStream.printf("%,15d | %,9d | %3.0f | %s%n",

@@ -1,4 +1,3 @@
-// Created: 27.07.2016
 package de.freese.mediathek.utils.cache;
 
 import java.io.IOException;
@@ -18,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Thomas Freese
+ * @since 27.07.2016
  */
 public abstract class AbstractResourceCache implements ResourceCache {
     protected static MessageDigest createMessageDigest() {
@@ -59,11 +59,10 @@ public abstract class AbstractResourceCache implements ResourceCache {
             final Path path = Path.of(uri);
 
             return Files.size(path);
-        }
-        else if ("http".equals(protocol) || "https".equals(protocol)) {
+        } else if ("http".equals(protocol) || "https".equals(protocol)) {
             final URLConnection connection = uri.toURL().openConnection();
 
-            if (connection instanceof HttpURLConnection con) {
+            if (connection instanceof final HttpURLConnection con) {
                 con.setRequestMethod("HEAD");
             }
 
@@ -114,8 +113,8 @@ public abstract class AbstractResourceCache implements ResourceCache {
 
             return connection.getInputStream();
         }
-        catch (IOException ex) {
-            if (connection instanceof HttpURLConnection httpURLConnection) {
+        catch (final IOException ex) {
+            if (connection instanceof final HttpURLConnection httpURLConnection) {
                 httpURLConnection.disconnect();
             }
 

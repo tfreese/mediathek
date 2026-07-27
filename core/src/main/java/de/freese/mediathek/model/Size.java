@@ -1,10 +1,10 @@
-// Created: 08.11.2014
 package de.freese.mediathek.model;
 
 /**
  * Größen für Bilder.
  *
  * @author Thomas Freese
+ * @since 08.11.2014
  */
 @SuppressWarnings("java:S115")
 public enum Size {

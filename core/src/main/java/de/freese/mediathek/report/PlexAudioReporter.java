@@ -1,4 +1,3 @@
-// Created: 05.04.2020
 package de.freese.mediathek.report;
 
 import java.nio.file.Path;
@@ -11,6 +10,7 @@ import javax.sql.DataSource;
 
 /**
  * @author Thomas Freese
+ * @since 05.04.2020
  */
 public class PlexAudioReporter extends AbstractMediaReporter {
     @Override
@@ -34,7 +34,7 @@ public class PlexAudioReporter extends AbstractMediaReporter {
             con.setAutoCommit(false);
 
             try {
-                for (Map<String, String> map : heardMusic) {
+                for (final Map<String, String> map : heardMusic) {
                     final String artist = map.get("ARTIST");
                     final String song = map.get("SONG");
                     final int playCount = Integer.parseInt(map.get("PLAYCOUNT"));
@@ -53,7 +53,7 @@ public class PlexAudioReporter extends AbstractMediaReporter {
 
                 con.commit();
             }
-            catch (Exception ex) {
+            catch (final Exception ex) {
                 con.rollback();
 
                 getLogger().error(ex.getMessage(), ex);

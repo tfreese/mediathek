@@ -1,4 +1,3 @@
-// Created: 09 Nov. 2025
 package de.freese.mediathek.utils.csv;
 
 import java.io.BufferedOutputStream;
@@ -12,6 +11,7 @@ import java.util.Map;
 
 /**
  * @author Thomas Freese
+ * @since 09.11.2025
  */
 public interface CsvUtils {
 

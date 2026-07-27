@@ -1,4 +1,3 @@
-// Created: 03.11.2015
 package de.freese.mediathek.utils;
 
 import java.io.IOException;
@@ -14,6 +13,7 @@ import de.freese.mediathek.utils.csv.JacksonCsvUtils;
 
 /**
  * @author Thomas Freese
+ * @since 03.11.2015
  */
 public final class MediaDbUtils {
     private static final CsvUtils CSV_UTILS = new JacksonCsvUtils();

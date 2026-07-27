@@ -1,4 +1,3 @@
-// Created: 22.05.2016
 package de.freese.mediathek;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -23,6 +22,7 @@ import de.freese.mediathek.utils.csv.JacksonCsvUtils;
 
 /**
  * @author Thomas Freese
+ * @since 22.05.2016
  */
 class TestCsvUtils {
     static Stream<Arguments> createUtils() {

@@ -64,7 +64,7 @@ public final class ImageUtils {
     }
 
     public static BufferedImage toBufferedImage(final Icon icon) {
-        if (icon instanceof ImageIcon imageIcon && imageIcon.getImage() instanceof BufferedImage bi) {
+        if (icon instanceof final ImageIcon imageIcon && imageIcon.getImage() instanceof final BufferedImage bi) {
             return bi;
         }
 
@@ -78,7 +78,7 @@ public final class ImageUtils {
     }
 
     public static BufferedImage toBufferedImage(final Image image) {
-        if (image instanceof BufferedImage bi) {
+        if (image instanceof final BufferedImage bi) {
             return bi;
         }
 
@@ -86,14 +86,12 @@ public final class ImageUtils {
 
         // boolean hasAlpha = hasAlpha(image);
         //
-        // try
-        // {
+        // try {
         // GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         //
         // int transparency = Transparency.OPAQUE;
         //
-        // if (hasAlpha)
-        // {
+        // if (hasAlpha) {
         // transparency = Transparency.BITMASK;
         // }
         //
@@ -102,17 +100,14 @@ public final class ImageUtils {
         //
         // bufferedImage = gc.createCompatibleImage(image.getWidth(null), image.getHeight(null), transparency);
         // }
-        // catch (HeadlessException ex)
-        // {
+        // catch (HeadlessException ex) {
         // // Keine GUI vorhanden
         // }
         //
-        // if (bufferedImage == null)
-        // {
+        // if (bufferedImage == null) {
         // int type = BufferedImage.TYPE_INT_RGB;
         //
-        // if (hasAlpha)
-        // {
+        // if (hasAlpha) {
         // type = BufferedImage.TYPE_INT_ARGB;
         // }
         //

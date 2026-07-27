@@ -1,4 +1,3 @@
-// Created: 18.09.2014
 package de.freese.mediathek.utils.cache;
 
 import java.io.IOException;
@@ -16,6 +15,7 @@ import java.util.Objects;
 
 /**
  * @author Thomas Freese
+ * @since 18.09.2014
  */
 public class FileResourceCache extends AbstractResourceCache {
     private final Path cacheDirectory;

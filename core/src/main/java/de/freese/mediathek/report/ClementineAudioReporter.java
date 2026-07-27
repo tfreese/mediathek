@@ -1,7 +1,5 @@
-// Created: 05.04.2020
 package de.freese.mediathek.report;
 
-import javax.sql.DataSource;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,8 +8,11 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
 
+import javax.sql.DataSource;
+
 /**
  * @author Thomas Freese
+ * @since 05.04.2020
  */
 public class ClementineAudioReporter extends AbstractMediaReporter {
     @Override
@@ -40,7 +41,7 @@ public class ClementineAudioReporter extends AbstractMediaReporter {
             con.setAutoCommit(false);
 
             try {
-                for (Map<String, String> map : heardMusic) {
+                for (final Map<String, String> map : heardMusic) {
                     final String artist = map.get("ARTIST");
                     final String song = map.get("SONG");
                     final int playCount = Integer.parseInt(map.get("PLAYCOUNT"));
@@ -61,7 +62,8 @@ public class ClementineAudioReporter extends AbstractMediaReporter {
                 getLogger().info("Affected Rows: {}", affectedRows.length);
 
                 con.commit();
-            } catch (Exception ex) {
+            }
+            catch (final Exception ex) {
                 con.rollback();
 
                 getLogger().error(ex.getMessage(), ex);

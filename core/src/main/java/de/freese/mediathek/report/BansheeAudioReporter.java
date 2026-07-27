@@ -1,4 +1,3 @@
-// Created: 05.04.2020
 package de.freese.mediathek.report;
 
 import java.nio.file.Path;
@@ -10,6 +9,7 @@ import javax.sql.DataSource;
 
 /**
  * @author Thomas Freese
+ * @since 05.04.2020
  */
 public class BansheeAudioReporter extends AbstractMediaReporter {
     @Override

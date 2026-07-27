@@ -1,4 +1,3 @@
-// Created: 05.04.2020
 package de.freese.mediathek.report;
 
 import java.nio.file.Path;
@@ -13,6 +12,7 @@ import javax.sql.DataSource;
 
 /**
  * @author Thomas Freese
+ * @since 05.04.2020
  */
 public class KodiMovieReporter extends AbstractMediaReporter {
     @Override
@@ -53,7 +53,7 @@ public class KodiMovieReporter extends AbstractMediaReporter {
 
             try (PreparedStatement stmtUpdate = connection.prepareStatement(sqlUpdate);
                  PreparedStatement stmtSelect = connection.prepareStatement(sqlSelect)) {
-                for (Map<String, String> map : seenMovies) {
+                for (final Map<String, String> map : seenMovies) {
                     final String movie = map.get("MOVIE");
                     final int playCount = Integer.parseInt(map.get("PLAYCOUNT"));
                     final String lastPlayed = map.get("LASTPLAYED");
@@ -80,7 +80,7 @@ public class KodiMovieReporter extends AbstractMediaReporter {
 
                 connection.commit();
             }
-            catch (Exception ex) {
+            catch (final Exception ex) {
                 connection.rollback();
 
                 getLogger().error(ex.getMessage(), ex);
