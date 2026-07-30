@@ -1,5 +1,4 @@
 plugins {
-    // apply plugin: "application"
     id("java-library")
 }
 
