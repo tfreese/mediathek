@@ -1,6 +1,6 @@
 plugins {
     id("java-library")
-    id("org.springframework.boot")
+//    id("org.springframework.boot")
 }
 
 description = "API for KODI"
@@ -15,6 +15,6 @@ dependencies {
 // The archive name. If the name has not been explicitly set, the pattern for the name is:
 // [archiveBaseName]-[archiveAppendix]-[archiveVersion]-[archiveClassifier].[archiveExtension]
 // archiveFileName = "my-boot.jar"
-springBoot {
-    mainClass = "de.freese.mediathek.kodi.report.KodiReporter"
-}
+//springBoot {
+//    mainClass.set("de.freese.mediathek.kodi.report.KodiReporter")
+//}

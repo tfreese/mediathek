@@ -4,8 +4,8 @@ plugins {
 }
 
 javafx {
-    version = "$version_javafx"
-    modules = ["javafx.media", "javafx.swing"]
+    version = property("version_javafx").toString()
+    modules = listOf("javafx.media", "javafx.swing")
     configuration = "implementation"
 }
 

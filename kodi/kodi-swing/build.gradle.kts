@@ -14,5 +14,10 @@ dependencies {
 // [archiveBaseName]-[archiveAppendix]-[archiveVersion]-[archiveClassifier].[archiveExtension]
 // archiveFileName = "my-boot.jar"
 springBoot {
-    mainClass = "de.freese.mediathek.kodi.swing.KodiSwingClient"
+    mainClass.set("de.freese.mediathek.kodi.swing.KodiSwingClient")
 }
+
+//tasks.named<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
+//    // Holt das bootJar-Task-Objekt aus dem Core-Projekt und fügt es als File-Input hinzu
+//    inputs.files(project(":kodi:kodi-core").tasks.named("bootJar"))
+//}

@@ -9,7 +9,7 @@ dependencies {
 }
 
 checkstyle {
-    sourceSets = []
+    sourceSets = listOf()
 }
 
 // sonarlint {

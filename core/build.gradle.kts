@@ -6,7 +6,7 @@ description = "Base-Project for Media-Access"
 
 dependencies {
     api("org.springframework.boot:spring-boot-starter-jdbc") {
-        // exclude(group: "ch.qos.logback", module: "logback-classic")
+        // exclude(group = "ch.qos.logback", module = "logback-classic")
     }
     api("org.xerial:sqlite-jdbc")
 
@@ -17,42 +17,17 @@ dependencies {
     runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
 }
 
-ext {
-    main = "de.freese.mediathek.report.MultimediaReporter"
-}
-
-// Start: gradle run
-// application {
-//     mainClass = project.main
-//
-//     applicationDefaultJvmArgs = ["-Xms1024m", "-Xmx2048m"]
-// }
-// run {
-//     jvmArgs = ["--enable-native-access=ALL-UNNAMED"]
-// }
-
-// distTar {
-//     enabled = false
-// }
-
-// Done by Convention-Plugin.
-// jar {
-//     manifest {
-//         attributes(
-//                 "Main-Class": project.main
-//         )
-//     }
-// }
+val mainClazz = "de.freese.mediathek.report.MultimediaReporter"
 
 // Start: gradle runMultimediaReporter
-tasks.register("runMultimediaReporter", JavaExec) {
+tasks.register<JavaExec>("runMultimediaReporter") {
     group = "MyTasks"
     description = "Run the main class with JavaExecTask"
 
     // executable = ".../java.exe"
     // workingDir = workDir
-    // args = ["...","..."]
-    jvmArgs("--enable-native-access=ALL-UNNAMED")
+    // args("...","...")
+    // jvmArgs("...","...")
     // debugOptions {
     //     enabled = true
     //     port = 5566
@@ -62,8 +37,8 @@ tasks.register("runMultimediaReporter", JavaExec) {
 
     // classpath = files(...)
     // classpath = configurations.runtimeClasspath // Doesn't contain Main-Class !
-    classpath = sourceSets.main.runtimeClasspath
-    mainClass = project.main
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set(mainClazz)
 
     // args("-Dspring.profiles.active=file")
     // environment("spring.profiles.active", "file")

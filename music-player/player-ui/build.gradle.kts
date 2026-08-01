@@ -4,20 +4,24 @@ plugins {
 }
 
 // For JavaFx native-Library Downloads.
-configurations.matching { it.canBeResolved }.configureEach {
+configurations.matching { it.isCanBeResolved }.configureEach {
     attributes {
-        attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage, Usage.JAVA_RUNTIME))
-        attribute(OperatingSystemFamily.OPERATING_SYSTEM_ATTRIBUTE, objects.named(OperatingSystemFamily, OperatingSystemFamily.LINUX))
-        attribute(MachineArchitecture.ARCHITECTURE_ATTRIBUTE, objects.named(MachineArchitecture, MachineArchitecture.X86_64))
+        attribute(Usage.USAGE_ATTRIBUTE, objects.named<Usage>(Usage.JAVA_RUNTIME))
+        attribute(
+            OperatingSystemFamily.OPERATING_SYSTEM_ATTRIBUTE,
+            objects.named<OperatingSystemFamily>(OperatingSystemFamily.LINUX)
+        )
+        attribute(
+            MachineArchitecture.ARCHITECTURE_ATTRIBUTE,
+            objects.named<MachineArchitecture>(MachineArchitecture.X86_64)
+        )
     }
 }
 
 javafx {
-    version = "$version_javafx"
-    modules = ["javafx.controls"]
+    version = property("version_javafx").toString()
+    modules = listOf("javafx.controls")
     configuration = "implementation"
-    // platform = "linux" // linux, windows, mac
-    // sdk = "PATH"
 }
 
 dependencies {
