@@ -29,7 +29,7 @@ subprojects {
             }
 
             dependency("net.jthink:jaudiotagger:" + property("version_jaudiotagger"))
-            dependency("org.jfree:jfreechart:" + prpoperty("version_jfreechart"))
+            dependency("org.jfree:jfreechart:" + property("version_jfreechart"))
             dependency("tools.jackson.dataformat:jackson-dataformat-csv:" + dependencyManagement.importedProperties["jackson-bom.version"])
         }
     }
