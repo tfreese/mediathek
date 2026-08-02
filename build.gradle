@@ -7,12 +7,12 @@ plugins {
 }
 
 allprojects {
-    apply(plugin: "base")
+    plugins.apply("base")
 }
 
 subprojects {
-    apply(plugin: "de.freese.gradle.conventions")
-    apply(plugin: "io.spring.dependency-management")
+    plugins.apply("de.freese.gradle.conventions")
+    plugins.apply("io.spring.dependency-management")
 
     dependencyManagement {
         imports {
@@ -37,6 +37,13 @@ subprojects {
     pluginManager.withPlugin("java") {
         configurations.configureEach {
             exclude(group: "ch.qos.logback", module: "logback-classic")
+        }
+
+        dependencies {
+            testImplementation("org.junit.jupiter:junit-jupiter")
+            testCompileOnly("org.apiguardian:apiguardian-api")
+            testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+//            testImplementation("org.mockito:mockito-junit-jupiter")
         }
     }
 }

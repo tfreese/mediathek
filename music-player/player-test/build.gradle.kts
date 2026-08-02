@@ -19,5 +19,10 @@ dependencies {
     implementation("org.slf4j:jul-to-slf4j")
 
     runtimeOnly("org.slf4j:slf4j-simple")
+}
 
+tasks.named<Test>("test") {
+    dependsOn(":music-player:player-core:build")
+    dependsOn(":music-player:player-equalizer:build")
+    dependsOn(":music-player:player-fft:build")
 }
