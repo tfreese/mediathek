@@ -38,7 +38,7 @@ dependencies {
 // [archiveBaseName]-[archiveAppendix]-[archiveVersion]-[archiveClassifier].[archiveExtension]
 // archiveFileName = "my-boot.jar"
 springBoot {
-    mainClass = "de.freese.mediathek.kodi.javafx.KodiJavaFxClientLauncher"
+    mainClass.set("de.freese.mediathek.kodi.javafx.KodiJavaFxClientLauncher")
 }
 
 //tasks.named<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {

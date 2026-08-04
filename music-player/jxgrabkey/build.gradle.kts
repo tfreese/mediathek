@@ -15,7 +15,7 @@ dependencies {
 // gcc -dynamiclib -o build/native/libjni_demo.dylib native/JXGrabKey.cpp -I/usr/lib/jvm/default/include -I/usr/lib/jvm/default/include/linux
 // gcc -shared -fPIC -o build/native/JXGrabKey.so native/JXGrabKey.cpp -I/usr/lib/jvm/default/include -I/usr/lib/jvm/default/include/linux
 // -I = JRE-Header Files
-tasks.register("compileLibrary", Exec) {
+val compileLibraryTask = tasks.register<Exec>("compileLibrary") {
     group = "MyTasks"
     description = "Compile JNI-Library"
 
@@ -42,4 +42,4 @@ tasks.register("compileLibrary", Exec) {
     //     return standardOutput.toString()
     // }
 }
-processResources.finalizedBy("compileLibrary")
+tasks.named("processResources").get(compileLibraryTask).
