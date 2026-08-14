@@ -30,10 +30,6 @@ public final class MultimediaReporter {
             return createSqLite(readonly, "jdbc:sqlite:/home/tommy/.config/banshee-1/banshee.db");
         }
 
-        static DataSource clementineSqLite(final boolean readonly) {
-            return createSqLite(readonly, "jdbc:sqlite:/home/tommy/.config/Clementine/clementine.db");
-        }
-
         static DataSource kodiMusicSqLite(final boolean readonly) {
             return createSqLite(readonly, "jdbc:sqlite:/home/tommy/.kodi/userdata/Database/MyMusic82.db");
         }
