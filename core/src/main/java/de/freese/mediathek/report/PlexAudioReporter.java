@@ -13,11 +13,12 @@ import javax.sql.DataSource;
  * @since 05.04.2020
  */
 public class PlexAudioReporter extends AbstractMediaReporter {
-    @Override
-    public void updateDbFromReport(final DataSource dataSource, final Path path) throws Exception {
-        // ZoneId zoneId = ZoneId.of("Europe/Berlin");
-        // ZoneOffset zoneOffset = ZoneOffset.ofHours(+1);
+    public PlexAudioReporter(final DataSource dataSource) {
+        super(dataSource);
+    }
 
+    @Override
+    public void updateDbFromReport(final Path path) throws Exception {
         final String sql = """
                 update
                     metadata_item_settings
@@ -29,7 +30,7 @@ public class PlexAudioReporter extends AbstractMediaReporter {
 
         final List<Map<String, String>> heardMusic = readHeardMusik(path);
 
-        try (Connection con = dataSource.getConnection();
+        try (Connection con = getDataSource().getConnection();
              PreparedStatement pstmt = con.prepareStatement(sql)) {
             con.setAutoCommit(false);
 
@@ -62,7 +63,7 @@ public class PlexAudioReporter extends AbstractMediaReporter {
     }
 
     @Override
-    public void writeReport(final DataSource dataSource, final Path path) throws Exception {
+    public void writeReport(final Path path) throws Exception {
         throw new UnsupportedOperationException("writeReport not implemented");
     }
 }

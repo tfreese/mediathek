@@ -12,13 +12,17 @@ import javax.sql.DataSource;
  * @since 05.04.2020
  */
 public class BansheeAudioReporter extends AbstractMediaReporter {
+    public BansheeAudioReporter(final DataSource dataSource) {
+        super(dataSource);
+    }
+
     @Override
-    public void updateDbFromReport(final DataSource dataSource, final Path path) throws Exception {
+    public void updateDbFromReport(final Path path) throws Exception {
         throw new UnsupportedOperationException("updateDbFromReport not implemented");
     }
 
     @Override
-    public void writeReport(final DataSource dataSource, final Path path) throws Exception {
+    public void writeReport(final Path path) throws Exception {
         final String sql = """
                 select
                     car.name as artist,
@@ -32,18 +36,10 @@ public class BansheeAudioReporter extends AbstractMediaReporter {
                 order by artist asc, song asc
                 """;
 
-        try (Connection connection = dataSource.getConnection();
+        try (Connection connection = getDataSource().getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
             writeResultSet(resultSet, path);
         }
-
-        //        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        //
-        //        jdbcTemplate.query(sql.toString(), resultSet -> {
-        //            writeResultSet(resultSet, path);
-        //
-        //            return null;
-        //        });
     }
 }

@@ -22,12 +22,12 @@ except OSError as e:
 # import shutil
 # shutil.rmtree(os.path.join("..", ".gradle", "configuration-cache"), ignore_errors=True)
 
-# ../gradlew --quiet :core:build :core:runMultimediaReporter
-# ../gradlew --quiet :core:runMultimediaReporter -> Gradle-Befehl ausführen.
+# ../gradlew --quiet :core:build :core:runReporter
+# ../gradlew --quiet :core:runReporter -> Gradle-Befehl ausführen.
 # Wir nutzen shell=True, damit das Skript auf Windows (.bat) und Linux/Mac gleichermaßen läuft.
 try:
     gradle_command = os.path.join("..", "gradlew")
-    subprocess.run(f"{gradle_command} --quiet run :core:runMultimediaReporter", shell=True, check=True)
+    subprocess.run(f"{gradle_command} --quiet run :core:runReporter", shell=True, check=True)
 except subprocess.CalledProcessError as e:
     print(f"Fehler bei der Gradle-Ausführung: {e}")
     sys.exit(e.returncode)

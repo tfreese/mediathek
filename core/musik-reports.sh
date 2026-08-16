@@ -8,7 +8,7 @@ BASEDIR="$(dirname "$0")" # Script directory
 cd "$BASEDIR" || exit
 
 #rm -rf ../.gradle/configuration-cache/
-#../gradlew --quiet :core:build :core:runMultimediaReporter
-../gradlew --quiet :core:runMultimediaReporter
+#../gradlew --quiet :core:build :core:runReporter
+../gradlew --quiet :core:runReporter
 
 cd ~ || exit

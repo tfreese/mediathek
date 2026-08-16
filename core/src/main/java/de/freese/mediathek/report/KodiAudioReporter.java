@@ -20,8 +20,12 @@ import de.freese.mediathek.utils.MediaDbUtils;
  * @since 05.04.2020
  */
 public class KodiAudioReporter extends AbstractMediaReporter {
+    public KodiAudioReporter(final DataSource dataSource) {
+        super(dataSource);
+    }
+
     @Override
-    public void updateDbFromReport(final DataSource dataSource, final Path path) throws Exception {
+    public void updateDbFromReport(final Path path) throws Exception {
         final String sqlSelect = """
                 select
                     iTimesPlayed as playcount
@@ -45,7 +49,7 @@ public class KodiAudioReporter extends AbstractMediaReporter {
 
         final List<Map<String, String>> heardMusic = readHeardMusik(path);
 
-        try (Connection connection = dataSource.getConnection()) {
+        try (Connection connection = getDataSource().getConnection()) {
             connection.setAutoCommit(false);
 
             try (PreparedStatement stmtUpdate = connection.prepareStatement(sqlUpdate);
@@ -83,15 +87,15 @@ public class KodiAudioReporter extends AbstractMediaReporter {
     }
 
     @Override
-    public void writeReport(final DataSource dataSource, final Path path) throws Exception {
-        writeMusic(dataSource, path);
+    public void writeReport(final Path path) throws Exception {
+        writeMusic(path);
 
         // Nur mit expliziter Tabelle möglich: tommy.playlist_music_artist
-        // writeMusicPlaylistM3U(dataSource, path.resolve("Musik.m3u"));
-        // writeMusicPlaylistXSP(dataSource, path.resolve("Musik.xsp"));
+        // writeMusicPlaylistM3U( path.resolve("Musik.m3u"));
+        // writeMusicPlaylistXSP( path.resolve("Musik.xsp"));
     }
 
-    protected void writeMusic(final DataSource dataSource, final Path path) throws Exception {
+    protected void writeMusic(final Path path) throws Exception {
         final String sql = """
                 SELECT
                     strArtists AS artist,
@@ -104,7 +108,7 @@ public class KodiAudioReporter extends AbstractMediaReporter {
                 ORDER BY artist asc, song asc
                 """;
 
-        try (Connection connection = dataSource.getConnection();
+        try (Connection connection = getDataSource().getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
             writeResultSet(resultSet, path);
@@ -114,7 +118,7 @@ public class KodiAudioReporter extends AbstractMediaReporter {
     /**
      * Erzeugt eine allgemeine M3U-Playlist.<br>
      */
-    protected void writeMusicPlaylistM3U(final DataSource dataSource, final Path path) throws Exception {
+    protected void writeMusicPlaylistM3U(final Path path) throws Exception {
         MediaDbUtils.rename(path);
 
         final String sql = """
@@ -132,7 +136,7 @@ public class KodiAudioReporter extends AbstractMediaReporter {
                 ORDER BY artist, album, song, duration
                 """;
 
-        try (Connection connection = dataSource.getConnection();
+        try (Connection connection = getDataSource().getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql);
              PrintWriter pw = new PrintWriter(Files.newOutputStream(path), true, StandardCharsets.UTF_8)) {
@@ -151,7 +155,7 @@ public class KodiAudioReporter extends AbstractMediaReporter {
     /**
      * Erzeugt eine Smart-Playlist.<br>
      */
-    protected void writeMusicPlaylistXSP(final DataSource dataSource, final Path path) throws Exception {
+    protected void writeMusicPlaylistXSP(final Path path) throws Exception {
         MediaDbUtils.rename(path);
 
         final String sql = """
@@ -163,7 +167,7 @@ public class KodiAudioReporter extends AbstractMediaReporter {
                 ORDER BY operator, artist
                 """;
 
-        try (Connection connection = dataSource.getConnection();
+        try (Connection connection = getDataSource().getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql);
              PrintWriter pw = new PrintWriter(Files.newOutputStream(path), true, StandardCharsets.UTF_8)) {

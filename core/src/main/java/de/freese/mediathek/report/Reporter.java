@@ -18,31 +18,31 @@ import de.freese.mediathek.utils.StopWatch;
  * @author Thomas Freese
  * @since 05.04.2020
  */
-public final class MultimediaReporter {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MultimediaReporter.class);
+public final class Reporter {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Reporter.class);
     private static final StopWatch STOP_WATCH = new StopWatch();
 
     /**
      * @author Thomas Freese
      */
     static final class DataSources {
-        static DataSource bansheeSqLite(final boolean readonly) {
-            return createSqLite(readonly, "jdbc:sqlite:/home/tommy/.config/banshee-1/banshee.db");
+        static DataSource bansheeSqLite(final boolean readOnly) {
+            return createSqLite(readOnly, "jdbc:sqlite:/home/tommy/.config/banshee-1/banshee.db");
         }
 
-        static DataSource kodiMusicSqLite(final boolean readonly) {
-            return createSqLite(readonly, "jdbc:sqlite:/home/tommy/.kodi/userdata/Database/MyMusic82.db");
+        static DataSource kodiMusicSqLite(final boolean readOnly) {
+            return createSqLite(readOnly, "jdbc:sqlite:/home/tommy/.kodi/userdata/Database/MyMusic82.db");
         }
 
-        static DataSource plexSqlite(final boolean readonly) {
-            return createSqLite(readonly, "jdbc:sqlite:/home/tommy/com.plexapp.plugins.library.db");
+        static DataSource plexSqlite(final boolean readOnly) {
+            return createSqLite(readOnly, "jdbc:sqlite:/home/tommy/com.plexapp.plugins.library.db");
         }
 
-        static DataSource strawberrySqLite(final boolean readonly) {
-            return createSqLite(readonly, "jdbc:sqlite:/home/tommy/.local/share/strawberry/strawberry/strawberry.db");
+        static DataSource strawberrySqLite(final boolean readOnly) {
+            return createSqLite(readOnly, "jdbc:sqlite:/home/tommy/.local/share/strawberry/strawberry/strawberry.db");
         }
 
-        private static DataSource createSqLite(final boolean readonly, final String url) {
+        private static DataSource createSqLite(final boolean readOnly, final String url) {
             // Native Libraries deaktivieren für den Zugriff auf die Dateien.
             System.setProperty("sqlite.purejava", "true");
 
@@ -53,7 +53,7 @@ public final class MultimediaReporter {
             // DriverManager.setLogWriter(new PrintWriter(System.out, true));
 
             final SQLiteConfig config = new SQLiteConfig();
-            config.setReadOnly(readonly);
+            config.setReadOnly(readOnly);
             config.setReadUncommitted(true);
 
             // final SingleConnectionDataSource dataSource = new SingleConnectionDataSource();
@@ -77,27 +77,14 @@ public final class MultimediaReporter {
     }
 
     static void main() throws Exception {
-        // final MediaReporter mediaReporter = new BansheeAudioReporter();
-        // final MediaReporter mediaReporter = new ClementineAudioReporter();
-        // final MediaReporter mediaReporter = new KodiAudioReporter();
-        // final MediaReporter mediaReporter = new PlexAudioReporter();
-        final MediaReporter mediaReporter = new StrawberryAudioReporter();
-
         STOP_WATCH.start("connect");
-        final DataSource dataSource = DataSources.strawberrySqLite(true);
+        DataSource dataSource = DataSources.strawberrySqLite(true);
         STOP_WATCH.stop();
 
-        // final Set<String> extensions = new TreeSet<>();
-        // try (Connection connection = dataSource.getConnection();
-        //      Statement statement = connection.createStatement();
-        //      ResultSet resultSet = statement.executeQuery("select url from songs")) {
-        //     while (resultSet.next()) {
-        //         final String url = resultSet.getString("URL");
-        //         extensions.add(PlayerUtils.getFileExtension(url));
-        //     }
-        // }
-        //
-        // LOGGER.info("Extensions: {}", extensions);
+        MediaReporter mediaReporter = new StrawberryAudioReporter(dataSource);
+        // final MediaReporter mediaReporter = new BansheeAudioReporter(dataSource);
+        // final MediaReporter mediaReporter = new KodiAudioReporter(dataSource);
+        // final MediaReporter mediaReporter = new PlexAudioReporter(dataSource);
 
         try {
             STOP_WATCH.start("writeReport");
@@ -107,8 +94,8 @@ public final class MultimediaReporter {
 
             LOGGER.info("Path: {}", path);
 
-            mediaReporter.writeReport(dataSource, path.resolve("musik-report-strawberry.csv"));
-            // mediaReporter.updateDbFromReport(dataSource, path.resolve("musik-report-strawberry.csv"));
+            mediaReporter.writeReport(path.resolve("musik-report-strawberry.csv"));
+            // mediaReporter.updateDbFromReport(path.resolve("musik-report-strawberry.csv"));
 
             STOP_WATCH.stop();
         }
@@ -119,10 +106,6 @@ public final class MultimediaReporter {
         finally {
             STOP_WATCH.start("disconnect");
 
-            // if (dataSource instanceof SingleConnectionDataSource ds) {
-            //     ds.destroy();
-            // }
-            // else
             if (dataSource instanceof final Closeable c) {
                 c.close();
             }
@@ -137,7 +120,7 @@ public final class MultimediaReporter {
         System.exit(0);
     }
 
-    private MultimediaReporter() {
+    private Reporter() {
         super();
     }
 }

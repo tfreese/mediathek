@@ -15,8 +15,12 @@ import javax.sql.DataSource;
  * @since 05.04.2020
  */
 public class StrawberryAudioReporter extends AbstractMediaReporter {
+    public StrawberryAudioReporter(final DataSource dataSource) {
+        super(dataSource);
+    }
+
     @Override
-    public void updateDbFromReport(final DataSource dataSource, final Path path) throws Exception {
+    public void updateDbFromReport(final Path path) throws Exception {
         // TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
         // TransactionStatus transactionStatus = transactionManager.getTransaction(transactionDefinition);
 
@@ -32,7 +36,7 @@ public class StrawberryAudioReporter extends AbstractMediaReporter {
 
         final List<Map<String, String>> heardMusic = readHeardMusik(path);
 
-        try (Connection con = dataSource.getConnection();
+        try (Connection con = getDataSource().getConnection();
              PreparedStatement pstmt = con.prepareStatement(sql)) {
             con.setAutoCommit(false);
 
@@ -68,7 +72,7 @@ public class StrawberryAudioReporter extends AbstractMediaReporter {
     }
 
     @Override
-    public void writeReport(final DataSource dataSource, final Path path) throws Exception {
+    public void writeReport(final Path path) throws Exception {
         final String sql = """
                 select
                     ARTIST,
@@ -81,7 +85,7 @@ public class StrawberryAudioReporter extends AbstractMediaReporter {
                 order by ARTIST asc, SONG asc
                 """;
 
-        try (Connection connection = dataSource.getConnection();
+        try (Connection connection = getDataSource().getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
             writeResultSet(resultSet, path);

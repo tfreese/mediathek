@@ -4,6 +4,9 @@ import java.nio.file.Path;
 import java.sql.ResultSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+
+import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +18,18 @@ import de.freese.mediathek.utils.MediaDbUtils;
  * @since 05.04.2020
  */
 public abstract class AbstractMediaReporter implements MediaReporter {
+    private final DataSource dataSource;
     private final Logger logger = LoggerFactory.getLogger(getClass());
+
+    protected AbstractMediaReporter(final DataSource dataSource) {
+        super();
+
+        this.dataSource = Objects.requireNonNull(dataSource, "dataSource required");
+    }
+
+    protected DataSource getDataSource() {
+        return dataSource;
+    }
 
     protected Logger getLogger() {
         return logger;

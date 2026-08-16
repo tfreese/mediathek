@@ -17,10 +17,10 @@ dependencies {
     runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
 }
 
-val mainClazz = "de.freese.mediathek.report.MultimediaReporter"
+val mainClazz = "de.freese.mediathek.report.Reporter"
 
-// Start: gradle runMultimediaReporter
-tasks.register<JavaExec>("runMultimediaReporter") {
+// Start: gradle runReporter
+tasks.register<JavaExec>("runReporter") {
     group = "MyTasks"
     description = "Run the main class with JavaExecTask"
 

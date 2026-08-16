@@ -15,8 +15,12 @@ import javax.sql.DataSource;
  * @since 05.04.2020
  */
 public class KodiMovieReporter extends AbstractMediaReporter {
+    public KodiMovieReporter(final DataSource dataSource) {
+        super(dataSource);
+    }
+
     @Override
-    public void updateDbFromReport(final DataSource dataSource, final Path path) throws Exception {
+    public void updateDbFromReport(final Path path) throws Exception {
         final String sqlSelect = """
                 select
                     files.playcount,
@@ -48,7 +52,7 @@ public class KodiMovieReporter extends AbstractMediaReporter {
 
         final List<Map<String, String>> seenMovies = readSeenMovies(path);
 
-        try (Connection connection = dataSource.getConnection()) {
+        try (Connection connection = getDataSource().getConnection()) {
             connection.setAutoCommit(false);
 
             try (PreparedStatement stmtUpdate = connection.prepareStatement(sqlUpdate);
@@ -89,7 +93,7 @@ public class KodiMovieReporter extends AbstractMediaReporter {
     }
 
     @Override
-    public void writeReport(final DataSource dataSource, final Path path) throws Exception {
+    public void writeReport(final Path path) throws Exception {
         final String sql = """
                 SELECT
                     c00 AS movie,
@@ -102,7 +106,7 @@ public class KodiMovieReporter extends AbstractMediaReporter {
                 ORDER BY movie asc
                 """;
 
-        try (Connection connection = dataSource.getConnection();
+        try (Connection connection = getDataSource().getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
             writeResultSet(resultSet, path);
