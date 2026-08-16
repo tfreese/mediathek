@@ -42,8 +42,7 @@ public abstract class AbstractAppConfig implements EnvironmentAware {
     public abstract DataSource dataSourceVideo();
 
     // @Bean(destroyMethod = "shutdownNow")
-    // public Executor executor()
-    // {
+    // public Executor executor() {
     // ThreadPoolExecutor executor = new ThreadPoolExecutor(3, 10, 60L, TimeUnit.SECONDS, new SynchronousQueue<>(), new ThreadPoolExecutor.CallerRunsPolicy());
     //
     // return executor;
