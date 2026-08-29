@@ -1,4 +1,3 @@
-// Created: 15 Aug. 2025
 package de.freese.player.test.ui.swing;
 
 import java.awt.event.WindowAdapter;
@@ -17,12 +16,14 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
 /**
  * @author Thomas Freese
+ * @since 15.08.2025
  */
 public final class TestPlayer {
     private static final Logger LOGGER = LoggerFactory.getLogger(TestPlayer.class);
@@ -54,21 +55,21 @@ public final class TestPlayer {
                         try {
                             Files.walkFileTree(tempPath, new SimpleFileVisitor<>() {
                                 @Override
-                                public FileVisitResult postVisitDirectory(final Path dir, final IOException exc) throws IOException {
+                                public @NonNull FileVisitResult postVisitDirectory(final @NonNull Path dir, final IOException exc) throws IOException {
                                     Files.delete(dir);
 
                                     return FileVisitResult.CONTINUE;
                                 }
 
                                 @Override
-                                public FileVisitResult visitFile(final Path file, final BasicFileAttributes attrs) throws IOException {
+                                public @NonNull FileVisitResult visitFile(final @NonNull Path file, final @NonNull BasicFileAttributes attrs) throws IOException {
                                     Files.delete(file);
 
                                     return FileVisitResult.CONTINUE;
                                 }
                             });
                         }
-                        catch (IOException ex) {
+                        catch (final IOException ex) {
                             LOGGER.error(ex.getMessage(), ex);
                         }
                     }
@@ -91,7 +92,7 @@ public final class TestPlayer {
                 frame.setVisible(true);
             });
         }
-        catch (Exception ex) {
+        catch (final Exception ex) {
             LOGGER.error(ex.getMessage(), ex);
         }
     }

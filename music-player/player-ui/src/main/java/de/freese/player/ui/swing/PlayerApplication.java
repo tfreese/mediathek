@@ -1,4 +1,3 @@
-// Created: 18 Aug. 2024
 package de.freese.player.ui.swing;
 
 import java.awt.Color;
@@ -29,6 +28,7 @@ import de.freese.player.ui.swing.component.playlist.ReloadPlayListSwingWorker;
 
 /**
  * @author Thomas Freese
+ * @since 18.08.2024
  */
 public final class PlayerApplication {
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayerApplication.class);

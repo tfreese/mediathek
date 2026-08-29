@@ -1,8 +1,8 @@
-// Created: 22 Sept. 2024
 package de.freese.player.ui.model;
 
 /**
  * @author Thomas Freese
+ * @since 22.09.2024
  */
 public final class PlayList {
     private long id;

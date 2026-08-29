@@ -1,4 +1,3 @@
-// Created: 30 Sept. 2024
 package de.freese.player.test;
 
 import java.io.InputStream;
@@ -12,6 +11,7 @@ import de.freese.player.core.exception.PlayerException;
 
 /**
  * @author Thomas Freese
+ * @since 30.09.2024
  */
 public final class WavHeaderDemo {
     private static final Logger LOGGER = LoggerFactory.getLogger(WavHeaderDemo.class);
@@ -30,12 +30,12 @@ public final class WavHeaderDemo {
             // https://de.wikipedia.org/wiki/RIFF_WAVE
 
             // RIFF-Section, 12 Byte
-            LOGGER.info("TYPE: {}", new String(Arrays.copyOfRange(header, 0, 4)));
+            LOGGER.atInfo().log("TYPE: {}", new String(Arrays.copyOfRange(header, 0, 4)));
             LOGGER.info("FileSize[b]: {}", toInt(Arrays.copyOfRange(header, 4, 8), false));
-            LOGGER.info("WAVE: {}", new String(Arrays.copyOfRange(header, 8, 12)));
+            LOGGER.atInfo().log("WAVE: {}", new String(Arrays.copyOfRange(header, 8, 12)));
 
             // FMT-Section, 24 Byte
-            LOGGER.info("FMT: {}", new String(Arrays.copyOfRange(header, 12, 16)));
+            LOGGER.atInfo().log("FMT: {}", new String(Arrays.copyOfRange(header, 12, 16)));
             LOGGER.info("FMT-Length: {}", toInt(Arrays.copyOfRange(header, 16, 20), false));
             LOGGER.info("FORMAT (1=PCM): {}", toShort(Arrays.copyOfRange(header, 20, 22), false));
             LOGGER.info("Channels: {}", toShort(Arrays.copyOfRange(header, 22, 24), false));
@@ -45,10 +45,10 @@ public final class WavHeaderDemo {
             LOGGER.info("Bits/Sample: {}", toShort(Arrays.copyOfRange(header, 34, 36), false));
 
             // Data-Section, 8 Byte
-            LOGGER.info("Signature: {}", new String(Arrays.copyOfRange(header, 36, 40)));
+            LOGGER.atInfo().log("Signature: {}", new String(Arrays.copyOfRange(header, 36, 40)));
             LOGGER.info("Data-Length: {}", toInt(Arrays.copyOfRange(header, 40, 44), false));
         }
-        catch (Exception ex) {
+        catch (final Exception ex) {
             LOGGER.error(ex.getMessage(), ex);
         }
     }

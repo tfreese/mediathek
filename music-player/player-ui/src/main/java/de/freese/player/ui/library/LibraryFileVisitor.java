@@ -1,4 +1,3 @@
-// Created: 08 Sept. 2024
 package de.freese.player.ui.library;
 
 import java.io.IOException;
@@ -10,11 +9,14 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 
+import org.jspecify.annotations.NonNull;
+
 import de.freese.player.core.model.AudioCodec;
 import de.freese.player.core.util.PlayerUtils;
 
 /**
  * @author Thomas Freese
+ * @since 08.09.2024
  */
 public class LibraryFileVisitor implements FileVisitor<Path> {
 
@@ -30,17 +32,17 @@ public class LibraryFileVisitor implements FileVisitor<Path> {
     }
 
     @Override
-    public FileVisitResult postVisitDirectory(final Path dir, final IOException exc) throws IOException {
+    public @NonNull FileVisitResult postVisitDirectory(final Path dir, final IOException exc) throws IOException {
         return FileVisitResult.CONTINUE;
     }
 
     @Override
-    public FileVisitResult preVisitDirectory(final Path dir, final BasicFileAttributes attrs) throws IOException {
+    public @NonNull FileVisitResult preVisitDirectory(final Path dir, final @NonNull BasicFileAttributes attrs) throws IOException {
         return FileVisitResult.CONTINUE;
     }
 
     @Override
-    public FileVisitResult visitFile(final Path file, final BasicFileAttributes attrs) throws IOException {
+    public @NonNull FileVisitResult visitFile(final Path file, final @NonNull BasicFileAttributes attrs) throws IOException {
         final String fileExtension = PlayerUtils.getFileExtension(file);
 
         if (supportedAudioFiles.contains(fileExtension)) {
@@ -51,7 +53,7 @@ public class LibraryFileVisitor implements FileVisitor<Path> {
     }
 
     @Override
-    public FileVisitResult visitFileFailed(final Path file, final IOException exc) throws IOException {
+    public @NonNull FileVisitResult visitFileFailed(final Path file, final @NonNull IOException exc) throws IOException {
         return FileVisitResult.CONTINUE;
     }
 }

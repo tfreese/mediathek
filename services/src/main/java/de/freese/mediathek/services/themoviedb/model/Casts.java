@@ -1,4 +1,3 @@
-// Created: 26.04.2014
 package de.freese.mediathek.services.themoviedb.model;
 
 import java.util.ArrayList;
@@ -8,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * @author Thomas Freese
+ * @since 26.04.2014
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Casts {
@@ -25,7 +25,7 @@ public class Casts {
     public List<Crew> getDirectors() {
         final List<Crew> directors = new ArrayList<>();
 
-        for (Crew c : crew) {
+        for (final Crew c : crew) {
             if ("Director".equals(c.getJob())) {
                 directors.add(c);
             }

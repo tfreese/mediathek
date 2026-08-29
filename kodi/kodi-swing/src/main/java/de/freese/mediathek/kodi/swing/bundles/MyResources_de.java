@@ -1,10 +1,10 @@
-// Created: 28.12.22
 package de.freese.mediathek.kodi.swing.bundles;
 
 import java.util.Map;
 
 /**
  * @author Thomas Freese
+ * @since 28.12.2022
  */
 public class MyResources_de extends AbstractMapResourceBundle {
     @Override

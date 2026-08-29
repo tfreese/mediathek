@@ -1,4 +1,3 @@
-// Created: 28.12.22
 package de.freese.mediathek.kodi.swing.service;
 
 import java.util.List;
@@ -11,6 +10,7 @@ import de.freese.mediathek.utils.MediaDbUtils;
 
 /**
  * @author Thomas Freese
+ * @since 28.12.2022
  */
 public class MovieService extends AbstractShowAndMovieService<Movie> {
     public MovieService(final ApplicationContext applicationContext) {

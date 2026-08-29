@@ -1,4 +1,3 @@
-// Created: 16.09.2014
 package de.freese.mediathek.kodi.api;
 
 import java.util.List;
@@ -9,6 +8,7 @@ import de.freese.mediathek.kodi.model.Show;
 
 /**
  * @author Thomas Freese
+ * @since 16.09.2014
  */
 public interface MediaService {
     List<Movie> getGenreMovies(int genreID);

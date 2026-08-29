@@ -1,4 +1,3 @@
-// Created: 08 Sept. 2024
 package de.freese.player.ui;
 
 import java.net.URI;
@@ -34,6 +33,7 @@ import de.freese.player.ui.model.PlayList;
 
 /**
  * @author Thomas Freese
+ * @since 08.09.2024
  */
 public final class PlayerRepository {
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayerRepository.class);
@@ -80,7 +80,9 @@ public final class PlayerRepository {
         }
 
         final String sql = """
-                delete from config
+                delete
+                from
+                    config
                 where
                     content = ?
                 """;
@@ -90,14 +92,17 @@ public final class PlayerRepository {
             preparedStatement.setString(1, path.toUri().toString());
             preparedStatement.executeUpdate();
         }
-        catch (SQLException ex) {
+        catch (final SQLException ex) {
             throw new PlayerException(ex);
         }
     }
 
     public void deleteOrphansSongs(final Set<URI> urisNew) {
         final String sqlSelect = """
-                select uri from song
+                select
+                    uri
+                from
+                    song
                 """;
 
         final Set<URI> urisExisting = new HashSet<>();
@@ -110,7 +115,7 @@ public final class PlayerRepository {
                 urisExisting.add(uri);
             }
         }
-        catch (SQLException ex) {
+        catch (final SQLException ex) {
             throw new PlayerException(ex);
         }
 
@@ -121,7 +126,9 @@ public final class PlayerRepository {
 
     public void deletePlayList(final String name) {
         final String sql = """
-                delete from playlist
+                delete
+                from
+                    playlist
                 where
                     name = ?
                 """;
@@ -132,7 +139,7 @@ public final class PlayerRepository {
 
             preparedStatement.executeUpdate();
         }
-        catch (SQLException ex) {
+        catch (final SQLException ex) {
             throw new PlayerException(ex);
         }
     }
@@ -151,7 +158,9 @@ public final class PlayerRepository {
         }
 
         final String sql = """
-                delete from song
+                delete
+                from
+                    song
                 where
                     uri = ?
                 """;
@@ -161,7 +170,7 @@ public final class PlayerRepository {
 
             int n = 0;
 
-            for (URI uri : uris) {
+            for (final URI uri : uris) {
                 preparedStatement.clearParameters();
                 preparedStatement.setString(1, uri.toString());
                 preparedStatement.addBatch();
@@ -175,7 +184,7 @@ public final class PlayerRepository {
 
             preparedStatement.executeBatch();
         }
-        catch (SQLException ex) {
+        catch (final SQLException ex) {
             throw new PlayerException(ex);
         }
     }
@@ -186,8 +195,9 @@ public final class PlayerRepository {
                     pl.id,
                     pl.name,
                     pl.where_clause
-                from playlist pl
-                inner join config c on c.content = pl.name
+                from
+                    playlist pl
+                    inner join config c on c.content = pl.name
                 where
                     c.name = 'currentPlayList'
                 """;
@@ -209,7 +219,7 @@ public final class PlayerRepository {
                 result.setWhereClause("1 = 1");
             }
         }
-        catch (SQLException ex) {
+        catch (final SQLException ex) {
             throw new PlayerException(ex);
         }
 
@@ -218,7 +228,10 @@ public final class PlayerRepository {
 
     public List<Path> getLibraryPaths() {
         final String sql = """
-                select content from config
+                select
+                    content
+                from
+                    config
                 where
                     name like 'library_path_%'
                 """;
@@ -233,7 +246,7 @@ public final class PlayerRepository {
                 result.add(Path.of(uri));
             }
         }
-        catch (SQLException ex) {
+        catch (final SQLException ex) {
             throw new PlayerException(ex);
         }
 
@@ -246,7 +259,8 @@ public final class PlayerRepository {
                     id,
                     name,
                     where_clause
-                from playlist
+                from
+                    playlist
                 order by
                     name asc
                 """;
@@ -265,7 +279,7 @@ public final class PlayerRepository {
                 result.add(playList);
             }
         }
-        catch (SQLException ex) {
+        catch (final SQLException ex) {
             throw new PlayerException(ex);
         }
 
@@ -280,7 +294,10 @@ public final class PlayerRepository {
         }
 
         final String sql = """
-                select * from song
+                select
+                    *
+                from
+                    song
                 where
                     %s
                 order by
@@ -316,7 +333,7 @@ public final class PlayerRepository {
                 consumer.accept(audioSource);
             }
         }
-        catch (SQLException ex) {
+        catch (final SQLException ex) {
             throw new PlayerException(ex);
         }
     }
@@ -344,7 +361,7 @@ public final class PlayerRepository {
             preparedStatement.setString(2, name);
             preparedStatement.executeUpdate();
         }
-        catch (SQLException ex) {
+        catch (final SQLException ex) {
             throw new PlayerException(ex);
         }
     }
@@ -355,7 +372,10 @@ public final class PlayerRepository {
         }
 
         String sql = """
-                select count(*) from config
+                select
+                    count(*)
+                from
+                    config
                 where
                     name like 'library_path_%'
                 """;
@@ -368,7 +388,7 @@ public final class PlayerRepository {
             resultSet.next();
             pathCount = resultSet.getInt(1);
         }
-        catch (SQLException ex) {
+        catch (final SQLException ex) {
             throw new PlayerException(ex);
         }
 
@@ -385,7 +405,7 @@ public final class PlayerRepository {
 
             preparedStatement.executeUpdate();
         }
-        catch (SQLException ex) {
+        catch (final SQLException ex) {
             throw new PlayerException(ex);
         }
     }
@@ -423,7 +443,7 @@ public final class PlayerRepository {
                 }
             }
         }
-        catch (SQLException ex) {
+        catch (final SQLException ex) {
             throw new PlayerException(ex);
         }
     }
@@ -473,7 +493,7 @@ public final class PlayerRepository {
 
             preparedStatement.executeUpdate();
         }
-        catch (SQLException ex) {
+        catch (final SQLException ex) {
             throw new PlayerException(ex);
         }
     }
@@ -484,7 +504,8 @@ public final class PlayerRepository {
         }
 
         final String sql = """
-                update song
+                update
+                    song
                 set
                     play_count = ?
                 where
@@ -497,7 +518,7 @@ public final class PlayerRepository {
             preparedStatement.setString(2, uri.toString());
             preparedStatement.executeUpdate();
         }
-        catch (SQLException ex) {
+        catch (final SQLException ex) {
             throw new PlayerException(ex);
         }
     }

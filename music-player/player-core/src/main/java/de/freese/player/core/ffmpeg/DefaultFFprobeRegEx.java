@@ -1,4 +1,3 @@
-// Created: 15 Juli 2024
 package de.freese.player.core.ffmpeg;
 
 import java.io.BufferedReader;
@@ -19,6 +18,7 @@ import de.freese.player.core.input.DefaultAudioSource;
 
 /**
  * @author Thomas Freese
+ * @since 15.07.2024
  */
 final class DefaultFFprobeRegEx extends AbstractFF implements FFprobe {
     private static final Pattern PATTERN_BIT_RATE = Pattern.compile("(\\d+)\\s+kb/s", Pattern.CASE_INSENSITIVE);
@@ -240,9 +240,7 @@ final class DefaultFFprobeRegEx extends AbstractFF implements FFprobe {
         final ProcessBuilder processBuilder = createProcessBuilder(command);
         processBuilder.redirectErrorStream(true);
 
-        try {
-            final Process process = processBuilder.start();
-
+        try (Process process = processBuilder.start()) {
             final String output;
 
             try (BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) {
@@ -262,13 +260,13 @@ final class DefaultFFprobeRegEx extends AbstractFF implements FFprobe {
 
             return audioFile;
         }
-        catch (IOException ex) {
+        catch (final IOException ex) {
             throw new UncheckedIOException(ex);
         }
-        catch (RuntimeException ex) {
+        catch (final RuntimeException ex) {
             throw ex;
         }
-        catch (InterruptedException ex) {
+        catch (final InterruptedException ex) {
             // Restore interrupted state.
             Thread.currentThread().interrupt();
 

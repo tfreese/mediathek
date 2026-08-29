@@ -1,4 +1,3 @@
-// Created: 10 Aug. 2024
 package de.freese.player.fft.reader;
 
 import java.io.IOException;
@@ -13,6 +12,7 @@ import de.freese.player.fft.config.FFTConfig;
 
 /**
  * @author Thomas Freese
+ * @since 10.08.2024
  */
 public interface AudioReader extends Iterator<int[]> {
     static AudioReader of(final Path audioFile) throws UnsupportedAudioFileException, IOException {

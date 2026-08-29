@@ -1,4 +1,3 @@
-// Created: 27.04.2014
 package de.freese.mediathek.services.themoviedb.model;
 
 import java.util.Objects;
@@ -8,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 /**
  * @author Thomas Freese
+ * @since 27.04.2014
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Language implements Comparable<Language> {
@@ -30,7 +30,7 @@ public class Language implements Comparable<Language> {
         if (!(o instanceof final Language language)) {
             return false;
         }
-        
+
         return Objects.equals(iso6391, language.iso6391) && Objects.equals(name, language.name);
     }
 
@@ -58,13 +58,8 @@ public class Language implements Comparable<Language> {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("Language [iso_639_1=");
-        builder.append(iso6391);
-        builder.append(", name=");
-        builder.append(name);
-        builder.append("]");
-
-        return builder.toString();
+        return "Language [iso_639_1=" + iso6391
+                + ", name=" + name
+                + "]";
     }
 }

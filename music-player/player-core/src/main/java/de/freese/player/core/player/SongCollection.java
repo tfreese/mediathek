@@ -1,4 +1,3 @@
-// Created: 08 Sept. 2024
 package de.freese.player.core.player;
 
 import java.time.Duration;
@@ -9,6 +8,7 @@ import de.freese.player.core.input.AudioSource;
 
 /**
  * @author Thomas Freese
+ * @since 08.09.2024
  */
 public interface SongCollection {
     SongCollection addAudioSource(AudioSource audioSource);

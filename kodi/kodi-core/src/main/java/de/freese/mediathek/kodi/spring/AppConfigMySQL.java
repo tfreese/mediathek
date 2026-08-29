@@ -1,4 +1,3 @@
-// Created: 16.09.2014
 package de.freese.mediathek.kodi.spring;
 
 import javax.sql.DataSource;
@@ -12,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 
 /**
  * @author Thomas Freese
+ * @since 16.09.2014
  */
 @Configuration
 @Profile("mysql")

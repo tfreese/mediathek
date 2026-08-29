@@ -1,4 +1,3 @@
-// Created: 28.12.22
 package de.freese.mediathek.kodi.swing.service;
 
 import java.util.List;
@@ -11,6 +10,7 @@ import de.freese.mediathek.kodi.model.Show;
 
 /**
  * @author Thomas Freese
+ * @since 28.12.2022
  */
 public class GenreService extends AbstractService {
     public GenreService(final ApplicationContext applicationContext) {

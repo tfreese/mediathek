@@ -1,4 +1,3 @@
-// Created: 02 Feb. 2025
 package de.freese.player.core.player;
 
 import java.nio.file.Path;
@@ -26,6 +25,7 @@ import de.freese.player.core.model.Window;
 
 /**
  * @author Thomas Freese
+ * @since 02.02.2025
  */
 public final class DefaultPlayer implements Player {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultPlayer.class);
@@ -137,7 +137,7 @@ public final class DefaultPlayer implements Player {
                     //
                     //     // throw ex;
                     // }
-                    catch (Exception ex) {
+                    catch (final Exception ex) {
                         LOGGER.error(ex.getMessage(), ex);
 
                         stop();
@@ -186,7 +186,7 @@ public final class DefaultPlayer implements Player {
             // catch (PlayerException ex) {
             //     throw ex;
             // }
-            catch (Exception ex) {
+            catch (final Exception ex) {
                 LOGGER.error(ex.getMessage(), ex);
                 // throw new RuntimeException(ex);
             }
@@ -200,7 +200,7 @@ public final class DefaultPlayer implements Player {
 
             audioPlayerSource = new DefaultAudioPlayerSource(audioSource, audioInputStream);
         }
-        catch (Exception ex) {
+        catch (final Exception ex) {
             LOGGER.error(ex.getMessage(), ex);
         }
     }

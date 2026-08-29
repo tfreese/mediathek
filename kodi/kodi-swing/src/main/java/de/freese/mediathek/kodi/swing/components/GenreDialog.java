@@ -1,4 +1,3 @@
-// Created: 28.09.2014
 package de.freese.mediathek.kodi.swing.components;
 
 import java.awt.GridBagLayout;
@@ -24,6 +23,7 @@ import de.freese.mediathek.kodi.swing.components.list.GenreListCellRenderer;
 
 /**
  * @author Thomas Freese
+ * @since 28.09.2014
  */
 public class GenreDialog extends JDialog {
     @Serial

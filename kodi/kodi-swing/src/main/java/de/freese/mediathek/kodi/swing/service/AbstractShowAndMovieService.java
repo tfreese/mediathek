@@ -1,4 +1,3 @@
-// Created: 28.12.22
 package de.freese.mediathek.kodi.swing.service;
 
 import java.awt.image.BufferedImage;
@@ -17,6 +16,7 @@ import de.freese.mediathek.utils.cache.ResourceCache;
 
 /**
  * @author Thomas Freese
+ * @since 28.12.2022
  */
 public abstract class AbstractShowAndMovieService<T> extends AbstractService {
     protected AbstractShowAndMovieService(final ApplicationContext applicationContext) {

@@ -1,4 +1,3 @@
-// Created: 29 Sept. 2024
 package de.freese.player.ui.swing.component.playlist;
 
 import java.util.List;
@@ -11,6 +10,7 @@ import de.freese.player.ui.model.PlayList;
 
 /**
  * @author Thomas Freese
+ * @since 29.09.2024
  */
 public class ReloadPlayListSwingWorker extends SwingWorker<Void, AudioSource> {
     public ReloadPlayListSwingWorker() {

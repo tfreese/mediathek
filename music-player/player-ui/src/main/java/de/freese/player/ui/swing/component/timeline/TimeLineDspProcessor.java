@@ -1,4 +1,3 @@
-// Created: 03 Okt. 2024
 package de.freese.player.ui.swing.component.timeline;
 
 import java.util.Objects;
@@ -14,6 +13,7 @@ import de.freese.player.core.model.Window;
 
 /**
  * @author Thomas Freese
+ * @since 03.10.2024
  */
 public final class TimeLineDspProcessor implements DspProcessor {
     private static final Logger LOGGER = LoggerFactory.getLogger(TimeLineDspProcessor.class);

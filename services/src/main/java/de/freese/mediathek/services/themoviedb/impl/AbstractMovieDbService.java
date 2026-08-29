@@ -1,4 +1,3 @@
-// Created: 26.04.2014
 package de.freese.mediathek.services.themoviedb.impl;
 
 import org.springframework.util.Assert;
@@ -10,6 +9,7 @@ import de.freese.mediathek.services.AbstractService;
  * Abstracter Basisservice.
  *
  * @author Thomas Freese
+ * @since 26.04.2014
  */
 public abstract class AbstractMovieDbService extends AbstractService {
     private RestTemplate restTemplate;
@@ -39,9 +39,6 @@ public abstract class AbstractMovieDbService extends AbstractService {
      * Liefert <a href="https://api.themoviedb.org/3/">themoviedb</a>.
      */
     protected StringBuilder url() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append("https://api.themoviedb.org/3/");
-
-        return sb;
+        return new StringBuilder("https://api.themoviedb.org/3/");
     }
 }

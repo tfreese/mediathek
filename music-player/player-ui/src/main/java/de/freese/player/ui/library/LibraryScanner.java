@@ -1,4 +1,3 @@
-// Created: 08 Sept. 2024
 package de.freese.player.ui.library;
 
 import java.io.IOException;
@@ -26,6 +25,7 @@ import de.freese.player.ui.ApplicationContext;
 
 /**
  * @author Thomas Freese
+ * @since 08.09.2024
  */
 public final class LibraryScanner {
     private static final FileVisitOption[] FILEVISITOPTION_NO_SYNLINKS = {};
@@ -35,11 +35,11 @@ public final class LibraryScanner {
     public void scan(final Set<Path> paths, final IntConsumer sizeConsumer, final Consumer<AudioSource> audioSourceConsumer) {
         final List<Path> files = new ArrayList<>();
 
-        for (Path path : paths) {
+        for (final Path path : paths) {
             try {
                 Files.walkFileTree(path, Set.of(FILEVISITOPTION_NO_SYNLINKS), Integer.MAX_VALUE, new LibraryFileVisitor(files::add));
             }
-            catch (IOException ex) {
+            catch (final IOException ex) {
                 LOGGER.error(ex.getMessage());
             }
         }
@@ -59,7 +59,7 @@ public final class LibraryScanner {
                     final AudioSource audioSource = AudioSourceFactory.createAudioSource(uri);
                     audioSourceConsumer.accept(audioSource);
                 }
-                catch (Exception ex) {
+                catch (final Exception ex) {
                     LOGGER.error("{}: {}", uri, ex.getMessage());
                 }
 
@@ -71,17 +71,17 @@ public final class LibraryScanner {
 
         // Wait until all are finished.
         try {
-            for (Future<Void> future : futures) {
+            for (final Future<Void> future : futures) {
                 future.get();
             }
         }
-        catch (InterruptedException ex) {
+        catch (final InterruptedException ex) {
             LOGGER.error(ex.getMessage(), ex);
 
             // Restore interrupted state.
             Thread.currentThread().interrupt();
         }
-        catch (ExecutionException ex) {
+        catch (final ExecutionException ex) {
             LOGGER.error(ex.getMessage(), ex);
         }
     }

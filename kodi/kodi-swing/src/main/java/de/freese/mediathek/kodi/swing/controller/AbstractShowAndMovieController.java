@@ -1,4 +1,3 @@
-// Created: 28.12.22
 package de.freese.mediathek.kodi.swing.controller;
 
 import java.util.ArrayList;
@@ -15,6 +14,7 @@ import de.freese.mediathek.kodi.swing.view.AbstractShowAndMovieView;
 
 /**
  * @author Thomas Freese
+ * @since 28.12.2022
  */
 public abstract class AbstractShowAndMovieController<T> extends AbstractController {
     protected AbstractShowAndMovieController(final AbstractShowAndMovieService<T> service, final AbstractShowAndMovieView<T> view) {
@@ -65,13 +65,13 @@ public abstract class AbstractShowAndMovieController<T> extends AbstractControll
                     getService().updateEntityGenres(entity, newGenreIDs);
                     setSelected(entity);
                 }
-                catch (InterruptedException ex) {
+                catch (final InterruptedException ex) {
                     getLogger().error(ex.getMessage(), ex);
 
                     // Restore interrupted state.
                     Thread.currentThread().interrupt();
                 }
-                catch (Exception ex) {
+                catch (final Exception ex) {
                     getLogger().error(ex.getMessage(), ex);
                 }
             }
@@ -112,13 +112,13 @@ public abstract class AbstractShowAndMovieController<T> extends AbstractControll
                 try {
                     getView().getImageLabel().setIcon(get());
                 }
-                catch (InterruptedException ex) {
+                catch (final InterruptedException ex) {
                     getLogger().error("No valid url: {}", ex.getMessage());
 
                     // Restore interrupted state.
                     Thread.currentThread().interrupt();
                 }
-                catch (Exception ex) {
+                catch (final Exception ex) {
                     getLogger().error("No valid url: {}", ex.getMessage());
                 }
             }

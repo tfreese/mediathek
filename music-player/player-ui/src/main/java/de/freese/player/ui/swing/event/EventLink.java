@@ -1,4 +1,3 @@
-// Created: 13 Okt. 2024
 package de.freese.player.ui.swing.event;
 
 import java.util.ArrayList;
@@ -7,6 +6,7 @@ import java.util.Objects;
 
 /**
  * @author Thomas Freese
+ * @since 13.10.2024
  */
 public final class EventLink {
     private final List<EventConsumer<Object>> eventConsumers = new ArrayList<>();

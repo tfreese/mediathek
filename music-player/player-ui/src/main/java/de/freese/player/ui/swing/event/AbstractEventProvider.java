@@ -1,4 +1,3 @@
-// Created: 09 Okt. 2024
 package de.freese.player.ui.swing.event;
 
 import java.util.Objects;
@@ -6,6 +5,7 @@ import java.util.function.Consumer;
 
 /**
  * @author Thomas Freese
+ * @since 09.10.2024
  */
 public abstract class AbstractEventProvider<T> implements EventProvider<T> {
     private Consumer<T> eventConsumer;

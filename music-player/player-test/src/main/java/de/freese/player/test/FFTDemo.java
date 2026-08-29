@@ -1,4 +1,3 @@
-// Created: 05 Aug. 2024
 package de.freese.player.test;
 
 import java.util.Set;
@@ -17,6 +16,7 @@ import de.freese.player.fft.sampling.WindowFunction;
 
 /**
  * @author Thomas Freese
+ * @since 05.08.2024
  */
 public final class FFTDemo {
     private static final boolean BIG_ENDIAN = false; // java.nio.ByteOrder.BIG_ENDIAN.equals(java.nio.ByteOrder.nativeOrder())

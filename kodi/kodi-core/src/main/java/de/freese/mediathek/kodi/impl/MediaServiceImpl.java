@@ -1,4 +1,3 @@
-// Created: 16.09.2014
 package de.freese.mediathek.kodi.impl;
 
 import java.util.Collections;
@@ -15,6 +14,7 @@ import de.freese.mediathek.kodi.model.Show;
 
 /**
  * @author Thomas Freese
+ * @since 16.09.2014
  */
 public class MediaServiceImpl implements MediaService {
     private final MediaDao mediaDAO;
@@ -93,7 +93,7 @@ public class MediaServiceImpl implements MediaService {
 
         getMediaDAO().deleteMovieGenres(movieID);
 
-        for (int genreID : genreIDs) {
+        for (final int genreID : genreIDs) {
             getMediaDAO().insertMovieGenre(movieID, genreID);
         }
 
@@ -109,7 +109,7 @@ public class MediaServiceImpl implements MediaService {
 
         getMediaDAO().deleteShowGenres(showID);
 
-        for (int genreID : genreIDs) {
+        for (final int genreID : genreIDs) {
             getMediaDAO().insertShowGenre(showID, genreID);
         }
 

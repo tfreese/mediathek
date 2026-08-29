@@ -1,4 +1,3 @@
-// Created: 14 Sept. 2024
 package de.freese.player.ui.swing.component.library;
 
 import java.awt.Dimension;
@@ -38,6 +37,7 @@ import de.freese.player.ui.swing.component.playlist.ReloadPlayListSwingWorker;
 
 /**
  * @author Thomas Freese
+ * @since 14.09.2024
  */
 public final class LibraryView {
     private static final Logger LOGGER = LoggerFactory.getLogger(LibraryView.class);
@@ -229,13 +229,13 @@ public final class LibraryView {
                     final SwingWorker<Void, AudioSource> swingWorker = new ReloadPlayListSwingWorker();
                     ApplicationContext.getExecutorService().execute(swingWorker);
                 }
-                catch (InterruptedException ex) {
+                catch (final InterruptedException ex) {
                     // Restore interrupted state.
                     Thread.currentThread().interrupt();
-                    
+
                     LOGGER.error(ex.getMessage(), ex);
                 }
-                catch (Exception ex) {
+                catch (final Exception ex) {
                     LOGGER.error(ex.getMessage(), ex);
                 }
             }

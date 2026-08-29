@@ -1,4 +1,3 @@
-// Created: 14 Sept. 2025
 package de.freese.player.test;
 
 import java.io.BufferedInputStream;
@@ -11,6 +10,8 @@ import java.util.Arrays;
 
 /**
  * @author chatgpt.com
+ * @author Thomas Freese
+ * @since 14.09.2025
  */
 public final class WavStreamingDecoder {
     // WavData speichert die grundlegenden WAV-Daten
@@ -157,7 +158,7 @@ public final class WavStreamingDecoder {
             final int bufferSize = 1024;
             decodeWavStream(filename, wavData, bufferSize);
         }
-        catch (IOException ex) {
+        catch (final IOException ex) {
             ex.printStackTrace();
         }
     }

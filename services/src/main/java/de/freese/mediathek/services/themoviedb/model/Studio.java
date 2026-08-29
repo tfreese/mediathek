@@ -1,4 +1,3 @@
-// Created: 27.04.2014
 package de.freese.mediathek.services.themoviedb.model;
 
 import java.util.Objects;
@@ -7,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * @author Thomas Freese
+ * @since 27.04.2014
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Studio implements Comparable<Studio> {
@@ -29,7 +29,7 @@ public class Studio implements Comparable<Studio> {
         if (!(o instanceof final Studio studio)) {
             return false;
         }
-        
+
         return id == studio.id && Objects.equals(name, studio.name);
     }
 
@@ -56,13 +56,8 @@ public class Studio implements Comparable<Studio> {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("Studio [name=");
-        builder.append(name);
-        builder.append(", id=");
-        builder.append(id);
-        builder.append("]");
-
-        return builder.toString();
+        return "Studio [name=" + name
+                + ", id=" + id
+                + "]";
     }
 }

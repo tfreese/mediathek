@@ -1,4 +1,3 @@
-// Created: 24.04.2014
 package de.freese.mediathek.services.themoviedb.model;
 
 import java.util.List;
@@ -9,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 /**
  * @author Thomas Freese
+ * @since 24.04.2014
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MovieDetails extends Movie {

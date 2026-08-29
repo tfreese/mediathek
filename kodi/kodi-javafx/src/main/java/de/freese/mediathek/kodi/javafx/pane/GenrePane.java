@@ -1,4 +1,3 @@
-// Created: 15.04.2015
 package de.freese.mediathek.kodi.javafx.pane;
 
 import java.util.ResourceBundle;
@@ -24,6 +23,7 @@ import de.freese.mediathek.kodi.model.Model;
 
 /**
  * @author Thomas Freese
+ * @since 15.04.2015
  */
 public class GenrePane extends VBox {
     private final Button buttonReload;
@@ -133,11 +133,9 @@ public class GenrePane extends VBox {
         // columnSerien.setCellFactory(cellFactorySerien);
         // columnSerien.setCellFactory(TextFieldTableCell.forTableColumn());
         // columnSerien.setOnEditCommit(
-        // new EventHandler<CellEditEvent<Person, String>>()
-        // {
+        // new EventHandler<CellEditEvent<Person, String>>() {
         // @Override
-        // public void handle(CellEditEvent<Person, String> t)
-        // {
+        // public void handle(CellEditEvent<Person, String> t) {
         // ((Person) t.getTableView().getItems().get(
         // t.getTablePosition().getRow())).setFirstName(t.getNewValue());
         // }

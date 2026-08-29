@@ -1,4 +1,3 @@
-// Created: 28.12.22
 package de.freese.mediathek.kodi.swing.controller;
 
 import java.util.ArrayList;
@@ -15,6 +14,7 @@ import de.freese.mediathek.kodi.swing.view.GenreView;
 
 /**
  * @author Thomas Freese
+ * @since 28.12.2022
  */
 public class GenreController extends AbstractController {
     public GenreController(final GenreService service, final GenreView view) {
@@ -55,13 +55,13 @@ public class GenreController extends AbstractController {
 
                     getView().setShowsAndMovies(results.get(0), results.get(1));
                 }
-                catch (InterruptedException ex) {
+                catch (final InterruptedException ex) {
                     getLogger().error(ex.getMessage(), ex);
 
                     // Restore interrupted state.
                     Thread.currentThread().interrupt();
                 }
-                catch (Exception ex) {
+                catch (final Exception ex) {
                     getLogger().error(ex.getMessage(), ex);
                 }
             }

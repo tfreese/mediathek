@@ -1,4 +1,3 @@
-// Created: 07 Sept. 2024
 package de.freese.player.ui.swing.component.spectrum;
 
 import java.awt.BasicStroke;
@@ -33,6 +32,7 @@ import de.freese.player.ui.spectrum.SpectrumRenderer;
 
 /**
  * @author Thomas Freese
+ * @since 07.09.2024
  */
 // @SuppressWarnings("serial")
 public final class JFreeChartRenderer implements SpectrumRenderer {

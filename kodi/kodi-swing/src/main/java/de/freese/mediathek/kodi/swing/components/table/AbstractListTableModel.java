@@ -28,11 +28,11 @@ public abstract class AbstractListTableModel<T> extends AbstractTableModel {
     }
 
     protected AbstractListTableModel(final int columnCount, final List<T> list) {
-        super();
-
         if (columnCount < 0) {
             throw new IllegalArgumentException("column count < 0: " + columnCount);
         }
+
+        super();
 
         columnNames = null;
         this.columnCount = columnCount;

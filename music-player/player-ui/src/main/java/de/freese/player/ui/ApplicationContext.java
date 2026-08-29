@@ -1,4 +1,3 @@
-// Created: 08 Sept. 2024
 package de.freese.player.ui;
 
 import java.io.Closeable;
@@ -29,6 +28,7 @@ import de.freese.player.ui.swing.component.table.TableModelSongCollection;
 
 /**
  * @author Thomas Freese
+ * @since 08.09.2024
  */
 public final class ApplicationContext {
     private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationContext.class);
@@ -78,7 +78,7 @@ public final class ApplicationContext {
             try {
                 Files.createDirectories(tempDir);
             }
-            catch (IOException ex) {
+            catch (final IOException ex) {
                 throw new UncheckedIOException(ex);
             }
         }
@@ -87,7 +87,7 @@ public final class ApplicationContext {
             try {
                 Files.createDirectories(workingDir);
             }
-            catch (IOException ex) {
+            catch (final IOException ex) {
                 throw new UncheckedIOException(ex);
             }
         }
@@ -121,14 +121,14 @@ public final class ApplicationContext {
 
             repository = new PlayerRepository(dataSource);
         }
-        catch (Exception ex) {
+        catch (final Exception ex) {
             LOGGER.error(ex.getMessage(), ex);
 
-            if (dataSource instanceof Closeable closeable) {
+            if (dataSource instanceof final Closeable closeable) {
                 try {
                     closeable.close();
                 }
-                catch (IOException ex1) {
+                catch (final IOException ex1) {
                     LOGGER.error(ex1.getMessage(), ex1);
                 }
             }
@@ -154,11 +154,11 @@ public final class ApplicationContext {
         //     LOGGER.error(ex.getMessage());
         // }
 
-        if (dataSource instanceof Closeable closeable) {
+        if (dataSource instanceof final Closeable closeable) {
             try {
                 closeable.close();
             }
-            catch (IOException ex) {
+            catch (final IOException ex) {
                 LOGGER.error(ex.getMessage(), ex);
             }
         }
@@ -166,11 +166,11 @@ public final class ApplicationContext {
         try (Stream<Path> stream = Files.find(tempDir, 1, (path, attr) -> attr.isRegularFile())) {
             final List<Path> list = stream.toList();
 
-            for (Path path : list) {
+            for (final Path path : list) {
                 Files.delete(path);
             }
         }
-        catch (IOException ex) {
+        catch (final IOException ex) {
             throw new UncheckedIOException(ex);
         }
     }

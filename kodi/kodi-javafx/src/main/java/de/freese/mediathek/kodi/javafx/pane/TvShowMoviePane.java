@@ -1,4 +1,3 @@
-// Created: 01.06.2016
 package de.freese.mediathek.kodi.javafx.pane;
 
 import java.util.ResourceBundle;
@@ -31,6 +30,7 @@ import de.freese.mediathek.kodi.model.Model;
 
 /**
  * @author Thomas Freese
+ * @since 01.06.2016
  */
 public class TvShowMoviePane<T extends Model> extends VBox {
     private final Button buttonEditGenres;

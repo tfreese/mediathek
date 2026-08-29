@@ -1,4 +1,3 @@
-// Created: 15 Aug. 2025
 package de.freese.player.test.ui.swing;
 
 import java.awt.GridBagConstraints;
@@ -36,6 +35,7 @@ import de.freese.player.core.signal.WhiteNoise;
 
 /**
  * @author Thomas Freese
+ * @since 15.08.2025
  */
 public final class PanelSignal extends JPanel {
     private static final AudioFormat AUDIO_FORMAT = new AudioFormat(8_000.0F,
@@ -151,7 +151,7 @@ public final class PanelSignal extends JPanel {
                 final long endTime = System.currentTimeMillis() - startTime;
                 SwingUtilities.invokeLater(() -> elapsedTimeMeter.setText("Duration: %d ms".formatted(endTime)));
             }
-            catch (Exception ex) {
+            catch (final Exception ex) {
                 LOGGER.error(ex.getMessage(), ex);
             }
         };

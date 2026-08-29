@@ -1,8 +1,8 @@
-// Created: 16 Juli 2024
 package de.freese.player.core.ffmpeg;
 
 /**
  * @author Thomas Freese
+ * @since 16.07.2024
  */
 public final class FFLocator {
     public static FFmpeg createFFmpeg() {

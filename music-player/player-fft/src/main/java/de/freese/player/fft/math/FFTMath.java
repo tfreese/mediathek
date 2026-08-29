@@ -1,4 +1,3 @@
-// Created: 09 Aug. 2024
 package de.freese.player.fft.math;
 
 import java.util.Arrays;
@@ -9,6 +8,7 @@ import de.freese.player.fft.output.Spectrum;
 
 /**
  * @author Thomas Freese
+ * @since 09.08.2024
  */
 public final class FFTMath {
     /**
@@ -22,7 +22,7 @@ public final class FFTMath {
         Frequency max = null;
         double maxAmp = -100D;
 
-        for (Frequency frequency : spectrum) {
+        for (final Frequency frequency : spectrum) {
             if (frequency.getAmplitude() > maxAmp) {
                 maxAmp = Math.max(maxAmp, frequency.getAmplitude());
                 max = frequency;
@@ -55,7 +55,7 @@ public final class FFTMath {
     }
 
     public static void normalize(final Spectrum spectrum, final double maxAmp) {
-        for (Frequency frequency : spectrum) {
+        for (final Frequency frequency : spectrum) {
             frequency.setAmplitude(frequency.getAmplitude() / maxAmp);
         }
     }
@@ -78,7 +78,7 @@ public final class FFTMath {
      * Converts amplitudes contents of a single FFT frame to a decibel (dB) scale.
      */
     public static void scaleLogarithmically(final Spectrum spectrum) {
-        for (Frequency frequency : spectrum) {
+        for (final Frequency frequency : spectrum) {
             frequency.setAmplitude(10D * Math.log10(frequency.getAmplitude() / MAX_AMPLITUDE_INTENSITY));
 
             // establish -100 dB floor (avoid infinitely negative values)

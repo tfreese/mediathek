@@ -116,7 +116,7 @@ public class KodiJavaFxClient extends Application {
         tabPane.getTabs().add(tab);
 
         // Scene
-        Scene scene = null;
+        final Scene scene;
 
         // Momentan kein Antialiasing wegen JavaFX-Bug.
         final int javaVersion = getJavaVersion();

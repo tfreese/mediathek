@@ -1,4 +1,3 @@
-// Created: 13 Aug. 2025
 package de.freese.player.test.flac;
 
 /**
@@ -6,6 +5,7 @@ package de.freese.player.test.flac;
  *
  * @author Thomas Freese
  * @see org.jaudiotagger.audio.flac.metadatablock.BlockType
+ * @since 13.08.2025
  */
 public enum BlockType {
     STREAMINFO(0),

@@ -1,4 +1,3 @@
-// Created: 16 Juli 2024
 package de.freese.player.core.ffmpeg;
 
 import java.io.BufferedReader;
@@ -18,6 +17,7 @@ import de.freese.player.core.exception.PlayerException;
 
 /**
  * @author Thomas Freese
+ * @since 16.07.2024
  */
 abstract class AbstractFF {
     protected static final Pattern PATTERN_COMMA = Pattern.compile(",", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.UNIX_LINES);
@@ -70,8 +70,7 @@ abstract class AbstractFF {
         final ProcessBuilder processBuilder = createProcessBuilder(command);
         processBuilder.redirectErrorStream(true);
 
-        try {
-            final Process process = processBuilder.start();
+        try (Process process = processBuilder.start()) {
             final List<String> output;
 
             try (BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) {
@@ -86,13 +85,13 @@ abstract class AbstractFF {
 
             return output.getFirst();
         }
-        catch (IOException ex) {
+        catch (final IOException ex) {
             throw new UncheckedIOException(ex);
         }
-        catch (RuntimeException ex) {
+        catch (final RuntimeException ex) {
             throw ex;
         }
-        catch (InterruptedException ex) {
+        catch (final InterruptedException ex) {
             // Restore interrupted state.
             Thread.currentThread().interrupt();
 

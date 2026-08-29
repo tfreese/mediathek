@@ -1,4 +1,3 @@
-// Created: 26.04.2014
 package de.freese.mediathek.services.themoviedb.api;
 
 import de.freese.mediathek.services.themoviedb.model.Casts;
@@ -10,6 +9,7 @@ import de.freese.mediathek.services.themoviedb.model.Search;
  * Interface für den Zugriff auf die Movie-API.
  *
  * @author Thomas Freese
+ * @since 26.04.2014
  */
 public interface MovieService {
     /**

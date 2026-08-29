@@ -1,4 +1,3 @@
-// Created: 03 Nov. 2024
 package de.freese.player.core.signal;
 
 import java.security.SecureRandom;
@@ -8,6 +7,7 @@ import javax.sound.sampled.AudioFormat;
 
 /**
  * @author Thomas Freese
+ * @since 03.11.2024
  */
 public final class WhiteNoise implements Signal {
     private final Random random = new SecureRandom();

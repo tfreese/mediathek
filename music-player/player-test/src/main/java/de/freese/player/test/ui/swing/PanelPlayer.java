@@ -1,4 +1,3 @@
-// Created: 15 Aug. 2025
 package de.freese.player.test.ui.swing;
 
 import java.awt.GridBagConstraints;
@@ -30,6 +29,7 @@ import de.freese.player.core.player.DefaultAudioPlayerSink;
 
 /**
  * @author Thomas Freese
+ * @since 15.08.2025
  */
 public final class PanelPlayer extends JPanel {
     private static final Logger LOGGER = LoggerFactory.getLogger(PanelPlayer.class);
@@ -52,7 +52,7 @@ public final class PanelPlayer extends JPanel {
                     .sorted()
                     .toList();
         }
-        catch (Exception ex) {
+        catch (final Exception ex) {
             LOGGER.error(ex.getMessage(), ex);
         }
 
@@ -80,7 +80,7 @@ public final class PanelPlayer extends JPanel {
                         try {
                             return AudioPlayerSource.of(sample, tempPath);
                         }
-                        catch (Exception ex) {
+                        catch (final Exception ex) {
                             LOGGER.error(ex.getMessage(), ex);
                         }
 

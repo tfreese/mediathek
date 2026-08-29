@@ -1,4 +1,3 @@
-// Created: 05.04.2020
 package de.freese.mediathek.kodi.report;
 
 import java.io.IOException;
@@ -14,6 +13,7 @@ import de.freese.mediathek.report.KodiAudioReporter;
 
 /**
  * @author Thomas Freese
+ * @since 05.04.2020
  */
 public class KodiSpringAudioReporter extends KodiAudioReporter {
     private static DataSource createDataSource() throws IOException {

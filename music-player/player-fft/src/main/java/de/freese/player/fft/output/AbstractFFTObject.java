@@ -39,9 +39,9 @@ public abstract class AbstractFFTObject implements Iterable<Spectrum> {
     private final double windowDurationMs;
 
     protected AbstractFFTObject(final AudioReader audioReader) {
-        super();
-
         Objects.requireNonNull(audioReader, "audioReader required");
+
+        super();
 
         fftConfig = audioReader.getFFTConfig();
 

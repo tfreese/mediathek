@@ -1,4 +1,3 @@
-// Created: 27.04.2014
 package de.freese.mediathek.services.themoviedb.model;
 
 import java.util.Objects;
@@ -7,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * @author Thomas Freese
+ * @since 27.04.2014
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Genre implements Comparable<Genre> {
@@ -29,7 +29,7 @@ public class Genre implements Comparable<Genre> {
         if (!(o instanceof final Genre genre)) {
             return false;
         }
-        
+
         return id == genre.id && Objects.equals(name, genre.name);
     }
 
@@ -56,13 +56,8 @@ public class Genre implements Comparable<Genre> {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("Genre [name=");
-        builder.append(name);
-        builder.append(", id=");
-        builder.append(id);
-        builder.append("]");
-
-        return builder.toString();
+        return "Genre [name=" + name
+                + ", id=" + id
+                + "]";
     }
 }

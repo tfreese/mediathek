@@ -1,4 +1,3 @@
-// Created: 28.12.22
 package de.freese.mediathek.kodi.swing.view;
 
 import java.awt.BorderLayout;
@@ -31,6 +30,7 @@ import de.freese.mediathek.kodi.swing.controller.Controller;
 
 /**
  * @author Thomas Freese
+ * @since 28.12.2022
  */
 public abstract class AbstractShowAndMovieView<T> extends AbstractView {
     private JButton genreButton;

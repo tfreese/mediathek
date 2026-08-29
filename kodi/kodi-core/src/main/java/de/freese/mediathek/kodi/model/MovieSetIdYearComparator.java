@@ -1,4 +1,3 @@
-// Created: 15.10.2015
 package de.freese.mediathek.kodi.model;
 
 import java.text.Collator;
@@ -8,6 +7,7 @@ import java.util.Objects;
 
 /**
  * @author Thomas Freese
+ * @since 15.10.2015
  */
 public final class MovieSetIdYearComparator implements Comparator<Movie> {
     private static final Collator COLLATOR = Collator.getInstance(Locale.GERMANY);

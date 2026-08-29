@@ -1,4 +1,3 @@
-// Created: 29 Jan. 2025
 package de.freese.player.core.player;
 
 import java.util.Objects;
@@ -12,6 +11,7 @@ import de.freese.player.core.util.PlayerUtils;
 
 /**
  * @author Thomas Freese
+ * @since 29.01.2025
  */
 public interface AudioPlayerSink {
 
@@ -58,7 +58,7 @@ public interface AudioPlayerSink {
     default void play(final double[] samplesMono) {
         Objects.requireNonNull(samplesMono, "samples required");
 
-        for (double sampleMono : samplesMono) {
+        for (final double sampleMono : samplesMono) {
             play(sampleMono);
         }
     }

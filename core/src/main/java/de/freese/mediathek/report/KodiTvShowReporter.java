@@ -73,21 +73,18 @@ public class KodiTvShowReporter extends AbstractMediaReporter {
                     stmtSelect.setString(3, episode);
 
                     try (ResultSet resultSet = stmtSelect.executeQuery()) {
-                        if (resultSet.next()) {
-                            // Eintrag gefunden -> Update
-                            if (playCount != resultSet.getInt("PLAYCOUNT") || !lastPlayed.equals(resultSet.getString("LASTPLAYED"))) {
-                                final int idFile = resultSet.getInt("IDFILE");
+                        if (resultSet.next() && (playCount != resultSet.getInt("PLAYCOUNT") || !lastPlayed.equals(resultSet.getString("LASTPLAYED")))) {
+                            final int idFile = resultSet.getInt("IDFILE");
 
-                                final String message = "Update TvShow: IDFile=%d, %s - S%02dE%02d - %s%n".formatted(
-                                        idFile, tvshow, Integer.parseInt(season), Integer.parseInt(episode), title);
-                                getLogger().info(message);
+                            final String message = "Update TvShow: IDFile=%d, %s - S%02dE%02d - %s%n".formatted(
+                                    idFile, tvshow, Integer.parseInt(season), Integer.parseInt(episode), title);
+                            getLogger().info(message);
 
-                                stmtUpdate.setInt(1, playCount);
-                                stmtUpdate.setString(2, lastPlayed);
-                                stmtUpdate.setInt(3, playCount);
+                            stmtUpdate.setInt(1, playCount);
+                            stmtUpdate.setString(2, lastPlayed);
+                            stmtUpdate.setInt(3, playCount);
 
-                                stmtUpdate.executeUpdate();
-                            }
+                            stmtUpdate.executeUpdate();
                         }
                     }
                 }

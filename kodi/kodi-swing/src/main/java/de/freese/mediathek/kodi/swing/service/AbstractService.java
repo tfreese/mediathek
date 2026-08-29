@@ -1,4 +1,3 @@
-// Created: 28.12.22
 package de.freese.mediathek.kodi.swing.service;
 
 import org.slf4j.Logger;
@@ -7,6 +6,7 @@ import org.springframework.context.ApplicationContext;
 
 /**
  * @author Thomas Freese
+ * @since 28.12.2022
  */
 public abstract class AbstractService implements Service {
     private final ApplicationContext applicationContext;
@@ -14,7 +14,7 @@ public abstract class AbstractService implements Service {
 
     protected AbstractService(final ApplicationContext applicationContext) {
         super();
-        
+
         this.applicationContext = applicationContext;
     }
 

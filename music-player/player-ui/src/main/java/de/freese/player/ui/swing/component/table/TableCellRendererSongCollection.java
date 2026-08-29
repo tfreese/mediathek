@@ -1,4 +1,3 @@
-// Created: 01 Sept. 2024
 package de.freese.player.ui.swing.component.table;
 
 import java.awt.Component;
@@ -15,6 +14,7 @@ import de.freese.player.ui.ApplicationContext;
 
 /**
  * @author Thomas Freese
+ * @since 01.09.2024
  */
 public class TableCellRendererSongCollection extends DefaultTableCellRenderer {
     @Serial
@@ -34,7 +34,7 @@ public class TableCellRendererSongCollection extends DefaultTableCellRenderer {
             setHorizontalAlignment(SwingConstants.LEFT);
         }
 
-        if (value instanceof Duration duration) {
+        if (value instanceof final Duration duration) {
             setText(PlayerUtils.toString(duration));
         }
 

@@ -1,4 +1,3 @@
-// Created: 13 Okt. 2024
 package de.freese.player.equalizer;
 
 import org.slf4j.Logger;
@@ -8,6 +7,7 @@ import org.slf4j.LoggerFactory;
  * Equalizer with Infinite Impulse Response (IIR) Algorithm.
  *
  * @author Thomas Freese
+ * @since 13.10.2024
  */
 public class EqualizerIIR implements Equalizer {
     static final IIRCoefficients[] IIR_CF15_44100 = {

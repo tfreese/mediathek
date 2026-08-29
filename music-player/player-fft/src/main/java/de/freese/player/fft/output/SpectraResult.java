@@ -4,6 +4,8 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
+import org.jspecify.annotations.NonNull;
+
 import de.freese.player.fft.reader.AudioReader;
 
 /**
@@ -16,9 +18,9 @@ public final class SpectraResult extends AbstractFFTObject {
     private final Spectrum[] spectra;
 
     public SpectraResult(final AudioReader audioReader, final Spectrum[] spectra) {
-        super(audioReader);
-
         Objects.requireNonNull(spectra, "spectra required");
+
+        super(audioReader);
 
         if (spectra.length == 0) {
             throw new IllegalArgumentException("spectra are empty");
@@ -31,7 +33,7 @@ public final class SpectraResult extends AbstractFFTObject {
         return spectra[index];
     }
 
-    public Iterator<Spectrum> iterator() {
+    public @NonNull Iterator<Spectrum> iterator() {
         return new Iterator<>() {
             private int index;
 

@@ -1,4 +1,3 @@
-// Created: 29 Aug. 2024
 package de.freese.player.ui.swing.component.spectrum;
 
 import java.awt.BorderLayout;
@@ -11,6 +10,7 @@ import de.freese.player.ui.spectrum.SpectrumRenderer;
 
 /**
  * @author Thomas Freese
+ * @since 29.08.2024
  */
 public final class SpectrumView {
     // @Serial

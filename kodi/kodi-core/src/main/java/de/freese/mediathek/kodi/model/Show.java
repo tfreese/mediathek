@@ -1,10 +1,10 @@
-// Created: 13.09.2014
 package de.freese.mediathek.kodi.model;
 
 import java.util.Objects;
 
 /**
  * @author Thomas Freese
+ * @since 13.09.2014
  */
 public final class Show extends AbstractModel {
     private String banner;

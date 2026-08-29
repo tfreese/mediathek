@@ -1,4 +1,3 @@
-// Created: 11 Aug. 2024
 package de.freese.player.fft.reader;
 
 import java.io.BufferedInputStream;
@@ -19,6 +18,7 @@ import de.freese.player.fft.config.FFTConfig;
 
 /**
  * @author Thomas Freese
+ * @since 11.08.2024
  */
 final class DefaultAudioReader implements AudioReader {
     /**
@@ -62,9 +62,9 @@ final class DefaultAudioReader implements AudioReader {
     private int waveLength;
 
     DefaultAudioReader(final Path audioFile, final FFTConfig fftConfig) throws UnsupportedAudioFileException, IOException {
-        super();
-
         Objects.requireNonNull(audioFile, "audioFile required");
+
+        super();
 
         final InputStream inputStream = new BufferedInputStream(Files.newInputStream(audioFile));
         AudioInputStream ais = AudioSystem.getAudioInputStream(inputStream);
@@ -117,7 +117,7 @@ final class DefaultAudioReader implements AudioReader {
             final byte[] audioBytes = audioInputStream.readAllBytes();
             return convertBytesToSamples(audioBytes);
         }
-        catch (IOException ex) {
+        catch (final IOException ex) {
             throw new UncheckedIOException(ex);
         }
     }
@@ -186,7 +186,7 @@ final class DefaultAudioReader implements AudioReader {
                 numExpectedFrames = (int) Math.ceil(((double) lengthOfWave / fftConfig.getWindowSize()) * frameOverlapMultiplier);
             }
         }
-        catch (IOException ex) {
+        catch (final IOException ex) {
             throw new UncheckedIOException(ex);
         }
 

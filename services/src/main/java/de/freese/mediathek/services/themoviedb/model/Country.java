@@ -1,4 +1,3 @@
-// Created: 27.04.2014
 package de.freese.mediathek.services.themoviedb.model;
 
 import java.util.Objects;
@@ -8,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 /**
  * @author Thomas Freese
+ * @since 27.04.2014
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Country implements Comparable<Country> {
@@ -30,7 +30,7 @@ public class Country implements Comparable<Country> {
         if (!(o instanceof final Country country)) {
             return false;
         }
-        
+
         return Objects.equals(iso31661, country.iso31661) && Objects.equals(name, country.name);
     }
 
@@ -58,13 +58,8 @@ public class Country implements Comparable<Country> {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("Country [iso_3166_1=");
-        builder.append(iso31661);
-        builder.append(", name=");
-        builder.append(name);
-        builder.append("]");
-
-        return builder.toString();
+        return "Country [iso_3166_1=" + iso31661
+                + ", name=" + name
+                + "]";
     }
 }

@@ -1,4 +1,3 @@
-// Created: 14 Juli 2024
 package de.freese.player.core.model;
 
 import java.util.Arrays;
@@ -11,6 +10,7 @@ import javax.sound.sampled.AudioFileFormat;
 /**
  * @author Thomas Freese
  * @see AudioFileFormat.Type
+ * @since 14.07.2024
  */
 public enum AudioCodec {
     AIFF("aif"),
@@ -31,7 +31,7 @@ public enum AudioCodec {
             return AIFF;
         }
 
-        for (AudioCodec audioCodec : values()) {
+        for (final AudioCodec audioCodec : values()) {
             if (audioCodec.getFileExtension().equals(fe)) {
                 return audioCodec;
             }

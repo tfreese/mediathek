@@ -1,4 +1,3 @@
-// Created: 08 Sept. 2024
 package de.freese.player.ui;
 
 import java.util.ArrayList;
@@ -15,6 +14,7 @@ import de.freese.player.ui.swing.PlayerApplication;
 
 /**
  * @author Thomas Freese
+ * @since 08.09.2024
  */
 public final class PlayerLauncher {
     static void main(final String[] args) {
@@ -28,7 +28,7 @@ public final class PlayerLauncher {
                     PlayerApplication.init();
                     PlayerApplication.start();
                 }
-                catch (Exception ex) {
+                catch (final Exception ex) {
                     throw new RuntimeException(ex);
                 }
             });

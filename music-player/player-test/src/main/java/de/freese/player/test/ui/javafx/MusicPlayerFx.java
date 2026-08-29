@@ -1,4 +1,3 @@
-// Created: 14 Juli 2024
 package de.freese.player.test.ui.javafx;
 
 import java.nio.file.Path;
@@ -14,6 +13,7 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
 
 /**
  * @author Thomas Freese
+ * @since 14.07.2024
  */
 public final class MusicPlayerFx extends Application {
     public static final Logger LOGGER = LoggerFactory.getLogger(MusicPlayerFx.class);

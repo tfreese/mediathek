@@ -1,4 +1,3 @@
-// Created: 13 Aug. 2025
 package de.freese.player.test;
 
 import java.nio.ByteBuffer;
@@ -8,6 +7,7 @@ import org.jaudiotagger.audio.generic.Utils;
 /**
  * @author Thomas Freese
  * @see Utils
+ * @since 13.08.2025
  */
 public final class Unsigned {
     /**

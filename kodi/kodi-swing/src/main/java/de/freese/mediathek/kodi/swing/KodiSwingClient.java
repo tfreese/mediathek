@@ -1,4 +1,3 @@
-// Created: 14.09.2014
 package de.freese.mediathek.kodi.swing;
 
 import java.awt.BorderLayout;
@@ -36,6 +35,7 @@ import de.freese.mediathek.kodi.swing.view.ShowView;
 
 /**
  * @author Thomas Freese
+ * @since 14.09.2014
  */
 public class KodiSwingClient {
     private static final Logger LOGGER = LoggerFactory.getLogger("KODI-Client");
@@ -63,7 +63,7 @@ public class KodiSwingClient {
             try {
                 application.init(args);
             }
-            catch (Exception ex) {
+            catch (final Exception ex) {
                 throw new RuntimeException(ex);
             }
         });
@@ -96,7 +96,7 @@ public class KodiSwingClient {
     }
 
     private void init(final String[] args) {
-        String profile = null;
+        final String profile;
 
         if (args == null || args.length == 0) {
             profile = "sqlite";

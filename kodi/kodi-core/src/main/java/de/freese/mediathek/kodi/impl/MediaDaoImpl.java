@@ -1,4 +1,3 @@
-// Created: 13.09.2014
 package de.freese.mediathek.kodi.impl;
 
 import java.util.Iterator;
@@ -16,6 +15,7 @@ import de.freese.mediathek.kodi.model.Show;
 
 /**
  * @author Thomas Freese
+ * @since 13.09.2014
  */
 public class MediaDaoImpl implements MediaDao {
     private final JdbcTemplate jdbcTemplate;
@@ -30,79 +30,74 @@ public class MediaDaoImpl implements MediaDao {
 
     @Override
     public void deleteMovieGenres(final int movieID) {
-        final StringBuilder sql = new StringBuilder();
-        sql.append("delete from ").append(prependSchema("genre_link"));
-        sql.append(" where");
-        sql.append(" media_type = 'movie'");
-        sql.append(" and media_id = ?");
+        final String sql = "delete from " + prependSchema("genre_link")
+                + " where"
+                + " media_type = 'movie'"
+                + " and media_id = ?";
 
-        getJdbcTemplate().update(sql.toString(), movieID);
+        getJdbcTemplate().update(sql, movieID);
     }
 
     @Override
     public void deleteShowGenres(final int showID) {
-        final StringBuilder sql = new StringBuilder();
-        sql.append("delete from ").append(prependSchema("genre_link"));
-        sql.append(" where");
-        sql.append(" media_type = 'tvshow'");
-        sql.append(" and media_id = ?");
+        final String sql = "delete from " + prependSchema("genre_link")
+                + " where"
+                + " media_type = 'tvshow'"
+                + " and media_id = ?";
 
-        getJdbcTemplate().update(sql.toString(), showID);
+        getJdbcTemplate().update(sql, showID);
     }
 
     @Override
     public List<Movie> getGenreMovies(final int genreID) {
-        final StringBuilder sql = new StringBuilder();
-        sql.append("select");
-        sql.append(" m.idMovie as pk");
-        sql.append(", m.c00 as name");
-        sql.append(", m.c08 as poster");
-        sql.append(", m.c20 as fanart");
-        sql.append(", m.c09 as imdb_id");
-        sql.append(", m.c14 as genres");
-        sql.append(", m.c07 as year");
-        sql.append(", m.idSet as set_id");
-        sql.append(" from ").append(prependSchema("movie m"));
-        sql.append(" inner join ").append(prependSchema("genre_link gl on gl.media_id = m.idmovie"));
-        sql.append(" where");
-        sql.append(" gl.media_type = 'movie'");
-        sql.append(" and gl.genre_id = ?");
+        final String sql = "select"
+                + " m.idMovie as pk"
+                + ", m.c00 as name"
+                + ", m.c08 as poster"
+                + ", m.c20 as fanart"
+                + ", m.c09 as imdb_id"
+                + ", m.c14 as genres"
+                + ", m.c07 as year"
+                + ", m.idSet as set_id"
+                + " from " + prependSchema("movie m")
+                + " inner join " + prependSchema("genre_link gl on gl.media_id = m.idmovie")
+                + " where"
+                + " gl.media_type = 'movie'"
+                + " and gl.genre_id = ?";
 
-        return getJdbcTemplate().query(sql.toString(), new MovieRowMapper(), genreID);
+        return getJdbcTemplate().query(sql, new MovieRowMapper(), genreID);
     }
 
     @Override
     public List<Show> getGenreShows(final int genreID) {
-        final StringBuilder sql = new StringBuilder();
-        sql.append("select");
-        sql.append(" s.idShow as pk");
-        sql.append(", s.c00 as name");
-        sql.append(", s.c06 as banner");
-        sql.append(", s.c11 as fanart");
-        sql.append(", s.c12 as tvdb_id");
-        sql.append(", s.c08 as genres");
-        sql.append(" from ").append(prependSchema("tvshow s"));
-        sql.append(" inner join ").append(prependSchema("genre_link gl on gl.media_id = s.idshow"));
-        sql.append(" where");
-        sql.append(" gl.media_type = 'tvshow'");
-        sql.append(" and gl.genre_id = ?");
+        final String sql = "select"
+                + " s.idShow as pk"
+                + ", s.c00 as name"
+                + ", s.c06 as banner"
+                + ", s.c11 as fanart"
+                + ", s.c12 as tvdb_id"
+                + ", s.c08 as genres"
+                + " from " + prependSchema("tvshow s")
+                + " inner join " + prependSchema("genre_link gl on gl.media_id = s.idshow")
+                + " where"
+                + " gl.media_type = 'tvshow'"
+                + " and gl.genre_id = ?";
 
-        return getJdbcTemplate().query(sql.toString(), new ShowRowMapper(), genreID);
+        return getJdbcTemplate().query(sql, new ShowRowMapper(), genreID);
     }
 
     @Override
     public List<Genre> getGenres() {
-        final StringBuilder sql = new StringBuilder();
-        sql.append("select");
-        sql.append(" g.genre_id as pk");
-        sql.append(", g.name");
-        sql.append(", (");
-        sql.append("select count(gl.media_id) from ").append(prependSchema("genre_link gl where gl.genre_id = g.genre_id and gl.media_type = 'movie'"));
-        sql.append(") as filme_anzahl");
-        sql.append(", (");
-        sql.append("select count(gl.media_id) from ").append(prependSchema("genre_link gl where gl.genre_id = g.genre_id and gl.media_type = 'tvshow'"));
-        sql.append(") as serien_anzahl");
-        sql.append(" from ").append(prependSchema("genre g"));
+        final String sql = "select"
+                + " g.genre_id as pk"
+                + ", g.name"
+                + ", ("
+                + "select count(gl.media_id) from " + prependSchema("genre_link gl where gl.genre_id = g.genre_id and gl.media_type = 'movie'")
+                + ") as filme_anzahl"
+                + ", ("
+                + "select count(gl.media_id) from " + prependSchema("genre_link gl where gl.genre_id = g.genre_id and gl.media_type = 'tvshow'")
+                + ") as serien_anzahl"
+                + " from " + prependSchema("genre g");
 
         // sql.append("select");
         // sql.append(" g.idgenre as pk");
@@ -126,40 +121,38 @@ public class MediaDaoImpl implements MediaDao {
         // sql.append(" group by g.strgenre");
         // sql.append(") as shows");
         // sql.append(" from xbmc_video75.genre g");
-        return getJdbcTemplate().query(sql.toString(), new GenreRowMapper());
+        return getJdbcTemplate().query(sql, new GenreRowMapper());
     }
 
     @Override
     public List<Genre> getMovieGenres(final int movieID) {
-        final StringBuilder sql = new StringBuilder();
-        sql.append("select");
-        sql.append(" g.genre_id as pk");
-        sql.append(", g.name");
-        sql.append(", 0 as filme_anzahl");
-        sql.append(", 0 as serien_anzahl");
-        sql.append(" from ").append(prependSchema("genre g"));
-        sql.append(" inner join ").append(prependSchema("genre_link gl on gl.genre_id = g.genre_id"));
-        sql.append(" where");
-        sql.append(" gl.media_type = 'movie'");
-        sql.append(" and gl.media_id = ?");
+        final String sql = "select"
+                + " g.genre_id as pk"
+                + ", g.name"
+                + ", 0 as filme_anzahl"
+                + ", 0 as serien_anzahl"
+                + " from " + prependSchema("genre g")
+                + " inner join " + prependSchema("genre_link gl on gl.genre_id = g.genre_id")
+                + " where"
+                + " gl.media_type = 'movie'"
+                + " and gl.media_id = ?";
         // sql.append(" order by name");
 
-        return getJdbcTemplate().query(sql.toString(), new GenreRowMapper(), movieID);
+        return getJdbcTemplate().query(sql, new GenreRowMapper(), movieID);
     }
 
     @Override
     public List<Movie> getMovies() {
-        final StringBuilder sql = new StringBuilder();
-        sql.append("select");
-        sql.append(" m.idMovie as pk");
-        sql.append(", m.c00 as name");
-        sql.append(", m.c08 as poster");
-        sql.append(", m.c20 as fanart");
-        sql.append(", m.c09 as imdb_id");
-        sql.append(", m.c14 as genres");
-        sql.append(", m.c07 as year");
-        sql.append(", m.idSet as set_id");
-        sql.append(" from ").append(prependSchema("movie m"));
+        final String sql = "select"
+                + " m.idMovie as pk"
+                + ", m.c00 as name"
+                + ", m.c08 as poster"
+                + ", m.c20 as fanart"
+                + ", m.c09 as imdb_id"
+                + ", m.c14 as genres"
+                + ", m.c07 as year"
+                + ", m.idSet as set_id"
+                + " from " + prependSchema("movie m");
         // sql.append("select m.idMovie as pk, m.c00 as name, m.c09 as imdb_id,");
         // sql.append(" GROUP_CONCAT(g.strgenre ORDER BY g.strgenre SEPARATOR ' / ') as genres,");
         // sql.append(" m.c08 as poster, m.c20 as fanart");
@@ -168,37 +161,35 @@ public class MediaDaoImpl implements MediaDao {
         // sql.append(" inner join xbmc_video75.genre g on g.idgenre = glm.idgenre");
         // sql.append(" group by name");
 
-        return getJdbcTemplate().query(sql.toString(), new MovieRowMapper());
+        return getJdbcTemplate().query(sql, new MovieRowMapper());
     }
 
     @Override
     public List<Genre> getShowGenres(final int showID) {
-        final StringBuilder sql = new StringBuilder();
-        sql.append("select");
-        sql.append(" g.genre_id as pk");
-        sql.append(", g.name");
-        sql.append(", 0 as filme_anzahl");
-        sql.append(", 0 as serien_anzahl");
-        sql.append(" from ").append(prependSchema("genre g"));
-        sql.append(" inner join ").append(prependSchema("genre_link gl on gl.genre_id = g.genre_id"));
-        sql.append(" where");
-        sql.append(" gl.media_type = 'tvshow'");
-        sql.append(" and gl.media_id = ?");
+        final String sql = "select"
+                + " g.genre_id as pk"
+                + ", g.name"
+                + ", 0 as filme_anzahl"
+                + ", 0 as serien_anzahl"
+                + " from " + prependSchema("genre g")
+                + " inner join " + prependSchema("genre_link gl on gl.genre_id = g.genre_id")
+                + " where"
+                + " gl.media_type = 'tvshow'"
+                + " and gl.media_id = ?";
 
-        return getJdbcTemplate().query(sql.toString(), new GenreRowMapper(), showID);
+        return getJdbcTemplate().query(sql, new GenreRowMapper(), showID);
     }
 
     @Override
     public List<Show> getShows() {
-        final StringBuilder sql = new StringBuilder();
-        sql.append("select");
-        sql.append(" s.idShow as pk");
-        sql.append(", s.c00 as name");
-        sql.append(", s.c06 as banner");
-        sql.append(", s.c11 as fanart");
-        sql.append(", s.c12 as tvdb_id");
-        sql.append(", s.c08 as genres");
-        sql.append(" from ").append(prependSchema("tvshow s"));
+        final String sql = "select"
+                + " s.idShow as pk"
+                + ", s.c00 as name"
+                + ", s.c06 as banner"
+                + ", s.c11 as fanart"
+                + ", s.c12 as tvdb_id"
+                + ", s.c08 as genres"
+                + " from " + prependSchema("tvshow s");
         // sql.append("select s.idshow as pk, s.c00 as name, s.c12 as tvdb_id,");
         // sql.append(" GROUP_CONCAT(g.strgenre ORDER BY g.strgenre SEPARATOR ' / ') as genres,");
         // sql.append(" s.c06 as banner, s.c11 as fanart");
@@ -207,27 +198,25 @@ public class MediaDaoImpl implements MediaDao {
         // sql.append(" inner join xbmc_video75.genre g on g.idgenre = gls.idgenre");
         // sql.append(" group by name;");
 
-        return getJdbcTemplate().query(sql.toString(), new ShowRowMapper());
+        return getJdbcTemplate().query(sql, new ShowRowMapper());
     }
 
     @Override
     public void insertMovieGenre(final int movieID, final int genreID) {
-        final StringBuilder sql = new StringBuilder();
-        sql.append("insert into ").append(prependSchema("genre_link"));
-        sql.append(" (genre_id, media_id, media_type)");
-        sql.append(" values (?, ?, 'movie')");
+        final String sql = "insert into " + prependSchema("genre_link")
+                + " (genre_id, media_id, media_type)"
+                + " values (?, ?, 'movie')";
 
-        getJdbcTemplate().update(sql.toString(), genreID, movieID);
+        getJdbcTemplate().update(sql, genreID, movieID);
     }
 
     @Override
     public void insertShowGenre(final int showID, final int genreID) {
-        final StringBuilder sql = new StringBuilder();
-        sql.append("insert into ").append(prependSchema("genre_link"));
-        sql.append(" (genre_id, media_id, media_type)");
-        sql.append(" values (?, ?, 'tvshow')");
+        final String sql = "insert into " + prependSchema("genre_link")
+                + " (genre_id, media_id, media_type)"
+                + " values (?, ?, 'tvshow')";
 
-        getJdbcTemplate().update(sql.toString(), genreID, showID);
+        getJdbcTemplate().update(sql, genreID, showID);
     }
 
     public void setSchema(final String schema) {

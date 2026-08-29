@@ -1,4 +1,3 @@
-// Created: 06 Aug. 2024
 package de.freese.player.core.model;
 
 import java.util.Objects;
@@ -10,6 +9,7 @@ import de.freese.player.core.util.PlayerUtils;
 
 /**
  * @author Thomas Freese
+ * @since 06.08.2024
  */
 public final class Window {
     public static Window of(final AudioFormat audioFormat, final byte[] audioBytes, final long framesRead, final long framesTotal) {
@@ -20,8 +20,8 @@ public final class Window {
             throw new IllegalArgumentException("audioBytes length is not a power of 2: " + audioBytes.length);
         }
 
-        int[] samplesLeft = null;
-        int[] samplesRight = null;
+        final int[] samplesLeft;
+        final int[] samplesRight;
 
         if (audioFormat.getChannels() == 1) {
             // Mono

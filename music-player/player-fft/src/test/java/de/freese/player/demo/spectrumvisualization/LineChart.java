@@ -1,4 +1,3 @@
-// Created: 08 Aug. 2024
 package de.freese.player.demo.spectrumvisualization;
 
 import java.awt.BasicStroke;
@@ -23,6 +22,7 @@ import de.freese.player.fft.output.Spectrum;
 
 /**
  * @author Thomas Freese
+ * @since 08.08.2024
  */
 final class LineChart extends JFrame {
     @Serial

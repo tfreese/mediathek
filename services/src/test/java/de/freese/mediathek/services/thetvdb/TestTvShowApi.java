@@ -1,4 +1,3 @@
-// Created: 24.04.2014
 package de.freese.mediathek.services.thetvdb;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,6 +14,7 @@ import de.freese.mediathek.services.Settings;
 
 /**
  * @author Thomas Freese
+ * @since 24.04.2014
  */
 class TestTvShowApi {
     private static TVService service;
@@ -103,7 +103,7 @@ class TestTvShowApi {
         assertNotNull(result);
         assertTrue(result.size() > 1);
 
-        for (TVShow show : result) {
+        for (final TVShow show : result) {
             assertNotNull(show.getBeschreibung());
             assertNotNull(show.getBanner());
             assertNotNull(show.getID());

@@ -1,10 +1,10 @@
-// Created: 14 Juli 2024
 package de.freese.player.test.ui.javafx;
 
 import javafx.application.Application;
 
 /**
  * @author Thomas Freese
+ * @since 14.07.2024
  */
 public final class MusicPlayerFxLauncher {
     static void main() {

@@ -1,4 +1,3 @@
-// Created: 05 Nov. 2024
 package de.freese.player.equalizer;
 
 /**
@@ -6,6 +5,7 @@ package de.freese.player.equalizer;
  *
  * @author Thomas Freese
  * @see <a href="https://github.com/sedmelluq/lavaplayer/tree/master/main/src/main/java/com/sedmelluq/discord/lavaplayer/filter/equalizer">lavaplayer-equalizer</a>
+ * @since 05.11.2024
  */
 public final class DefaultEqualizer implements Equalizer {
     private static final IIRCoefficients[] COEFFICIENTS_48000 = {

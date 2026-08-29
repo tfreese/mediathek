@@ -1,4 +1,3 @@
-// Created: 13.09.2014
 package de.freese.mediathek.kodi.impl;
 
 import java.sql.ResultSet;
@@ -10,6 +9,7 @@ import de.freese.mediathek.kodi.model.Movie;
 
 /**
  * @author Thomas Freese
+ * @since 13.09.2014
  */
 public class MovieRowMapper implements RowMapper<Movie> {
     @Override

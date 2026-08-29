@@ -1,4 +1,3 @@
-// Created: 16.09.2014
 package de.freese.mediathek.services.thetvdb;
 
 import java.util.ArrayList;
@@ -11,6 +10,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Thomas Freese
+ * @since 16.09.2014
  */
 @XmlRootElement(name = "fanart")
 @XmlAccessorType(XmlAccessType.FIELD)

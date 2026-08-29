@@ -1,4 +1,3 @@
-// Created: 08 Aug. 2024
 package de.freese.player.fft;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -23,6 +22,7 @@ import de.freese.player.fft.sampling.WindowFunction;
 
 /**
  * @author Thomas Freese
+ * @since 08.08.2024
  */
 class TestSpectraResult {
     private static Path mono500Hz3SecsWav;
@@ -48,7 +48,7 @@ class TestSpectraResult {
     void testAmplitudesBetween0And1WhenNormalized() throws IOException, UnsupportedAudioFileException {
         final SpectraResult result = FFTFactory.createFull(stereo600Hz500MsWAV, new FFTConfig().decibelScale(false).normalized(true));
 
-        for (Spectrum spectrum : result) {
+        for (final Spectrum spectrum : result) {
             spectrum.forEach(frequency -> {
                 assertTrue(frequency.getAmplitude() >= 0D);
                 assertTrue(frequency.getAmplitude() <= 1D);

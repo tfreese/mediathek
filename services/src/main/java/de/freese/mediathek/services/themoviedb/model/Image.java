@@ -1,4 +1,3 @@
-// Created: 26.04.2014
 package de.freese.mediathek.services.themoviedb.model;
 
 import java.util.Objects;
@@ -8,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 /**
  * @author Thomas Freese
+ * @since 26.04.2014
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Image implements Comparable<Image> {
@@ -38,7 +38,7 @@ public class Image implements Comparable<Image> {
         if (!(o instanceof final Image image)) {
             return false;
         }
-        
+
         return height == image.height && Float.compare(voteAverage, image.voteAverage) == 0 && width == image.width && Objects.equals(path, image.path);
     }
 
@@ -83,17 +83,10 @@ public class Image implements Comparable<Image> {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("Image [width=");
-        builder.append(width);
-        builder.append(", height=");
-        builder.append(height);
-        builder.append(", voteAverage=");
-        builder.append(voteAverage);
-        builder.append(", path=");
-        builder.append(path);
-        builder.append("]");
-
-        return builder.toString();
+        return "Image [width=" + width
+                + ", height=" + height
+                + ", voteAverage=" + voteAverage
+                + ", path=" + path
+                + "]";
     }
 }

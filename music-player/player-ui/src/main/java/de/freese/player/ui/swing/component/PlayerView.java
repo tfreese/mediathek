@@ -1,4 +1,3 @@
-// Created: 03 Sept. 2024
 package de.freese.player.ui.swing.component;
 
 import java.awt.Dimension;
@@ -46,6 +45,7 @@ import de.freese.player.ui.utils.image.ImageFactory;
 
 /**
  * @author Thomas Freese
+ * @since 03.09.2024
  */
 public final class PlayerView {
     // @Serial

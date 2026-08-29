@@ -1,4 +1,3 @@
-// Created: 26.04.2014
 package de.freese.mediathek.services.themoviedb.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -6,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 /**
  * @author Thomas Freese
+ * @since 26.04.2014
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Crew {
@@ -49,15 +49,9 @@ public class Crew {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("Crew [name=");
-        builder.append(name);
-        builder.append(", job=");
-        builder.append(job);
-        builder.append(", profile=");
-        builder.append(profile);
-        builder.append("]");
-
-        return builder.toString();
+        return "Crew [name=" + name
+                + ", job=" + job
+                + ", profile=" + profile
+                + "]";
     }
 }

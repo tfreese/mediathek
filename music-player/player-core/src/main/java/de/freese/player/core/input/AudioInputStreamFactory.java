@@ -1,4 +1,3 @@
-// Created: 24 Aug. 2024
 package de.freese.player.core.input;
 
 import java.io.BufferedInputStream;
@@ -13,6 +12,7 @@ import de.freese.player.core.model.AudioCodec;
 
 /**
  * @author Thomas Freese
+ * @since 24.08.2024
  */
 public final class AudioInputStreamFactory {
     // au -> AU;  wav -> WAVE; aif -> AIFF

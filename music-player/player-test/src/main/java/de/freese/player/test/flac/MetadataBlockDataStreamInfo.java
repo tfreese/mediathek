@@ -1,4 +1,3 @@
-// Created: 13 Aug. 2025
 package de.freese.player.test.flac;
 
 import static de.freese.player.test.Unsigned.readThreeByteInteger;
@@ -16,6 +15,7 @@ import java.util.StringJoiner;
  *
  * @author Thomas Freese
  * @see org.jaudiotagger.audio.flac.metadatablock.MetadataBlockDataStreamInfo
+ * @since 13.08.2025
  */
 public final class MetadataBlockDataStreamInfo {
     private static final int STREAM_INFO_DATA_LENGTH = 34;

@@ -1,4 +1,3 @@
-// Created: 07 Sept. 2024
 package de.freese.player.ui.spectrum;
 
 import java.util.HashMap;
@@ -17,6 +16,7 @@ import de.freese.player.fft.output.Frequency;
  * Groups the Spectrum in Bands with avg. Amplitude.
  *
  * @author Thomas Freese
+ * @since 07.09.2024
  */
 public final class BandSpectrumCollector implements Collector<Frequency, Map<Integer, double[]>, Map<Integer, Double>> {
     private final double bandCount;
@@ -28,11 +28,11 @@ public final class BandSpectrumCollector implements Collector<Frequency, Map<Int
      * bandCount = 220 -> Spectrum is 0-22kHz -> 100Hz Range per Band
      */
     public BandSpectrumCollector(final int bandCount) {
-        super();
-
         if (bandCount <= 0) {
             throw new IllegalArgumentException("bandCount must > 0: " + bandCount);
         }
+
+        super();
 
         this.bandCount = bandCount;
     }

@@ -1,8 +1,8 @@
-// Created: 21 Sept. 2024
 package de.freese.player.equalizer;
 
 /**
  * @author Thomas Freese
+ * @since 21.09.2024
  */
 public final class EqualizerControls {
     /**
@@ -98,7 +98,7 @@ public final class EqualizerControls {
         // return enabled;
         double bandSum = 0D;
 
-        for (double band : bands) {
+        for (final double band : bands) {
             bandSum += band;
         }
 

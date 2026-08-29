@@ -1,4 +1,3 @@
-// Created: 10.06.2016
 package de.freese.mediathek.kodi.swing.components.rowfilter;
 
 import java.util.List;
@@ -14,6 +13,7 @@ import javax.swing.RowFilter;
  * Example: new RegExRowFilter("^a", Pattern.CASE_INSENSITIVE, List.of(2));
  *
  * @author Thomas Freese
+ * @since 10.06.2016
  */
 public class RegExRowFilter extends AbstractRowFilterIndexed {
     private final Matcher matcher;

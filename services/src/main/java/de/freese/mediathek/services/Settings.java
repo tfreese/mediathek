@@ -1,8 +1,8 @@
-// Created: 05.04.2020
 package de.freese.mediathek.services;
 
 /**
  * @author Thomas Freese
+ * @since 05.04.2020
  */
 public final class Settings {
     public static final String PROPERTY_MOVIE_DB_API_KEY = "MOVIE_DB_API_KEY";

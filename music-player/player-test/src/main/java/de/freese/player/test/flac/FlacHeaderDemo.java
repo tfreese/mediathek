@@ -1,4 +1,3 @@
-// Created: 30 Sept. 2024
 package de.freese.player.test.flac;
 
 import static de.freese.player.test.Unsigned.getIntLE;
@@ -22,6 +21,7 @@ import org.slf4j.LoggerFactory;
  * <a href="https://www.rfc-editor.org/rfc/rfc9639.html">rfc</a>
  *
  * @author Thomas Freese
+ * @since 30.09.2024
  */
 public final class FlacHeaderDemo {
     private static final Logger LOGGER = LoggerFactory.getLogger(FlacHeaderDemo.class);
@@ -45,7 +45,7 @@ public final class FlacHeaderDemo {
             readFileHeader(fileChannel);
             findStreamInfoBlock(fileChannel);
         }
-        catch (Exception ex) {
+        catch (final Exception ex) {
             LOGGER.error(ex.getMessage(), ex);
         }
     }

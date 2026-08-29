@@ -1,4 +1,3 @@
-// Created: 26.04.2014
 package de.freese.mediathek.services.themoviedb.impl;
 
 import de.freese.mediathek.services.themoviedb.api.MovieService;
@@ -12,6 +11,7 @@ import de.freese.mediathek.services.themoviedb.model.Search;
  * <a href="http://docs.themoviedb.apiary.io/#movies" target="_blank">http://docs.themoviedb.apiary.io/#movies</a>
  *
  * @author Thomas Freese
+ * @since 26.04.2014
  */
 public class DefaultMovieService extends AbstractMovieDbService implements MovieService {
     public DefaultMovieService(final String apiKey) {

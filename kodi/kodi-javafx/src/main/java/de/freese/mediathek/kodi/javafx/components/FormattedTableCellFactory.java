@@ -1,4 +1,3 @@
-// Created: 11.04.2015
 package de.freese.mediathek.kodi.javafx.components;
 
 import java.text.Format;
@@ -12,6 +11,7 @@ import javafx.util.Callback;
 
 /**
  * @author Thomas Freese
+ * @since 11.04.2015
  */
 public class FormattedTableCellFactory<S, T> implements Callback<TableColumn<S, T>, TableCell<S, T>> {
     private TextAlignment alignment;
@@ -35,7 +35,7 @@ public class FormattedTableCellFactory<S, T> implements Callback<TableColumn<S, 
                 else if (FormattedTableCellFactory.this.format != null) {
                     super.setText(FormattedTableCellFactory.this.format.format(item));
                 }
-                else if (item instanceof Node m) {
+                else if (item instanceof final Node m) {
                     super.setText(null);
                     super.setGraphic(m);
                 }

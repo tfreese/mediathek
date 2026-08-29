@@ -1,4 +1,3 @@
-// Created: 29 Jan. 2025
 package de.freese.player.core.player;
 
 import java.nio.ByteOrder;
@@ -14,6 +13,7 @@ import de.freese.player.core.exception.PlayerException;
 
 /**
  * @author Thomas Freese
+ * @since 29.01.2025
  */
 public final class DefaultAudioPlayerSink implements AudioPlayerSink {
     // public static AudioFormat getTargetAudioFormat(final AudioSource audioSource) {
@@ -53,10 +53,10 @@ public final class DefaultAudioPlayerSink implements AudioPlayerSink {
             sourceDataLine.open(audioFormat);
             sourceDataLine.start();
         }
-        catch (RuntimeException ex) {
+        catch (final RuntimeException ex) {
             throw ex;
         }
-        catch (Exception ex) {
+        catch (final Exception ex) {
             throw new PlayerException(ex);
         }
     }

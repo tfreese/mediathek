@@ -78,10 +78,10 @@ public final class Reporter {
 
     static void main() throws Exception {
         STOP_WATCH.start("connect");
-        DataSource dataSource = DataSources.strawberrySqLite(true);
+        final DataSource dataSource = DataSources.strawberrySqLite(true);
         STOP_WATCH.stop();
 
-        MediaReporter mediaReporter = new StrawberryAudioReporter(dataSource);
+        final MediaReporter mediaReporter = new StrawberryAudioReporter(dataSource);
         // final MediaReporter mediaReporter = new BansheeAudioReporter(dataSource);
         // final MediaReporter mediaReporter = new KodiAudioReporter(dataSource);
         // final MediaReporter mediaReporter = new PlexAudioReporter(dataSource);

@@ -1,4 +1,3 @@
-// Created: 08 Aug. 2024
 package de.freese.player.fft;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,6 +25,7 @@ import de.freese.player.fft.sampling.WindowFunction;
 
 /**
  * @author Thomas Freese
+ * @since 08.08.2024
  */
 class TestSpectrumStream {
     private static Path mono500Hz3SecsWav;

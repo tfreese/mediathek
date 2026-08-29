@@ -1,4 +1,3 @@
-// Created: 13 Okt. 2024
 package de.freese.player.ui.swing.event;
 
 import java.util.HashMap;
@@ -6,6 +5,7 @@ import java.util.Map;
 
 /**
  * @author Thomas Freese
+ * @since 13.10.2024
  */
 public final class EventRegistry {
     private static final EventRegistry INSTANCE = new EventRegistry();

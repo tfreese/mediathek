@@ -1,4 +1,3 @@
-// Created: 15 Juli 2024
 package de.freese.player.core.ffmpeg;
 
 import java.io.BufferedInputStream;
@@ -20,6 +19,7 @@ import de.freese.player.core.util.PlayerUtils;
 
 /**
  * @author Thomas Freese
+ * @since 15.07.2024
  */
 final class DefaultFFmpeg extends AbstractFF implements FFmpeg {
     private static AudioFormat getTargetAudioFormat(final AudioSource audioSource) {
@@ -68,13 +68,13 @@ final class DefaultFFmpeg extends AbstractFF implements FFmpeg {
 
             return tmpFile;
         }
-        catch (IOException ex) {
+        catch (final IOException ex) {
             throw new UncheckedIOException(ex);
         }
-        catch (RuntimeException ex) {
+        catch (final RuntimeException ex) {
             throw ex;
         }
-        catch (InterruptedException ex) {
+        catch (final InterruptedException ex) {
             // Restore interrupted state.
             Thread.currentThread().interrupt();
 
@@ -100,9 +100,7 @@ final class DefaultFFmpeg extends AbstractFF implements FFmpeg {
 
         getLogger().debug("execute: {}", command);
 
-        try {
-            final Process process = processBuilder.start();
-
+        try (Process process = processBuilder.start()) {
             // buffer = 1/4 second of audio.
             final int bufferSize = audioSource.getSampleRate() / 4;
             final InputStream inputStream = new BufferedInputStream(process.getInputStream(), bufferSize);
@@ -128,13 +126,13 @@ final class DefaultFFmpeg extends AbstractFF implements FFmpeg {
 
             return new AudioInputStream(inputStream, audioFormatTarget, AudioSystem.NOT_SPECIFIED);
         }
-        catch (IOException ex) {
+        catch (final IOException ex) {
             throw new UncheckedIOException(ex);
         }
-        catch (RuntimeException ex) {
+        catch (final RuntimeException ex) {
             throw ex;
         }
-        catch (InterruptedException ex) {
+        catch (final InterruptedException ex) {
             // Restore interrupted state.
             Thread.currentThread().interrupt();
 

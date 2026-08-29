@@ -1,4 +1,3 @@
-// Created: 03 Nov. 2024
 package de.freese.player.demo;
 
 import java.util.Arrays;
@@ -8,6 +7,7 @@ import de.freese.player.fft.math.FFT;
 
 /**
  * @author Thomas Freese
+ * @since 03.11.2024
  */
 public final class FFTDemo {
     static void main() {

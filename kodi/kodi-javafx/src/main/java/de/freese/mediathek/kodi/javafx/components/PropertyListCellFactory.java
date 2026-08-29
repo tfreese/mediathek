@@ -1,4 +1,3 @@
-// Created: 12.04.2015
 package de.freese.mediathek.kodi.javafx.components;
 
 import java.lang.reflect.Method;
@@ -12,6 +11,7 @@ import org.springframework.util.ReflectionUtils;
 
 /**
  * @author Thomas Freese
+ * @since 12.04.2015
  */
 public class PropertyListCellFactory<T> implements Callback<ListView<T>, ListCell<T>> {
     private final Method method;

@@ -1,4 +1,3 @@
-// Created: 16.09.2014
 package de.freese.mediathek.kodi.spring;
 
 import java.nio.file.Paths;
@@ -8,6 +7,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 import javax.sql.DataSource;
 
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.EnvironmentAware;
@@ -30,6 +30,7 @@ import de.freese.mediathek.utils.cache.ResourceCache;
 
 /**
  * @author Thomas Freese
+ * @since 16.09.2014
  */
 @Configuration
 @PropertySource("classpath:kodi.properties")
@@ -87,7 +88,7 @@ public abstract class AbstractAppConfig implements EnvironmentAware {
     }
 
     @Override
-    public void setEnvironment(final Environment environment) {
+    public void setEnvironment(final @NonNull Environment environment) {
         this.environment = environment;
     }
 

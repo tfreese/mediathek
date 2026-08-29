@@ -1,4 +1,3 @@
-// Created: 18 Aug. 2024
 package de.freese.player.ui.javafx;
 
 import javafx.application.Application;
@@ -15,6 +14,7 @@ import de.freese.player.ui.ApplicationContext;
 
 /**
  * @author Thomas Freese
+ * @since 18.08.2024
  */
 public final class PlayerApplication extends Application {
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayerApplication.class);

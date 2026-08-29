@@ -1,4 +1,3 @@
-// Created: 31 Aug. 2024
 package de.freese.player.core.player;
 
 import java.net.URI;
@@ -14,6 +13,7 @@ import de.freese.player.core.input.AudioSourceFactory;
 
 /**
  * @author Thomas Freese
+ * @since 31.08.2024
  */
 public final class DefaultSongCollection implements SongCollection {
     private final List<AudioSource> audioSources = new ArrayList<>(1024);

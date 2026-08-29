@@ -1,4 +1,3 @@
-// Created: 25 Aug. 2024
 package de.freese.player.fft;
 
 import java.io.IOException;
@@ -19,6 +18,7 @@ import de.freese.player.fft.sampling.SampleWindowExtractor;
 
 /**
  * @author Thomas Freese
+ * @since 25.08.2024
  */
 public final class FFTFactory {
     /**

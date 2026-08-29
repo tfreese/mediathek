@@ -1,4 +1,3 @@
-// Created: 12.04.2015
 package de.freese.mediathek.kodi.javafx.controller;
 
 import java.util.List;
@@ -19,6 +18,7 @@ import de.freese.mediathek.utils.cache.ResourceCache;
 
 /**
  * @author Thomas Freese
+ * @since 12.04.2015
  */
 public abstract class AbstractController<T extends Model> implements Initializable, ChangeListener<T> {
     private final ApplicationContext applicationContext;

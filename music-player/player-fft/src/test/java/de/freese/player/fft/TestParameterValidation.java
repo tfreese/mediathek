@@ -1,4 +1,3 @@
-// Created: 08 Aug. 2024
 package de.freese.player.fft;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -15,6 +14,7 @@ import de.freese.player.fft.config.FFTConfig;
 
 /**
  * @author Thomas Freese
+ * @since 08.08.2024
  */
 @SuppressWarnings("java:S5778")
 class TestParameterValidation {

@@ -1,4 +1,3 @@
-// Created: 17 Juli 2024
 package de.freese.player.core.util;
 
 import java.io.BufferedInputStream;
@@ -23,6 +22,7 @@ import de.freese.player.core.model.Window;
 
 /**
  * @author Thomas Freese
+ * @since 17.07.2024
  * //@see com.sun.media.sound.Toolkit
  */
 public final class PlayerUtils {

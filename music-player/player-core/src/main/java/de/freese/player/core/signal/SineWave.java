@@ -1,4 +1,3 @@
-// Created: 03 Nov. 2024
 package de.freese.player.core.signal;
 
 import java.nio.ByteBuffer;
@@ -9,6 +8,7 @@ import de.freese.player.core.util.PlayerUtils;
 
 /**
  * @author Thomas Freese
+ * @since 03.11.2024
  */
 public final class SineWave implements Signal {
     private final double frequency;

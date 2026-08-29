@@ -1,4 +1,3 @@
-// Created: 08 Aug. 2024
 package de.freese.player.demo.firstfft;
 
 import java.io.IOException;
@@ -12,6 +11,7 @@ import de.freese.player.fft.output.SpectraResult;
 
 /**
  * @author Thomas Freese
+ * @since 08.08.2024
  */
 public final class FirstFFT {
     static void main() throws Exception {

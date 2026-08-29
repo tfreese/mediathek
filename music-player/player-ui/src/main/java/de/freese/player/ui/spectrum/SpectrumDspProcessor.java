@@ -1,4 +1,3 @@
-// Created: 29 Aug. 2024
 package de.freese.player.ui.spectrum;
 
 import java.util.Objects;
@@ -13,6 +12,7 @@ import de.freese.player.fft.sampling.WindowFunction;
 
 /**
  * @author Thomas Freese
+ * @since 29.08.2024
  */
 public final class SpectrumDspProcessor implements DspProcessor {
     // private static final Logger LOGGER = LoggerFactory.getLogger(SpectrumDspProcessor.class);

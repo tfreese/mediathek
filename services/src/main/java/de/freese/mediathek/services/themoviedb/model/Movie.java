@@ -1,4 +1,3 @@
-// Created: 24.04.2014
 package de.freese.mediathek.services.themoviedb.model;
 
 import java.util.Objects;
@@ -10,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author Thomas Freese
+ * @since 24.04.2014
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Movie implements Comparable<Movie> {
@@ -121,21 +121,12 @@ public class Movie implements Comparable<Movie> {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("Movie [id=");
-        builder.append(id);
-        builder.append(", title=");
-        builder.append(title);
-        builder.append(", originalTitle=");
-        builder.append(originalTitle);
-        builder.append(", releaseDate=");
-        builder.append(releaseDate);
-        builder.append(", backdrop=");
-        builder.append(backdrop);
-        builder.append(", poster=");
-        builder.append(poster);
-        builder.append("]");
-
-        return builder.toString();
+        return "Movie [id=" + id
+                + ", title=" + title
+                + ", originalTitle=" + originalTitle
+                + ", releaseDate=" + releaseDate
+                + ", backdrop=" + backdrop
+                + ", poster=" + poster
+                + "]";
     }
 }

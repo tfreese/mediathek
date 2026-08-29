@@ -1,4 +1,3 @@
-// Created: 22 Juli 2025
 package de.freese.player.test;
 
 import javax.swing.SwingUtilities;
@@ -16,6 +15,7 @@ import org.slf4j.LoggerFactory;
  * com.github.kwhat:jnativehook:2.2.2<br>
  *
  * @author Thomas Freese
+ * @since 22.07.2025
  */
 public final class JNativehookDemo {
     private static final Logger LOGGER = LoggerFactory.getLogger(JNativehookDemo.class);
@@ -32,7 +32,7 @@ public final class JNativehookDemo {
         try {
             GlobalScreen.registerNativeHook();
         }
-        catch (Exception ex) {
+        catch (final Exception ex) {
             LOGGER.error(ex.getMessage(), ex);
             return;
         }
@@ -46,7 +46,7 @@ public final class JNativehookDemo {
                     try {
                         GlobalScreen.unregisterNativeHook();
                     }
-                    catch (NativeHookException ex) {
+                    catch (final NativeHookException ex) {
                         LOGGER.error(ex.getMessage(), ex);
                     }
 

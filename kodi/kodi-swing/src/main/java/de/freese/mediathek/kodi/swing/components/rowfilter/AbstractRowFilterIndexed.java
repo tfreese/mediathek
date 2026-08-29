@@ -1,4 +1,3 @@
-// Created: 10.06.2016
 package de.freese.mediathek.kodi.swing.components.rowfilter;
 
 import java.util.List;
@@ -9,6 +8,7 @@ import javax.swing.RowFilter;
  * {@link RowFilter} for specific columns.<br>
  *
  * @author Thomas Freese
+ * @since 10.06.2016
  */
 public abstract class AbstractRowFilterIndexed extends RowFilter<Object, Object> {
     private final List<Integer> columns;

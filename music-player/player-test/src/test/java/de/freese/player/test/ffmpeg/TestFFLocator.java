@@ -1,4 +1,3 @@
-// Created: 15 Juli 2024
 package de.freese.player.test.ffmpeg;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -10,6 +9,7 @@ import de.freese.player.core.ffmpeg.FFLocator;
 
 /**
  * @author Thomas Freese
+ * @since 15.07.2024
  */
 class TestFFLocator {
     @Test

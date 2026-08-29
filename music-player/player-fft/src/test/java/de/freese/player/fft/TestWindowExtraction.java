@@ -1,4 +1,3 @@
-// Created: 08 Aug. 2024
 package de.freese.player.fft;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
@@ -17,9 +16,10 @@ import de.freese.player.fft.sampling.WindowFunction;
 
 /**
  * @author Thomas Freese
+ * @since 08.08.2024
  */
 class TestWindowExtraction {
-    private static final double[] HANNING_8 = {0, 0.19, 0.61, 0.95, 0.95, 0.61, 0.19, 0};
+    private static final double[] HANNING_8 = {0D, 0.19D, 0.61D, 0.95D, 0.95D, 0.61D, 0.19D, 0D};
 
     private static int[] exampleWave;
 

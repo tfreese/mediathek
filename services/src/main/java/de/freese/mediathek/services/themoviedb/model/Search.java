@@ -1,4 +1,3 @@
-// Created: 24.04.2014
 package de.freese.mediathek.services.themoviedb.model;
 
 import java.util.Collections;
@@ -6,9 +5,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.jspecify.annotations.NonNull;
 
 /**
  * @author Thomas Freese
+ * @since 24.04.2014
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Search implements Iterable<Movie> {
@@ -19,7 +20,7 @@ public class Search implements Iterable<Movie> {
     }
 
     @Override
-    public Iterator<Movie> iterator() {
+    public @NonNull Iterator<Movie> iterator() {
         if (results != null) {
             return results.iterator();
         }

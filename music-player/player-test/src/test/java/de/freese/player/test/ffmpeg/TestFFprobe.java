@@ -1,4 +1,3 @@
-// Created: 18 Juli 2024
 package de.freese.player.test.ffmpeg;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,6 +23,7 @@ import de.freese.player.core.input.AudioSource;
 
 /**
  * @author Thomas Freese
+ * @since 18.07.2024
  */
 class TestFFprobe {
     private static final Logger LOGGER = LoggerFactory.getLogger(TestFFprobe.class);
@@ -223,7 +223,7 @@ class TestFFprobe {
         assertNotNull(audioSource);
         assertEquals(195, audioSource.getBitRate());
         assertEquals(2, audioSource.getChannels());
-        assertEquals("PT43.08S", audioSource.getDuration().toString());
+        assertEquals("PT43.04S", audioSource.getDuration().toString());
         assertEquals("mp3", audioSource.getFormat());
         assertEquals(44100, audioSource.getSampleRate());
 

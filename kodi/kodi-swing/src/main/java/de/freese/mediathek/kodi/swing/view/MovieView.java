@@ -1,4 +1,3 @@
-// Created: 28.12.22
 package de.freese.mediathek.kodi.swing.view;
 
 import javax.swing.JTable;
@@ -9,6 +8,7 @@ import de.freese.mediathek.kodi.swing.components.table.MovieTableModel;
 
 /**
  * @author Thomas Freese
+ * @since 28.12.2022
  */
 public class MovieView extends AbstractShowAndMovieView<Movie> {
     @Override

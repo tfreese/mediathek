@@ -1,4 +1,3 @@
-// Created: 13 Aug. 2025
 package de.freese.player.test.flac;
 
 import static de.freese.player.test.Unsigned.toIntFromInt;
@@ -12,6 +11,7 @@ import java.nio.channels.FileChannel;
  *
  * @author Thomas Freese
  * @see org.jaudiotagger.audio.flac.metadatablock.MetadataBlockHeader
+ * @since 13.08.2025
  */
 public final class MetadataBlockHeader {
     private static final int HEADER_LENGTH = 4;

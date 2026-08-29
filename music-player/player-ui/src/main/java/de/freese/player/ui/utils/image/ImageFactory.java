@@ -1,4 +1,3 @@
-// Created: 24 Aug. 2024
 package de.freese.player.ui.utils.image;
 
 import java.awt.Image;
@@ -19,6 +18,7 @@ import org.apache.batik.transcoder.TranscoderInput;
 
 /**
  * @author Thomas Freese
+ * @since 24.08.2024
  */
 public final class ImageFactory {
     private static final Map<String, Image> CACHE = new ConcurrentHashMap<>();
@@ -50,10 +50,10 @@ public final class ImageFactory {
                 image = loadImage(resource, classLoader);
             }
         }
-        catch (IOException ex) {
+        catch (final IOException ex) {
             throw new UncheckedIOException(ex);
         }
-        catch (TranscoderException ex) {
+        catch (final TranscoderException ex) {
             throw new RuntimeException(ex);
         }
 

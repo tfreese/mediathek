@@ -1,4 +1,3 @@
-// Created: 03 Nov. 2024
 package de.freese.player.core.signal;
 
 import java.util.Set;
@@ -7,6 +6,7 @@ import javax.sound.sampled.AudioFormat;
 
 /**
  * @author Thomas Freese
+ * @since 03.11.2024
  */
 public final class DecayPulse implements Signal {
     private final Set<Double> frequencies;
@@ -47,7 +47,7 @@ public final class DecayPulse implements Signal {
 
             double sinValue = 0D;
 
-            for (double frequency : frequencies) {
+            for (final double frequency : frequencies) {
                 sinValue += Math.sin(Math.TAU * frequency * time);
             }
 

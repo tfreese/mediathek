@@ -1,4 +1,3 @@
-// Created: 08.11.2014
 package de.freese.mediathek.services;
 
 import java.net.URLEncoder;
@@ -18,6 +17,7 @@ import de.freese.mediathek.utils.cache.ResourceCache;
  * Basisimplementierung für den Zugriff auf eine Online-Media-Datenbank (www.themoviedb.org, www.thetvdb.com).
  *
  * @author Thomas Freese
+ * @since 08.11.2014
  */
 public abstract class AbstractService implements InitializingBean {
     private final String apiKey;
@@ -69,7 +69,7 @@ public abstract class AbstractService implements InitializingBean {
         try {
             return URLEncoder.encode(value.strip().toLowerCase(), StandardCharsets.UTF_8);
         }
-        catch (Exception ex) {
+        catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
     }

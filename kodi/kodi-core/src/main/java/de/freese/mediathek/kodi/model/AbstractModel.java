@@ -1,21 +1,19 @@
-// Created: 16.09.2014
 package de.freese.mediathek.kodi.model;
 
 import java.util.Objects;
 
+import org.jspecify.annotations.NonNull;
+
 /**
  * @author Thomas Freese
+ * @since 16.09.2014
  */
 public abstract class AbstractModel implements Model {
     private String name;
     private int pk = -1;
 
     @Override
-    public int compareTo(final Model o) {
-        if (o == null) {
-            return -1;
-        }
-
+    public int compareTo(final @NonNull Model o) {
         if (this == o) {
             return 0;
         }
@@ -32,7 +30,7 @@ public abstract class AbstractModel implements Model {
             return true;
         }
 
-        if (!(o instanceof AbstractModel model)) {
+        if (!(o instanceof final AbstractModel model)) {
             return false;
         }
 
@@ -66,12 +64,9 @@ public abstract class AbstractModel implements Model {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append(getClass().getSimpleName()).append(" [");
-        builder.append("pk=").append(pk);
-        builder.append(", name=").append(name);
-        builder.append("]");
-
-        return builder.toString();
+        return getClass().getSimpleName() + " ["
+                + "pk=" + pk
+                + ", name=" + name
+                + "]";
     }
 }

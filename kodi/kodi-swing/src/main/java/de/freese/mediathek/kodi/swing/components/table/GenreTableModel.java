@@ -1,4 +1,3 @@
-// Created: 26.12.22
 package de.freese.mediathek.kodi.swing.components.table;
 
 import java.io.Serial;
@@ -8,6 +7,7 @@ import de.freese.mediathek.kodi.model.Genre;
 
 /**
  * @author Thomas Freese
+ * @since 26.12.2022
  */
 public class GenreTableModel extends AbstractListTableModel<Genre> {
     @Serial

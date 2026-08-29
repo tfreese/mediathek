@@ -1,4 +1,3 @@
-// Created: 15.04.2015
 package de.freese.mediathek.kodi.javafx.controller;
 
 import java.net.URL;
@@ -23,6 +22,7 @@ import de.freese.mediathek.kodi.model.Show;
 
 /**
  * @author Thomas Freese
+ * @since 15.04.2015
  */
 public class GenreController extends AbstractController<Genre> {
     private final GenrePane scene;

@@ -1,4 +1,3 @@
-// Created: 26.04.2014
 package de.freese.mediathek.services.themoviedb.model;
 
 import java.util.Objects;
@@ -8,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 /**
  * @author Thomas Freese
+ * @since 26.04.2014
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Actor implements Comparable<Actor> {
@@ -38,7 +38,7 @@ public class Actor implements Comparable<Actor> {
         if (!(o instanceof final Actor actor)) {
             return false;
         }
-        
+
         return order == actor.order && Objects.equals(name, actor.name) && Objects.equals(profile, actor.profile) && Objects.equals(role, actor.role);
     }
 
@@ -83,17 +83,10 @@ public class Actor implements Comparable<Actor> {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("Actor [name=");
-        builder.append(name);
-        builder.append(", role=");
-        builder.append(role);
-        builder.append(", order=");
-        builder.append(order);
-        builder.append(", profile=");
-        builder.append(profile);
-        builder.append("]");
-
-        return builder.toString();
+        return "Actor [name=" + name
+                + ", role=" + role
+                + ", order=" + order
+                + ", profile=" + profile
+                + "]";
     }
 }

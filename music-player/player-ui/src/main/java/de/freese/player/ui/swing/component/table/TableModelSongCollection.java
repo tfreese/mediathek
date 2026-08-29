@@ -1,4 +1,3 @@
-// Created: 08 Sept. 2024
 package de.freese.player.ui.swing.component.table;
 
 import java.io.Serial;
@@ -17,6 +16,7 @@ import de.freese.player.core.util.PlayerUtils;
 
 /**
  * @author Thomas Freese
+ * @since 08.09.2024
  */
 public final class TableModelSongCollection extends AbstractTableModel implements SongCollection {
     @Serial

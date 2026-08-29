@@ -1,4 +1,3 @@
-// Created: 08.11.2014
 package de.freese.mediathek.services.thetvdb;
 
 import java.util.List;
@@ -14,6 +13,7 @@ import de.freese.mediathek.services.themoviedb.model.Image;
 
 /**
  * @author Thomas Freese
+ * @since 08.11.2014
  */
 @XmlRootElement(name = "Series")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -152,15 +152,12 @@ public class TVShow implements Comparable<TVShow> {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("Serie [");
-        builder.append("id=").append(id);
-        builder.append(", releaseDate=").append(releaseDate);
-        builder.append(", title=").append(title);
-        builder.append(", language=").append(language);
-        builder.append("]");
-
-        return builder.toString();
+        return "Serie ["
+                + "id=" + id
+                + ", releaseDate=" + releaseDate
+                + ", title=" + title
+                + ", language=" + language
+                + "]";
     }
 
     void setActors(final String actors) {

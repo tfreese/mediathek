@@ -1,4 +1,3 @@
-// Created: 14 Juli 2024
 package de.freese.player.core.player;
 
 import java.time.Duration;
@@ -11,6 +10,7 @@ import de.freese.player.core.input.AudioSource;
 
 /**
  * @author Thomas Freese
+ * @since 14.07.2024
  */
 // extends AutoCloseable
 public interface Player {

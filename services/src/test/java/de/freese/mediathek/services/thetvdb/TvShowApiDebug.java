@@ -1,4 +1,3 @@
-// Created: 26.04.2014
 package de.freese.mediathek.services.thetvdb;
 
 import java.io.InputStream;
@@ -15,6 +14,7 @@ import de.freese.mediathek.services.Settings;
  * API-Debug für <a href="http://www.thetvdb.com">...</a>.
  *
  * @author Thomas Freese
+ * @since 26.04.2014
  */
 public class TvShowApiDebug {
     public static final String TEST_SHOW = Settings.TEST_SHOW;

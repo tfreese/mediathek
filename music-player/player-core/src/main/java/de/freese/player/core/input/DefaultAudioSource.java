@@ -1,4 +1,3 @@
-// Created: 16 Juli 2024
 package de.freese.player.core.input;
 
 import java.net.URI;
@@ -8,6 +7,7 @@ import java.util.Objects;
 
 /**
  * @author Thomas Freese
+ * @since 16.07.2024
  */
 public class DefaultAudioSource implements AudioSource {
     private String album;

@@ -6,6 +6,8 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.stream.Stream;
 
+import org.jspecify.annotations.NonNull;
+
 /**
  * The result of an FFT being computed for a single sampling window of an audio file.<br>
  * An {@link SpectraResult} for a full audio file will contain an array of {@link Spectrum}.
@@ -26,9 +28,9 @@ public final class Spectrum implements Iterable<Frequency> {
     private final Frequency[] frequencies;
 
     public Spectrum(final Frequency[] frequencies, final double frameStartMs, final double frameEndMs) {
-        super();
-
         Objects.requireNonNull(frequencies, "frequencies required");
+
+        super();
 
         if (frequencies.length == 0) {
             throw new IllegalArgumentException("frequencies are empty");
@@ -51,7 +53,7 @@ public final class Spectrum implements Iterable<Frequency> {
         return frequencies[index];
     }
 
-    public Iterator<Frequency> iterator() {
+    public @NonNull Iterator<Frequency> iterator() {
         return new Iterator<>() {
             private int index;
 

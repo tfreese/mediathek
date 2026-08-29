@@ -1,4 +1,3 @@
-// Created: 08 Aug. 2024
 package de.freese.player.demo.customizedparams;
 
 import java.io.IOException;
@@ -14,6 +13,7 @@ import de.freese.player.fft.sampling.WindowFunction;
 
 /**
  * @author Thomas Freese
+ * @since 08.08.2024
  */
 public final class SmallRectangularWindow {
     static void main() throws Exception {

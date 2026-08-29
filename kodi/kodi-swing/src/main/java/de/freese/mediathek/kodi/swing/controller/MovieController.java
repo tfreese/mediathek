@@ -1,4 +1,3 @@
-// Created: 28.12.22
 package de.freese.mediathek.kodi.swing.controller;
 
 import de.freese.mediathek.kodi.model.Movie;
@@ -7,6 +6,7 @@ import de.freese.mediathek.kodi.swing.view.MovieView;
 
 /**
  * @author Thomas Freese
+ * @since 28.12.2022
  */
 public class MovieController extends AbstractShowAndMovieController<Movie> {
     public MovieController(final MovieService service, final MovieView view) {

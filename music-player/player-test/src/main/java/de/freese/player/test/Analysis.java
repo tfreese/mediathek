@@ -1,4 +1,3 @@
-// Created: 03 Aug. 2024
 package de.freese.player.test;
 
 import java.io.InputStream;
@@ -14,6 +13,7 @@ import de.freese.player.core.player.DefaultAudioPlayerSink;
 
 /**
  * @author Thomas Freese
+ * @since 03.08.2024
  */
 public final class Analysis {
     static void main() throws Exception {

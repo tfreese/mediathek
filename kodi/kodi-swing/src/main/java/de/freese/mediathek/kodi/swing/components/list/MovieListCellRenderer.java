@@ -1,4 +1,3 @@
-// Created: 28.09.2014
 package de.freese.mediathek.kodi.swing.components.list;
 
 import java.awt.Component;
@@ -11,6 +10,7 @@ import de.freese.mediathek.kodi.model.Movie;
 
 /**
  * @author Thomas Freese
+ * @since 28.09.2014
  */
 public class MovieListCellRenderer extends DefaultListCellRenderer {
     @Serial

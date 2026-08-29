@@ -1,4 +1,3 @@
-// Created: 12.04.2015
 package de.freese.mediathek.kodi.javafx.controller;
 
 import java.io.InputStream;
@@ -27,6 +26,7 @@ import de.freese.mediathek.kodi.model.Model;
 
 /**
  * @author Thomas Freese
+ * @since 12.04.2015
  */
 public abstract class AbstractTvShowMovieController<T extends Model> extends AbstractController<T> {
     private final TvShowMoviePane<T> pane;
@@ -93,6 +93,7 @@ public abstract class AbstractTvShowMovieController<T extends Model> extends Abs
             getPane().getImageProperty().set(image);
 
         });
+        
         // Alert alert = new Alert(AlertType.ERROR, task.getException().getMessage());
         // alert.showAndWait();
         task.setOnFailed(event -> KodiJavaFxClient.LOGGER.error(task.getException().getMessage()));

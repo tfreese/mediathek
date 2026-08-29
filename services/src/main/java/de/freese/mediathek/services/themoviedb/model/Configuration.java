@@ -1,4 +1,3 @@
-// Created: 24.04.2014
 package de.freese.mediathek.services.themoviedb.model;
 
 import java.util.List;
@@ -9,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * @author Thomas Freese
+ * @since 24.04.2014
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Configuration {
@@ -80,21 +80,11 @@ public class Configuration {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("Configuration [imageBaseURL=");
-        builder.append(imageBaseURL);
-        builder.append(", backdropSizes=");
-        builder.append(backdropSizes);
-        builder.append(", posterSizes=");
-        builder.append(posterSizes);
-        builder.append(", logoSizes=");
-        builder.append(logoSizes);
-        builder.append(", profileSizes=");
-        builder.append(profileSizes);
-        // builder.append(", changeKeys=");
-        // builder.append(changeKeys);
-        builder.append("]");
-
-        return builder.toString();
+        return "Configuration [imageBaseURL=" + imageBaseURL
+                + ", backdropSizes=" + backdropSizes
+                + ", posterSizes=" + posterSizes
+                + ", logoSizes=" + logoSizes
+                + ", profileSizes=" + profileSizes
+                + "]";
     }
 }

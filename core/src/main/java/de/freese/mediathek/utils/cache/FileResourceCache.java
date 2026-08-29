@@ -13,6 +13,8 @@ import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Objects;
 
+import org.jspecify.annotations.NonNull;
+
 /**
  * @author Thomas Freese
  * @since 18.09.2014
@@ -39,14 +41,14 @@ public class FileResourceCache extends AbstractResourceCache {
 
             Files.walkFileTree(cacheDirectory, new SimpleFileVisitor<>() {
                 @Override
-                public FileVisitResult postVisitDirectory(final Path dir, final IOException exc) throws IOException {
+                public @NonNull FileVisitResult postVisitDirectory(final @NonNull Path dir, final IOException exc) throws IOException {
                     Files.delete(dir);
 
                     return FileVisitResult.CONTINUE;
                 }
 
                 @Override
-                public FileVisitResult visitFile(final Path file, final BasicFileAttributes attrs) throws IOException {
+                public @NonNull FileVisitResult visitFile(final @NonNull Path file, final @NonNull BasicFileAttributes attrs) throws IOException {
                     Files.delete(file);
 
                     return FileVisitResult.CONTINUE;

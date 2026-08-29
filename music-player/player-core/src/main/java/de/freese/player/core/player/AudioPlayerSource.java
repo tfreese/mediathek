@@ -1,4 +1,3 @@
-// Created: 29 Jan. 2025
 package de.freese.player.core.player;
 
 import java.net.URI;
@@ -16,6 +15,7 @@ import de.freese.player.core.model.Window;
 
 /**
  * @author Thomas Freese
+ * @since 29.01.2025
  */
 public interface AudioPlayerSource {
 
@@ -27,7 +27,7 @@ public interface AudioPlayerSource {
         try {
             return of(AudioSourceFactory.createAudioSource(uri), tempDir);
         }
-        catch (Exception ex) {
+        catch (final Exception ex) {
             throw new PlayerException(ex);
         }
     }

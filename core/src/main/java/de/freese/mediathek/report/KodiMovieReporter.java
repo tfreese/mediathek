@@ -65,19 +65,16 @@ public class KodiMovieReporter extends AbstractMediaReporter {
                     stmtSelect.setString(1, movie);
 
                     try (ResultSet resultSet = stmtSelect.executeQuery()) {
-                        if (resultSet.next()) {
-                            // Eintrag gefunden -> Update
-                            if (playCount != resultSet.getInt("PLAYCOUNT") || !lastPlayed.equals(resultSet.getString("LASTPLAYED"))) {
-                                final int idFile = resultSet.getInt("IDFILE");
+                        if (resultSet.next() && playCount != resultSet.getInt("PLAYCOUNT") || !lastPlayed.equals(resultSet.getString("LASTPLAYED"))) {
+                            final int idFile = resultSet.getInt("IDFILE");
 
-                                getLogger().info("Update Movie: IDFile={}, {}", idFile, movie);
+                            getLogger().info("Update Movie: IDFile={}, {}", idFile, movie);
 
-                                stmtUpdate.setInt(1, playCount);
-                                stmtUpdate.setString(2, lastPlayed);
-                                stmtUpdate.setInt(3, idFile);
+                            stmtUpdate.setInt(1, playCount);
+                            stmtUpdate.setString(2, lastPlayed);
+                            stmtUpdate.setInt(3, idFile);
 
-                                stmtUpdate.executeUpdate();
-                            }
+                            stmtUpdate.executeUpdate();
                         }
                     }
                 }

@@ -1,4 +1,3 @@
-// Created: 08 Aug. 2024
 package de.freese.player.demo.spectrumvisualization;
 
 import java.io.BufferedInputStream;
@@ -28,6 +27,7 @@ import de.freese.player.fft.sampling.WindowFunction;
 
 /**
  * @author Thomas Freese
+ * @since 08.08.2024
  */
 public final class SpectrumVisualizer {
     /**
@@ -94,7 +94,7 @@ public final class SpectrumVisualizer {
                 audioClip.open(audioInputStream);
                 audioClip.start();
             }
-            catch (Exception ex) {
+            catch (final Exception ex) {
                 LOGGER.error(ex.getMessage(), ex);
             }
         });

@@ -1,4 +1,3 @@
-// Created: 19 Okt. 2024
 package de.freese.player.ui.swing.component.equalizer;
 
 import java.awt.Dimension;
@@ -27,6 +26,7 @@ import de.freese.player.ui.swing.component.GbcBuilder;
 
 /**
  * @author Thomas Freese
+ * @since 19.10.2024
  */
 public class EqualizerView {
     private static final Logger LOGGER = LoggerFactory.getLogger(EqualizerView.class);
@@ -77,9 +77,10 @@ public class EqualizerView {
     private final List<JSlider> sliders = new ArrayList<>();
 
     public EqualizerView(final EqualizerDspProcessor equalizerDspProcessor) {
+        Objects.requireNonNull(equalizerDspProcessor, "equalizerDspProcessor required");
+        
         super();
 
-        Objects.requireNonNull(equalizerDspProcessor, "equalizerDspProcessor required");
         final EqualizerControls equalizerControls = equalizerDspProcessor.getControls();
 
         int row = 0;

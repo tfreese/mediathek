@@ -1,4 +1,3 @@
-// Created: 12 Aug. 2024
 package de.freese.player.core.input;
 
 import java.net.URI;
@@ -10,6 +9,7 @@ import de.freese.player.core.util.PlayerUtils;
 
 /**
  * @author Thomas Freese
+ * @since 12.08.2024
  */
 public interface AudioSource {
     String getAlbum();

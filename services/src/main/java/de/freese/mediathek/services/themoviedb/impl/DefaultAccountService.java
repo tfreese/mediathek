@@ -1,4 +1,3 @@
-// Created: 26.04.2014
 package de.freese.mediathek.services.themoviedb.impl;
 
 import de.freese.mediathek.services.themoviedb.api.AccountService;
@@ -9,6 +8,7 @@ import de.freese.mediathek.services.themoviedb.model.Configuration;
  * <a href="http://docs.themoviedb.apiary.io/#configuration" target="_blank">http://docs.themoviedb.apiary.io/#configuration</a>
  *
  * @author Thomas Freese
+ * @since 26.04.2014
  */
 public class DefaultAccountService extends AbstractMovieDbService implements AccountService {
     public DefaultAccountService(final String apiKey) {

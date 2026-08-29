@@ -1,4 +1,3 @@
-// Created: 10.11.2014
 package de.freese.mediathek.services.thetvdb;
 
 import java.util.List;
@@ -10,6 +9,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Thomas Freese
+ * @since 10.11.2014
  */
 @XmlRootElement(name = "Actors")
 @XmlAccessorType(XmlAccessType.FIELD)

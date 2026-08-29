@@ -1,4 +1,3 @@
-// Created: 24.04.2014
 package de.freese.mediathek.services.thetvdb;
 
 import java.awt.image.BufferedImage;
@@ -26,6 +25,7 @@ import de.freese.mediathek.services.themoviedb.model.Images;
  * http:// www.thetvdb.com/wiki/index.php?title=Programmers_API
  **
  * @author Thomas Freese
+ * @since 24.04.2014
  */
 public class TVService extends AbstractService {
     private RestTemplate restTemplate;
@@ -44,7 +44,6 @@ public class TVService extends AbstractService {
 
             restTemplate = new RestTemplate(messageConverters);
             // restTemplate.getMessageConverters().add(new Jaxb2RootElementHttpMessageConverter());
-
         }
     }
 
@@ -93,7 +92,7 @@ public class TVService extends AbstractService {
 
             final StringBuilder sb = new StringBuilder("|");
 
-            for (Actor actor : actorsList) {
+            for (final Actor actor : actorsList) {
                 sb.append(actor.getName()).append("|");
             }
 
@@ -133,7 +132,7 @@ public class TVService extends AbstractService {
         }
 
         final String url = String.format("http://thetvdb.com/banners/%s", path);
-        BufferedImage image = null;
+        final BufferedImage image;
 
         try (InputStream inputStream = getCache().getResource(URI.create(url))) {
             image = ImageIO.read(inputStream);
@@ -157,7 +156,7 @@ public class TVService extends AbstractService {
         final Map<String, TVShow> map = new HashMap<>();
         final Map<String, TVShow> map2 = new HashMap<>();
 
-        for (TVShow show : search.getSeries()) {
+        for (final TVShow show : search.getSeries()) {
             if (show.getLanguage().equals(getLocale().getLanguage())) {
                 map.put(show.getID(), show);
             }
@@ -166,7 +165,7 @@ public class TVService extends AbstractService {
             }
         }
 
-        for (Entry<String, TVShow> entry : map2.entrySet()) {
+        for (final Entry<String, TVShow> entry : map2.entrySet()) {
             if (map.containsKey(entry.getKey())) {
                 continue;
             }
@@ -196,9 +195,6 @@ public class TVService extends AbstractService {
      * <a href="http://thetvdb.com/api/1D62F2F90030C444/mirrors.xml">http://thetvdb.com/api/1D62F2F90030C444/mirrors.xml</a><br>
      */
     private StringBuilder url() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append("http://thetvdb.com/api/");
-
-        return sb;
+        return new StringBuilder("http://thetvdb.com/api/");
     }
 }

@@ -1,4 +1,3 @@
-// Created: 12.04.2015
 package de.freese.mediathek.kodi.javafx.components;
 
 import javafx.scene.control.ListCell;
@@ -9,6 +8,7 @@ import de.freese.mediathek.kodi.model.Model;
 
 /**
  * @author Thomas Freese
+ * @since 12.04.2015
  */
 public class ModelListCellFactory implements Callback<ListView<Model>, ListCell<Model>> {
     @Override

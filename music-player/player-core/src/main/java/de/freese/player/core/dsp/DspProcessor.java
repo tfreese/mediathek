@@ -1,4 +1,3 @@
-// Created: 12 Aug. 2024
 package de.freese.player.core.dsp;
 
 import de.freese.player.core.model.Window;
@@ -7,6 +6,7 @@ import de.freese.player.core.model.Window;
  * Digital Sound Processor.
  *
  * @author Thomas Freese
+ * @since 12.08.2024
  */
 public interface DspProcessor {
     default String getName() {

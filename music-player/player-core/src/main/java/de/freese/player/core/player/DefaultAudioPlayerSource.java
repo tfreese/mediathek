@@ -1,4 +1,3 @@
-// Created: 01 Feb. 2025
 package de.freese.player.core.player;
 
 import java.io.IOException;
@@ -16,6 +15,7 @@ import de.freese.player.core.util.PlayerUtils;
 
 /**
  * @author Thomas Freese
+ * @since 01.02. 2025
  */
 final class DefaultAudioPlayerSource implements AudioPlayerSource {
     private final AudioInputStream audioInputStream;
@@ -37,7 +37,7 @@ final class DefaultAudioPlayerSource implements AudioPlayerSource {
 
             audioInputStream.close();
         }
-        catch (IOException ex) {
+        catch (final IOException ex) {
             throw new PlayerException(ex);
         }
     }
@@ -65,10 +65,10 @@ final class DefaultAudioPlayerSource implements AudioPlayerSource {
             audioInputStream.reset();
             audioInputStream.skip(byteIndex);
         }
-        catch (RuntimeException ex) {
+        catch (final RuntimeException ex) {
             throw ex;
         }
-        catch (Exception ex) {
+        catch (final Exception ex) {
             throw new PlayerException(ex);
         }
     }
@@ -103,7 +103,7 @@ final class DefaultAudioPlayerSource implements AudioPlayerSource {
                 window = Window.of(audioFormat, Arrays.copyOf(audioBytes, bytesRead), Math.min(framesRead, framesTotal), framesTotal);
             }
         }
-        catch (IOException ex) {
+        catch (final IOException ex) {
             throw new PlayerException(ex);
         }
 

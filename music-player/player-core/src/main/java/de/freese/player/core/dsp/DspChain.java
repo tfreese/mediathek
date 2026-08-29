@@ -1,4 +1,3 @@
-// Created: 12 Aug. 2024
 package de.freese.player.core.dsp;
 
 import java.util.ArrayList;
@@ -11,6 +10,7 @@ import de.freese.player.core.model.Window;
  * Chain for Digital Sound Processors.
  *
  * @author Thomas Freese
+ * @since 12.08.2024
  */
 public final class DspChain implements DspProcessor {
     private final List<DspProcessor> processors = new ArrayList<>();
@@ -28,7 +28,7 @@ public final class DspChain implements DspProcessor {
 
     @Override
     public void process(final Window window) {
-        for (DspProcessor processor : processors) {
+        for (final DspProcessor processor : processors) {
             if (!processor.isEnabled()) {
                 continue;
             }

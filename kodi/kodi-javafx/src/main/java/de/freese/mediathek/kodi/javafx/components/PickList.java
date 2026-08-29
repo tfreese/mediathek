@@ -1,4 +1,3 @@
-// Created: 12.04.2015
 package de.freese.mediathek.kodi.javafx.components;
 
 import javafx.collections.ObservableList;
@@ -10,6 +9,7 @@ import javafx.scene.layout.VBox;
 
 /**
  * @author Thomas Freese
+ * @since 12.04.2015
  */
 public class PickList<T extends Comparable<? super T>> extends HBox {
     private final ListView<T> listViewLeft;

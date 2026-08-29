@@ -1,4 +1,3 @@
-// Created: 14 Juli 2024
 package de.freese.player.core.player;
 
 import java.util.concurrent.Executor;
@@ -13,6 +12,7 @@ import de.freese.player.core.exception.PlayerException;
 
 /**
  * @author Thomas Freese
+ * @since 14.07.2024
  */
 public final class ClipPlayer {
 
@@ -57,10 +57,10 @@ public final class ClipPlayer {
 
             clip.open(audioInputStream);
         }
-        catch (RuntimeException ex) {
+        catch (final RuntimeException ex) {
             throw ex;
         }
-        catch (Exception ex) {
+        catch (final Exception ex) {
             throw new PlayerException(ex);
         }
 
@@ -132,10 +132,10 @@ public final class ClipPlayer {
                 clip = null;
             }
         }
-        catch (PlayerException ex) {
+        catch (final PlayerException ex) {
             throw ex;
         }
-        catch (Exception ex) {
+        catch (final Exception ex) {
             throw new PlayerException(ex);
         }
     }

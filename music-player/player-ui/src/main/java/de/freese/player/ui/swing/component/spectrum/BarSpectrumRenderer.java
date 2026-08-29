@@ -1,4 +1,3 @@
-// Created: 05 Okt. 2024
 package de.freese.player.ui.swing.component.spectrum;
 
 import java.awt.Color;
@@ -23,6 +22,7 @@ import de.freese.player.ui.spectrum.SpectrumRenderer;
 
 /**
  * @author Thomas Freese
+ * @since 05.10.2024
  */
 @SuppressWarnings("serial")
 public final class BarSpectrumRenderer extends Component implements SpectrumRenderer {
@@ -147,7 +147,7 @@ public final class BarSpectrumRenderer extends Component implements SpectrumRend
 
         g2d.setPaint(new GradientPaint(0F, 0F, Color.GREEN, 0F, getHeight() - 5F, Color.RED));
 
-        for (Map.Entry<Integer, Double> entry : bandSpectrum.entrySet()) {
+        for (final Map.Entry<Integer, Double> entry : bandSpectrum.entrySet()) {
             // final int barHeight = (int) Math.floor(entry.getValue() * getHeight());
             final int barHeight = (int) (entry.getValue() * (getHeight() - 5));
 

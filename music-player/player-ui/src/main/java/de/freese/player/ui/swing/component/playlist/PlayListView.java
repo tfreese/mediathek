@@ -1,4 +1,3 @@
-// Created: 14 Sept. 2024
 package de.freese.player.ui.swing.component.playlist;
 
 import java.awt.Color;
@@ -34,6 +33,7 @@ import de.freese.player.ui.utils.image.ImageFactory;
 
 /**
  * @author Thomas Freese
+ * @since 14.09.2024
  */
 public final class PlayListView {
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayListView.class);
@@ -65,7 +65,7 @@ public final class PlayListView {
 
             jLabel.setToolTipText(tooltip);
         }
-        catch (Exception ex) {
+        catch (final Exception ex) {
             throw new PlayerException(ex);
         }
 

@@ -1,4 +1,3 @@
-// Created: 04 Nov. 2024
 package de.freese.player.ui.equalizer;
 
 import de.freese.player.core.dsp.DspProcessor;
@@ -9,6 +8,7 @@ import de.freese.player.equalizer.EqualizerControls;
 
 /**
  * @author Thomas Freese
+ * @since 04.11.2024
  */
 public final class EqualizerDspProcessor implements DspProcessor {
     private final Equalizer equalizer = new DefaultEqualizer();

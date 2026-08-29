@@ -1,10 +1,10 @@
-// Created: 18.01.2021
 package de.freese.mediathek.kodi.javafx;
 
 import javafx.application.Application;
 
 /**
  * @author Thomas Freese
+ * @since 18.01.2021
  */
 public final class KodiJavaFxClientLauncher {
     static void main() {

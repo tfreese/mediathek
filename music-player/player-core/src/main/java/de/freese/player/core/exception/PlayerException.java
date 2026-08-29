@@ -1,10 +1,10 @@
-// Created: 17 Juli 2024
 package de.freese.player.core.exception;
 
 import java.io.Serial;
 
 /**
  * @author Thomas Freese
+ * @since 17.07.2024
  */
 public class PlayerException extends RuntimeException {
     @Serial

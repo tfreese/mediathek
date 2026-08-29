@@ -3,6 +3,7 @@ plugins {
 }
 
 dependencies {
+    api("org.jspecify:jspecify")
     api("org.slf4j:slf4j-api")
 
     testImplementation("org.jfree:jfreechart")

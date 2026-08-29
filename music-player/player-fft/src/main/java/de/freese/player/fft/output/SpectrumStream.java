@@ -2,6 +2,8 @@ package de.freese.player.fft.output;
 
 import java.util.Iterator;
 
+import org.jspecify.annotations.NonNull;
+
 import de.freese.player.fft.config.FFTConfig;
 import de.freese.player.fft.math.FFTComputationWrapper;
 import de.freese.player.fft.math.FFTMath;
@@ -37,7 +39,7 @@ public final class SpectrumStream extends AbstractFFTObject {
     }
 
     @Override
-    public Iterator<Spectrum> iterator() {
+    public @NonNull Iterator<Spectrum> iterator() {
         return new Iterator<>() {
             @Override
             public boolean hasNext() {

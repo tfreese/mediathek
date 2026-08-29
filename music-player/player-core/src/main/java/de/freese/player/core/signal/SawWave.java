@@ -1,17 +1,17 @@
-// Created: 03 Nov. 2024
 package de.freese.player.core.signal;
 
 import javax.sound.sampled.AudioFormat;
 
 /**
  * @author Thomas Freese
+ * @since 03.11.2024
  */
 public final class SawWave implements Signal {
     private final double frequency;
 
     public SawWave(final double frequency) {
         super();
-        
+
         this.frequency = frequency;
     }
 

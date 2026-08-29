@@ -1,4 +1,3 @@
-// Created: 10.11.2014
 package de.freese.mediathek.services.thetvdb;
 
 import java.util.Objects;
@@ -11,6 +10,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Thomas Freese
+ * @since 10.11.2014
  */
 @XmlRootElement(name = "Episode")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -99,16 +99,13 @@ public class Episode implements Comparable<Episode> {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("Episode [");
-        builder.append("id=").append(id);
-        builder.append(", season=").append(season);
-        builder.append(", episode=").append(episodeNumber);
-        builder.append(", releaseDate=").append(releaseDate);
-        builder.append(", title=").append(title);
-        builder.append(", language=").append(language);
-        builder.append("]");
-
-        return builder.toString();
+        return "Episode ["
+                + "id=" + id
+                + ", season=" + season
+                + ", episode=" + episodeNumber
+                + ", releaseDate=" + releaseDate
+                + ", title=" + title
+                + ", language=" + language
+                + "]";
     }
 }

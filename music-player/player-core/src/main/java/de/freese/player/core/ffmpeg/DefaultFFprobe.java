@@ -1,4 +1,3 @@
-// Created: 15 Juli 2024
 package de.freese.player.core.ffmpeg;
 
 import java.io.BufferedReader;
@@ -18,6 +17,7 @@ import de.freese.player.core.util.PlayerUtils;
 
 /**
  * @author Thomas Freese
+ * @since 15.07.2024
  */
 final class DefaultFFprobe extends AbstractFF implements FFprobe {
     private static DefaultAudioSource parseMetaData(final List<String> output) {
@@ -94,7 +94,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
         if (line == null || line.isBlank()) {
             return null;
         }
-        
+
         return line.substring(line.indexOf(":") + 1).strip();
     }
 
@@ -133,11 +133,12 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
                 .orElse("");
 
         if (line.contains("kb/s")) {
-            line = line.substring(line.lastIndexOf(','));
+            String[] splits = PATTERN_COMMA.split(line);
+            final String bitRate = splits[4].strip();
 
-            final String[] splits = PATTERN_SPACES.split(line);
+            splits = PATTERN_SPACES.split(bitRate);
 
-            return Integer.parseInt(splits[1].strip());
+            return Integer.parseInt(splits[0].strip());
         }
 
         // Fallback
@@ -349,9 +350,7 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
         final ProcessBuilder processBuilder = createProcessBuilder(command);
         processBuilder.redirectErrorStream(true);
 
-        try {
-            final Process process = processBuilder.start();
-
+        try (Process process = processBuilder.start()) {
             final List<String> output;
 
             try (BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) {
@@ -375,13 +374,13 @@ final class DefaultFFprobe extends AbstractFF implements FFprobe {
 
             return audioSource;
         }
-        catch (IOException ex) {
+        catch (final IOException ex) {
             throw new UncheckedIOException(ex);
         }
-        catch (RuntimeException ex) {
+        catch (final RuntimeException ex) {
             throw ex;
         }
-        catch (InterruptedException ex) {
+        catch (final InterruptedException ex) {
             // Restore interrupted state.
             Thread.currentThread().interrupt();
 

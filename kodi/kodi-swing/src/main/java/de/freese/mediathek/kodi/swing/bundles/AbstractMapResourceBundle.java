@@ -1,4 +1,3 @@
-// Created: 03.01.23
 package de.freese.mediathek.kodi.swing.bundles;
 
 import java.util.Collections;
@@ -8,14 +7,17 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import org.jspecify.annotations.NonNull;
+
 /**
  * @author Thomas Freese
+ * @since 03.01.2023
  */
 public abstract class AbstractMapResourceBundle extends ResourceBundle {
     private Map<String, Object> lookup;
 
     @Override
-    public Enumeration<String> getKeys() {
+    public @NonNull Enumeration<String> getKeys() {
         if (lookup == null) {
             loadLookup();
         }
@@ -32,13 +34,9 @@ public abstract class AbstractMapResourceBundle extends ResourceBundle {
     protected abstract Map<String, Object> getContents();
 
     @Override
-    protected Object handleGetObject(final String key) {
+    protected Object handleGetObject(final @NonNull String key) {
         if (lookup == null) {
             loadLookup();
-        }
-
-        if (key == null) {
-            throw new NullPointerException();
         }
 
         if (parent != null) {
@@ -49,7 +47,7 @@ public abstract class AbstractMapResourceBundle extends ResourceBundle {
     }
 
     @Override
-    protected Set<String> handleKeySet() {
+    protected @NonNull Set<String> handleKeySet() {
         if (lookup == null) {
             loadLookup();
         }

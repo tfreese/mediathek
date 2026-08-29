@@ -1,4 +1,3 @@
-// Created: 15 Aug. 2025
 package de.freese.player.test.ui.swing;
 
 import java.awt.GridBagConstraints;
@@ -28,6 +27,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Thomas Freese
+ * @since 15.08.2025
  */
 public final class PanelAudioSystem extends JPanel {
     private static final Logger LOGGER = LoggerFactory.getLogger(PanelAudioSystem.class);
@@ -75,13 +75,13 @@ public final class PanelAudioSystem extends JPanel {
                         try {
                             get();
                         }
-                        catch (InterruptedException ex) {
+                        catch (final InterruptedException ex) {
                             LOGGER.error(ex.getMessage(), ex);
 
                             // Restore interrupted state.
                             Thread.currentThread().interrupt();
                         }
-                        catch (Exception ex) {
+                        catch (final Exception ex) {
                             LOGGER.error(ex.getMessage(), ex);
                         }
                         finally {
@@ -116,13 +116,13 @@ public final class PanelAudioSystem extends JPanel {
                         try {
                             get();
                         }
-                        catch (InterruptedException ex) {
+                        catch (final InterruptedException ex) {
                             LOGGER.error(ex.getMessage(), ex);
 
                             // Restore interrupted state.
                             Thread.currentThread().interrupt();
                         }
-                        catch (Exception ex) {
+                        catch (final Exception ex) {
                             LOGGER.error(ex.getMessage(), ex);
                         }
                         finally {
@@ -164,7 +164,7 @@ public final class PanelAudioSystem extends JPanel {
             audioClip.addLineListener(event -> LOGGER.info("{}", event));
 
             // ((FloatControl) sourceDataLine.getControl(FloatControl.Type.MASTER_GAIN)).setValue(6.0206F);
-            for (Control control : audioClip.getControls()) {
+            for (final Control control : audioClip.getControls()) {
                 LOGGER.info("Clip controls: {}", control);
             }
 
@@ -203,7 +203,7 @@ public final class PanelAudioSystem extends JPanel {
             sourceDataLine.addLineListener(event -> LOGGER.info("{}", event));
 
             // ((FloatControl) sourceDataLine.getControl(FloatControl.Type.MASTER_GAIN)).setValue(6.0206F);
-            for (Control control : sourceDataLine.getControls()) {
+            for (final Control control : sourceDataLine.getControls()) {
                 LOGGER.info("SourceDataLine controls: {}", control);
             }
 
