@@ -43,10 +43,10 @@ public final class Reporter {
         }
 
         private static DataSource createSqLite(final boolean readOnly, final String url) {
-            // Native Libraries deaktivieren für den Zugriff auf die Dateien.
+            // Deactivate native Libraries for File-Access.
             System.setProperty("sqlite.purejava", "true");
 
-            // Pfade für native Libraries.
+            // Path for native Libraries.
             // System.setProperty("org.sqlite.lib.path", "/home/tommy");
             // System.setProperty("org.sqlite.lib.name", "sqlite-libsqlitejdbc.so");
 
