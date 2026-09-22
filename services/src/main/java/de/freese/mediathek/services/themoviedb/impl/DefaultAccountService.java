@@ -1,5 +1,7 @@
 package de.freese.mediathek.services.themoviedb.impl;
 
+import org.springframework.web.client.RestClient;
+
 import de.freese.mediathek.services.themoviedb.api.AccountService;
 import de.freese.mediathek.services.themoviedb.model.Configuration;
 
@@ -11,14 +13,19 @@ import de.freese.mediathek.services.themoviedb.model.Configuration;
  * @since 26.04.2014
  */
 public class DefaultAccountService extends AbstractMovieDbService implements AccountService {
-    public DefaultAccountService(final String apiKey) {
-        super(apiKey);
+    public DefaultAccountService(final RestClient restClient, final String apiKey) {
+        super(restClient, apiKey);
     }
 
     @Override
     public Configuration getConfiguration() {
         final StringBuilder url = url().append("configuration?api_key={api_key}");
 
-        return getRestTemplate().getForObject(url.toString(), Configuration.class, getApiKey());
+        return getRestClient()
+                .get()
+                .uri(url.toString(), getApiKey())
+                .retrieve()
+                .toEntity(Configuration.class)
+                .getBody();
     }
 }

@@ -4,8 +4,9 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.util.Locale;
+import java.util.Objects;
 
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.RestClient;
 import tools.jackson.databind.json.JsonMapper;
 
 import de.freese.mediathek.services.Settings;
@@ -21,29 +22,45 @@ public class MovieApiDebug {
     public static final int TEST_MOVIE_ID = Settings.TEST_MOVIE_ID;
 
     static void main() throws Exception {
-        final MovieApiDebug debug = new MovieApiDebug();
+        final RestClient restClient = RestClient.builder().build();
+
+        final MovieApiDebug debug = new MovieApiDebug(restClient);
         debug.testSearch();
         // debug.testDetails();
         // debug.testImages();
         // debug.testActors();
     }
 
-    public MovieApiDebug() {
+    private final JsonMapper jsonMapper;
+    private final RestClient restClient;
+
+    public MovieApiDebug(final RestClient restClient) {
         super();
+
+        this.restClient = Objects.requireNonNull(restClient, "restClient required");
+        this.jsonMapper = JsonMapper.builder().build();
     }
 
     // @Test
-    public void testActors() throws Exception {
-        final RestTemplate template = new RestTemplate();
-        final String result = template.getForObject("https://api.themoviedb.org/3/movie/{movieID}/credits?api_key={api_key}&language=de", String.class, TEST_MOVIE_ID, getApiKey());
+    public void testActors() {
+        final String result = restClient
+                .get()
+                .uri("https://api.themoviedb.org/3/movie/{movieID}/credits?api_key={api_key}&language=de", TEST_MOVIE_ID, getApiKey())
+                .retrieve()
+                .toEntity(String.class)
+                .getBody();
 
         prettyPrint(result);
     }
 
     // @Test
-    public void testConfiguration() throws Exception {
-        final RestTemplate template = new RestTemplate();
-        final String result = template.getForObject("https://api.themoviedb.org/3/configuration?api_key={api_key}", String.class, getApiKey());
+    public void testConfiguration() {
+        final String result = restClient
+                .get()
+                .uri("https://api.themoviedb.org/3/configuration?api_key={api_key}", getApiKey())
+                .retrieve()
+                .toEntity(String.class)
+                .getBody();
 
         // ObjectMapper mapper = new ObjectMapper();
         // Object json = mapper.readValue(result, Object.class);
@@ -53,9 +70,13 @@ public class MovieApiDebug {
     }
 
     // @Test
-    public void testDetails() throws Exception {
-        final RestTemplate template = new RestTemplate();
-        final String result = template.getForObject("https://api.themoviedb.org/3/movie/{movieID}?api_key={api_key}&language=de", String.class, TEST_MOVIE_ID, getApiKey());
+    public void testDetails() {
+        final String result = restClient
+                .get()
+                .uri("https://api.themoviedb.org/3/movie/{movieID}?api_key={api_key}&language=de", TEST_MOVIE_ID, getApiKey())
+                .retrieve()
+                .toEntity(String.class)
+                .getBody();
 
         prettyPrint(result);
     }
@@ -94,33 +115,25 @@ public class MovieApiDebug {
     }
 
     // @Test
-    public void testImages() throws Exception {
-        final RestTemplate template = new RestTemplate();
-        final String result = template.getForObject("https://api.themoviedb.org/3/movie/{movieID}/images?api_key={api_key}", String.class, TEST_MOVIE_ID, getApiKey());
+    public void testImages() {
+        final String result = restClient
+                .get()
+                .uri("https://api.themoviedb.org/3/movie/{movieID}/images?api_key={api_key}", TEST_MOVIE_ID, getApiKey())
+                .retrieve()
+                .toEntity(String.class)
+                .getBody();
 
         prettyPrint(result);
     }
 
     // @Test
-    public void testSearch() throws Exception {
-        final RestTemplate template = new RestTemplate();
-        final String result = template.getForObject("https://api.themoviedb.org/3/search/movie?api_key={api_key}&language={lang}&query={query}", String.class, getApiKey(),
-                getLocale().getLanguage(), TEST_MOVIE);
-        // String result =
-        // template.getForObject("https://api.themoviedb.org/3/search/tv?api_key={api_key}&language={lang}&query={query}", String.class, getApiKey(),
-        // getLocale().getLanguage(), "stargate"); // 4629
-
-        // String result =
-        // template.getForObject("https://api.themoviedb.org/3/tv/{id}?api_key={api_key}&language={lang}", String.class, "4629", getApiKey(), getLocale()
-        // .getLanguage());
-
-        // String result =
-        // template.getForObject("https://api.themoviedb.org/3/tv/{id}/season/1?api_key={api_key}&language={lang}", String.class, "4629", getApiKey(),
-        // getLocale().getLanguage());
-
-        // String result =
-        // template.getForObject("https://api.themoviedb.org/3/movie/{id}/keywords?api_key={api_key}", String.class, TEST_MOVIE_ID, getApiKey(),
-        // getLocale().getLanguage());
+    public void testSearch() {
+        final String result = restClient
+                .get()
+                .uri("https://api.themoviedb.org/3/search/movie?api_key={api_key}&language={lang}&query={query}", getApiKey(), getLocale().getLanguage(), TEST_MOVIE)
+                .retrieve()
+                .toEntity(String.class)
+                .getBody();
 
         prettyPrint(result);
     }
@@ -133,9 +146,9 @@ public class MovieApiDebug {
         return Locale.GERMANY;
     }
 
-    private void prettyPrint(final String result) throws Exception {
-        final JsonMapper jsonMapper = JsonMapper.builder().build();
+    private void prettyPrint(final String result) {
         final Object json = jsonMapper.readValue(result, Object.class);
+
         System.out.println(jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(json));
     }
 }

@@ -9,12 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 
 import javax.imageio.ImageIO;
 
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.RestClient;
 
 import de.freese.mediathek.services.AbstractService;
 import de.freese.mediathek.services.themoviedb.model.Image;
@@ -28,30 +27,24 @@ import de.freese.mediathek.services.themoviedb.model.Images;
  * @since 24.04.2014
  */
 public class TVService extends AbstractService {
-    private RestTemplate restTemplate;
+    private final RestClient restClient;
 
-    public TVService(final String apiKey) {
+    public TVService(final RestClient restClient, final String apiKey) {
         super(apiKey);
-    }
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        super.afterPropertiesSet();
-
-        if (restTemplate == null) {
-            final List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
-            messageConverters.add(new Jaxb2RootElementHttpMessageConverter());
-
-            restTemplate = new RestTemplate(messageConverters);
-            // restTemplate.getMessageConverters().add(new Jaxb2RootElementHttpMessageConverter());
-        }
+        this.restClient = Objects.requireNonNull(restClient, "restClient required");
     }
 
     public TVShow getDetails(final String id) {
         // http://thetvdb.com//api/1D62F2F90030C444/series/72449/de.xml
         final StringBuilder url = url().append("{apikey}/series/{id}/{lang}.xml");
 
-        final Search search = getRestTemplate().getForObject(url.toString(), Search.class, getApiKey(), id, getLocale().getLanguage());
+        final Search search = restClient
+                .get()
+                .uri(url.toString(), getApiKey(), id, getLocale().getLanguage())
+                .retrieve()
+                .toEntity(Search.class)
+                .getBody();
 
         if (search == null || search.getSeries().isEmpty()) {
             return null;
@@ -69,7 +62,12 @@ public class TVService extends AbstractService {
         // Serie mit Episoden
         StringBuilder url = url().append("{apikey}/series/{id}/all/{lang}.xml");
 
-        final Search search = getRestTemplate().getForObject(url.toString(), Search.class, getApiKey(), id, getLocale().getLanguage());
+        final Search search = restClient
+                .get()
+                .uri(url.toString(), getApiKey(), id, getLocale().getLanguage())
+                .retrieve()
+                .toEntity(Search.class)
+                .getBody();
 
         if (search == null || search.getSeries().isEmpty()) {
             return null;
@@ -83,7 +81,12 @@ public class TVService extends AbstractService {
 
         // Actors
         url = url().append("{apikey}/series/{id}/actors.xml");
-        final Actors actors = getRestTemplate().getForObject(url.toString(), Actors.class, getApiKey(), id);
+        final Actors actors = restClient
+                .get()
+                .uri(url.toString(), getApiKey(), id)
+                .retrieve()
+                .toEntity(Actors.class)
+                .getBody();
 
         if (actors != null) {
             final List<Actor> actorsList = actors.getActorList();
@@ -103,7 +106,12 @@ public class TVService extends AbstractService {
         // BannerType: poster, fanart, series or season
         // BannerType2: graphical, text or blank
         url = url().append("{apikey}/series/{id}/banners.xml");
-        final Images images = getRestTemplate().getForObject(url.toString(), Images.class, getApiKey(), id);
+        final Images images = restClient
+                .get()
+                .uri(url.toString(), getApiKey(), id)
+                .retrieve()
+                .toEntity(Images.class)
+                .getBody();
 
         if (images != null) {
             // List<Image> banners = images.getBanners();
@@ -146,7 +154,12 @@ public class TVService extends AbstractService {
         // http://thetvdb.com/api/GetSeries.php?seriesname=stargate&language=de
         final StringBuilder url = url().append("GetSeries.php?seriesname={name}&language={lang}");
 
-        final Search search = getRestTemplate().getForObject(url.toString(), Search.class, urlEncode(name), getLocale().getLanguage());
+        final Search search = restClient
+                .get()
+                .uri(url.toString(), urlEncode(name), getLocale().getLanguage())
+                .retrieve()
+                .toEntity(Search.class)
+                .getBody();
 
         if (search == null || search.getSeries().isEmpty()) {
             return List.of();
@@ -180,14 +193,6 @@ public class TVService extends AbstractService {
         map2.clear();
 
         return result;
-    }
-
-    public void setRestTemplate(final RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
-
-    private RestTemplate getRestTemplate() {
-        return restTemplate;
     }
 
     /**

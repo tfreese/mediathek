@@ -1,5 +1,7 @@
 package de.freese.mediathek.services.themoviedb.impl;
 
+import org.springframework.web.client.RestClient;
+
 import de.freese.mediathek.services.themoviedb.api.MovieService;
 import de.freese.mediathek.services.themoviedb.model.Casts;
 import de.freese.mediathek.services.themoviedb.model.Images;
@@ -14,42 +16,67 @@ import de.freese.mediathek.services.themoviedb.model.Search;
  * @since 26.04.2014
  */
 public class DefaultMovieService extends AbstractMovieDbService implements MovieService {
-    public DefaultMovieService(final String apiKey) {
-        super(apiKey);
+    public DefaultMovieService(final RestClient restClient, final String apiKey) {
+        super(restClient, apiKey);
     }
 
     @Override
     public Casts casts(final int id) {
         final Appendable url = url().append("movie/{movieID}/casts?api_key={api_key}&language=de");
 
-        return getRestTemplate().getForObject(url.toString(), Casts.class, id, getApiKey());
+        return getRestClient()
+                .get()
+                .uri(url.toString(), id, getApiKey())
+                .retrieve()
+                .toEntity(Casts.class)
+                .getBody();
     }
 
     @Override
     public MovieDetails details(final int id) {
         final Appendable url = url().append("movie/{movieID}?api_key={api_key}&language=de");
 
-        return getRestTemplate().getForObject(url.toString(), MovieDetails.class, id, getApiKey());
+        return getRestClient()
+                .get()
+                .uri(url.toString(), id, getApiKey())
+                .retrieve()
+                .toEntity(MovieDetails.class)
+                .getBody();
     }
 
     @Override
     public Images images(final int id) {
         final Appendable url = url().append("movie/{movieID}/images?api_key={api_key}"); // &language=de
 
-        return getRestTemplate().getForObject(url.toString(), Images.class, id, getApiKey());
+        return getRestClient()
+                .get()
+                .uri(url.toString(), id, getApiKey())
+                .retrieve()
+                .toEntity(Images.class)
+                .getBody();
     }
 
     @Override
     public Search search(final String movie) {
         final Appendable url = url().append("search/movie?api_key={api_key}&language=de&query={query}");
 
-        return getRestTemplate().getForObject(url.toString(), Search.class, getApiKey(), urlEncode(movie));
+        return getRestClient()
+                .get()
+                .uri(url.toString(), getApiKey(), urlEncode(movie))
+                .retrieve()
+                .toEntity(Search.class)
+                .getBody();
     }
 
     @Override
     public Search search(final String movie, final int year) {
         final Appendable url = url().append("search/movie?api_key={api_key}&language=de&query={query}&year={year}");
 
-        return getRestTemplate().getForObject(url.toString(), Search.class, getApiKey(), urlEncode(movie), year);
+        return getRestClient()
+                .get()
+                .uri(url.toString(), getApiKey(), urlEncode(movie), year)
+                .retrieve()
+                .toEntity(Search.class)
+                .getBody();
     }
 }

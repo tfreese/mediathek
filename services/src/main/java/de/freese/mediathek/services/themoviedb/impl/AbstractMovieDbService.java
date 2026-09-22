@@ -1,7 +1,8 @@
 package de.freese.mediathek.services.themoviedb.impl;
 
-import org.springframework.util.Assert;
-import org.springframework.web.client.RestTemplate;
+import java.util.Objects;
+
+import org.springframework.web.client.RestClient;
 
 import de.freese.mediathek.services.AbstractService;
 
@@ -12,27 +13,16 @@ import de.freese.mediathek.services.AbstractService;
  * @since 26.04.2014
  */
 public abstract class AbstractMovieDbService extends AbstractService {
-    private RestTemplate restTemplate;
+    private final RestClient restClient;
 
-    protected AbstractMovieDbService(final String apiKey) {
+    protected AbstractMovieDbService(final RestClient restClient, final String apiKey) {
         super(apiKey);
+
+        this.restClient = Objects.requireNonNull(restClient, "restClient required");
     }
 
-    @Override
-    public void afterPropertiesSet() {
-        Assert.notNull(getApiKey(), "API-Key is missing");
-
-        if (restTemplate == null) {
-            restTemplate = new RestTemplate();
-        }
-    }
-
-    public void setRestTemplate(final RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
-
-    protected RestTemplate getRestTemplate() {
-        return restTemplate;
+    protected RestClient getRestClient() {
+        return restClient;
     }
 
     /**

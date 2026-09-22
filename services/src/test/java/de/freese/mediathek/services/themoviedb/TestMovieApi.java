@@ -11,6 +11,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.springframework.web.client.RestClient;
 
 import de.freese.mediathek.services.Settings;
 import de.freese.mediathek.services.themoviedb.api.AccountService;
@@ -35,11 +36,13 @@ class TestMovieApi {
     private static MovieService movieService;
 
     @BeforeAll
-    static void beforeAll() {
-        movieService = new DefaultMovieService(Settings.getMovieDbApiKey());
+    static void beforeAll() throws Exception {
+        final RestClient restClient = RestClient.builder().build();
+
+        movieService = new DefaultMovieService(restClient, Settings.getMovieDbApiKey());
         ((DefaultMovieService) movieService).afterPropertiesSet();
 
-        accountService = new DefaultAccountService(Settings.getMovieDbApiKey());
+        accountService = new DefaultAccountService(restClient, Settings.getMovieDbApiKey());
         ((DefaultAccountService) accountService).afterPropertiesSet();
     }
 

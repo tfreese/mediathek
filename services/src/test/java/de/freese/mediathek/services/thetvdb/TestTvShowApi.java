@@ -9,6 +9,8 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter;
+import org.springframework.web.client.RestClient;
 
 import de.freese.mediathek.services.Settings;
 
@@ -21,7 +23,11 @@ class TestTvShowApi {
 
     @BeforeAll
     static void beforeClass() throws Exception {
-        service = new TVService(Settings.getTvDbApiKey());
+        final RestClient restClient = RestClient.builder()
+                .configureMessageConverters(configurer -> configurer.addCustomConverter(new Jaxb2RootElementHttpMessageConverter()))
+                .build();
+
+        service = new TVService(restClient, Settings.getTvDbApiKey());
         service.afterPropertiesSet();
     }
 

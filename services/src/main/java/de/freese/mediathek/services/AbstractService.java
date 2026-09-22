@@ -4,6 +4,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.Locale;
+import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +30,7 @@ public abstract class AbstractService implements InitializingBean {
     protected AbstractService(final String apiKey) {
         super();
 
-        this.apiKey = apiKey;
+        this.apiKey = Objects.requireNonNull(apiKey, "apiKey required");
     }
 
     @Override
